@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "userDataDir": false
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Debug next",
+      "skipFiles": ["<node_internals>/**"],
+      "port": 9229,
+      "preLaunchTask": "yarn dev"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug next and chrome",
+      "configurations": ["Debug chrome", "Debug next"]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "project": "./tsconfig.json"
+  },
+  "extends": [
+    // js/ts specific
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "typescript",
+    // jest
+    "plugin:jest/recommended",
+    "plugin:jest/style",
+    "plugin:jest-dom/recommended",
+    "plugin:testing-library/react",
+    // react/next
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@next/next/recommended",
+    "plugin:@next/next/core-web-vitals",
+    // must be last for prettier to work well with eslint
+    "prettier"
+  ],
+  "plugins": ["import", "react", "jsx-a11y"],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "jest": true,
+    "node": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "jest": {
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "quotes": [
+      "warn",
+      "single",
+      { "avoidEscape": true, "allowTemplateLiterals": false }
+    ],
+    "indent": "off",
+    "no-console": "off",
+    "react/display-name": "off",
+    "@typescript-eslint/indent": ["warn", 2],
+    "@typescript-eslint/no-floating-promises": "error",
+    // next recommended settings
+    "import/no-anonymous-default-export": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "jsx-a11y/alt-text": [
+      "warn",
+      {
+        "elements": ["img"],
+        "img": ["Image"]
+      }
+    ],
+    "@next/next/no-sync-scripts": 2,
+    "@next/next/no-html-link-for-pages": 2,
+    "@next/next/no-img-element": 2
+  },
+  "overrides": [
+    {
+      // storybook specific files
+      "files": ["**/*.stories.{js|jsx|ts|tsx}"],
+      "rules": {
+        "import/no-anonymous-default-export": "off"
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @supports (height: 100vh) {
+    /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
+    height: 100vh;
+  }
+
+  padding: $spacer;
+  background-color: $primary;
+}
+
+.loginCard {
+  z-index: 1;
+  width: 100%;
+  max-width: 350px;
+
+  .title {
+    margin-bottom: 0;
+    text-align: center;
+
+    hr {
+      margin: $spacer 0;
+    }
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
