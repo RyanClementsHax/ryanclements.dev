@@ -2,31 +2,10 @@
 
 exports[`Index page matches snapshot 1`] = `
 <DocumentFragment>
-  <main
-    class="page"
-  >
-    <div
-      class="loginCard card"
-    >
-      <div
-        class="body card-body"
-      >
-        <h1
-          class="title card-title"
-        >
-          index:header
-          <hr />
-        </h1>
-        <a
-          class="btn btn-primary"
-          href="/api/auth/login?returnTo=/home"
-          role="button"
-          tabindex="0"
-        >
-          index:login-btn
-        </a>
-      </div>
-    </div>
+  <main>
+    <h1>
+      Ryan Clements
+    </h1>
   </main>
 </DocumentFragment>
 `;

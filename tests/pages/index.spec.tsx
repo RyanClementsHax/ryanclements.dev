@@ -1,19 +1,19 @@
 import React from 'react'
-import { render, screen } from 'tests/testUtils'
+import { render } from 'tests/testUtils'
+import { axe } from 'jest-axe'
 import { Primary } from 'stories/pages/index.stories'
 
-jest.mock('next/router', () => require('next-router-mock'))
-
 describe('Index page', () => {
-  it('matches snapshot', () => {
-    const { asFragment } = render(<Primary />, {})
-    expect(asFragment()).toMatchSnapshot()
+  let container: Element, asFragment: () => DocumentFragment
+
+  beforeEach(() => {
+    ;({ container, asFragment } = render(<Primary />))
   })
 
-  it('has a link to login', () => {
-    render(<Primary />)
-    expect(
-      screen.getByRole('button', { name: 'index:login-btn' })
-    ).toHaveAttribute('href', '/api/auth/login?returnTo=/home')
+  it('has no axe violations', async () => {
+    expect(await axe(container)).toHaveNoViolations()
+  })
+  it('matches snapshot', () => {
+    expect(asFragment()).toMatchSnapshot()
   })
 })

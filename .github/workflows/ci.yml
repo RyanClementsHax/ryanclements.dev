@@ -56,41 +56,41 @@ jobs:
           path: ./**
           key: ${{ github.sha }}
       - run: yarn type-check
-  lighthouse:
-    runs-on: ubuntu-latest
-    needs: checkout
-    steps:
-      - name: wait for deploy preview
-        uses: jakepartusch/wait-for-netlify-action@v1
-        id: netlify
-        with:
-          site_name: 'practical-mirzakhani-23ef99'
-          max_timeout: 600 # 10min
-      # workaround to make sure that any additional commits after opening the pull request get deployed before running lighthouse
-      - name: ensure deploy preview updated
-        uses: fountainhead/action-wait-for-check@v1.0.0
-        with:
-          token: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          # There is no reason why we are waiting on this check specifically, we just need to choose one (I think...)
-          checkName: 'Pages changed - practical-mirzakhani-23ef99'
-      - name: restore source code
-        uses: actions/cache@v2
-        with:
-          path: ./**
-          key: ${{ github.sha }}
-      - name: make artifact directory
-        run: mkdir /tmp/artifacts
-      - name: audit deploy preview
-        uses: foo-software/lighthouse-check-action@master
-        with:
-          accessToken: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
-          urls: ${{ steps.netlify.outputs.url }}
-          outputDirectory: /tmp/artifacts
-          emulatedFormFactor: all
-          overridesJsonFile: ./lighthouse.json
-      - name: upload audit report
-        uses: actions/upload-artifact@master
-        with:
-          name: Lighthouse reports
-          path: /tmp/artifacts
+  # lighthouse:
+  #   runs-on: ubuntu-latest
+  #   needs: checkout
+  #   steps:
+  #     - name: wait for deploy preview
+  #       uses: jakepartusch/wait-for-netlify-action@v1
+  #       id: netlify
+  #       with:
+  #         site_name: 'practical-mirzakhani-23ef99'
+  #         max_timeout: 600 # 10min
+  #     # workaround to make sure that any additional commits after opening the pull request get deployed before running lighthouse
+  #     - name: ensure deploy preview updated
+  #       uses: fountainhead/action-wait-for-check@v1.0.0
+  #       with:
+  #         token: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
+  #         ref: ${{ github.event.pull_request.head.sha || github.sha }}
+  #         # There is no reason why we are waiting on this check specifically, we just need to choose one (I think...)
+  #         checkName: 'Pages changed - practical-mirzakhani-23ef99'
+  #     - name: restore source code
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ./**
+  #         key: ${{ github.sha }}
+  #     - name: make artifact directory
+  #       run: mkdir /tmp/artifacts
+  #     - name: audit deploy preview
+  #       uses: foo-software/lighthouse-check-action@master
+  #       with:
+  #         accessToken: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
+  #         urls: ${{ steps.netlify.outputs.url }}
+  #         outputDirectory: /tmp/artifacts
+  #         emulatedFormFactor: all
+  #         overridesJsonFile: ./lighthouse.json
+  #     - name: upload audit report
+  #       uses: actions/upload-artifact@master
+  #       with:
+  #         name: Lighthouse reports
+  #         path: /tmp/artifacts
