@@ -28,6 +28,12 @@ module.exports = {
       {
         severity: 'warning'
       }
+    ],
+    'scss/at-rule-no-unknown': [
+      true,
+      {
+        ignoreAtRules: ['tailwind', 'apply', 'variants', 'responsive', 'screen']
+      }
     ]
   }
 }
