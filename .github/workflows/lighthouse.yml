@@ -14,7 +14,6 @@ jobs:
           token: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
           max_timeout: 60
       - name: Add comment to PR
-        id: loading_lighthouse_comment_to_pr
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
@@ -26,8 +25,6 @@ jobs:
         id: lighthouse_audit
         uses: treosh/lighthouse-ci-action@v7
         with:
-          # add as many urls here as you wish to audit
-          # prefixed by the preview-url
           urls: |
             ${{ steps.vercel_preview_url.outputs.url }}
           uploadArtifacts: true
@@ -35,7 +32,6 @@ jobs:
           runs: 3
       - name: Format lighthouse result
         id: lighthouse_result
-        if: ${{ always() }}
         uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
@@ -65,8 +61,6 @@ jobs:
 
             core.setOutput("comment", comment);
       - name: Add Lighthouse comment to PR
-        id: lighthouse_comment_to_pr
-        if: ${{ always() }}
         uses: marocchino/sticky-pull-request-comment@v1
         with:
           GITHUB_TOKEN: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
