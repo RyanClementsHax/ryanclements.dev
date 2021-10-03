@@ -9,7 +9,7 @@ export const Index: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center bg-red-600">
         <h1 className="text-6xl font-bold">Welcome to my site!</h1>
 
         <p className="mt-3 text-2xl">

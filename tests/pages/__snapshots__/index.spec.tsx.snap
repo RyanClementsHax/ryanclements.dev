@@ -6,7 +6,7 @@ exports[`Index page matches snapshot 1`] = `
     class="flex flex-col items-center justify-center min-h-screen py-2"
   >
     <main
-      class="flex flex-col items-center justify-center w-full flex-1 px-20 text-center"
+      class="flex flex-col items-center justify-center w-full flex-1 px-20 text-center bg-red-600"
     >
       <h1
         class="text-6xl font-bold"
