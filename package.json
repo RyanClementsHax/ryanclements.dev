@@ -23,7 +23,7 @@
     "test": "jest",
     "test:all": "yarn lint:all && yarn type-check && yarn test",
     "prepare": "husky install",
-    "chromatic": "env-cmd -f .env.local --silent chromatic"
+    "chromatic": "env-cmd -f .env.local --silent chromatic --exit-zero-on-changes"
   },
   "dependencies": {
     "next": "^11.1.2",
