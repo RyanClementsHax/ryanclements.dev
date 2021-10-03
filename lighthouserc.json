@@ -1,12 +1,14 @@
 {
   "ci": {
-    "settings": {
-      "onlyCategories": [
-        "performance",
-        "accessibility",
-        "seo",
-        "best-practices"
-      ]
+    "collect": {
+      "settings": {
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "seo",
+          "best-practices"
+        ]
+      }
     }
   }
 }
