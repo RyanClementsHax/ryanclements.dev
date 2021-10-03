@@ -1,12 +1,5 @@
 {
-  "config": {
-    "settings": {
-      "onlyCategories": [
-        "performance",
-        "accessibility",
-        "seo",
-        "best-practices"
-      ]
-    }
+  "settings": {
+    "onlyCategories": ["performance", "accessibility", "seo", "best-practices"]
   }
 }
