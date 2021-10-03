@@ -1,0 +1,12 @@
+{
+  "ci": {
+    "settings": {
+      "onlyCategories": [
+        "performance",
+        "accessibility",
+        "seo",
+        "best-practices"
+      ]
+    }
+  }
+}
