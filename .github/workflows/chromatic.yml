@@ -1,0 +1,45 @@
+name: Chromatic
+
+on:
+  push:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: restore cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: install
+        run: yarn install --frozen-lockfile --check-files
+        # cache the working directory so we can use it in other jobs without having to checkout and install
+      - uses: actions/cache@v2
+        with:
+          path: ./**
+          key: ${{ github.sha }}
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+    needs: checkout
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # 👈 Required to retrieve git history
+      - name: restore cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: publish to chromatic
+        uses: chromaui/action@v1
+        with:
+          token: ${{ secrets.CI_GITHUB_TOKEN }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

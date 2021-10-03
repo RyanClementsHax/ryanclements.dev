@@ -5,7 +5,10 @@ module.exports = {
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    'storybook-addon-next-router'
+    'storybook-addon-next-router',
+    '@storybook/addon-a11y',
+    '@storybook/addon-storysource',
+    'storybook-dark-mode'
   ],
   core: {
     builder: 'webpack5'
@@ -14,7 +17,7 @@ module.exports = {
     const nextConfig = require('../next.config.js')([], baseConfig)
 
     configureRootAbsoluteImport(baseConfig)
-    configureScssModulesFromNextConfig(baseConfig, nextConfig)
+    configureCss(baseConfig, nextConfig)
 
     return baseConfig
   }
@@ -23,7 +26,7 @@ module.exports = {
 const configureRootAbsoluteImport = baseConfig =>
   baseConfig.resolve.modules.push(path.resolve(__dirname, '..'))
 
-const configureScssModulesFromNextConfig = (baseConfig, nextConfig) =>
+const configureCss = (baseConfig, nextConfig) =>
   baseConfig.module.rules.push({
     test: /\.(s*)css$/,
     use: [
@@ -33,6 +36,9 @@ const configureScssModulesFromNextConfig = (baseConfig, nextConfig) =>
         options: {
           modules: { auto: true }
         }
+      },
+      {
+        loader: 'postcss-loader'
       },
       {
         loader: 'sass-loader',
