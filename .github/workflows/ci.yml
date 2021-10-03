@@ -89,6 +89,7 @@ jobs:
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
+          configPath: './lighthouserc.json'
       - name: format lighthouse result
         id: lighthouse_result
         uses: actions/github-script@v4
