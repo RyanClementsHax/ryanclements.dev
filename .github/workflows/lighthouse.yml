@@ -7,11 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Get preview url
-        uses: aaimio/vercel-preview-url-action@v1
+      - name: Awaiting preview url
+        uses: patrickedqvist/wait-for-vercel-preview@v1.1.1
         id: vercel_preview_url
         with:
-          GITHUB_TOKEN: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
+          token: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
+          max_timeout: 60
       - name: Add comment to PR
         id: loading_lighthouse_comment_to_pr
         uses: marocchino/sticky-pull-request-comment@v2
