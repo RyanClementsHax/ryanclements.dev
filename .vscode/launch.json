@@ -2,12 +2,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug chrome",
-      "type": "chrome",
+      "type": "pwa-chrome",
       "request": "launch",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}",
-      "userDataDir": false
+      "name": "Debug chrome",
+      "url": "http://localhost:3000"
     },
     {
       "type": "node",
