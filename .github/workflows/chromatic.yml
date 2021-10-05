@@ -6,11 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  checkout:
+  chromatic-deployment:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # 👈 Required to retrieve git history
       - name: restore cache dependencies
         uses: actions/cache@v2
         with:
@@ -24,20 +26,6 @@ jobs:
         with:
           path: ./**
           key: ${{ github.sha }}
-  chromatic-deployment:
-    runs-on: ubuntu-latest
-    needs: checkout
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 # 👈 Required to retrieve git history
-      - name: restore cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - name: publish to chromatic
         uses: chromaui/action@v1
         with:
