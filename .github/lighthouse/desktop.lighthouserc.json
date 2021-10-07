@@ -1,0 +1,16 @@
+{
+  "ci": {
+    "collect": {
+      "extends": "lighthouse:default",
+      "settings": {
+        "emulatedFormFactor": "desktop",
+        "onlyCategories": [
+          "performance",
+          "accessibility",
+          "seo",
+          "best-practices"
+        ]
+      }
+    }
+  }
+}

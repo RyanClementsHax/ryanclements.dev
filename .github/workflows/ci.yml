@@ -88,8 +88,8 @@ jobs:
           header: lighthouse
           message: |
             🚦 Running Lighthouse audit...
-      - name: audit urls using lighthouse
-        id: lighthouse_audit
+      - name: audit urls using lighthouse emulating desktop
+        id: lighthouse_audit_desktop
         uses: treosh/lighthouse-ci-action@v7
         with:
           urls: |
@@ -97,35 +97,65 @@ jobs:
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
-          configPath: './lighthouserc.json'
+          configPath: './.github/lighthouse/desktop.lighthouserc.json'
+      - name: audit urls using lighthouse emulating mobile
+        id: lighthouse_audit_mobile
+        uses: treosh/lighthouse-ci-action@v7
+        with:
+          urls: |
+            ${{ steps.vercel_preview_url.outputs.url }}
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          runs: 3
+          configPath: './.github/lighthouse/mobile.lighthouserc.json'
       - name: format lighthouse result
         id: lighthouse_result
         uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const links = ${{ steps.lighthouse_audit.outputs.links }}
-            const results = (${{ steps.lighthouse_audit.outputs.manifest }}).filter(result => result.isRepresentativeRun);
+            const runs = [
+              {
+                title: 'Desktop',
+                links: ${{ steps.lighthouse_audit_desktop.outputs.links }},
+                results: (${{ steps.lighthouse_audit_desktop.outputs.manifest }}).filter(result => result.isRepresentativeRun)
+              },
+              {
+                title: 'Mobile',
+                links: ${{ steps.lighthouse_audit_mobile.outputs.links }},
+                results: (${{ steps.lighthouse_audit_mobile.outputs.manifest }}).filter(result => result.isRepresentativeRun)
+              }
+            ]
 
-            const score = res => res >= 90 ? '🟢' : res >= 50 ? '🟠' : '🔴';
+            const gradeScore = res => (res >= 90 ? '🟢' : res >= 50 ? '🟠' : '🔴')
 
-            const comment = results.map((result) => {
-              const summary = result.summary;
-              const url = result.url;
+            const formatRun = ({ title, links, results }) =>
+              results
+                .map(result => {
+                  const summary = result.summary
+                  const url = result.url
 
-              return `
-              🌎 [${url}](${url})
-              ⚡️ [Lighthouse report](${links[url]})
+                  return `
+            ## ${title}
+            🌎 [${url}](${url})
+            ⚡️ [Report](${links[url]})
 
-              | Category | Score |
-              | --- | --- |
-              ${Object.keys(summary).map((key) => {
-                const percentage = Math.round(summary[key] * 100);
-                return `| ${score(percentage)} ${key} | ${percentage} |`;
-              }).join('\n')}
+            | Category | Score |
+            | --- | --- |
+            ${Object.keys(summary)
+              .map(key => {
+                const percentage = Math.round(summary[key] * 100)
+                return `| ${gradeScore(percentage)} ${key} | ${percentage} |`
+              })
+              .join('\n')}
+            `
+                })
+                .join('---')
 
-              `;
-            }).join('---');
+            const comment = `
+            # Lighthouse Results
+            ${runs.map(formatRun).join('')}
+            `
 
             core.setOutput("comment", comment);
       - name: add lighthouse comment to PR
