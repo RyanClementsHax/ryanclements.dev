@@ -60,8 +60,6 @@ describe('theme utils', () => {
             })
           )
 
-        console.log(global.localStorage.getItem('themePreference'))
-
         const result = getInitialTheme()
 
         expect(result).toBe(Theme.light)
