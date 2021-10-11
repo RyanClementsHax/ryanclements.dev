@@ -8,7 +8,6 @@ export const ThemeToggle: React.FC = () => {
   }
   return (
     <label htmlFor="dark-theme-toggle">
-      Dark theme
       <input
         id="dark-theme-toggle"
         type="checkbox"
@@ -17,6 +16,7 @@ export const ThemeToggle: React.FC = () => {
           setTheme(checked ? Theme.dark : Theme.light)
         }
       />
+      Dark theme
     </label>
   )
 }

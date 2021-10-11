@@ -1,9 +1,10 @@
+import { ThemeToggle } from 'components/Theme'
 import Head from 'next/head'
 import Image from 'next/image'
 
 export const Index: React.FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 dark:bg-gray-800">
       <Head>
         <title>Ryan Clements</title>
         <link rel="icon" href="/favicon.ico" />
@@ -15,6 +16,7 @@ export const Index: React.FC = () => {
         <p className="mt-3 text-2xl">
           It is currently under construction 🚧👷‍♂️👷‍♀️
         </p>
+        <ThemeToggle />
       </main>
 
       <footer className="flex items-center justify-center w-full h-24 border-t">
