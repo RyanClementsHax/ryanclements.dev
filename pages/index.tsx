@@ -11,7 +11,7 @@ export const Index: React.FC = () => {
       </Head>
 
       <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">Welcome to my site!</h1>
+        <h1 className="text-6xl font-bold text-primary">Welcome to my site!</h1>
 
         <p className="mt-3 text-2xl">
           It is currently under construction 🚧👷‍♂️👷‍♀️
