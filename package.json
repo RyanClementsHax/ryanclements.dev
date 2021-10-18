@@ -18,7 +18,7 @@
     "lint:js": "eslint --fix",
     "lint:js:all": "yarn lint:js .",
     "lint:styles": "stylelint --fix",
-    "lint:styles:all": "yarn lint:styles ./**/*.{tsx,scss,css}",
+    "lint:styles:all": "yarn lint:styles ./**/*.{scss,css}",
     "print-browser-support": "browserslist --config=\".browserslistrc\"",
     "test": "jest",
     "test:all": "yarn lint:all && yarn type-check && yarn test",
