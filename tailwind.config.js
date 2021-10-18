@@ -13,15 +13,14 @@ module.exports = {
   },
   plugins: [
     require('./styles/tailwindPlugins/multiThemePlugin')({
-      themes: [
-        {
-          name: 'default',
-          extend: {
-            colors: {
-              primary: 'orange'
-            }
+      defaultTheme: {
+        extend: {
+          colors: {
+            primary: 'orange'
           }
-        },
+        }
+      },
+      themes: [
         {
           name: 'dark',
           extend: {
