@@ -13,21 +13,29 @@ module.exports = {
   },
   plugins: [
     require('./styles/tailwindPlugins/multiThemePlugin')({
-      DEFAULT: {
-        colors: {
-          primary: 'orange'
-        }
-      },
-      dark: {
-        colors: {
-          primary: 'purple',
-          foo: 'bar'
+      themes: [
+        {
+          name: 'default',
+          extend: {
+            colors: {
+              primary: 'orange'
+            }
+          }
         },
-        bazz: {
-          DEFAULT: 'thing',
-          buzz: 'vict'
+        {
+          name: 'dark',
+          extend: {
+            colors: {
+              primary: 'purple',
+              foo: 'bar'
+            },
+            bazz: {
+              DEFAULT: 'thing',
+              buzz: 'vict'
+            }
+          }
         }
-      }
+      ]
     })
   ]
 }

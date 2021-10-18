@@ -69,21 +69,22 @@ const toBaseConfig = (theme, prevPathSteps = []) =>
     }
   }, {})
 
-const resolveThemesAsBaseConfig = themes => {
-  const mergedTheme = merge({}, ...Object.values(themes))
+const resolveThemesAsTailwindConfig = themes => {
+  const mergedTheme = merge({}, ...themes.map(x => x.extend))
   return toBaseConfig(mergedTheme)
 }
 
-const resolveThemeAsCustomProps = (theme, prevPathSteps = []) =>
+const resolveThemeExtensionAsCustomProps = (theme, prevPathSteps = []) =>
   Object.entries(theme).reduce((acc, [key, value]) => {
     const valuePath = [...prevPathSteps, key]
     return {
       ...acc,
       ...(typeof value === 'object'
-        ? resolveThemeAsCustomProps(value, valuePath)
+        ? resolveThemeExtensionAsCustomProps(value, valuePath)
         : { [createCustomPropName(valuePath)]: createCustomPropValue(value) })
     }
   }, {})
 
-module.exports.resolveThemesAsBaseConfig = resolveThemesAsBaseConfig
-module.exports.resolveThemeAsCustomProps = resolveThemeAsCustomProps
+module.exports.resolveThemesAsTailwindConfig = resolveThemesAsTailwindConfig
+module.exports.resolveThemeExtensionAsCustomProps =
+  resolveThemeExtensionAsCustomProps

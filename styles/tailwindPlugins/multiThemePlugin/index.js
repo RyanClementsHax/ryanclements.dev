@@ -7,11 +7,11 @@ const {
 const prefixSelector = require('tailwindcss/lib/util/prefixSelector').default
 
 const {
-  resolveThemesAsBaseConfig,
-  resolveThemeAsCustomProps
+  resolveThemesAsTailwindConfig,
+  resolveThemeExtensionAsCustomProps
 } = require('./utils')
 
-const defaultThemeName = 'DEFAULT'
+const defaultThemeName = 'default'
 
 // I copied the way tailwind does dark themeing internally, but modified it to handle any theme name
 // It is on the developer to make sure the theme name doesn't conflict with any other variants
@@ -36,23 +36,22 @@ const addThemeVariants = (themes, { addVariant, config }) =>
   )
 
 const addThemeStyles = (themes, { addBase, e }) =>
-  Object.entries(themes).forEach(([themeName, themeConfig]) =>
+  themes.forEach(({ name, extend }) =>
     addBase({
-      [themeName === defaultThemeName ? ':root' : `.${e(themeName)}`]:
-        resolveThemeAsCustomProps(themeConfig)
+      [name === defaultThemeName ? ':root' : `.${e(name)}`]:
+        resolveThemeExtensionAsCustomProps(extend)
     })
   )
 
 module.exports = plugin.withOptions(
-  options => helpers => {
-    addThemeVariants(options, helpers)
-    addThemeStyles(options, helpers)
-  },
-  options => {
-    return {
-      theme: {
-        extend: resolveThemesAsBaseConfig(options)
-      }
+  ({ themes }) =>
+    helpers => {
+      addThemeVariants(themes, helpers)
+      addThemeStyles(themes, helpers)
+    },
+  ({ themes }) => ({
+    theme: {
+      extend: resolveThemesAsTailwindConfig(themes)
     }
-  }
+  })
 )
