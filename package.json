@@ -26,6 +26,7 @@
     "chromatic": "env-cmd -f .env.local --silent chromatic --exit-zero-on-changes"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "next": "^11.1.2",
     "next-compose-plugins": "^2.2.1",
     "react": "^17.0.2",
@@ -49,6 +50,7 @@
     "@types/jest": "^27.0.1",
     "@types/jest-axe": "^3.5.3",
     "@types/jest-when": "^2.7.3",
+    "@types/lodash": "^4.14.175",
     "@types/node": "^15.3.0",
     "@types/react": "^17.0.21",
     "@types/tailwindcss": "^2.2.1",

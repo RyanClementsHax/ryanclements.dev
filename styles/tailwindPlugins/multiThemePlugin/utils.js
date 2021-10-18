@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { merge } = require('lodash')
+
 const toKebabCase = string =>
   string
     .replace(/([a-z])([A-Z])/g, '$1-$2')
@@ -10,20 +13,24 @@ const createCustomPropName = valuePath =>
     .map(toKebabCase)
     .join('-')}`
 
-const transformValue = (value, valuePath) =>
-  `var(${createCustomPropName(valuePath)}, ${value})`
+const asCustomProp = valuePath => `var(${createCustomPropName(valuePath)})`
 
-const resolveThemeAsBaseConfig = (theme, prevPathSteps = []) =>
+const toBaseConfig = (theme, prevPathSteps = []) =>
   Object.entries(theme).reduce((acc, [key, value]) => {
     const valuePath = [...prevPathSteps, key]
     return {
       ...acc,
       [key]:
         typeof value === 'object'
-          ? resolveThemeAsBaseConfig(value, valuePath)
-          : transformValue(value, valuePath)
+          ? toBaseConfig(value, valuePath)
+          : asCustomProp(valuePath)
     }
   }, {})
+
+const resolveThemesAsBaseConfig = themes => {
+  const mergedTheme = merge({}, ...Object.values(themes))
+  return toBaseConfig(mergedTheme)
+}
 
 const resolveThemeAsCustomProps = (theme, prevPathSteps = []) =>
   Object.entries(theme).reduce((acc, [key, value]) => {
@@ -36,5 +43,5 @@ const resolveThemeAsCustomProps = (theme, prevPathSteps = []) =>
     }
   }, {})
 
-module.exports.resolveThemeAsBaseConfig = resolveThemeAsBaseConfig
+module.exports.resolveThemesAsBaseConfig = resolveThemesAsBaseConfig
 module.exports.resolveThemeAsCustomProps = resolveThemeAsCustomProps

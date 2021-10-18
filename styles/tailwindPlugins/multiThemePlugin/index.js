@@ -7,7 +7,7 @@ const {
 const prefixSelector = require('tailwindcss/lib/util/prefixSelector').default
 
 const {
-  resolveThemeAsBaseConfig,
+  resolveThemesAsBaseConfig,
   resolveThemeAsCustomProps
 } = require('./utils')
 
@@ -49,15 +49,9 @@ module.exports = plugin.withOptions(
     addThemeStyles(options, helpers)
   },
   options => {
-    if (!options[defaultThemeName]) {
-      throw new Error(
-        `No ${defaultThemeName} theme set for the multiThemePlugin. Theming won't work unless values are set for the default theme.`
-      )
-    }
-
     return {
       theme: {
-        extend: resolveThemeAsBaseConfig(options[defaultThemeName])
+        extend: resolveThemesAsBaseConfig(options)
       }
     }
   }
