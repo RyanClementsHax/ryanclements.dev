@@ -40,13 +40,15 @@ const addThemeVariants = (themes, { addVariant, config }) =>
     )
   )
 
-const addThemeStyles = (themes, { addBase, e }) =>
+const addThemeStyles = (themes, helpers) => {
+  const { addBase, e } = helpers
   themes.forEach(({ name, extend }) =>
     addBase({
       [name === defaultThemeName ? ':root' : `.${e(name)}`]:
-        resolveThemeExtensionAsCustomProps(extend)
+        resolveThemeExtensionAsCustomProps(extend, helpers)
     })
   )
+}
 
 module.exports = plugin.withOptions(
   (options = defaultOptions) =>

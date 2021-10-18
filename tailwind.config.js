@@ -17,7 +17,10 @@ module.exports = {
         extend: {
           colors: {
             primary: 'orange'
-          }
+          },
+          foo: theme => ({
+            bar: theme('colors.red.500')
+          })
         }
       },
       themes: [
@@ -25,9 +28,11 @@ module.exports = {
           name: 'dark',
           extend: {
             colors: {
-              primary: 'purple',
-              foo: 'bar'
+              primary: 'purple'
             },
+            foo: theme => ({
+              bar: theme('colors.primary')
+            }),
             bazz: {
               DEFAULT: 'thing',
               buzz: 'vict'

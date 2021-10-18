@@ -25,6 +25,11 @@ const getThemesFromOptions = ({ defaultTheme, themes = [] }) => [
   })
 ]
 
+const toThemeCallback = (value, valuePath) => theme => {
+  const config = value(theme)
+  return toBaseConfig(config, valuePath)
+}
+
 const toBaseConfig = (theme, prevPathSteps = []) =>
   Object.entries(theme).reduce((acc, [key, value]) => {
     const valuePath = [...prevPathSteps, key]
@@ -33,6 +38,8 @@ const toBaseConfig = (theme, prevPathSteps = []) =>
       [key]:
         typeof value === 'object'
           ? toBaseConfig(value, valuePath)
+          : typeof value === 'function'
+          ? toThemeCallback(value, valuePath)
           : asCustomProp(value, valuePath)
     }
   }, {})
@@ -42,13 +49,23 @@ const resolveThemesAsTailwindConfig = themes => {
   return toBaseConfig(mergedTheme)
 }
 
-const resolveThemeExtensionAsCustomProps = (theme, prevPathSteps = []) =>
-  Object.entries(theme).reduce((acc, [key, value]) => {
+const resolveThemeExtensionAsCustomProps = (
+  themeExtension,
+  helpers,
+  prevPathSteps = []
+) =>
+  Object.entries(themeExtension).reduce((acc, [key, value]) => {
     const valuePath = [...prevPathSteps, key]
     return {
       ...acc,
       ...(typeof value === 'object'
-        ? resolveThemeExtensionAsCustomProps(value, valuePath)
+        ? resolveThemeExtensionAsCustomProps(value, helpers, valuePath)
+        : typeof value === 'function'
+        ? resolveThemeExtensionAsCustomProps(
+            value(helpers.theme),
+            helpers,
+            valuePath
+          )
         : { [createCustomPropName(valuePath)]: createCustomPropValue(value) })
     }
   }, {})
