@@ -15,10 +15,11 @@ const getThemesFromOptions = ({ defaultTheme, themes = [] }) => [
     name: defaultThemeName
   },
   ...themes.map(x => {
-    if (!x.name)
+    if (!x.name) {
       throw new Error(
         'Every theme in the themes array in the multiThemePlugin options must have a name property set to a unique string'
       )
+    }
     return { extend: {}, ...x }
   })
 ]
