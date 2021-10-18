@@ -13,6 +13,11 @@ const {
   defaultThemeName
 } = require('./themeUtils')
 
+const defaultOptions = {
+  defaultTheme: { extend: {} },
+  themes: []
+}
+
 // I copied the way tailwind does dark themeing internally, but modified it to handle any theme name
 // It is on the developer to make sure the theme name doesn't conflict with any other variants
 const addThemeVariants = (themes, { addVariant, config }) =>
@@ -44,12 +49,13 @@ const addThemeStyles = (themes, { addBase, e }) =>
   )
 
 module.exports = plugin.withOptions(
-  options => helpers => {
-    const themes = getThemesFromOptions(options)
-    addThemeVariants(themes, helpers)
-    addThemeStyles(themes, helpers)
-  },
-  options => ({
+  (options = defaultOptions) =>
+    helpers => {
+      const themes = getThemesFromOptions(options)
+      addThemeVariants(themes, helpers)
+      addThemeStyles(themes, helpers)
+    },
+  (options = defaultOptions) => ({
     theme: {
       extend: resolveThemesAsTailwindConfig(getThemesFromOptions(options))
     }

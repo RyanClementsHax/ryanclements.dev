@@ -8,12 +8,19 @@ const {
 
 const defaultThemeName = 'default'
 
-const getThemesFromOptions = ({ defaultTheme, themes }) => [
+const getThemesFromOptions = ({ defaultTheme, themes = [] }) => [
   {
+    extend: {},
     ...defaultTheme,
     name: defaultThemeName
   },
-  ...themes
+  ...themes.map(x => {
+    if (!x.name)
+      throw new Error(
+        'Every theme in the themes array in the multiThemePlugin options must have a name property set to a unique string'
+      )
+    return { extend: {}, ...x }
+  })
 ]
 
 const toBaseConfig = (theme, prevPathSteps = []) =>
