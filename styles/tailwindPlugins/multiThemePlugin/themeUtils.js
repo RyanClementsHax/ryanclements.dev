@@ -19,8 +19,9 @@ const getThemesFromOptions = ({ defaultTheme, themes = [] }) => [
       throw new Error(
         'Every theme in the themes array in the multiThemePlugin options must have a name property set to a unique string'
       )
+    } else {
+      return { extend: {}, ...x }
     }
-    return { extend: {}, ...x }
   })
 ]
 
