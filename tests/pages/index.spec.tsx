@@ -4,16 +4,13 @@ import { axe } from 'jest-axe'
 import { Primary } from 'stories/pages/index.stories'
 
 describe('Index page', () => {
-  let container: Element, asFragment: () => DocumentFragment
+  let container: Element
 
   beforeEach(() => {
-    ;({ container, asFragment } = render(<Primary />))
+    ;({ container } = render(<Primary />))
   })
 
   it('has no axe violations', async () => {
     await act(async () => expect(await axe(container)).toHaveNoViolations())
-  })
-  it('matches snapshot', () => {
-    expect(asFragment()).toMatchSnapshot()
   })
 })

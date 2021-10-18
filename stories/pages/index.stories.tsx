@@ -1,4 +1,5 @@
 import { Meta, Story } from '@storybook/react'
+import { Theme } from 'components/Theme'
 
 import Index from 'pages/index'
 
@@ -7,6 +8,11 @@ const Template: Story<Parameters<typeof Index>[0]> = props => (
 )
 
 export const Primary = Template.bind({})
+
+export const DarkTheme = Template.bind({})
+DarkTheme.parameters = {
+  theme: Theme.dark
+}
 
 export default {
   title: 'Index',

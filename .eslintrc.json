@@ -45,7 +45,7 @@
     "indent": "off",
     "no-console": "off",
     "react/display-name": "off",
-    "@typescript-eslint/indent": ["warn", 2],
+    "@typescript-eslint/indent": "off",
     "@typescript-eslint/no-floating-promises": "error",
     // next recommended settings
     "import/no-anonymous-default-export": "warn",
