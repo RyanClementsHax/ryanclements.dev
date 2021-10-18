@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { isColor, asRgb, toKebabCase, withOpacity } = require('./colorUtils')
+const { isColor, toRgb, toKebabCase, withOpacity } = require('./colorUtils')
 
-const createCustomPropValue = value => {
+const toCustomPropValue = value => {
   if (isColor(value)) {
-    return asRgb(value)
+    return toRgb(value)
   } else {
     return value
   }
 }
 
-const createCustomPropName = valuePath =>
+const toCustomPropName = valuePath =>
   `--${valuePath
     .filter(step => step.toLowerCase() !== 'default')
     .map(toKebabCase)
     .join('-')}`
 
 const asCustomProp = (value, valuePath) => {
-  const customPropName = createCustomPropName(valuePath)
+  const customPropName = toCustomPropName(valuePath)
   if (isColor(value)) {
     return withOpacity(customPropName)
   } else {
@@ -24,6 +24,6 @@ const asCustomProp = (value, valuePath) => {
   }
 }
 
-module.exports.createCustomPropValue = createCustomPropValue
-module.exports.createCustomPropName = createCustomPropName
+module.exports.toCustomPropValue = toCustomPropValue
+module.exports.toCustomPropName = toCustomPropName
 module.exports.asCustomProp = asCustomProp

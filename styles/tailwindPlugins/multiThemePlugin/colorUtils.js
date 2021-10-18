@@ -7,7 +7,7 @@ const toKebabCase = string =>
     .replace(/\s+/g, '-')
     .toLowerCase()
 
-const asRgb = value => {
+const toRgb = value => {
   const [r, g, b] = Color(value).rgb().array()
   return `${r}, ${g}, ${b}`
 }
@@ -34,6 +34,6 @@ const isColor = string => {
 }
 
 module.exports.toKebabCase = toKebabCase
-module.exports.asRgb = asRgb
+module.exports.toRgb = toRgb
 module.exports.withOpacity = withOpacity
 module.exports.isColor = isColor

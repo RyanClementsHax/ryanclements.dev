@@ -2,8 +2,8 @@
 const { merge } = require('lodash')
 const {
   asCustomProp,
-  createCustomPropName,
-  createCustomPropValue
+  toCustomPropName,
+  toCustomPropValue
 } = require('./customPropUtils')
 
 const defaultThemeName = 'default'
@@ -27,26 +27,26 @@ const getThemesFromOptions = ({ defaultTheme, themes = [] }) => [
 
 const toThemeCallback = (value, valuePath) => theme => {
   const config = value(theme)
-  return toBaseConfig(config, valuePath)
+  return toTailwindExtension(config, valuePath)
 }
 
-const toBaseConfig = (theme, prevPathSteps = []) =>
+const toTailwindExtension = (theme, prevPathSteps = []) =>
   Object.entries(theme).reduce((acc, [key, value]) => {
     const valuePath = [...prevPathSteps, key]
     return {
       ...acc,
       [key]:
         typeof value === 'object'
-          ? toBaseConfig(value, valuePath)
+          ? toTailwindExtension(value, valuePath)
           : typeof value === 'function'
           ? toThemeCallback(value, valuePath)
           : asCustomProp(value, valuePath)
     }
   }, {})
 
-const resolveThemesAsTailwindConfig = themes => {
-  const mergedTheme = merge({}, ...themes.map(x => x.extend))
-  return toBaseConfig(mergedTheme)
+const resolveThemeExtensionsAsTailwindExtension = themes => {
+  const mergedThemeExtension = merge({}, ...themes.map(x => x.extend))
+  return toTailwindExtension(mergedThemeExtension)
 }
 
 const resolveThemeExtensionAsCustomProps = (
@@ -66,12 +66,13 @@ const resolveThemeExtensionAsCustomProps = (
             helpers,
             valuePath
           )
-        : { [createCustomPropName(valuePath)]: createCustomPropValue(value) })
+        : { [toCustomPropName(valuePath)]: toCustomPropValue(value) })
     }
   }, {})
 
 module.exports.defaultThemeName = defaultThemeName
 module.exports.getThemesFromOptions = getThemesFromOptions
-module.exports.resolveThemesAsTailwindConfig = resolveThemesAsTailwindConfig
+module.exports.resolveThemeExtensionsAsTailwindExtension =
+  resolveThemeExtensionsAsTailwindExtension
 module.exports.resolveThemeExtensionAsCustomProps =
   resolveThemeExtensionAsCustomProps

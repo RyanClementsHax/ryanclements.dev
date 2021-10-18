@@ -7,7 +7,7 @@ const {
 const prefixSelector = require('tailwindcss/lib/util/prefixSelector').default
 
 const {
-  resolveThemesAsTailwindConfig,
+  resolveThemeExtensionsAsTailwindExtension,
   resolveThemeExtensionAsCustomProps,
   getThemesFromOptions,
   defaultThemeName
@@ -59,7 +59,9 @@ module.exports = plugin.withOptions(
     },
   (options = defaultOptions) => ({
     theme: {
-      extend: resolveThemesAsTailwindConfig(getThemesFromOptions(options))
+      extend: resolveThemeExtensionsAsTailwindExtension(
+        getThemesFromOptions(options)
+      )
     }
   })
 )
