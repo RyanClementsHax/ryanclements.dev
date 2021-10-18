@@ -20,7 +20,12 @@ module.exports = {
       },
       dark: {
         colors: {
-          primary: 'purple'
+          primary: 'purple',
+          foo: 'bar'
+        },
+        bazz: {
+          DEFAULT: 'thing',
+          buzz: 'vict'
         }
       }
     })
