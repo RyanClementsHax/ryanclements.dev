@@ -22,7 +22,7 @@ describe('themeUtils', () => {
         })
       })
 
-      it('resolves nested as custom props', () => {
+      it('resolves nested values as custom props', () => {
         expect(
           resolveThemeExtensionsAsTailwindExtension([
             {
@@ -69,6 +69,78 @@ describe('themeUtils', () => {
               primary: 'var(--colors-primary)'
             })
           )
+        })
+      })
+    })
+
+    describe('when given multiple themes', () => {
+      it('resolves top level values as custom props', () => {
+        expect(
+          resolveThemeExtensionsAsTailwindExtension([
+            {
+              name: 'first',
+              extend: {
+                top1: 'level'
+              }
+            },
+            {
+              name: 'second',
+              extend: {
+                top2: 'level'
+              }
+            }
+          ])
+        ).toEqual({
+          top1: 'var(--top1)',
+          top2: 'var(--top2)'
+        })
+      })
+
+      it('resolves nested values as custom props', () => {
+        expect(
+          resolveThemeExtensionsAsTailwindExtension([
+            {
+              name: 'first',
+              extend: {
+                colors: {
+                  primary: 'first'
+                },
+                foo: {
+                  bar: {
+                    bing: 'bazz'
+                  }
+                }
+              }
+            },
+            {
+              name: 'second',
+              extend: {
+                colors: {
+                  secondary: 'second'
+                },
+                woah: {
+                  bar: {
+                    bing: 'bazz'
+                  }
+                }
+              }
+            }
+          ])
+        ).toEqual({
+          colors: {
+            primary: 'var(--colors-primary)',
+            secondary: 'var(--colors-secondary)'
+          },
+          foo: {
+            bar: {
+              bing: 'var(--foo-bar-bing)'
+            }
+          },
+          woah: {
+            bar: {
+              bing: 'var(--woah-bar-bing)'
+            }
+          }
         })
       })
     })
