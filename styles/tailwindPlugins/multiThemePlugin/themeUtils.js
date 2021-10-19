@@ -6,25 +6,6 @@ const {
   toCustomPropValue
 } = require('./customPropUtils')
 
-const defaultThemeName = 'default'
-
-const getThemesFromOptions = ({ defaultTheme, themes = [] }) => [
-  {
-    extend: {},
-    ...defaultTheme,
-    name: defaultThemeName
-  },
-  ...themes.map(x => {
-    if (!x.name) {
-      throw new Error(
-        'Every theme in the themes array in the multiThemePlugin options must have a name property set to a unique string'
-      )
-    } else {
-      return { extend: {}, ...x }
-    }
-  })
-]
-
 const toThemeCallback = (value, valuePath) => theme => {
   const config = value(theme)
   return toTailwindExtension(config, valuePath)
@@ -70,8 +51,6 @@ const resolveThemeExtensionAsCustomProps = (
     }
   }, {})
 
-module.exports.defaultThemeName = defaultThemeName
-module.exports.getThemesFromOptions = getThemesFromOptions
 module.exports.resolveThemeExtensionsAsTailwindExtension =
   resolveThemeExtensionsAsTailwindExtension
 module.exports.resolveThemeExtensionAsCustomProps =

@@ -28,6 +28,7 @@
   "dependencies": {
     "color": "^4.0.1",
     "just-kebab-case": "^1.1.0",
+    "just-unique": "^3.3.0",
     "lodash": "^4.17.21",
     "next": "^11.1.2",
     "next-compose-plugins": "^2.2.1",

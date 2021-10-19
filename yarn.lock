@@ -9235,6 +9235,11 @@ just-kebab-case@^1.1.0:
   resolved "https://registry.yarnpkg.com/just-kebab-case/-/just-kebab-case-1.1.0.tgz#ebe854fde84b0afa4e597fcd870b12eb3c026755"
   integrity sha512-QkuwuBMQ9BQHMUEkAtIA4INLrkmnnveqlFB1oFi09gbU0wBdZo6tTnyxNWMR84zHxBuwK7GLAwqN8nrvVxOLTA==
 
+just-unique@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/just-unique/-/just-unique-3.3.0.tgz#18fddc6e12670e01b6a3e8e173429437f80be55d"
+  integrity sha512-v4XPUCMFZqLU1xCOcJBP5q51wo0xfYw/lWUR0gWjI9wgXZ9/P4x/TNoINmPDtELqb0ZmML45puvZh2AL1hjH+Q==
+
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"

@@ -6,11 +6,10 @@ const {
 } = require('tailwindcss/lib/util/pluginUtils')
 const prefixSelector = require('tailwindcss/lib/util/prefixSelector').default
 
+const { getThemesFromOptions, defaultThemeName } = require('./optionsUtils')
 const {
   resolveThemeExtensionsAsTailwindExtension,
-  resolveThemeExtensionAsCustomProps,
-  getThemesFromOptions,
-  defaultThemeName
+  resolveThemeExtensionAsCustomProps
 } = require('./themeUtils')
 
 const defaultOptions = {
