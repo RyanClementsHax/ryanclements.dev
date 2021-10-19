@@ -12,6 +12,9 @@ const {
   resolveThemeExtensionAsCustomProps
 } = require('./themeUtils')
 
+/**
+ * @type {import('./optionsUtils').MultiThemePluginOptions}
+ */
 const defaultOptions = {
   defaultTheme: { extend: {} },
   themes: []
@@ -19,6 +22,11 @@ const defaultOptions = {
 
 // I copied the way tailwind does dark themeing internally, but modified it to handle any theme name
 // It is on the developer to make sure the theme name doesn't conflict with any other variants
+/**
+ * @param {import('./optionsUtils').ThemeConfig[]} themes
+ * @param {import('./themeUtils').Helpers} helpers
+ * @returns {void}
+ */
 const addThemeVariants = (themes, { addVariant, config }) =>
   Object.entries(themes).map(([themeName]) =>
     addVariant(
@@ -38,7 +46,10 @@ const addThemeVariants = (themes, { addVariant, config }) =>
       })
     )
   )
-
+/**
+ * @param {import('./optionsUtils').ThemeConfig[]} themes
+ * @param {import('./themeUtils').Helpers} helpers
+ */
 const addThemeStyles = (themes, helpers) => {
   const { addBase, e } = helpers
   themes.forEach(({ name, extend }) =>
@@ -49,7 +60,15 @@ const addThemeStyles = (themes, helpers) => {
   )
 }
 
-module.exports = plugin.withOptions(
+/**
+ * @callback MultiThemePlugin
+ * @param {import('./optionsUtils').MultiThemePluginOptions} options
+ * @returns {any}
+ * @throws {Error} if the options are invalid
+ */
+
+/** @type {MultiThemePlugin} */
+const multiThemePlugin = plugin.withOptions(
   (options = defaultOptions) =>
     helpers => {
       const themes = getThemesFromOptions(options)
@@ -64,3 +83,5 @@ module.exports = plugin.withOptions(
     }
   })
 )
+
+module.exports = multiThemePlugin

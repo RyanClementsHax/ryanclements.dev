@@ -12,7 +12,7 @@ const toRgb = value => {
 
 /**
  * @param {string} customPropName - a custom prop to configure with opacity
- * @return {({ opacityVariable, opacityValue}: { opacityVariable?: string, opacityValue?: string }) => string} the variable configured with opacity
+ * @return {({ opacityVariable, opacityValue }: { opacityVariable?: string, opacityValue?: string }) => string} the variable configured with opacity
  */
 const withOpacity =
   customPropName =>
