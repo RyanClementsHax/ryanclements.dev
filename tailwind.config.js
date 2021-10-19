@@ -19,7 +19,7 @@ module.exports = {
             primary: 'orange'
           },
           foo: theme => ({
-            bar: theme('colors.red.500')
+            bar1: theme('colors.red.500')
           })
         }
       },
@@ -31,7 +31,7 @@ module.exports = {
               primary: 'purple'
             },
             foo: theme => ({
-              bar: theme('colors.primary')
+              bar2: theme('colors.primary')
             }),
             bazz: {
               DEFAULT: 'thing',
