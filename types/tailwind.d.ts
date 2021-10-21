@@ -18,6 +18,8 @@ type OmitFromKnownKeys<T, K extends keyof T> = KnownKeys<T> extends infer U
   : never
 
 declare module 'tailwindcss' {
+  export type WithExtensions<T, U = any> = T & { [key: string]: T[keyof T] | U }
+
   export type OpacityCb = ({
     opacityVariable,
     opacityValue
@@ -34,30 +36,33 @@ declare module 'tailwindcss' {
   export interface ColorConfig {
     [key: string]: ColorValue
   }
+
   export type TailwindValue =
     | string
     | number
     | { [key: string]: TailwindValue }
     | TailwindValue[]
+
   export type Theme = (key: string) => any
   export type ThemeCb<T> = (theme: Theme) => T
   export type WithThemeCb<T> = T | ThemeCb<T>
-  export type TailwindExtension = {
-    [key: string]: WithThemeCb<TailwindValue>
-    colors?: WithThemeCb<ColorConfig>
-  }
-  export type TailwindTheme = {
-    [key: string]:
-      | WithThemeCb<TailwindValue>
-      | WithThemeCb<ColorConfig>
-      | TailwindExtension
-    colors?: WithThemeCb<ColorConfig>
-    extend?: TailwindExtension
-  }
-  export type TailwindConfig = {
-    [key: string]: any
+
+  export type TailwindExtension = WithExtensions<
+    Partial<{
+      colors?: WithThemeCb<ColorConfig>
+    }>,
+    WithThemeCb<TailwindValue>
+  >
+  export type TailwindTheme = WithExtensions<
+    Partial<{
+      colors: WithThemeCb<ColorConfig>
+      extend: TailwindExtension
+    }>,
+    WithThemeCb<TailwindValue>
+  >
+  export type TailwindConfig = WithExtensions<{
     theme: TailwindTheme
-  }
+  }>
 }
 
 declare module 'tailwindcss/plugin' {
@@ -87,12 +92,14 @@ declare module 'tailwindcss/plugin' {
   export type PluginTailwindExtensionWithOptionsCb<TOptions> = (
     options: TOptions
   ) => TailwindConfig
+
   declare const plugin: {
     withOptions<TOptions>(
       pluginWithOptionsCb: PluginWithOptionsCb<TOptions>,
       pluginTailwindExtensionWithOptionsCb: PluginTailwindExtensionWithOptionsCb<TOptions>
     ): any
   }
+
   export = plugin
 }
 

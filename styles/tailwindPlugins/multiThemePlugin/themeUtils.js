@@ -25,9 +25,10 @@ const {
  */
 
 /**
- * @param {ThemeCb<TailwindValue>} value - the theme callback
+ * @template T
+ * @param {ThemeCb<T>} value - the theme callback
  * @param {string[]} valuePath - the path to the value
- * @return {ThemeCb<TailwindValue>} a function that will resolve the theme extension provided by the callback when given the tailwind theme helper
+ * @return {ThemeCb<T>} a function that will resolve the theme extension provided by the callback when given the tailwind theme helper
  */
 const toThemeExtensionResolverCallback = (value, valuePath) => theme => {
   const config = value(theme)
@@ -38,32 +39,32 @@ const toThemeExtensionResolverCallback = (value, valuePath) => theme => {
 }
 
 /**
- * @template {TailwindExtension | WithThemeCb<TailwindValue> | WithThemeCb<ColorConfig>} T
- * @param {T} themeExtensionValue - the theme config to convert to a tailwind extension
- * @param {string[]} prevPathSteps - the theme config to convert to a tailwind extension
- * @return {T extends TailwindValue ? TailwindValue : T extends ColorConfig ? ColorConfig : T extends TailwindExtension ? TailwindExtension : T extends WithThemeCb<ColorConfig> ? WithThemeCb<ColorConfig> : WithThemeCb<TailwindValue>} the resolved tailwind extension from the given theme
+ * @param {any} themeExtensionValue - the value to convert to a tailwind extension
+ * @param {string[]} pathSteps - the path to the value
+ * @return {any} the resolved tailwind extension from the given theme
+ * @throws {Error} if any callbacks are found in places not supported by tailwind
  */
 const resolveThemeExtensionsAsTailwindExtensionRecursionHelper = (
   themeExtensionValue,
-  prevPathSteps = []
+  pathSteps = []
 ) =>
   Array.isArray(themeExtensionValue)
     ? themeExtensionValue.map((x, i) =>
         resolveThemeExtensionsAsTailwindExtensionRecursionHelper(x, [
-          ...prevPathSteps,
+          ...pathSteps,
           i.toString()
         ])
       )
     : typeof themeExtensionValue === 'function'
     ? (() => {
-        if (prevPathSteps.length === 1) {
+        if (pathSteps.length === 1) {
           return toThemeExtensionResolverCallback(
-            /** @type {ThemeCb<TailwindValue>} */ (themeExtensionValue),
-            prevPathSteps
+            themeExtensionValue,
+            pathSteps
           )
         } else {
           throw new Error(
-            `callback found on path "${prevPathSteps.join(
+            `callback found on path "${pathSteps.join(
               '.'
             )}" and they are only allowed at the top level or for color opacity configuration`
           )
@@ -75,16 +76,17 @@ const resolveThemeExtensionsAsTailwindExtensionRecursionHelper = (
           ...acc,
           [key]: resolveThemeExtensionsAsTailwindExtensionRecursionHelper(
             value,
-            [...prevPathSteps, key]
+            [...pathSteps, key]
           )
         }),
         {}
       )
-    : asCustomProp(themeExtensionValue, prevPathSteps)
+    : asCustomProp(themeExtensionValue, pathSteps)
 
 /**
  * @param {ThemeConfig[]} themes - the themes to convert to a tailwind extension
  * @return {TailwindExtension} the resolved tailwind extension from the given theme
+ * @throws {Error} if any callbacks are found in places not supported by tailwind
  */
 const resolveThemeExtensionsAsTailwindExtension = themes => {
   /** @type {TailwindExtension} */
@@ -95,21 +97,21 @@ const resolveThemeExtensionsAsTailwindExtension = themes => {
 }
 
 /**
- * @param {TailwindExtension | WithThemeCb<TailwindValue> | WithThemeCb<ColorConfig>} themeExtensionValue - the theme extension value to convert to custom props
+ * @param {any} themeExtensionValue - the value to convert to custom props
  * @param {Helpers} helpers - the tailwind plugin helpers
- * @param {string[]} prevPathSteps - the tailwind plugin helpers
+ * @param {string[]} pathSteps - the path to the value
  * @return {{ [key: string]: string }} the theme extension value resolved as custom props
  */
 const resolveThemeExtensionAsCustomPropsRecursionHelper = (
   themeExtensionValue,
   helpers,
-  prevPathSteps = []
+  pathSteps = []
 ) =>
   Array.isArray(themeExtensionValue)
     ? themeExtensionValue
         .map((x, i) =>
           resolveThemeExtensionAsCustomPropsRecursionHelper(x, helpers, [
-            ...prevPathSteps,
+            ...pathSteps,
             i.toString()
           ])
         )
@@ -118,22 +120,21 @@ const resolveThemeExtensionAsCustomPropsRecursionHelper = (
     ? resolveThemeExtensionAsCustomPropsRecursionHelper(
         themeExtensionValue(helpers.theme),
         helpers,
-        prevPathSteps
+        pathSteps
       )
     : typeof themeExtensionValue === 'object'
     ? Object.entries(themeExtensionValue).reduce(
         (acc, [key, value]) => ({
           ...acc,
           ...resolveThemeExtensionAsCustomPropsRecursionHelper(value, helpers, [
-            ...prevPathSteps,
+            ...pathSteps,
             key
           ])
         }),
         {}
       )
     : {
-        [toCustomPropName(prevPathSteps)]:
-          toCustomPropValue(themeExtensionValue)
+        [toCustomPropName(pathSteps)]: toCustomPropValue(themeExtensionValue)
       }
 
 /**

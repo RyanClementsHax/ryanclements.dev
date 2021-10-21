@@ -73,6 +73,7 @@ const addThemeStyles = (themes, helpers) => {
  * @param {MultiThemePluginOptions} options
  * @returns {any}
  * @throws {Error} if the options are invalid
+ * @throws {Error} if any callbacks are found in places not supported by tailwind
  */
 
 /** @type {MultiThemePlugin} */

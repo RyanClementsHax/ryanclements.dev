@@ -1,14 +1,5 @@
 import { resolveThemeExtensionsAsTailwindExtension } from './themeUtils'
-import {
-  TailwindExtension,
-  TailwindValue,
-  Theme,
-  ThemeCb,
-  ColorConfig,
-  ColorValue,
-  OpacityCb,
-  WithThemeCb
-} from 'tailwindcss'
+import { TailwindExtension, TailwindValue, Theme, ThemeCb } from 'tailwindcss'
 
 describe('themeUtils', () => {
   let theme: Theme
@@ -22,29 +13,21 @@ describe('themeUtils', () => {
     }
   })
 
-  const resolveOpacityCallbacks = <
-    T extends WithThemeCb<ColorConfig> | ColorValue
-  >(
-    themeExtensionValue: T
-  ): T extends WithThemeCb<ColorConfig>
-    ? WithThemeCb<ColorConfig>
-    : ColorValue => {
+  const resolveOpacityCallbacks = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    themeExtensionValue: any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): any => {
     if (
       typeof themeExtensionValue === 'string' ||
       typeof themeExtensionValue === 'number' ||
       typeof themeExtensionValue === 'undefined' ||
       Array.isArray(themeExtensionValue)
     ) {
-      return themeExtensionValue as T extends WithThemeCb<ColorConfig>
-        ? WithThemeCb<ColorConfig>
-        : ColorValue
+      return themeExtensionValue
     }
     if (typeof themeExtensionValue === 'function') {
-      return (themeExtensionValue as OpacityCb)(
-        opacityConfig
-      ) as T extends WithThemeCb<ColorConfig>
-        ? WithThemeCb<ColorConfig>
-        : ColorValue
+      return themeExtensionValue(opacityConfig)
     }
     return Object.entries(themeExtensionValue).reduce(
       (acc, [key, value]) => ({
@@ -52,9 +35,7 @@ describe('themeUtils', () => {
         [key]: resolveOpacityCallbacks(value)
       }),
       {}
-    ) as T extends WithThemeCb<ColorConfig>
-      ? WithThemeCb<ColorConfig>
-      : ColorValue
+    )
   }
 
   const resolveCallbacks = (
