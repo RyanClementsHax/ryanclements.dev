@@ -9,16 +9,18 @@ const {
 
 /**
  * @typedef {import('tailwindcss').Theme} Theme
+ * @typedef {import('tailwindcss').ThemeCallback} ThemeCallback
  * @typedef {import('tailwindcss').TailwindExtension} TailwindExtension
  * @typedef {import('tailwindcss').TailwindExtensionValue} TailwindExtensionValue
+ * @typedef {import('tailwindcss').TailwindExtensionTopLevelValue} TailwindExtensionTopLevelValue
  * @typedef {import('tailwindcss/plugin').Helpers} Helpers
  * @typedef {import('./optionsUtils').ThemeConfig} ThemeConfig
  */
 
 /**
- * @param {(theme: Theme) => any} value - the theme callback
+ * @param {ThemeCallback} value - the theme callback
  * @param {string[]} valuePath - the path to the value
- * @return {(theme: Theme) => any} a function that will resolve the theme extension provided by the callback when given the tailwind theme helper
+ * @return {ThemeCallback} a function that will resolve the theme extension provided by the callback when given the tailwind theme helper
  */
 const toThemeExtensionResolverCallback = (value, valuePath) => theme => {
   const config = value(theme)
@@ -26,9 +28,10 @@ const toThemeExtensionResolverCallback = (value, valuePath) => theme => {
 }
 
 /**
- * @param {TailwindExtensionValue} theme - the theme config to convert to a tailwind extension
+ * @template T
+ * @param {T} theme - the theme config to convert to a tailwind extension
  * @param {string[]} prevPathSteps - the theme config to convert to a tailwind extension
- * @return {TailwindExtension} the resolved tailwind extension from the given theme
+ * @return {T extends TailwindExtensionValue ? TailwindExtensionValue : T extends TailwindExtensionTopLevelValue ? TailwindExtensionTopLevelValue : TailwindExtension} the resolved tailwind extension from the given theme
  */
 const toTailwindExtension = (theme, prevPathSteps = []) =>
   Object.entries(theme).reduce((acc, [key, value]) => {
@@ -49,12 +52,13 @@ const toTailwindExtension = (theme, prevPathSteps = []) =>
  * @return {TailwindExtension} the resolved tailwind extension from the given theme
  */
 const resolveThemeExtensionsAsTailwindExtension = themes => {
+  /** @type {TailwindExtension} */
   const mergedThemeExtension = merge({}, ...themes.map(x => x.extend))
   return toTailwindExtension(mergedThemeExtension)
 }
 
 /**
- * @param {TailwindExtension | TailwindExtensionValue} themeExtensionValue - the theme to convert to custom props
+ * @param {TailwindExtension | TailwindExtensionTopLevelValue} themeExtensionValue - the theme to convert to custom props
  * @param {Helpers} helpers - the tailwind plugin helpers
  * @param {string[]} prevPathSteps - the tailwind plugin helpers
  * @return {{ [key: string]: string }} the theme resolved as custom props

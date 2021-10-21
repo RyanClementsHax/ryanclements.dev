@@ -4,14 +4,16 @@
 
 declare module 'tailwindcss' {
   export type TailwindExtensionValue =
-    TailwindExtension[keyof TailwindExtension]
+    | string
+    | number
+    | { [key: string]: TailwindExtensionValue }
+    | TailwindExtensionValue[]
+  export type TailwindExtensionTopLevelValue =
+    TailwindExtension[keyof TailwindExtensionValue]
   export type Theme = (key: string) => TailwindExtensionValue
+  export type ThemeCallback = (theme: Theme) => TailwindExtensionValue
   export interface TailwindExtension {
-    [key: string]:
-      | ((theme: Theme) => any)
-      | Record<string, any>
-      | any[]
-      | string
+    [key: string]: ThemeCallback | TailwindExtensionValue
   }
   export interface TailwindConfig {
     extend: TailwindExtension
