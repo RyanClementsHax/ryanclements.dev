@@ -19,7 +19,7 @@ const {
 /**
  * @typedef {import('tailwindcss').ColorConfig} ColorConfig
  * @typedef {import('tailwindcss').TailwindExtension} TailwindExtension
- * @typedef {import('tailwindcss').TailwindValue} TailwindValue
+ * @typedef {import('tailwindcss').ExtensionValue} ExtensionValue
  * @typedef {import('tailwindcss/plugin').Helpers} Helpers
  * @typedef {import('./optionsUtils').ThemeConfig} ThemeConfig
  */
@@ -48,7 +48,9 @@ const resolveThemeExtensionsAsTailwindExtensionRecursionHelper = (
   themeExtensionValue,
   pathSteps = []
 ) =>
-  Array.isArray(themeExtensionValue)
+  typeof themeExtensionValue === 'undefined' || themeExtensionValue === null
+    ? themeExtensionValue
+    : Array.isArray(themeExtensionValue)
     ? themeExtensionValue.map((x, i) =>
         resolveThemeExtensionsAsTailwindExtensionRecursionHelper(x, [
           ...pathSteps,

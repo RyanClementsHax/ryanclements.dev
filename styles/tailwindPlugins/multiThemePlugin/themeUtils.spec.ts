@@ -1,5 +1,5 @@
 import { resolveThemeExtensionsAsTailwindExtension } from './themeUtils'
-import { TailwindExtension, TailwindValue, Theme, ThemeCb } from 'tailwindcss'
+import { TailwindExtension, ExtensionValue, Theme, ThemeCb } from 'tailwindcss'
 
 describe('themeUtils', () => {
   let theme: Theme
@@ -46,7 +46,7 @@ describe('themeUtils', () => {
         ...acc,
         [key]:
           typeof value === 'function'
-            ? (value as ThemeCb<TailwindValue>)(theme)
+            ? (value as ThemeCb<ExtensionValue>)(theme)
             : value
       }),
       {}

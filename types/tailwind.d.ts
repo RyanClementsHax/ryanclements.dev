@@ -37,11 +37,11 @@ declare module 'tailwindcss' {
     [key: string]: ColorValue
   }
 
-  export type TailwindValue =
+  export type ExtensionValue =
     | string
     | number
-    | { [key: string]: TailwindValue }
-    | TailwindValue[]
+    | { [key: string]: ExtensionValue }
+    | ExtensionValue[]
 
   export type Theme = (key: string) => any
   export type ThemeCb<T> = (theme: Theme) => T
@@ -51,14 +51,14 @@ declare module 'tailwindcss' {
     Partial<{
       colors?: WithThemeCb<ColorConfig>
     }>,
-    WithThemeCb<TailwindValue>
+    WithThemeCb<ExtensionValue>
   >
   export type TailwindTheme = WithExtensions<
     Partial<{
       colors: WithThemeCb<ColorConfig>
       extend: TailwindExtension
     }>,
-    WithThemeCb<TailwindValue>
+    WithThemeCb<ExtensionValue>
   >
   export type TailwindConfig = WithExtensions<{
     theme: TailwindTheme
