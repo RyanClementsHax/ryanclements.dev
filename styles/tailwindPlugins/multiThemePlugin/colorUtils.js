@@ -1,3 +1,4 @@
+//@ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 const Color = require('color')
 

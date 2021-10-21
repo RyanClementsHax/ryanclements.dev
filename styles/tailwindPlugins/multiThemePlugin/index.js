@@ -1,3 +1,4 @@
+//@ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require('tailwindcss/plugin')
 const {
@@ -13,7 +14,13 @@ const {
 } = require('./themeUtils')
 
 /**
- * @type {import('./optionsUtils').MultiThemePluginOptions}
+ * @typedef {import('tailwindcss/plugin').Helpers} Helpers
+ * @typedef {import('./optionsUtils').MultiThemePluginOptions} MultiThemePluginOptions
+ * @typedef {import('./optionsUtils').ThemeConfig} ThemeConfig
+ */
+
+/**
+ * @type {MultiThemePluginOptions}
  */
 const defaultOptions = {
   defaultTheme: { extend: {} },
@@ -23,11 +30,11 @@ const defaultOptions = {
 // I copied the way tailwind does dark themeing internally, but modified it to handle any theme name
 // It is on the developer to make sure the theme name doesn't conflict with any other variants
 /**
- * @param {import('./optionsUtils').ThemeConfig[]} themes
- * @param {import('./themeUtils').Helpers} helpers
+ * @param {ThemeConfig[]} themes
+ * @param {Helpers} helpers
  * @returns {void}
  */
-const addThemeVariants = (themes, { addVariant, config }) =>
+const addThemeVariants = (themes, { addVariant, config }) => {
   Object.entries(themes).map(([themeName]) =>
     addVariant(
       themeName,
@@ -46,9 +53,10 @@ const addThemeVariants = (themes, { addVariant, config }) =>
       })
     )
   )
+}
 /**
- * @param {import('./optionsUtils').ThemeConfig[]} themes
- * @param {import('./themeUtils').Helpers} helpers
+ * @param {ThemeConfig[]} themes
+ * @param {Helpers} helpers
  */
 const addThemeStyles = (themes, helpers) => {
   const { addBase, e } = helpers
@@ -62,7 +70,7 @@ const addThemeStyles = (themes, helpers) => {
 
 /**
  * @callback MultiThemePlugin
- * @param {import('./optionsUtils').MultiThemePluginOptions} options
+ * @param {MultiThemePluginOptions} options
  * @returns {any}
  * @throws {Error} if the options are invalid
  */

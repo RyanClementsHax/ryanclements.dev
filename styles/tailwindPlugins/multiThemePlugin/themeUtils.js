@@ -1,3 +1,4 @@
+//@ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { merge } = require('lodash')
 const {
@@ -7,15 +8,16 @@ const {
 } = require('./customPropUtils')
 
 /**
- * @typedef {(modifySelectors: ({ className, selector }: { className: string, selector: string }) => void, separator: any, container any) => void} AddVariantCb
- * @typedef {(variant: string, cb: AddVariantCb) => void} AddVariant
- * @typedef {{ theme: (key: string) => unknown, addVariant: AddVariant, config: (key: string) => any }} Helpers
+ * @typedef {import('tailwindcss').Theme} Theme
+ * @typedef {import('tailwindcss').TailwindExtension} TailwindExtension
+ * @typedef {import('tailwindcss/plugin').Helpers} Helpers
+ * @typedef {import('./optionsUtils').ThemeConfig} ThemeConfig
  */
 
 /**
- * @param {(theme: Helpers['theme']) => any} value - the theme callback
+ * @param {(theme: Theme) => any} value - the theme callback
  * @param {string[]} valuePath - the path to the value
- * @return {(theme: Helpers['theme']) => any} a function that will resolve the theme extension provided by the callback when given the tailwind theme helper
+ * @return {(theme: Theme) => any} a function that will resolve the theme extension provided by the callback when given the tailwind theme helper
  */
 const toThemeExtensionResolverCallback = (value, valuePath) => theme => {
   const config = value(theme)
@@ -23,9 +25,9 @@ const toThemeExtensionResolverCallback = (value, valuePath) => theme => {
 }
 
 /**
- * @param {import('./optionsUtils').ThemeConfig} theme - the theme config to convert to a tailwind extension
- * @param {?string[]} prevPathSteps - the theme config to convert to a tailwind extension
- * @return {import('./optionsUtils').TailwindExtension} the resolved tailwind extension from the given theme
+ * @param {TailwindExtension[keyof TailwindExtension]} theme - the theme config to convert to a tailwind extension
+ * @param {string[]} prevPathSteps - the theme config to convert to a tailwind extension
+ * @return {TailwindExtension} the resolved tailwind extension from the given theme
  */
 const toTailwindExtension = (theme, prevPathSteps = []) =>
   Object.entries(theme).reduce((acc, [key, value]) => {
@@ -42,8 +44,8 @@ const toTailwindExtension = (theme, prevPathSteps = []) =>
   }, {})
 
 /**
- * @param {import('./optionsUtils').ThemeConfig[]} themes - the themes to convert to a tailwind extension
- * @return {import('./optionsUtils').TailwindExtension} the resolved tailwind extension from the given theme
+ * @param {ThemeConfig[]} themes - the themes to convert to a tailwind extension
+ * @return {TailwindExtension} the resolved tailwind extension from the given theme
  */
 const resolveThemeExtensionsAsTailwindExtension = themes => {
   const mergedThemeExtension = merge({}, ...themes.map(x => x.extend))
@@ -51,9 +53,9 @@ const resolveThemeExtensionsAsTailwindExtension = themes => {
 }
 
 /**
- * @param {import('./optionsUtils').ThemeConfig[]} themeExtension - the theme to convert to custom props
- * @param {{ theme: (key: string) => unknown }} helpers - the tailwind plugin helpers
- * @param {?string[]} prevPathSteps - the tailwind plugin helpers
+ * @param {TailwindExtension[keyof TailwindExtension]} themeExtension - the theme to convert to custom props
+ * @param {Helpers} helpers - the tailwind plugin helpers
+ * @param {string[]} prevPathSteps - the tailwind plugin helpers
  * @return {{ [key: string]: string }} the theme resolved as custom props
  */
 const resolveThemeExtensionAsCustomProps = (

@@ -1,6 +1,11 @@
+//@ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { isColor, toRgb, withOpacity } = require('./colorUtils')
 const kebabCase = require('just-kebab-case')
+
+/**
+ * @typedef {import('./colorUtils').withOpacity} withOpacity
+ */
 
 /**
  * @param {string} value - a custom prop value
@@ -27,7 +32,7 @@ const toCustomPropName = valuePath =>
 /**
  * @param {string} value - the value of the custom prop to generate
  * @param {string[]} valuePath - the path to get to the value
- * @return {string | ReturnType<typeof import('./colorUtils').withOpacity>} a normal custom prop generated from valuePath if the value is not a color else it is a function that generates custom prop configured with opacity when called with opacity configuration
+ * @return {string | ReturnType<typeof withOpacity>} a normal custom prop generated from valuePath if the value is not a color else it is a function that generates custom prop configured with opacity when called with opacity configuration
  */
 const asCustomProp = (value, valuePath) => {
   const customPropName = toCustomPropName(valuePath)

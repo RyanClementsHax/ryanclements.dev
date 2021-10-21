@@ -1,8 +1,9 @@
+//@ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 const unique = require('just-unique')
 
 /**
- * @typedef {any} TailwindExtension
+ * @typedef {import('tailwindcss').TailwindExtension} TailwindExtension
  * @typedef {{name?: string, extend: TailwindExtension}} DefaultThemeConfig
  * @typedef {{name: string, extend: TailwindExtension}} ThemeConfig
  * @typedef {{defaultTheme?: DefaultThemeConfig, themes?: ThemeConfig[]}} MultiThemePluginOptions
@@ -47,7 +48,7 @@ const getThemesFromOptions = options => {
       ...defaultTheme,
       name: defaultThemeName
     },
-    ...themes.map(x => ({ extend: {}, ...x }))
+    ...themes.map(x => ({ ...{ extend: {} }, ...x }))
   ]
 }
 module.exports.defaultThemeName = defaultThemeName
