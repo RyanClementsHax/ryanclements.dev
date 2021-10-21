@@ -7,6 +7,9 @@ import {
 
 describe('customPropUtils', () => {
   describe('toCustomPropValue', () => {
+    it('if given a number it converts it to a string', () => {
+      expect(toCustomPropValue(4)).toEqual('4')
+    })
     it('converts the value to rgb if it is a color', () => {
       expect(toCustomPropValue('#fff')).toEqual('255, 255, 255')
     })
@@ -43,8 +46,18 @@ describe('customPropUtils', () => {
       }
     })
 
-    it('converts the value to a custom prop', () => {
+    it('converts the value to a custom prop if passed a string that is not a color', () => {
       const result = asCustomProp('not a color', ['this', 'that'])
+
+      if (typeof result === 'string') {
+        expect(result).toEqual('var(--this-that)')
+      } else {
+        throw new Error('expected to receive a string')
+      }
+    })
+
+    it('converts the value to a custom prop if passed a number', () => {
+      const result = asCustomProp(4, ['this', 'that'])
 
       if (typeof result === 'string') {
         expect(result).toEqual('var(--this-that)')

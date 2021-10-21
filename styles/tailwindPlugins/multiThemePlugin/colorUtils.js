@@ -28,12 +28,15 @@ const withOpacity =
   }
 
 /**
- * @param {string} string - the string to test if it is a valid color string
- * @return {boolean} whether the string passed in is a valid color string
+ * @param {string | number} value - the value to test if it is a valid color string
+ * @return {boolean} whether the value passed in is a valid color string
  */
-const isColor = string => {
+const isColor = value => {
+  if (typeof value === 'number') {
+    return false
+  }
   try {
-    Color(string)
+    Color(value)
     return true
   } catch {
     return false

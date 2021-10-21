@@ -8,11 +8,13 @@ const kebabCase = require('just-kebab-case')
  */
 
 /**
- * @param {string} value - a custom prop value
+ * @param {string | number} value - a custom prop value
  * @return {string} the value converted to a string of its rgb components comma separated if it is a color else it returns the value unaltered
  */
 const toCustomPropValue = value => {
-  if (isColor(value)) {
+  if (typeof value === 'number') {
+    return value.toString()
+  } else if (isColor(value)) {
     return toRgb(value)
   } else {
     return value
@@ -30,7 +32,7 @@ const toCustomPropName = valuePath =>
     .join('-')}`
 
 /**
- * @param {string} value - the value of the custom prop to generate
+ * @param {string | number} value - the value of the custom prop to generate
  * @param {string[]} valuePath - the path to get to the value
  * @return {string | ReturnType<typeof withOpacity>} a normal custom prop generated from valuePath if the value is not a color else it is a function that generates custom prop configured with opacity when called with opacity configuration
  */

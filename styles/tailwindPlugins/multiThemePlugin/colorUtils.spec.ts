@@ -67,11 +67,15 @@ describe('colorUtils', () => {
   })
 
   describe('isColor', () => {
-    it('returns true when the string is a valid color', () => {
+    it('returns true when the value is a valid color', () => {
       expect(isColor('#fff')).toBe(true)
     })
 
-    it('returns false when the string is not a valid color', () => {
+    it('returns false when the value is a number', () => {
+      expect(isColor(4)).toBe(false)
+    })
+
+    it('returns false when the value is not a valid color', () => {
       expect(isColor('not valid')).toBe(false)
     })
   })
