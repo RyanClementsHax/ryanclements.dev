@@ -9,7 +9,7 @@ const {
 
 /**
  * @typedef {import('tailwindcss').Theme} Theme
- * @typedef {import('tailwindcss').ThemeCallback} ThemeCallback
+ * @typedef {import('tailwindcss').ThemeCb} ThemeCb
  * @typedef {import('tailwindcss').TailwindExtension} TailwindExtension
  * @typedef {import('tailwindcss').TailwindExtensionValue} TailwindExtensionValue
  * @typedef {import('tailwindcss').TailwindExtensionTopLevelValue} TailwindExtensionTopLevelValue
@@ -18,9 +18,9 @@ const {
  */
 
 /**
- * @param {ThemeCallback} value - the theme callback
+ * @param {ThemeCb} value - the theme callback
  * @param {string[]} valuePath - the path to the value
- * @return {ThemeCallback} a function that will resolve the theme extension provided by the callback when given the tailwind theme helper
+ * @return {ThemeCb} a function that will resolve the theme extension provided by the callback when given the tailwind theme helper
  */
 const toThemeExtensionResolverCallback = (value, valuePath) => theme => {
   const config = value(theme)
@@ -48,7 +48,20 @@ const resolveThemeExtensionsAsTailwindExtensionRecursionHelper = (
         ])
       )
     : typeof themeExtensionValue === 'function'
-    ? toThemeExtensionResolverCallback(themeExtensionValue, prevPathSteps)
+    ? (() => {
+        if (prevPathSteps.length === 1) {
+          return toThemeExtensionResolverCallback(
+            themeExtensionValue,
+            prevPathSteps
+          )
+        } else {
+          throw new Error(
+            `callback found on path "${prevPathSteps.join(
+              '.'
+            )}" and they are only allowed at the top level or for color opacity configuration`
+          )
+        }
+      })()
     : typeof themeExtensionValue === 'object'
     ? Object.entries(themeExtensionValue).reduce(
         (acc, [key, value]) => ({

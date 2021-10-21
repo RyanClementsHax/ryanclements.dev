@@ -3,17 +3,35 @@
 // tailwind doesn't have type definitions so we need to create them on our own until types are added
 
 declare module 'tailwindcss' {
+  export type OpacityCb = ({
+    opacityVariable,
+    opacityValue
+  }: {
+    opacityVariable?: string
+    opacityValue?: string
+  }) => string
   export type TailwindExtensionValue =
     | string
     | number
     | { [key: string]: TailwindExtensionValue }
     | TailwindExtensionValue[]
-  export type TailwindExtensionTopLevelValue =
-    TailwindExtension[keyof TailwindExtensionValue]
+  export type TailwindColorExtensionValue =
+    | string
+    | number
+    | { [key: string]: TailwindColorExtensionValue }
+    | TailwindColorExtensionValue[]
+    | OpacityCb
+  export type ThemeColorExtension = {
+    [key: string]: TailwindColorExtensionValue
+  }
   export type Theme = (key: string) => TailwindExtensionValue
-  export type ThemeCallback = (theme: Theme) => TailwindExtensionValue
+  export type ThemeCb<T = TailwindExtensionValue> = (theme: Theme) => T
+  export type TailwindExtensionTopLevelValue<T = TailwindExtensionValue> =
+    | ThemeCb<T>
+    | T
   export interface TailwindExtension {
-    [key: string]: ThemeCallback | TailwindExtensionValue
+    // colors?: ThemeColorCallback | ThemeColorExtension
+    [key: string]: TailwindExtensionTopLevelValue
   }
   export interface TailwindTheme {
     extend: TailwindExtension

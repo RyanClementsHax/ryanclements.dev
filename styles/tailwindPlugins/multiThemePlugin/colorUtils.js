@@ -3,6 +3,10 @@
 const Color = require('color')
 
 /**
+ * @typedef {import('tailwindcss').OpacityCb} OpacityCb
+ */
+
+/**
  * @param {string} value - a color represented as a string (hex, rgb, rgba, hsl, hsla, etc)
  * @return {string} the color represented as its rgb values with alpha channel stripped
  */
@@ -13,7 +17,7 @@ const toRgb = value => {
 
 /**
  * @param {string} customPropName - a custom prop to configure with opacity
- * @return {({ opacityVariable, opacityValue }: { opacityVariable?: string, opacityValue?: string }) => string} the variable configured with opacity
+ * @return {OpacityCb} the variable configured with opacity
  */
 const withOpacity =
   customPropName =>

@@ -1,21 +1,68 @@
 import { resolveThemeExtensionsAsTailwindExtension } from './themeUtils'
-import { TailwindExtension, Theme } from 'tailwindcss'
+import {
+  TailwindExtension,
+  TailwindExtensionTopLevelValue,
+  TailwindExtensionValue,
+  Theme
+} from 'tailwindcss'
 
 describe('themeUtils', () => {
   let theme: Theme
+  let opacityConfig: { opacityVariable: string; opacityValue: string }
 
   beforeEach(() => {
     theme = jest.fn(x => x)
+    opacityConfig = {
+      opacityValue: 'opacityValue',
+      opacityVariable: '--opacity-variable'
+    }
   })
 
-  const resolveCallbacks = (extension: TailwindExtension): TailwindExtension =>
-    Object.entries(extension).reduce(
+  const resolveOpacityCallbacks = <
+    T extends TailwindExtensionTopLevelValue | TailwindExtensionValue
+  >(
+    themeExtensionValue: T
+  ): T extends TailwindExtensionValue
+    ? TailwindExtensionValue
+    : TailwindExtensionTopLevelValue => {
+    if (
+      typeof themeExtensionValue === 'string' ||
+      typeof themeExtensionValue === 'number' ||
+      typeof themeExtensionValue === 'undefined' ||
+      Array.isArray(themeExtensionValue)
+    ) {
+      return themeExtensionValue as T extends TailwindExtensionValue
+        ? TailwindExtensionValue
+        : TailwindExtensionTopLevelValue
+    }
+    if (typeof themeExtensionValue === 'function') {
+      return themeExtensionValue(opacityConfig)
+    }
+    return Object.entries(themeExtensionValue).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: resolveOpacityCallbacks(value)
+      }),
+      {}
+    )
+  }
+
+  const resolveCallbacks = (
+    extension: TailwindExtension
+  ): TailwindExtension => {
+    const extensionWithResolvedThemeCbs = Object.entries(extension).reduce(
       (acc, [key, value]) => ({
         ...acc,
         [key]: typeof value === 'function' ? value(theme) : value
       }),
       {}
+    ) as TailwindExtension
+
+    extensionWithResolvedThemeCbs.colors = resolveOpacityCallbacks(
+      extensionWithResolvedThemeCbs.colors
     )
+    return extensionWithResolvedThemeCbs
+  }
 
   describe('resolveThemeExtensionsAsTailwindExtension', () => {
     it('resolves an empty themes array as an empty config', () => {
@@ -67,24 +114,76 @@ describe('themeUtils', () => {
         })
       })
 
-      it('resolves callbacks', () => {
+      describe('callbacks', () => {
+        it('resolves theme callbacks', () => {
+          expect(
+            resolveCallbacks(
+              resolveThemeExtensionsAsTailwindExtension([
+                {
+                  name: 'first',
+                  extend: {
+                    colors: theme => ({
+                      primary: theme('some.key')
+                    })
+                  }
+                }
+              ])
+            )
+          ).toEqual({
+            colors: {
+              primary: 'var(--colors-primary)'
+            }
+          })
+        })
+
+        it('throws if it finds a callback not on the top level that is not within the color config', () => {
+          expect(() =>
+            resolveThemeExtensionsAsTailwindExtension([
+              {
+                name: 'first',
+                extend: {
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  //@ts-expect-error
+                  foo: {
+                    bar: (theme: Theme) => ({
+                      primary: theme('some.key')
+                    })
+                  }
+                }
+              }
+            ])
+          ).toThrow()
+        })
+      })
+
+      it('resolves arrays', () => {
         expect(
           resolveCallbacks(
             resolveThemeExtensionsAsTailwindExtension([
               {
                 name: 'first',
                 extend: {
-                  colors: theme => ({
-                    primary: theme('some.key')
-                  })
+                  myArray: [
+                    {
+                      thing: 1
+                    },
+                    {
+                      thing: 2
+                    }
+                  ]
                 }
               }
             ])
           )
         ).toEqual({
-          colors: {
-            primary: 'var(--colors-primary)'
-          }
+          myArray: [
+            {
+              thing: 'var(--my-array-0-thing)'
+            },
+            {
+              thing: 'var(--my-array-1-thing)'
+            }
+          ]
         })
       })
     })
@@ -219,6 +318,87 @@ describe('themeUtils', () => {
             foo: 'var(--something-else-foo)'
           }
         })
+      })
+
+      it('resolves non conflicting arrays', () => {
+        expect(
+          resolveCallbacks(
+            resolveThemeExtensionsAsTailwindExtension([
+              {
+                name: 'first',
+                extend: {
+                  myArray1: [
+                    {
+                      thing: 1
+                    },
+                    {
+                      thing: 2
+                    }
+                  ]
+                }
+              },
+              {
+                name: 'second',
+                extend: {
+                  myArray2: [
+                    {
+                      thing: 1
+                    },
+                    {
+                      thing: 2
+                    }
+                  ]
+                }
+              }
+            ])
+          )
+        ).toEqual({
+          myArray1: [
+            {
+              thing: 'var(--my-array1-0-thing)'
+            },
+            {
+              thing: 'var(--my-array1-1-thing)'
+            }
+          ],
+          myArray2: [
+            {
+              thing: 'var(--my-array2-0-thing)'
+            },
+            {
+              thing: 'var(--my-array2-1-thing)'
+            }
+          ]
+        })
+      })
+
+      it('throws if it finds a callback not on the top level that is not within the color config', () => {
+        expect(() =>
+          resolveThemeExtensionsAsTailwindExtension([
+            {
+              name: 'first',
+              extend: {
+                foo: {
+                  bar: {
+                    primary: 'orange'
+                  }
+                }
+              }
+            },
+            {
+              name: 'second',
+              extend: {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-expect-error
+                foo: {
+                  bar: (theme: Theme) => ({
+                    primary: theme('some.key')
+                  })
+                }
+              }
+            }
+          ])
+        ).toThrow()
       })
     })
   })
