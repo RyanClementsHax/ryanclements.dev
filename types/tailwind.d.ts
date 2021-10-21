@@ -3,7 +3,9 @@
 // tailwind doesn't have type definitions so we need to create them on our own until types are added
 
 declare module 'tailwindcss' {
-  export type Theme = (key: string) => any
+  export type TailwindExtensionValue =
+    TailwindExtension[keyof TailwindExtension]
+  export type Theme = (key: string) => TailwindExtensionValue
   export interface TailwindExtension {
     [key: string]:
       | ((theme: Theme) => any)
