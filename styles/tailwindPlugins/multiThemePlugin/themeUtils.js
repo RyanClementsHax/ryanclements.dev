@@ -8,19 +8,26 @@ const {
 } = require('./customPropUtils')
 
 /**
- * @typedef {import('tailwindcss').Theme} Theme
- * @typedef {import('tailwindcss').ThemeCb} ThemeCb
+ * @template T
+ * @typedef {import('tailwindcss').ThemeCb<T>} ThemeCb
+ *
+ */
+/**
+ * @template T
+ * @typedef {import('tailwindcss').WithThemeCb<T>} WithThemeCb
+ */
+/**
+ * @typedef {import('tailwindcss').ColorConfig} ColorConfig
  * @typedef {import('tailwindcss').TailwindExtension} TailwindExtension
- * @typedef {import('tailwindcss').TailwindExtensionValue} TailwindExtensionValue
- * @typedef {import('tailwindcss').TailwindExtensionTopLevelValue} TailwindExtensionTopLevelValue
+ * @typedef {import('tailwindcss').TailwindValue} TailwindValue
  * @typedef {import('tailwindcss/plugin').Helpers} Helpers
  * @typedef {import('./optionsUtils').ThemeConfig} ThemeConfig
  */
 
 /**
- * @param {ThemeCb} value - the theme callback
+ * @param {ThemeCb<TailwindValue>} value - the theme callback
  * @param {string[]} valuePath - the path to the value
- * @return {ThemeCb} a function that will resolve the theme extension provided by the callback when given the tailwind theme helper
+ * @return {ThemeCb<TailwindValue>} a function that will resolve the theme extension provided by the callback when given the tailwind theme helper
  */
 const toThemeExtensionResolverCallback = (value, valuePath) => theme => {
   const config = value(theme)
@@ -31,10 +38,10 @@ const toThemeExtensionResolverCallback = (value, valuePath) => theme => {
 }
 
 /**
- * @template {TailwindExtension | TailwindExtensionTopLevelValue | TailwindExtensionValue} T
+ * @template {TailwindExtension | WithThemeCb<TailwindValue> | WithThemeCb<ColorConfig>} T
  * @param {T} themeExtensionValue - the theme config to convert to a tailwind extension
  * @param {string[]} prevPathSteps - the theme config to convert to a tailwind extension
- * @return {T extends TailwindExtensionValue ? TailwindExtensionValue : T extends TailwindExtensionTopLevelValue ? TailwindExtensionTopLevelValue : TailwindExtension} the resolved tailwind extension from the given theme
+ * @return {T extends TailwindValue ? TailwindValue : T extends ColorConfig ? ColorConfig : T extends TailwindExtension ? TailwindExtension : T extends WithThemeCb<ColorConfig> ? WithThemeCb<ColorConfig> : WithThemeCb<TailwindValue>} the resolved tailwind extension from the given theme
  */
 const resolveThemeExtensionsAsTailwindExtensionRecursionHelper = (
   themeExtensionValue,
@@ -51,7 +58,7 @@ const resolveThemeExtensionsAsTailwindExtensionRecursionHelper = (
     ? (() => {
         if (prevPathSteps.length === 1) {
           return toThemeExtensionResolverCallback(
-            themeExtensionValue,
+            /** @type {ThemeCb<TailwindValue>} */ (themeExtensionValue),
             prevPathSteps
           )
         } else {
@@ -88,7 +95,7 @@ const resolveThemeExtensionsAsTailwindExtension = themes => {
 }
 
 /**
- * @param {TailwindExtension | TailwindExtensionTopLevelValue | TailwindExtensionValue} themeExtensionValue - the theme extension value to convert to custom props
+ * @param {TailwindExtension | WithThemeCb<TailwindValue> | WithThemeCb<ColorConfig>} themeExtensionValue - the theme extension value to convert to custom props
  * @param {Helpers} helpers - the tailwind plugin helpers
  * @param {string[]} prevPathSteps - the tailwind plugin helpers
  * @return {{ [key: string]: string }} the theme extension value resolved as custom props

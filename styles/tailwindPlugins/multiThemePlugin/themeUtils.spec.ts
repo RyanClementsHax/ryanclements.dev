@@ -1,9 +1,13 @@
 import { resolveThemeExtensionsAsTailwindExtension } from './themeUtils'
 import {
   TailwindExtension,
-  TailwindExtensionTopLevelValue,
-  TailwindExtensionValue,
-  Theme
+  TailwindValue,
+  Theme,
+  ThemeCb,
+  ColorConfig,
+  ColorValue,
+  OpacityCb,
+  WithThemeCb
 } from 'tailwindcss'
 
 describe('themeUtils', () => {
@@ -19,24 +23,28 @@ describe('themeUtils', () => {
   })
 
   const resolveOpacityCallbacks = <
-    T extends TailwindExtensionTopLevelValue | TailwindExtensionValue
+    T extends WithThemeCb<ColorConfig> | ColorValue
   >(
     themeExtensionValue: T
-  ): T extends TailwindExtensionValue
-    ? TailwindExtensionValue
-    : TailwindExtensionTopLevelValue => {
+  ): T extends WithThemeCb<ColorConfig>
+    ? WithThemeCb<ColorConfig>
+    : ColorValue => {
     if (
       typeof themeExtensionValue === 'string' ||
       typeof themeExtensionValue === 'number' ||
       typeof themeExtensionValue === 'undefined' ||
       Array.isArray(themeExtensionValue)
     ) {
-      return themeExtensionValue as T extends TailwindExtensionValue
-        ? TailwindExtensionValue
-        : TailwindExtensionTopLevelValue
+      return themeExtensionValue as T extends WithThemeCb<ColorConfig>
+        ? WithThemeCb<ColorConfig>
+        : ColorValue
     }
     if (typeof themeExtensionValue === 'function') {
-      return themeExtensionValue(opacityConfig)
+      return (themeExtensionValue as OpacityCb)(
+        opacityConfig
+      ) as T extends WithThemeCb<ColorConfig>
+        ? WithThemeCb<ColorConfig>
+        : ColorValue
     }
     return Object.entries(themeExtensionValue).reduce(
       (acc, [key, value]) => ({
@@ -44,7 +52,9 @@ describe('themeUtils', () => {
         [key]: resolveOpacityCallbacks(value)
       }),
       {}
-    )
+    ) as T extends WithThemeCb<ColorConfig>
+      ? WithThemeCb<ColorConfig>
+      : ColorValue
   }
 
   const resolveCallbacks = (
@@ -53,14 +63,19 @@ describe('themeUtils', () => {
     const extensionWithResolvedThemeCbs = Object.entries(extension).reduce(
       (acc, [key, value]) => ({
         ...acc,
-        [key]: typeof value === 'function' ? value(theme) : value
+        [key]:
+          typeof value === 'function'
+            ? (value as ThemeCb<TailwindValue>)(theme)
+            : value
       }),
       {}
     ) as TailwindExtension
 
-    extensionWithResolvedThemeCbs.colors = resolveOpacityCallbacks(
-      extensionWithResolvedThemeCbs.colors
-    )
+    if (extensionWithResolvedThemeCbs.colors) {
+      extensionWithResolvedThemeCbs.colors = resolveOpacityCallbacks(
+        extensionWithResolvedThemeCbs.colors
+      )
+    }
     return extensionWithResolvedThemeCbs
   }
 

@@ -2,6 +2,21 @@
 
 // tailwind doesn't have type definitions so we need to create them on our own until types are added
 
+type KnownKeys<T> = {
+  [K in keyof T as string extends K
+    ? never
+    : number extends K
+    ? never
+    : K]: T[K]
+}
+
+type OmitFromKnownKeys<T, K extends keyof T> = KnownKeys<T> extends infer U
+  ? keyof U extends keyof T
+    ? Pick<T, Exclude<keyof U, K>> &
+        Pick<T, Exclude<keyof T, keyof KnownKeys<T>>>
+    : never
+  : never
+
 declare module 'tailwindcss' {
   export type OpacityCb = ({
     opacityVariable,
@@ -10,36 +25,38 @@ declare module 'tailwindcss' {
     opacityVariable?: string
     opacityValue?: string
   }) => string
-  export type TailwindExtensionValue =
+  export type ColorValue =
     | string
     | number
-    | { [key: string]: TailwindExtensionValue }
-    | TailwindExtensionValue[]
-  export type TailwindColorExtensionValue =
-    | string
-    | number
-    | { [key: string]: TailwindColorExtensionValue }
-    | TailwindColorExtensionValue[]
+    | { [key: string]: ColorValue }
+    | ColorValue[]
     | OpacityCb
-  export type ThemeColorExtension = {
-    [key: string]: TailwindColorExtensionValue
+  export interface ColorConfig {
+    [key: string]: ColorValue
   }
-  export type Theme = (key: string) => TailwindExtensionValue
-  export type ThemeCb<T = TailwindExtensionValue> = (theme: Theme) => T
-  export type TailwindExtensionTopLevelValue<T = TailwindExtensionValue> =
-    | ThemeCb<T>
-    | T
-  export interface TailwindExtension {
-    // colors?: ThemeColorCallback | ThemeColorExtension
-    [key: string]: TailwindExtensionTopLevelValue
+  export type TailwindValue =
+    | string
+    | number
+    | { [key: string]: TailwindValue }
+    | TailwindValue[]
+  export type Theme = (key: string) => any
+  export type ThemeCb<T> = (theme: Theme) => T
+  export type WithThemeCb<T> = T | ThemeCb<T>
+  export type TailwindExtension = {
+    [key: string]: WithThemeCb<TailwindValue>
+    colors?: WithThemeCb<ColorConfig>
   }
-  export interface TailwindTheme {
-    extend: TailwindExtension
+  export type TailwindTheme = {
+    [key: string]:
+      | WithThemeCb<TailwindValue>
+      | WithThemeCb<ColorConfig>
+      | TailwindExtension
+    colors?: WithThemeCb<ColorConfig>
+    extend?: TailwindExtension
+  }
+  export type TailwindConfig = {
     [key: string]: any
-  }
-  export interface TailwindConfig {
     theme: TailwindTheme
-    [key: string]: any
   }
 }
 
