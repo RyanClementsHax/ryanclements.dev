@@ -57,6 +57,7 @@ describe('themeUtils', () => {
         extensionWithResolvedThemeCbs.colors
       )
     }
+
     return extensionWithResolvedThemeCbs
   }
 
@@ -65,225 +66,106 @@ describe('themeUtils', () => {
       expect(resolveThemeExtensionsAsTailwindExtension([])).toEqual({})
     })
 
-    describe('when given one theme', () => {
-      it('resolves top level values as custom props', () => {
-        expect(
-          resolveThemeExtensionsAsTailwindExtension([
-            {
-              name: 'first',
-              extend: {
-                top: 'level'
-              }
+    it('resolves and merges top level values as custom props', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              top1: 'level',
+              same: 'prop'
             }
-          ])
-        ).toEqual({
-          top: 'var(--top)'
-        })
-      })
-
-      it('resolves nested values as custom props', () => {
-        expect(
-          resolveThemeExtensionsAsTailwindExtension([
-            {
-              name: 'first',
-              extend: {
-                colors: {
-                  primary: 'first'
-                },
-                foo: {
-                  bar: {
-                    bing: 'bazz'
-                  }
-                }
-              }
-            }
-          ])
-        ).toEqual({
-          colors: {
-            primary: 'var(--colors-primary)'
           },
-          foo: {
-            bar: {
-              bing: 'var(--foo-bar-bing)'
+          {
+            name: 'second',
+            extend: {
+              top2: 'level',
+              same: 'prop'
+            }
+          },
+          {
+            name: 'third',
+            extend: {
+              top3: 'level',
+              same: 'prop'
             }
           }
-        })
-      })
-
-      describe('callbacks', () => {
-        it('resolves theme callbacks', () => {
-          expect(
-            resolveCallbacks(
-              resolveThemeExtensionsAsTailwindExtension([
-                {
-                  name: 'first',
-                  extend: {
-                    colors: theme => ({
-                      primary: theme('some.key')
-                    })
-                  }
-                }
-              ])
-            )
-          ).toEqual({
-            colors: {
-              primary: 'var(--colors-primary)'
-            }
-          })
-        })
-
-        it('throws if it finds a callback not on the top level that is not within the color config', () => {
-          expect(() =>
-            resolveThemeExtensionsAsTailwindExtension([
-              {
-                name: 'first',
-                extend: {
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  //@ts-expect-error
-                  foo: {
-                    bar: (theme: Theme) => ({
-                      primary: theme('some.key')
-                    })
-                  }
-                }
-              }
-            ])
-          ).toThrow()
-        })
-      })
-
-      it('resolves arrays', () => {
-        expect(
-          resolveCallbacks(
-            resolveThemeExtensionsAsTailwindExtension([
-              {
-                name: 'first',
-                extend: {
-                  myArray: [
-                    {
-                      thing: 1
-                    },
-                    {
-                      thing: 2
-                    }
-                  ]
-                }
-              }
-            ])
-          )
-        ).toEqual({
-          myArray: [
-            {
-              thing: 'var(--my-array-0-thing)'
-            },
-            {
-              thing: 'var(--my-array-1-thing)'
-            }
-          ]
-        })
+        ])
+      ).toEqual({
+        top1: 'var(--top1)',
+        top2: 'var(--top2)',
+        top3: 'var(--top3)',
+        same: 'var(--same)'
       })
     })
 
-    describe('when given multiple themes', () => {
-      it('resolves and merges top level values as custom props', () => {
-        expect(
-          resolveThemeExtensionsAsTailwindExtension([
-            {
-              name: 'first',
-              extend: {
-                top1: 'level',
-                same: 'prop'
-              }
-            },
-            {
-              name: 'second',
-              extend: {
-                top2: 'level',
-                same: 'prop'
-              }
-            },
-            {
-              name: 'third',
-              extend: {
-                top3: 'level',
-                same: 'prop'
-              }
-            }
-          ])
-        ).toEqual({
-          top1: 'var(--top1)',
-          top2: 'var(--top2)',
-          top3: 'var(--top3)',
-          same: 'var(--same)'
-        })
-      })
-
-      it('resolves and merges nested as custom props', () => {
-        expect(
-          resolveThemeExtensionsAsTailwindExtension([
-            {
-              name: 'first',
-              extend: {
-                colors: {
-                  primary: 'first'
-                },
-                foo: {
-                  bar: {
-                    bing: 'bazz'
-                  }
-                }
-              }
-            },
-            {
-              name: 'second',
-              extend: {
-                colors: {
-                  secondary: 'second'
-                },
-                foo: {
-                  bar: {
-                    different: 'bazz'
-                  },
-                  thing: 'value1'
-                }
-              }
-            },
-            {
-              name: 'third',
-              extend: {
-                colors: {
-                  secondary: 'third'
-                },
-                veryDifferent: {
-                  bar: {
-                    different: 'bazz'
-                  },
-                  thing: 'value2'
+    it('resolves and merges nested as custom props', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              colors: {
+                primary: 'first'
+              },
+              foo: {
+                bar: {
+                  bing: 'bazz'
                 }
               }
             }
-          ])
-        ).toEqual({
-          colors: {
-            primary: 'var(--colors-primary)',
-            secondary: 'var(--colors-secondary)'
           },
-          foo: {
-            bar: {
-              bing: 'var(--foo-bar-bing)',
-              different: 'var(--foo-bar-different)'
-            },
-            thing: 'var(--foo-thing)'
+          {
+            name: 'second',
+            extend: {
+              colors: {
+                secondary: 'second'
+              },
+              foo: {
+                bar: {
+                  different: 'bazz'
+                },
+                thing: 'value1'
+              }
+            }
           },
-          veryDifferent: {
-            bar: {
-              different: 'var(--very-different-bar-different)'
-            },
-            thing: 'var(--very-different-thing)'
+          {
+            name: 'third',
+            extend: {
+              colors: {
+                secondary: 'third'
+              },
+              veryDifferent: {
+                bar: {
+                  different: 'bazz'
+                },
+                thing: 'value2'
+              }
+            }
           }
-        })
+        ])
+      ).toEqual({
+        colors: {
+          primary: 'var(--colors-primary)',
+          secondary: 'var(--colors-secondary)'
+        },
+        foo: {
+          bar: {
+            bing: 'var(--foo-bar-bing)',
+            different: 'var(--foo-bar-different)'
+          },
+          thing: 'var(--foo-thing)'
+        },
+        veryDifferent: {
+          bar: {
+            different: 'var(--very-different-bar-different)'
+          },
+          thing: 'var(--very-different-thing)'
+        }
       })
+    })
 
+    describe('callbacks', () => {
       it('resolves non conflicting callbacks', () => {
         expect(
           resolveCallbacks(
@@ -316,58 +198,6 @@ describe('themeUtils', () => {
         })
       })
 
-      it('resolves non conflicting arrays', () => {
-        expect(
-          resolveCallbacks(
-            resolveThemeExtensionsAsTailwindExtension([
-              {
-                name: 'first',
-                extend: {
-                  myArray1: [
-                    {
-                      thing: 1
-                    },
-                    {
-                      thing: 2
-                    }
-                  ]
-                }
-              },
-              {
-                name: 'second',
-                extend: {
-                  myArray2: [
-                    {
-                      thing: 1
-                    },
-                    {
-                      thing: 2
-                    }
-                  ]
-                }
-              }
-            ])
-          )
-        ).toEqual({
-          myArray1: [
-            {
-              thing: 'var(--my-array1-0-thing)'
-            },
-            {
-              thing: 'var(--my-array1-1-thing)'
-            }
-          ],
-          myArray2: [
-            {
-              thing: 'var(--my-array2-0-thing)'
-            },
-            {
-              thing: 'var(--my-array2-1-thing)'
-            }
-          ]
-        })
-      })
-
       it('throws if it finds a callback not on the top level that is not within the color config', () => {
         expect(() =>
           resolveThemeExtensionsAsTailwindExtension([
@@ -395,6 +225,154 @@ describe('themeUtils', () => {
             }
           ])
         ).toThrow()
+      })
+
+      it('resolves color properties with opacity', () => {
+        expect(
+          resolveCallbacks(
+            resolveThemeExtensionsAsTailwindExtension([
+              {
+                name: 'first',
+                extend: {
+                  colors: {
+                    primary: '#ff0'
+                  }
+                }
+              },
+              {
+                name: 'second',
+                extend: {
+                  colors: {
+                    secondary: '#0ff'
+                  }
+                }
+              }
+            ])
+          )
+        ).toEqual({
+          colors: {
+            primary: 'rgba(var(--colors-primary), opacityValue)',
+            secondary: 'rgba(var(--colors-secondary), opacityValue)'
+          }
+        })
+      })
+    })
+
+    it('resolves non conflicting arrays', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              myArray1: [
+                {
+                  thing: 1
+                },
+                {
+                  thing: 2
+                }
+              ]
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              myArray2: [
+                {
+                  thing: 1
+                },
+                {
+                  thing: 2
+                }
+              ]
+            }
+          }
+        ])
+      ).toEqual({
+        myArray1: [
+          {
+            thing: 'var(--my-array1-0-thing)'
+          },
+          {
+            thing: 'var(--my-array1-1-thing)'
+          }
+        ],
+        myArray2: [
+          {
+            thing: 'var(--my-array2-0-thing)'
+          },
+          {
+            thing: 'var(--my-array2-1-thing)'
+          }
+        ]
+      })
+    })
+
+    it('ignores null values', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              colors: {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-expect-error
+                primary: null
+              }
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-expect-error
+              foo: {
+                secondary: null
+              }
+            }
+          }
+        ])
+      ).toEqual({
+        colors: {
+          primary: null
+        },
+        foo: {
+          secondary: null
+        }
+      })
+    })
+
+    it('ignores undefined values', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              colors: {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-expect-error
+                secondary: undefined
+              }
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-expect-error
+              foo: {
+                secondary: undefined
+              }
+            }
+          }
+        ])
+      ).toEqual({
+        colors: {
+          secondary: undefined
+        },
+        foo: {
+          secondary: undefined
+        }
       })
     })
   })
