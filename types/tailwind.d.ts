@@ -15,14 +15,18 @@ declare module 'tailwindcss' {
   export interface TailwindExtension {
     [key: string]: ThemeCallback | TailwindExtensionValue
   }
-  export interface TailwindConfig {
+  export interface TailwindTheme {
     extend: TailwindExtension
+    [key: string]: any
+  }
+  export interface TailwindConfig {
+    theme: TailwindTheme
     [key: string]: any
   }
 }
 
 declare module 'tailwindcss/plugin' {
-  import { TailwindExtension } from 'tailwindcss'
+  import { TailwindConfig } from 'tailwindcss'
 
   export type AddVariantCb = (
     modifySelectors: ({
@@ -45,13 +49,13 @@ declare module 'tailwindcss/plugin' {
 
   export type PluginCb = (helpers: Helpers) => void
   export type PluginWithOptionsCb<TOptions> = (options: TOptions) => PluginCb
-  export type PluginThemeExtensionWithOptionsCb<TOptions> = (
+  export type PluginTailwindExtensionWithOptionsCb<TOptions> = (
     options: TOptions
-  ) => TailwindExtension
+  ) => TailwindConfig
   declare const plugin: {
     withOptions<TOptions>(
       pluginWithOptionsCb: PluginWithOptionsCb<TOptions>,
-      pluginThemeExtensionWithOptionsCb: PluginThemeExtensionWithOptionsCb<TOptions>
+      pluginTailwindExtensionWithOptionsCb: PluginTailwindExtensionWithOptionsCb<TOptions>
     ): any
   }
   export = plugin
