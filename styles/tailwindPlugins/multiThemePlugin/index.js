@@ -77,13 +77,13 @@ const addThemeStyles = (themes, helpers) => {
 
 /** @type {MultiThemePlugin} */
 const multiThemePlugin = plugin.withOptions(
-  (options = defaultOptions) =>
+  (/** @type {MultiThemePluginOptions} */ options = defaultOptions) =>
     helpers => {
       const themes = getThemesFromOptions(options)
       addThemeVariants(themes, helpers)
       addThemeStyles(themes, helpers)
     },
-  (options = defaultOptions) => ({
+  (/** @type {MultiThemePluginOptions} */ options = defaultOptions) => ({
     theme: {
       extend: resolveThemeExtensionsAsTailwindExtension(
         getThemesFromOptions(options)

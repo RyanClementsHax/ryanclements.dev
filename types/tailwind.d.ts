@@ -45,7 +45,7 @@ declare module 'tailwindcss/plugin' {
     options: TOptions
   ) => TailwindExtension
   declare const plugin: {
-    withOptions<TOptions = any>(
+    withOptions<TOptions>(
       pluginWithOptionsCb: PluginWithOptionsCb<TOptions>,
       pluginThemeExtensionWithOptionsCb: PluginThemeExtensionWithOptionsCb<TOptions>
     ): any
