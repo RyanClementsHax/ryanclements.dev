@@ -198,7 +198,37 @@ describe('themeUtils', () => {
         })
       })
 
-      it('throws if it finds a callback not on the top level that is not within the color config', () => {
+      it('resolves conflicting callbacks', () => {
+        expect(
+          resolveCallbacks(
+            resolveThemeExtensionsAsTailwindExtension([
+              {
+                name: 'first',
+                extend: {
+                  colors: theme => ({
+                    primary: theme('some.key')
+                  })
+                }
+              },
+              {
+                name: 'second',
+                extend: {
+                  colors: theme => ({
+                    secondary: theme('some.different.key')
+                  })
+                }
+              }
+            ])
+          )
+        ).toEqual({
+          colors: {
+            primary: 'var(--colors-primary)',
+            secondary: 'var(--colors-secondary)'
+          }
+        })
+      })
+
+      it('throws if it finds a callback not on the top level', () => {
         expect(() =>
           resolveThemeExtensionsAsTailwindExtension([
             {

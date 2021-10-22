@@ -1,6 +1,6 @@
 //@ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { merge } = require('lodash')
+const { mergeWith, merge } = require('lodash')
 const {
   asCustomProp,
   toCustomPropName,
@@ -16,6 +16,55 @@ const {
  * @typedef {import('tailwindcss/plugin').Helpers} Helpers
  * @typedef {import('./optionsUtils').ThemeConfig} ThemeConfig
  */
+
+/**
+ * @param {any} themeExtensionValue - the value to convert to custom props
+ * @param {Helpers} helpers - the tailwind plugin helpers
+ * @param {string[]} pathSteps - the path to the value
+ * @return {{ [key: string]: string }} the theme extension value resolved as custom props
+ */
+const resolveThemeExtensionAsCustomPropsRecursionHelper = (
+  themeExtensionValue,
+  helpers,
+  pathSteps = []
+) =>
+  Array.isArray(themeExtensionValue)
+    ? themeExtensionValue
+        .map((x, i) =>
+          resolveThemeExtensionAsCustomPropsRecursionHelper(x, helpers, [
+            ...pathSteps,
+            i.toString()
+          ])
+        )
+        .reduce((acc, curr) => ({ ...acc, ...curr }), {})
+    : typeof themeExtensionValue === 'function'
+    ? resolveThemeExtensionAsCustomPropsRecursionHelper(
+        themeExtensionValue(helpers.theme),
+        helpers,
+        pathSteps
+      )
+    : typeof themeExtensionValue === 'object'
+    ? Object.entries(themeExtensionValue).reduce(
+        (acc, [key, value]) => ({
+          ...acc,
+          ...resolveThemeExtensionAsCustomPropsRecursionHelper(value, helpers, [
+            ...pathSteps,
+            key
+          ])
+        }),
+        {}
+      )
+    : {
+        [toCustomPropName(pathSteps)]: toCustomPropValue(themeExtensionValue)
+      }
+
+/**
+ * @param {TailwindExtension} themeExtension - the theme extension to convert to custom props
+ * @param {Helpers} helpers - the tailwind plugin helpers
+ * @return {{ [key: string]: string }} the theme extension resolved as custom props
+ */
+const resolveThemeExtensionAsCustomProps = (themeExtension, helpers) =>
+  resolveThemeExtensionAsCustomPropsRecursionHelper(themeExtension, helpers)
 
 /**
  * @template T
@@ -85,62 +134,24 @@ const resolveThemeExtensionsAsTailwindExtensionRecursionHelper = (
  */
 const resolveThemeExtensionsAsTailwindExtension = themes => {
   /** @type {TailwindExtension} */
-  const mergedThemeExtension = merge({}, ...themes.map(x => x.extend))
+  const mergedThemeExtension = mergeWith(
+    {},
+    ...themes.map(x => x.extend),
+    (/** @type {unknown} */ objectVal, /** @type {unknown} */ srcVal) => {
+      if (typeof objectVal === 'function' && typeof srcVal === 'function') {
+        return (/** @type {unknown[]} */ ...params) =>
+          merge(objectVal(...params), srcVal(...params))
+      } else {
+        return undefined
+      }
+    }
+  )
   return resolveThemeExtensionsAsTailwindExtensionRecursionHelper(
     mergedThemeExtension
   )
 }
 
-/**
- * @param {any} themeExtensionValue - the value to convert to custom props
- * @param {Helpers} helpers - the tailwind plugin helpers
- * @param {string[]} pathSteps - the path to the value
- * @return {{ [key: string]: string }} the theme extension value resolved as custom props
- */
-const resolveThemeExtensionAsCustomPropsRecursionHelper = (
-  themeExtensionValue,
-  helpers,
-  pathSteps = []
-) =>
-  Array.isArray(themeExtensionValue)
-    ? themeExtensionValue
-        .map((x, i) =>
-          resolveThemeExtensionAsCustomPropsRecursionHelper(x, helpers, [
-            ...pathSteps,
-            i.toString()
-          ])
-        )
-        .reduce((acc, curr) => ({ ...acc, ...curr }), {})
-    : typeof themeExtensionValue === 'function'
-    ? resolveThemeExtensionAsCustomPropsRecursionHelper(
-        themeExtensionValue(helpers.theme),
-        helpers,
-        pathSteps
-      )
-    : typeof themeExtensionValue === 'object'
-    ? Object.entries(themeExtensionValue).reduce(
-        (acc, [key, value]) => ({
-          ...acc,
-          ...resolveThemeExtensionAsCustomPropsRecursionHelper(value, helpers, [
-            ...pathSteps,
-            key
-          ])
-        }),
-        {}
-      )
-    : {
-        [toCustomPropName(pathSteps)]: toCustomPropValue(themeExtensionValue)
-      }
-
-/**
- * @param {TailwindExtension} themeExtension - the theme extension to convert to custom props
- * @param {Helpers} helpers - the tailwind plugin helpers
- * @return {{ [key: string]: string }} the theme extension resolved as custom props
- */
-const resolveThemeExtensionAsCustomProps = (themeExtension, helpers) =>
-  resolveThemeExtensionAsCustomPropsRecursionHelper(themeExtension, helpers)
-
-module.exports.resolveThemeExtensionsAsTailwindExtension =
-  resolveThemeExtensionsAsTailwindExtension
 module.exports.resolveThemeExtensionAsCustomProps =
   resolveThemeExtensionAsCustomProps
+module.exports.resolveThemeExtensionsAsTailwindExtension =
+  resolveThemeExtensionsAsTailwindExtension
