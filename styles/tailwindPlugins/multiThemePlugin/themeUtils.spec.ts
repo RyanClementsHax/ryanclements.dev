@@ -341,7 +341,7 @@ describe('themeUtils', () => {
                 name: 'first',
                 extend: {
                   colors: {
-                    primary: '#ff0'
+                    primary: 'orange'
                   }
                 }
               },
@@ -349,7 +349,7 @@ describe('themeUtils', () => {
                 name: 'second',
                 extend: {
                   colors: {
-                    secondary: '#0ff'
+                    secondary: 'purple'
                   }
                 }
               }

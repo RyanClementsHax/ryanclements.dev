@@ -20,7 +20,7 @@ const {
 /**
  * @param {any} themeExtensionValue - the value to convert to custom props
  * @param {Helpers} helpers - the tailwind plugin helpers
- * @param {string[]} pathSteps - the path to the value
+ * @param {string[]} [pathSteps=[]] - the path to the value
  * @return {{ [key: string]: string }} the theme extension value resolved as custom props
  */
 const resolveThemeExtensionAsCustomPropsRecursionHelper = (
@@ -82,7 +82,7 @@ const toThemeExtensionResolverCallback = (value, valuePath) => theme => {
 
 /**
  * @param {any} themeExtensionValue - the value to convert to a tailwind extension
- * @param {string[]} pathSteps - the path to the value
+ * @param {string[]} [pathSteps=[]] - the path to the value
  * @return {any} the resolved tailwind extension from the given theme
  * @throws {Error} if any callbacks are found in places not supported by tailwind
  */
