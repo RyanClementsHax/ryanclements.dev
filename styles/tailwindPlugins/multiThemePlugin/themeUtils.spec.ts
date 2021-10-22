@@ -99,7 +99,7 @@ describe('themeUtils', () => {
       })
     })
 
-    it('resolves and merges nested as custom props', () => {
+    it('resolves and merges nested values as custom props', () => {
       expect(
         resolveThemeExtensionsAsTailwindExtension([
           {
@@ -166,7 +166,7 @@ describe('themeUtils', () => {
     })
 
     describe('callbacks', () => {
-      it('resolves non conflicting callbacks', () => {
+      it('resolves non overlapping callbacks', () => {
         expect(
           resolveCallbacks(
             resolveThemeExtensionsAsTailwindExtension([
@@ -198,7 +198,7 @@ describe('themeUtils', () => {
         })
       })
 
-      it('resolves conflicting callbacks', () => {
+      it('resolves overlapping callbacks', () => {
         expect(
           resolveCallbacks(
             resolveThemeExtensionsAsTailwindExtension([
@@ -226,6 +226,82 @@ describe('themeUtils', () => {
             secondary: 'var(--colors-secondary)'
           }
         })
+      })
+
+      it('resolves callbacks when they overlap with static values', () => {
+        expect(
+          resolveCallbacks(
+            resolveThemeExtensionsAsTailwindExtension([
+              {
+                name: 'first',
+                extend: {
+                  colors: {
+                    primary: 'first'
+                  }
+                }
+              },
+              {
+                name: 'second',
+                extend: {
+                  colors: theme => ({
+                    secondary: theme('some.different.key')
+                  })
+                }
+              }
+            ])
+          )
+        ).toEqual({
+          colors: {
+            primary: 'var(--colors-primary)',
+            secondary: 'var(--colors-secondary)'
+          }
+        })
+      })
+
+      it('throws when a callback resolves to a type mismatch with a different theme', () => {
+        expect(() =>
+          resolveCallbacks(
+            resolveThemeExtensionsAsTailwindExtension([
+              {
+                name: 'first',
+                extend: {
+                  colors: {
+                    primary: 'first'
+                  }
+                }
+              },
+              {
+                name: 'second',
+                extend: {
+                  colors: theme => theme('some.other.key')
+                }
+              }
+            ])
+          )
+        ).toThrow()
+      })
+
+      it('throws when a callback resolves to a type mismatch with another callback defined in a different theme', () => {
+        expect(() =>
+          resolveCallbacks(
+            resolveThemeExtensionsAsTailwindExtension([
+              {
+                name: 'first',
+                extend: {
+                  colors: theme => ({
+                    primary: theme('first')
+                  })
+                }
+              },
+              {
+                name: 'second',
+                extend: {
+                  colors: theme => theme('some.other.key')
+                }
+              }
+            ])
+          )
+        ).toThrow()
       })
 
       it('throws if it finds a callback not on the top level', () => {
@@ -288,7 +364,7 @@ describe('themeUtils', () => {
       })
     })
 
-    it('resolves non conflicting arrays', () => {
+    it('resolves non overlapping arrays', () => {
       expect(
         resolveThemeExtensionsAsTailwindExtension([
           {
@@ -333,6 +409,50 @@ describe('themeUtils', () => {
           },
           {
             thing: 'var(--my-array2-1-thing)'
+          }
+        ]
+      })
+    })
+
+    it('resolves overlapping arrays', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              myArray: [
+                {
+                  thing1: 1
+                },
+                {
+                  thing1: 2
+                }
+              ]
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              myArray: [
+                {
+                  thing2: 1
+                },
+                {
+                  thing2: 2
+                }
+              ]
+            }
+          }
+        ])
+      ).toEqual({
+        myArray: [
+          {
+            thing1: 'var(--my-array-0-thing1)',
+            thing2: 'var(--my-array-0-thing2)'
+          },
+          {
+            thing1: 'var(--my-array-1-thing1)',
+            thing2: 'var(--my-array-1-thing2)'
           }
         ]
       })

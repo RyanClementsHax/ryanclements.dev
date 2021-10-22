@@ -110,7 +110,7 @@ const resolveThemeExtensionsAsTailwindExtensionRecursionHelper = (
           throw new Error(
             `callback found on path "${pathSteps.join(
               '.'
-            )}" and they are only allowed at the top level or for color opacity configuration`
+            )}" and they are only allowed at the top level`
           )
         }
       })()
@@ -127,6 +127,34 @@ const resolveThemeExtensionsAsTailwindExtensionRecursionHelper = (
       )
     : asCustomProp(themeExtensionValue, pathSteps)
 
+/** @type {import('lodash').MergeWithCustomizer} */
+const mergeAndResolveCallbacks = (objectVal, srcVal) => {
+  if (
+    typeof objectVal !== 'undefined' &&
+    (typeof objectVal === 'function' || typeof srcVal === 'function')
+  ) {
+    return (/** @type {unknown[]} */ ...params) => {
+      const objectValResolved =
+        typeof objectVal === 'function' ? objectVal(...params) : objectVal
+      const srcValResolved =
+        typeof srcVal === 'function' ? srcVal(...params) : srcVal
+      if (
+        typeof objectValResolved === 'function' ||
+        typeof srcValResolved === 'function'
+      ) {
+        throw new Error('nested callbacks are not supported in tailwind config')
+      } else if (typeof objectValResolved !== typeof srcValResolved) {
+        throw new Error(
+          'all callbacks must return values with types mergable with other themes e.g. a callback that returns a string must be set to a property that other themes dont have objects set to it'
+        )
+      }
+      return merge(objectValResolved, srcValResolved)
+    }
+  } else {
+    return undefined
+  }
+}
+
 /**
  * @param {ThemeConfig[]} themes - the themes to convert to a tailwind extension
  * @return {TailwindExtension} the resolved tailwind extension from the given theme
@@ -137,14 +165,7 @@ const resolveThemeExtensionsAsTailwindExtension = themes => {
   const mergedThemeExtension = mergeWith(
     {},
     ...themes.map(x => x.extend),
-    (/** @type {unknown} */ objectVal, /** @type {unknown} */ srcVal) => {
-      if (typeof objectVal === 'function' && typeof srcVal === 'function') {
-        return (/** @type {unknown[]} */ ...params) =>
-          merge(objectVal(...params), srcVal(...params))
-      } else {
-        return undefined
-      }
-    }
+    mergeAndResolveCallbacks
   )
   return resolveThemeExtensionsAsTailwindExtensionRecursionHelper(
     mergedThemeExtension
