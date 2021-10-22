@@ -10,16 +10,9 @@ const {
 /**
  * @template T
  * @typedef {import('tailwindcss').ThemeCb<T>} ThemeCb
- *
  */
 /**
- * @template T
- * @typedef {import('tailwindcss').WithThemeCb<T>} WithThemeCb
- */
-/**
- * @typedef {import('tailwindcss').ColorConfig} ColorConfig
  * @typedef {import('tailwindcss').TailwindExtension} TailwindExtension
- * @typedef {import('tailwindcss').ExtensionValue} ExtensionValue
  * @typedef {import('tailwindcss/plugin').Helpers} Helpers
  * @typedef {import('./optionsUtils').ThemeConfig} ThemeConfig
  */
