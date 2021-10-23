@@ -2,21 +2,6 @@
 
 // tailwind doesn't have type definitions so we need to create them on our own until types are added
 
-type KnownKeys<T> = {
-  [K in keyof T as string extends K
-    ? never
-    : number extends K
-    ? never
-    : K]: T[K]
-}
-
-type OmitFromKnownKeys<T, K extends keyof T> = KnownKeys<T> extends infer U
-  ? keyof U extends keyof T
-    ? Pick<T, Exclude<keyof U, K>> &
-        Pick<T, Exclude<keyof T, keyof KnownKeys<T>>>
-    : never
-  : never
-
 declare module 'tailwindcss' {
   export type WithExtensions<T, U = any> = T & { [key: string]: T[keyof T] | U }
 
