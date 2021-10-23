@@ -313,9 +313,9 @@ describe('themeUtils', () => {
           {
             name: 'first',
             extend: {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-expect-error
               colors: {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-expect-error
                 primary: null
               }
             }
@@ -347,9 +347,9 @@ describe('themeUtils', () => {
           {
             name: 'first',
             extend: {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-expect-error
               colors: {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-expect-error
                 secondary: undefined
               }
             }
@@ -695,9 +695,9 @@ describe('themeUtils', () => {
       expect(
         resolveThemeExtensionAsCustomProps(
           {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-expect-error
             colors: {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              //@ts-expect-error
               primary: null
             },
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -715,9 +715,9 @@ describe('themeUtils', () => {
       expect(
         resolveThemeExtensionAsCustomProps(
           {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-expect-error
             colors: {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              //@ts-expect-error
               primary: undefined
             },
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

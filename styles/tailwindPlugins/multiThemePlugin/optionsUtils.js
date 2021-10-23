@@ -4,8 +4,8 @@ const unique = require('just-unique')
 
 /**
  * @typedef {import('tailwindcss').TailwindExtension} TailwindExtension
- * @typedef {{name?: string, extend: TailwindExtension}} DefaultThemeConfig
  * @typedef {{name: string, extend: TailwindExtension}} ThemeConfig
+ * @typedef {Omit<ThemeConfig, 'name'>} DefaultThemeConfig
  * @typedef {{defaultTheme?: DefaultThemeConfig, themes?: ThemeConfig[]}} MultiThemePluginOptions
  */
 

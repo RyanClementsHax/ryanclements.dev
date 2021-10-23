@@ -27,15 +27,6 @@ declare module 'tailwindcss' {
     opacityVariable?: string
     opacityValue?: string
   }) => string
-  export type ColorValue =
-    | string
-    | number
-    | { [key: string]: ColorValue }
-    | ColorValue[]
-    | OpacityCb
-  export interface ColorConfig {
-    [key: string]: ColorValue
-  }
 
   export type ExtensionValue =
     | string
@@ -49,13 +40,13 @@ declare module 'tailwindcss' {
 
   export type TailwindExtension = WithExtensions<
     Partial<{
-      colors?: WithThemeCb<ColorConfig>
+      colors?: WithThemeCb<ExtensionValue>
     }>,
     WithThemeCb<ExtensionValue>
   >
   export type TailwindTheme = WithExtensions<
     Partial<{
-      colors: WithThemeCb<ColorConfig>
+      colors: WithThemeCb<ExtensionValue>
       extend: TailwindExtension
     }>,
     WithThemeCb<ExtensionValue>
