@@ -34,20 +34,20 @@ const defaultOptions = {
  * @param {Helpers} helpers
  * @returns {void}
  */
-const addThemeVariants = (themes, { addVariant, config }) => {
-  Object.entries(themes).map(([themeName]) =>
+const addThemeVariants = (themes, { addVariant, config, e }) => {
+  themes.map(({ name }) =>
     addVariant(
-      themeName,
+      name,
       transformAllSelectors(selector => {
         let variantSelector = updateLastClasses(selector, className => {
-          return `${themeName}${config('separator')}${className}`
+          return `${name}${config('separator')}${className}`
         })
 
         if (variantSelector === selector) {
           return null
         }
 
-        let themeSelector = prefixSelector(config('prefix'), `.${themeName}`)
+        let themeSelector = prefixSelector(config('prefix'), `.${e(name)}`)
 
         return `${themeSelector} ${variantSelector}`
       })
@@ -59,10 +59,12 @@ const addThemeVariants = (themes, { addVariant, config }) => {
  * @param {Helpers} helpers
  */
 const addThemeStyles = (themes, helpers) => {
-  const { addBase, e } = helpers
+  const { addBase, e, config } = helpers
   themes.forEach(({ name, extend }) =>
     addBase({
-      [name === defaultThemeName ? ':root' : `.${e(name)}`]:
+      [name === defaultThemeName
+        ? ':root'
+        : prefixSelector(config('prefix'), `.${e(name)}`)]:
         resolveThemeExtensionAsCustomProps(extend, helpers)
     })
   )

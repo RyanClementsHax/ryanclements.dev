@@ -15,7 +15,8 @@ module.exports = {
       defaultTheme: {
         extend: {
           colors: {
-            primary: 'orange'
+            primary: 'orange',
+            secondary: 'red'
           },
           foo: theme => ({
             bar1: theme('colors.red.500')
@@ -37,6 +38,10 @@ module.exports = {
               buzz: 'vict'
             }
           }
+        },
+        {
+          name: 'neon',
+          extend: {}
         }
       ]
     })
