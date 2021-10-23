@@ -15,6 +15,8 @@ export const Index: React.FC = () => {
           Welcome to my site!
         </h1>
 
+        <Image height={400} width={600} src="/character.jpg" alt="" />
+
         <p className="mt-3 text-2xl">
           It is currently under construction 🚧👷‍♂️👷‍♀️
         </p>
