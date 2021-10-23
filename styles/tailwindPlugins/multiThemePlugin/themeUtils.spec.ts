@@ -1,5 +1,9 @@
-import { resolveThemeExtensionsAsTailwindExtension } from './themeUtils'
+import {
+  resolveThemeExtensionAsCustomProps,
+  resolveThemeExtensionsAsTailwindExtension
+} from './themeUtils'
 import { TailwindExtension, ExtensionValue, Theme, ThemeCb } from 'tailwindcss'
+import { Helpers } from 'tailwindcss/plugin'
 
 describe('themeUtils', () => {
   let theme: Theme
@@ -161,6 +165,212 @@ describe('themeUtils', () => {
             different: 'var(--very-different-bar-different)'
           },
           thing: 'var(--very-different-thing)'
+        }
+      })
+    })
+
+    it('resolves non overlapping arrays', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              myArray1: [
+                {
+                  thing: 1
+                },
+                {
+                  thing: 2
+                }
+              ]
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              myArray2: [
+                {
+                  thing: 1
+                },
+                {
+                  thing: 2
+                }
+              ]
+            }
+          }
+        ])
+      ).toEqual({
+        myArray1: [
+          {
+            thing: 'var(--my-array1-0-thing)'
+          },
+          {
+            thing: 'var(--my-array1-1-thing)'
+          }
+        ],
+        myArray2: [
+          {
+            thing: 'var(--my-array2-0-thing)'
+          },
+          {
+            thing: 'var(--my-array2-1-thing)'
+          }
+        ]
+      })
+    })
+
+    it('resolves overlapping arrays', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              myArray: [
+                {
+                  thing1: 1
+                },
+                {
+                  thing1: 2
+                }
+              ]
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              myArray: [
+                {
+                  thing2: 1
+                },
+                {
+                  thing2: 2
+                }
+              ]
+            }
+          }
+        ])
+      ).toEqual({
+        myArray: [
+          {
+            thing1: 'var(--my-array-0-thing1)',
+            thing2: 'var(--my-array-0-thing2)'
+          },
+          {
+            thing1: 'var(--my-array-1-thing1)',
+            thing2: 'var(--my-array-1-thing2)'
+          }
+        ]
+      })
+    })
+
+    it('drops DEFAULT keys from custom vars when resolving', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              colors: {
+                red: {
+                  DEFAULT: 'thing'
+                }
+              },
+              foo: {
+                DEFAULT: 'thing'
+              }
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              myArray: [
+                {
+                  DEFAULT: 1
+                }
+              ]
+            }
+          }
+        ])
+      ).toEqual({
+        colors: {
+          red: {
+            DEFAULT: 'var(--colors-red)'
+          }
+        },
+        foo: {
+          DEFAULT: 'var(--foo)'
+        },
+        myArray: [
+          {
+            DEFAULT: 'var(--my-array-0)'
+          }
+        ]
+      })
+    })
+
+    it('ignores null values', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              colors: {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-expect-error
+                primary: null
+              }
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-expect-error
+              foo: {
+                secondary: null
+              }
+            }
+          }
+        ])
+      ).toEqual({
+        colors: {
+          primary: null
+        },
+        foo: {
+          secondary: null
+        }
+      })
+    })
+
+    it('ignores undefined values', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              colors: {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-expect-error
+                secondary: undefined
+              }
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-expect-error
+              foo: {
+                secondary: undefined
+              }
+            }
+          }
+        ])
+      ).toEqual({
+        colors: {
+          secondary: undefined
+        },
+        foo: {
+          secondary: undefined
         }
       })
     })
@@ -363,166 +573,195 @@ describe('themeUtils', () => {
         })
       })
     })
+  })
 
-    it('resolves non overlapping arrays', () => {
+  describe('resolveThemeExtensionAsCustomProps', () => {
+    let helpers: Helpers
+
+    beforeEach(() => {
+      helpers = {
+        addBase: jest.fn(),
+        addVariant: jest.fn(),
+        config: jest.fn(),
+        e: jest.fn(),
+        theme: jest.fn(x => x)
+      }
+    })
+
+    it('resolves an empty extension as no custom props', () => {
+      expect(resolveThemeExtensionAsCustomProps({}, helpers)).toEqual({})
+    })
+
+    it('resolves top level props', () => {
       expect(
-        resolveThemeExtensionsAsTailwindExtension([
+        resolveThemeExtensionAsCustomProps(
           {
-            name: 'first',
-            extend: {
-              myArray1: [
-                {
-                  thing: 1
-                },
-                {
-                  thing: 2
-                }
-              ]
-            }
+            foo: 'thing'
           },
-          {
-            name: 'second',
-            extend: {
-              myArray2: [
-                {
-                  thing: 1
-                },
-                {
-                  thing: 2
-                }
-              ]
-            }
-          }
-        ])
+          helpers
+        )
       ).toEqual({
-        myArray1: [
-          {
-            thing: 'var(--my-array1-0-thing)'
-          },
-          {
-            thing: 'var(--my-array1-1-thing)'
-          }
-        ],
-        myArray2: [
-          {
-            thing: 'var(--my-array2-0-thing)'
-          },
-          {
-            thing: 'var(--my-array2-1-thing)'
-          }
-        ]
+        '--foo': 'thing'
       })
     })
 
-    it('resolves overlapping arrays', () => {
+    it('resolves nested props', () => {
       expect(
-        resolveThemeExtensionsAsTailwindExtension([
+        resolveThemeExtensionAsCustomProps(
           {
-            name: 'first',
-            extend: {
-              myArray: [
-                {
-                  thing1: 1
-                },
-                {
-                  thing1: 2
-                }
-              ]
+            colors: {
+              primary: 'thing'
+            },
+            foo: {
+              bar: {
+                bazz: 'value'
+              }
             }
           },
-          {
-            name: 'second',
-            extend: {
-              myArray: [
-                {
-                  thing2: 1
-                },
-                {
-                  thing2: 2
-                }
-              ]
-            }
-          }
-        ])
+          helpers
+        )
       ).toEqual({
-        myArray: [
+        '--colors-primary': 'thing',
+        '--foo-bar-bazz': 'value'
+      })
+    })
+
+    it('resolves arrays', () => {
+      expect(
+        resolveThemeExtensionAsCustomProps(
           {
-            thing1: 'var(--my-array-0-thing1)',
-            thing2: 'var(--my-array-0-thing2)'
+            foo: {
+              bar: [
+                {
+                  thing: 1
+                },
+                {
+                  thing: 2
+                }
+              ]
+            }
           },
+          helpers
+        )
+      ).toEqual({
+        '--foo-bar-0-thing': '1',
+        '--foo-bar-1-thing': '2'
+      })
+    })
+
+    it('resolves colors as rgb', () => {
+      expect(
+        resolveThemeExtensionAsCustomProps(
           {
-            thing1: 'var(--my-array-1-thing1)',
-            thing2: 'var(--my-array-1-thing2)'
-          }
-        ]
+            colors: {
+              primary: '#114611'
+            }
+          },
+          helpers
+        )
+      ).toEqual({
+        '--colors-primary': '17, 70, 17'
+      })
+    })
+
+    it('drops DEFAULT keys from custom vars when resolving', () => {
+      expect(
+        resolveThemeExtensionAsCustomProps(
+          {
+            colors: {
+              red: {
+                DEFAULT: 'thing'
+              }
+            },
+            foo: {
+              DEFAULT: 'thing'
+            },
+            myArray: [
+              {
+                DEFAULT: 1
+              }
+            ]
+          },
+          helpers
+        )
+      ).toEqual({
+        '--colors-red': 'thing',
+        '--foo': 'thing',
+        '--my-array-0': '1'
       })
     })
 
     it('ignores null values', () => {
       expect(
-        resolveThemeExtensionsAsTailwindExtension([
+        resolveThemeExtensionAsCustomProps(
           {
-            name: 'first',
-            extend: {
-              colors: {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-expect-error
-                primary: null
-              }
-            }
-          },
-          {
-            name: 'second',
-            extend: {
+            colors: {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               //@ts-expect-error
-              foo: {
-                secondary: null
-              }
+              primary: null
+            },
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-expect-error
+            foo: {
+              secondary: null
             }
-          }
-        ])
-      ).toEqual({
-        colors: {
-          primary: null
-        },
-        foo: {
-          secondary: null
-        }
-      })
+          },
+          helpers
+        )
+      ).toEqual({})
     })
 
     it('ignores undefined values', () => {
       expect(
-        resolveThemeExtensionsAsTailwindExtension([
+        resolveThemeExtensionAsCustomProps(
           {
-            name: 'first',
-            extend: {
-              colors: {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-expect-error
-                secondary: undefined
-              }
+            colors: {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-expect-error
+              primary: undefined
+            },
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-expect-error
+            foo: {
+              secondary: undefined
             }
           },
-          {
-            name: 'second',
-            extend: {
+          helpers
+        )
+      ).toEqual({})
+    })
+
+    describe('callbacks', () => {
+      it('resolves top level callbacks', () => {
+        expect(
+          resolveThemeExtensionAsCustomProps(
+            {
+              colors: theme => ({
+                primary: theme('some.key')
+              })
+            },
+            helpers
+          )
+        ).toEqual({
+          '--colors-primary': 'some.key'
+        })
+      })
+
+      it('throws if it finds a callback not at the top level', () => {
+        expect(() =>
+          resolveThemeExtensionAsCustomProps(
+            {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               //@ts-expect-error
               foo: {
-                secondary: undefined
+                bar: (theme: Theme) => ({
+                  primary: theme('some.key')
+                })
               }
-            }
-          }
-        ])
-      ).toEqual({
-        colors: {
-          secondary: undefined
-        },
-        foo: {
-          secondary: undefined
-        }
+            },
+            helpers
+          )
+        ).toThrow()
       })
     })
   })

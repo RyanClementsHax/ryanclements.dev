@@ -28,7 +28,9 @@ const resolveThemeExtensionAsCustomPropsRecursionHelper = (
   helpers,
   pathSteps = []
 ) =>
-  Array.isArray(themeExtensionValue)
+  typeof themeExtensionValue === 'undefined' || themeExtensionValue === null
+    ? {}
+    : Array.isArray(themeExtensionValue)
     ? themeExtensionValue
         .map((x, i) =>
           resolveThemeExtensionAsCustomPropsRecursionHelper(x, helpers, [
@@ -38,11 +40,21 @@ const resolveThemeExtensionAsCustomPropsRecursionHelper = (
         )
         .reduce((acc, curr) => ({ ...acc, ...curr }), {})
     : typeof themeExtensionValue === 'function'
-    ? resolveThemeExtensionAsCustomPropsRecursionHelper(
-        themeExtensionValue(helpers.theme),
-        helpers,
-        pathSteps
-      )
+    ? (() => {
+        if (pathSteps.length === 1) {
+          return resolveThemeExtensionAsCustomPropsRecursionHelper(
+            themeExtensionValue(helpers.theme),
+            helpers,
+            pathSteps
+          )
+        } else {
+          throw new Error(
+            `callback found on path "${pathSteps.join(
+              '.'
+            )}" and they are only allowed at the top level`
+          )
+        }
+      })()
     : typeof themeExtensionValue === 'object'
     ? Object.entries(themeExtensionValue).reduce(
         (acc, [key, value]) => ({
