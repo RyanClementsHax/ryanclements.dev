@@ -1,3 +1,4 @@
+//@ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require('tailwindcss/plugin')
 const {
@@ -6,13 +7,21 @@ const {
 } = require('tailwindcss/lib/util/pluginUtils')
 const prefixSelector = require('tailwindcss/lib/util/prefixSelector').default
 
+const { getThemesFromOptions, defaultThemeName } = require('./optionsUtils')
 const {
   resolveThemeExtensionsAsTailwindExtension,
-  resolveThemeExtensionAsCustomProps,
-  getThemesFromOptions,
-  defaultThemeName
+  resolveThemeExtensionAsCustomProps
 } = require('./themeUtils')
 
+/**
+ * @typedef {import('tailwindcss/plugin').Helpers} Helpers
+ * @typedef {import('./optionsUtils').MultiThemePluginOptions} MultiThemePluginOptions
+ * @typedef {import('./optionsUtils').ThemeConfig} ThemeConfig
+ */
+
+/**
+ * @type {MultiThemePluginOptions}
+ */
 const defaultOptions = {
   defaultTheme: { extend: {} },
   themes: []
@@ -20,44 +29,64 @@ const defaultOptions = {
 
 // I copied the way tailwind does dark themeing internally, but modified it to handle any theme name
 // It is on the developer to make sure the theme name doesn't conflict with any other variants
-const addThemeVariants = (themes, { addVariant, config }) =>
-  Object.entries(themes).map(([themeName]) =>
+/**
+ * @param {ThemeConfig[]} themes
+ * @param {Helpers} helpers
+ * @returns {void}
+ */
+const addThemeVariants = (themes, { addVariant, config, e }) => {
+  themes.map(({ name }) =>
     addVariant(
-      themeName,
+      name,
       transformAllSelectors(selector => {
         let variantSelector = updateLastClasses(selector, className => {
-          return `${themeName}${config('separator')}${className}`
+          return `${name}${config('separator')}${className}`
         })
 
         if (variantSelector === selector) {
           return null
         }
 
-        let themeSelector = prefixSelector(config('prefix'), `.${themeName}`)
+        let themeSelector = prefixSelector(config('prefix'), `.${e(name)}`)
 
         return `${themeSelector} ${variantSelector}`
       })
     )
   )
-
+}
+/**
+ * @param {ThemeConfig[]} themes
+ * @param {Helpers} helpers
+ */
 const addThemeStyles = (themes, helpers) => {
-  const { addBase, e } = helpers
+  const { addBase, e, config } = helpers
   themes.forEach(({ name, extend }) =>
     addBase({
-      [name === defaultThemeName ? ':root' : `.${e(name)}`]:
+      [name === defaultThemeName
+        ? ':root'
+        : prefixSelector(config('prefix'), `.${e(name)}`)]:
         resolveThemeExtensionAsCustomProps(extend, helpers)
     })
   )
 }
 
-module.exports = plugin.withOptions(
-  (options = defaultOptions) =>
+/**
+ * @callback MultiThemePlugin
+ * @param {MultiThemePluginOptions} options
+ * @returns {any}
+ * @throws {Error} if the options are invalid
+ * @throws {Error} if any callbacks are found in places not supported by tailwind
+ */
+
+/** @type {MultiThemePlugin} */
+const multiThemePlugin = plugin.withOptions(
+  (/** @type {MultiThemePluginOptions} */ options = defaultOptions) =>
     helpers => {
       const themes = getThemesFromOptions(options)
       addThemeVariants(themes, helpers)
       addThemeStyles(themes, helpers)
     },
-  (options = defaultOptions) => ({
+  (/** @type {MultiThemePluginOptions} */ options = defaultOptions) => ({
     theme: {
       extend: resolveThemeExtensionsAsTailwindExtension(
         getThemesFromOptions(options)
@@ -65,3 +94,5 @@ module.exports = plugin.withOptions(
     }
   })
 )
+
+module.exports = multiThemePlugin

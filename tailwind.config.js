@@ -1,6 +1,5 @@
+//@ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
-
-/** @type {import('tailwindcss/tailwind-config').TailwindConfig} */
 module.exports = {
   mode: 'jit',
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
@@ -16,11 +15,9 @@ module.exports = {
       defaultTheme: {
         extend: {
           colors: {
-            primary: 'orange'
-          },
-          foo: theme => ({
-            bar: theme('colors.red.500')
-          })
+            primary: 'orange',
+            secondary: 'red'
+          }
         }
       },
       themes: [
@@ -29,15 +26,12 @@ module.exports = {
           extend: {
             colors: {
               primary: 'purple'
-            },
-            foo: theme => ({
-              bar: theme('colors.primary')
-            }),
-            bazz: {
-              DEFAULT: 'thing',
-              buzz: 'vict'
             }
           }
+        },
+        {
+          name: 'neon',
+          extend: {}
         }
       ]
     })

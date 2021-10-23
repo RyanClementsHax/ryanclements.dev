@@ -27,6 +27,8 @@
   },
   "dependencies": {
     "color": "^4.0.1",
+    "just-kebab-case": "^1.1.0",
+    "just-unique": "^3.3.0",
     "lodash": "^4.17.21",
     "next": "^11.1.2",
     "next-compose-plugins": "^2.2.1",
@@ -55,7 +57,6 @@
     "@types/lodash": "^4.14.175",
     "@types/node": "^15.3.0",
     "@types/react": "^17.0.21",
-    "@types/tailwindcss": "^2.2.1",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "autoprefixer": "^10.3.6",
