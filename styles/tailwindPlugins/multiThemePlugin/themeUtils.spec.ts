@@ -263,6 +263,37 @@ describe('themeUtils', () => {
       })
     })
 
+    it('resolves arrays with string values', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              fontFamily: {
+                serif: ['Times New Roman', 'Times', 'serif']
+              }
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              fontFamily: {
+                serif: ['Times New Roman', 'Times', 'serif']
+              }
+            }
+          }
+        ])
+      ).toEqual({
+        fontFamily: {
+          serif: [
+            'var(--font-family-serif-0)',
+            'var(--font-family-serif-1)',
+            'var(--font-family-serif-2)'
+          ]
+        }
+      })
+    })
+
     it('drops DEFAULT keys from custom vars when resolving', () => {
       expect(
         resolveThemeExtensionsAsTailwindExtension([
@@ -646,6 +677,23 @@ describe('themeUtils', () => {
       ).toEqual({
         '--foo-bar-0-thing': '1',
         '--foo-bar-1-thing': '2'
+      })
+    })
+
+    it('resolves arrays with strings', () => {
+      expect(
+        resolveThemeExtensionAsCustomProps(
+          {
+            fontFamily: {
+              serif: ['Times New Roman', 'Times', 'serif']
+            }
+          },
+          helpers
+        )
+      ).toEqual({
+        '--font-family-serif-0': 'Times New Roman',
+        '--font-family-serif-1': 'Times',
+        '--font-family-serif-2': 'serif'
       })
     })
 

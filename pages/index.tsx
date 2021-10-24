@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export const Index: React.FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2 dark:bg-gray-800">
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 dark:bg-gray-800 font-mono">
       <Head>
         <title>Ryan Clements</title>
         <link rel="icon" href="/favicon.ico" />
@@ -14,8 +14,6 @@ export const Index: React.FC = () => {
         <h1 className="text-6xl font-bold text-primary text-opacity-100 dark:text-opacity-25 neon:text-secondary">
           Welcome to my site!
         </h1>
-
-        <Image height={400} width={600} src="/character.jpg" alt="" />
 
         <p className="mt-3 text-2xl">
           It is currently under construction 🚧👷‍♂️👷‍♀️
