@@ -27,10 +27,10 @@
   },
   "dependencies": {
     "color": "^4.0.1",
-    "just-kebab-case": "^1.1.0",
+    "just-kebab-case": "^3.0.0",
     "just-unique": "^3.3.0",
     "lodash": "^4.17.21",
-    "next": "^11.1.2",
+    "next": "^12.0.1",
     "next-compose-plugins": "^2.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -38,7 +38,7 @@
     "tailwindcss": "^2.2.17"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^11.1.2",
+    "@next/bundle-analyzer": "^12.0.1",
     "@storybook/addon-a11y": "^6.3.9",
     "@storybook/addon-actions": "^6.3.8",
     "@storybook/addon-essentials": "^6.3.8",
@@ -66,7 +66,7 @@
     "css-loader": "^6.3.0",
     "env-cmd": "^10.1.0",
     "eslint": "^7.32.0",
-    "eslint-config-next": "^11.1.2",
+    "eslint-config-next": "^12.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-typescript": "^3.0.0",
     "eslint-plugin-jest": "^24.4.2",
