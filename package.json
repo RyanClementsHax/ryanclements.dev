@@ -26,6 +26,7 @@
     "chromatic": "env-cmd -f .env.local --silent chromatic --exit-zero-on-changes"
   },
   "dependencies": {
+    "autoprefixer": "^10.3.6",
     "color": "^4.0.1",
     "just-kebab-case": "^3.0.0",
     "just-unique": "^3.3.0",
@@ -61,7 +62,6 @@
     "@types/react": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "autoprefixer": "^10.3.6",
     "babel-jest": "^27.3.1",
     "chromatic": "^6.0.5",
     "cross-env": "^7.0.3",
