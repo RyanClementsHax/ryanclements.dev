@@ -9,5 +9,8 @@
     "source.fixAll.markdownlint": true,
     "source.fixAll.stylelint": true
   },
-  "jest.jestCommandLine": "yarn test"
+  "jest.jestCommandLine": "yarn test",
+  "emmet.includeLanguages": {
+    "postcss": "css"
+  }
 }

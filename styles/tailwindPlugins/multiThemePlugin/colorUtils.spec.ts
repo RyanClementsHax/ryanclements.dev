@@ -3,29 +3,29 @@ import { isColor, toRgb, withOpacity } from './colorUtils'
 describe('colorUtils', () => {
   describe('toRgb', () => {
     it('converts a hex shorthand', () => {
-      expect(toRgb('#fff')).toEqual('255, 255, 255')
+      expect(toRgb('#fff')).toBe('255, 255, 255')
     })
 
     it('converts a hex longhand', () => {
-      expect(toRgb('#945b38')).toEqual('148, 91, 56')
+      expect(toRgb('#945b38')).toBe('148, 91, 56')
     })
 
     it('converts a rgb', () => {
-      expect(toRgb('rgb(0, 204, 119)')).toEqual('0, 204, 119')
+      expect(toRgb('rgb(0, 204, 119)')).toBe('0, 204, 119')
     })
 
     it('converts a rgba', () => {
-      expect(toRgb('rgba(20, 0, 204, 0.72)')).toEqual('20, 0, 204')
+      expect(toRgb('rgba(20, 0, 204, 0.72)')).toBe('20, 0, 204')
     })
 
     it('converts a hsl', () => {
-      expect(toRgb('hsl(297, 100%, 24%)')).toEqual(
+      expect(toRgb('hsl(297, 100%, 24%)')).toBe(
         '116.2799999999999, 0, 122.39999999999999'
       )
     })
 
     it('converts a hsla', () => {
-      expect(toRgb('hsla(38, 100%, 75%, 0.78)')).toEqual('255, 208.25, 127.5')
+      expect(toRgb('hsla(38, 100%, 75%, 0.78)')).toBe('255, 208.25, 127.5')
     })
   })
 
