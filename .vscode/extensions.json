@@ -10,6 +10,7 @@
     "bradlc.vscode-tailwindcss",
     "austenc.tailwind-docs",
     "deque-systems.vscode-axe-linter",
-    "orta.vscode-jest"
+    "orta.vscode-jest",
+    "csstools.postcss"
   ]
 }

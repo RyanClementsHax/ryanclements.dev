@@ -13,8 +13,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
  * @type {import('next').NextConfig}
  **/
 const config = {
-  target: 'serverless',
-  experimental: { esmExternals: true },
+  experimental: { esmExternals: true }
 }
 
 module.exports = withPlugins([withBundleAnalyzer], config)

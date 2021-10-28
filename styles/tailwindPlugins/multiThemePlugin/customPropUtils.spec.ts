@@ -8,20 +8,20 @@ import {
 describe('customPropUtils', () => {
   describe('toCustomPropValue', () => {
     it('if given a number it converts it to a string', () => {
-      expect(toCustomPropValue(4)).toEqual('4')
+      expect(toCustomPropValue(4)).toBe('4')
     })
     it('converts the value to rgb if it is a color', () => {
-      expect(toCustomPropValue('#fff')).toEqual('255, 255, 255')
+      expect(toCustomPropValue('#fff')).toBe('255, 255, 255')
     })
 
     it('returns the value if it is not a color', () => {
-      expect(toCustomPropValue('not a color')).toEqual('not a color')
+      expect(toCustomPropValue('not a color')).toBe('not a color')
     })
   })
 
   describe('toCustomPropName', () => {
     it('concats the values as a kebab cased custom prop', () => {
-      expect(toCustomPropName(['this', 'that', '0', 'someOtherThing'])).toEqual(
+      expect(toCustomPropName(['this', 'that', '0', 'someOtherThing'])).toBe(
         '--this-that-0-some-other-thing'
       )
     })
@@ -29,7 +29,7 @@ describe('customPropUtils', () => {
     it('removes default path steps case insensitvely', () => {
       expect(
         toCustomPropName(['default', 'that', 'DEFAULT', 'someOtherThing'])
-      ).toEqual('--that-some-other-thing')
+      ).toBe('--that-some-other-thing')
     })
   })
 
@@ -38,7 +38,7 @@ describe('customPropUtils', () => {
       const result = asCustomProp('#fff', ['this', 'that'])
 
       if (typeof result === 'function') {
-        expect(result({ opacityValue: 'value' })).toEqual(
+        expect(result({ opacityValue: 'value' })).toBe(
           'rgba(var(--this-that), value)'
         )
       } else {
@@ -50,7 +50,7 @@ describe('customPropUtils', () => {
       const result = asCustomProp('not a color', ['this', 'that'])
 
       if (typeof result === 'string') {
-        expect(result).toEqual('var(--this-that)')
+        expect(result).toBe('var(--this-that)')
       } else {
         throw new Error('expected to receive a string')
       }
@@ -60,7 +60,7 @@ describe('customPropUtils', () => {
       const result = asCustomProp(4, ['this', 'that'])
 
       if (typeof result === 'string') {
-        expect(result).toEqual('var(--this-that)')
+        expect(result).toBe('var(--this-that)')
       } else {
         throw new Error('expected to receive a string')
       }
