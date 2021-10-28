@@ -47,10 +47,6 @@
     "react/display-name": "off",
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/no-floating-promises": "error",
-    "testing-library/no-render-in-setup": [
-      "error",
-      { "allowTestingFrameworkSetupHook": "beforeEach" }
-    ],
     // next recommended settings
     "import/no-anonymous-default-export": "warn",
     "react/react-in-jsx-scope": "off",
