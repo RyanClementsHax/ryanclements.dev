@@ -34,8 +34,7 @@
     {
       "files": ["**/*.ts?(x)"],
       "parserOptions": {
-        "project": "./tsconfig.json",
-        "extraFileExtensions": [".mjs"]
+        "project": "./tsconfig.json"
       },
       "rules": {
         "@typescript-eslint/no-floating-promises": "error"
