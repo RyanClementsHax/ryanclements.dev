@@ -8,6 +8,7 @@
   - [Testing](#testing)
     - [Lighthouse](#lighthouse)
   - [Deployment](#deployment)
+  - [Checkly](#checkly)
 
 ## Setup
 
@@ -70,3 +71,5 @@ It is recommended that you get [this](https://chrome.google.com/webstore/detail/
 ## Deployment
 
 Deployment is handled by Vercel on merge to the `main` branch
+
+## Checkly
