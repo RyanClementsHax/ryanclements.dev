@@ -1,6 +1,7 @@
 import { Layout } from 'components/Landing/Layout'
 import Head from 'next/head'
 import Image from 'next/image'
+import banner from 'public/banner.jpg'
 
 export const Index: React.FC = () => {
   return (
@@ -24,10 +25,12 @@ export const Index: React.FC = () => {
           </div>
           <div className="relative h-[500px] hidden md:block shadow-md lg:col-span-3">
             <Image
-              src="/banner.jpg"
+              src={banner}
               layout="fill"
               objectFit="cover"
               objectPosition="center"
+              placeholder="blur"
+              priority
               alt="My wife, me, and our wedding party being silly"
             />
           </div>
