@@ -13,7 +13,7 @@ module.exports = {
   ],
   moduleNameMapper: {
     '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
-    '\\.(gif|ttf|eot|svg|png|jpg)$': '<rootDir>/test/__mocks__/fileMock.js',
+    '\\.(gif|ttf|eot|svg|png|jpg)$': '<rootDir>/tests/__mocks__/fileMock.js',
     '^lib/(.*)$': '<rootDir>/lib/$1'
   },
   moduleDirectories: ['node_modules', __dirname],
