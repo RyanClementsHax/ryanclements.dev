@@ -1,4 +1,3 @@
-//@ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { isColor, toRgb, withOpacity } = require('./colorUtils')
 const kebabCase = require('just-kebab-case')

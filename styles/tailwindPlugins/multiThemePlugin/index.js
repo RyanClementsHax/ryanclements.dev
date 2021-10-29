@@ -1,4 +1,3 @@
-//@ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require('tailwindcss/plugin')
 const {
