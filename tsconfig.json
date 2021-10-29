@@ -20,5 +20,12 @@
     "baseUrl": "."
   },
   "exclude": ["node_modules", ".next", "out"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.mjs",
+    "**/*.jsx"
+  ]
 }
