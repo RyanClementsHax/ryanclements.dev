@@ -1,7 +1,7 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "rvest.vs-code-prettier-eslint",
+    "esbenp.prettier-vscode",
     "yzhang.markdown-all-in-one",
     "davidanson.vscode-markdownlint",
     "stylelint.vscode-stylelint",

@@ -20,10 +20,8 @@
       "single",
       { "avoidEscape": true, "allowTemplateLiterals": false }
     ],
-    "indent": "off",
-    "no-console": "off",
-    "react/no-danger": "error",
-    "@typescript-eslint/indent": "off"
+    "no-console": "warn",
+    "react/no-danger": "error"
   },
   "overrides": [
     {
@@ -35,18 +33,12 @@
     },
     {
       "files": ["**/*.ts?(x)"],
-      "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": "./tsconfig.json",
-        "extraFileExtensions": [".mjs"],
-        "sourceType": "module",
-        "ecmaFeatures": {
-          "jsx": true
-        },
-        "warnOnUnsupportedTypeScriptVersion": true
+        "extraFileExtensions": [".mjs"]
       },
       "rules": {
-        "import/no-anonymous-default-export": "off"
+        "@typescript-eslint/no-floating-promises": "error"
       }
     }
   ]
