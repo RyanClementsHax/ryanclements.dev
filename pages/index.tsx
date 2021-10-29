@@ -1,7 +1,6 @@
 import { Layout } from 'components/Landing/Layout'
 import Head from 'next/head'
-import Image from 'next/image'
-import banner from 'public/banner.jpg'
+import { OfficeTransparent as Office } from 'components/Banners'
 
 export const Index: React.FC = () => {
   return (
@@ -23,16 +22,8 @@ export const Index: React.FC = () => {
               software&nbsp;👨‍💻
             </h2>
           </div>
-          <div className="relative h-[500px] hidden md:block shadow-md lg:col-span-3">
-            <Image
-              src={banner}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
-              placeholder="blur"
-              priority
-              alt="My wife, me, and our wedding party being silly"
-            />
+          <div className="relative h-[500px] hidden md:block lg:col-span-3">
+            <Office />
           </div>
         </div>
       </section>
