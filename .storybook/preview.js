@@ -62,7 +62,7 @@ export const decorators = [
       } else {
         updateTheme(globals.theme)
       }
-    }, [globals.theme, parameters.theme])
+    }, [previousParametersTheme, globals.theme, parameters.theme])
 
     return (
       <ThemeContext.Provider
