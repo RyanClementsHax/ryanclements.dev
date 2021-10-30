@@ -14,6 +14,7 @@
     "noImplicitReturns": true,
     "jsx": "preserve",
     "allowJs": true,
+    "checkJs": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -26,6 +27,7 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.mjs",
-    "**/*.jsx"
+    "**/*.jsx",
+    ".storybook/*.js"
   ]
 }

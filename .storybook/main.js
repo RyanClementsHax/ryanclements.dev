@@ -1,4 +1,10 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
+
+/**
+ * @typedef {import('next').NextConfig} NextConfig
+ * @typedef {import('webpack').Configuration} WebpackConfig
+ */
 
 module.exports = {
   stories: ['../**/*.stories.@(js|jsx|ts|tsx)'],
@@ -13,7 +19,11 @@ module.exports = {
   core: {
     builder: 'webpack5'
   },
-  webpackFinal: async baseConfig => {
+  /**
+   * @param {WebpackConfig} baseConfig
+   * @return {Promise<WebpackConfig>}
+   */
+  async webpackFinal(baseConfig) {
     const nextConfig = require('../next.config.js')([], baseConfig)
 
     configureRootAbsoluteImport(baseConfig)
@@ -23,11 +33,21 @@ module.exports = {
   }
 }
 
-const configureRootAbsoluteImport = baseConfig =>
-  baseConfig.resolve.modules.push(path.resolve(__dirname, '..'))
+/**
+ * @param {WebpackConfig} baseConfig
+ * @return {void}
+ */
+const configureRootAbsoluteImport = baseConfig => {
+  baseConfig.resolve?.modules?.push(path.resolve(__dirname, '..'))
+}
 
-const configureCss = (baseConfig, nextConfig) =>
-  baseConfig.module.rules.push({
+/**
+ * @param {WebpackConfig} baseConfig
+ * @param {NextConfig} nextConfig
+ * @return {void}
+ */
+const configureCss = (baseConfig, nextConfig) => {
+  baseConfig.module?.rules?.push({
     test: /\.(s*)css$/,
     use: [
       'style-loader',
@@ -48,3 +68,4 @@ const configureCss = (baseConfig, nextConfig) =>
       }
     ]
   })
+}

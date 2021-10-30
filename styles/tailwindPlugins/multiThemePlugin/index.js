@@ -31,7 +31,7 @@ const defaultOptions = {
 /**
  * @param {ThemeConfig[]} themes
  * @param {Helpers} helpers
- * @returns {void}
+ * @return {void}
  */
 const addThemeVariants = (themes, { addVariant, config, e }) => {
   themes.map(({ name }) =>
@@ -56,6 +56,7 @@ const addThemeVariants = (themes, { addVariant, config, e }) => {
 /**
  * @param {ThemeConfig[]} themes
  * @param {Helpers} helpers
+ * @return {void}
  */
 const addThemeStyles = (themes, helpers) => {
   const { addBase, e, config } = helpers
@@ -72,7 +73,7 @@ const addThemeStyles = (themes, helpers) => {
 /**
  * @callback MultiThemePlugin
  * @param {MultiThemePluginOptions} options
- * @returns {any}
+ * @return {any}
  * @throws {Error} if the options are invalid
  * @throws {Error} if any callbacks are found in places not supported by tailwind
  */
