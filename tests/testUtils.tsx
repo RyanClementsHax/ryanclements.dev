@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import { ThemeProvider } from 'components/Theme'
+import { ThemeProvider } from 'components/theme'
 
 const Providers: React.FC = ({ children }) => (
   <ThemeProvider>{children}</ThemeProvider>

@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react'
-import { Theme } from 'components/Theme'
+import { Theme } from 'components/theme'
 
 import Index from 'pages/index'
 

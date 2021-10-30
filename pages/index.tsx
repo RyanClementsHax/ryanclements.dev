@@ -1,4 +1,4 @@
-import { Layout } from 'components/Landing/Layout'
+import { Layout } from 'components/landing/Layout'
 import Head from 'next/head'
 import Image from 'next/image'
 import banner from 'public/banner.jpg'
