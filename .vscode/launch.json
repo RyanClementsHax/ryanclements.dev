@@ -2,18 +2,28 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Next.js: debug server-side",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn dev"
+    },
+    {
+      "name": "Next.js: debug client-side",
       "type": "pwa-chrome",
       "request": "launch",
-      "name": "Debug chrome",
       "url": "http://localhost:3000"
     },
     {
-      "type": "node",
-      "request": "attach",
-      "name": "Debug next",
-      "skipFiles": ["<node_internals>/**"],
-      "port": 9229,
-      "preLaunchTask": "yarn dev"
+      "name": "Next.js: debug full stack",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn dev",
+      "console": "integratedTerminal",
+      "serverReadyAction": {
+        "pattern": "started server on .+, url: (https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
     },
     {
       "type": "node",
@@ -25,12 +35,6 @@
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "yarn",
       "args": ["test", "--runInBand", "--watchAll=false"]
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Debug next and chrome",
-      "configurations": ["Debug chrome", "Debug next"]
     }
   ]
 }

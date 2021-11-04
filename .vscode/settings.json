@@ -1,6 +1,6 @@
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "npm.packageManager": "yarn",
   "css.validate": false,
   "less.validate": false,

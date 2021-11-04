@@ -1,16 +1,15 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "rvest.vs-code-prettier-eslint",
     "yzhang.markdown-all-in-one",
     "davidanson.vscode-markdownlint",
     "stylelint.vscode-stylelint",
     "webben.browserslist",
-    "dsznajder.es7-react-js-snippets",
     "bradlc.vscode-tailwindcss",
     "austenc.tailwind-docs",
     "deque-systems.vscode-axe-linter",
     "orta.vscode-jest",
-    "csstools.postcss"
+    "csstools.postcss",
+    "esbenp.prettier-vscode"
   ]
 }
