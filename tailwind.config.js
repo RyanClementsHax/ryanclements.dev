@@ -18,7 +18,23 @@ module.exports = {
       defaultTheme: {
         extend: {
           colors: {
-            background: 'white'
+            surface: 'white',
+            on: {
+              surface: colors.gray[800]
+            },
+            primary: {
+              DEFAULT: '#1E40AF',
+              50: '#EEF1FC',
+              100: '#DCE3F9',
+              200: '#CBD5F6',
+              300: '#A8B9F0',
+              400: '#859DEA',
+              500: '#6280E4',
+              600: '#3F64DE',
+              700: '#234CD1',
+              800: '#1E40AF',
+              900: '#18338C'
+            }
           }
         }
       },
@@ -27,7 +43,23 @@ module.exports = {
           name: 'dark',
           extend: {
             colors: {
-              background: colors.gray[900]
+              surface: colors.gray[900],
+              on: {
+                surface: colors.gray[400]
+              },
+              primary: {
+                DEFAULT: '#8695C6',
+                50: '#F1F3F8',
+                100: '#E3E7F2',
+                200: '#C8CEE5',
+                300: '#ACB6D8',
+                400: '#8695C6',
+                500: '#7485BE',
+                600: '#596DB1',
+                700: '#485B99',
+                800: '#3B4A7D',
+                900: '#2E3A61'
+              }
             }
           }
         }
