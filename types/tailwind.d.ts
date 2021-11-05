@@ -93,3 +93,8 @@ declare module 'tailwindcss/lib/util/prefixSelector' {
   declare function prefixSelector(prefix: string, selector: string): string
   export default prefixSelector
 }
+
+declare module 'tailwindcss/colors' {
+  declare const colors: any
+  export = colors
+}

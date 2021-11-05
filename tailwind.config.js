@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const colors = require('tailwindcss/colors')
 
 module.exports = {
   mode: 'jit',
@@ -15,8 +16,7 @@ module.exports = {
       defaultTheme: {
         extend: {
           colors: {
-            primary: 'orange',
-            secondary: 'red'
+            background: 'white'
           }
         }
       },
@@ -25,13 +25,9 @@ module.exports = {
           name: 'dark',
           extend: {
             colors: {
-              primary: 'purple'
+              background: colors.gray[900]
             }
           }
-        },
-        {
-          name: 'neon',
-          extend: {}
         }
       ]
     })

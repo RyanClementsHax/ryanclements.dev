@@ -16,7 +16,7 @@ export const ThemeToggle: React.FC = () => {
       checked={darkThemeEnabled}
       onChange={checked => setTheme(checked ? Theme.dark : Theme.light)}
       className={`${darkThemeEnabled ? 'bg-blue-900' : 'bg-blue-700'}
-          relative inline-flex flex-shrink-0 h-[38px] w-[74px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+          relative inline-flex flex-shrink-0 h-[38px] w-[74px] border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-blue-700 focus-visible:ring-opacity-75`}
     >
       <span className="sr-only">Enable dark theme</span>
       <span
