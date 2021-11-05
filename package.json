@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.1",
+    "@heroicons/react": "^1.0.5",
     "autoprefixer": "^10.3.6",
     "color": "^4.0.1",
     "just-kebab-case": "^3.0.0",
