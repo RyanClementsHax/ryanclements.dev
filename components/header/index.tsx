@@ -1,9 +1,7 @@
-import { ThemeToggle } from 'components/theme'
+import { ThemeSelect } from 'components/theme'
 
-export const Header: React.FC = () => {
-  return (
-    <header className="absolute right-0 p-3">
-      <ThemeToggle />
-    </header>
-  )
-}
+export const Header: React.FC = () => (
+  <header className="absolute p-3 w-full flex justify-end">
+    <ThemeSelect />
+  </header>
+)

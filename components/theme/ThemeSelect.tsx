@@ -4,7 +4,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 import { useTheme } from './ThemeContext'
 import { Theme } from './types'
 
-export const ThemeToggle: React.FC = () => {
+export const ThemeSelect: React.FC = () => {
   const { theme, setTheme } = useTheme()
 
   if (!theme) {

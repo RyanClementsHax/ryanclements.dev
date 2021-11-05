@@ -6575,6 +6575,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"classnames@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "classnames@npm:2.3.1"
+  checksum: 14db8889d56c267a591f08b0834989fe542d47fac659af5a539e110cc4266694e8de86e4e3bbd271157dbd831361310a8293e0167141e80b0f03a0f175c80960
+  languageName: node
+  linkType: hard
+
 "clean-css@npm:^4.2.3":
   version: 4.2.4
   resolution: "clean-css@npm:4.2.4"
@@ -14154,6 +14161,7 @@ __metadata:
     babel-jest: ^27.3.1
     browserslist: ^4.17.6
     chromatic: ^6.0.5
+    classnames: ^2.3.1
     color: ^4.0.1
     cross-env: ^7.0.3
     css-loader: ^6.5.0
