@@ -27,7 +27,7 @@ jobs:
             **/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - name: install
-        run: yarn install --frozen-lockfile --check-files
+        run: yarn install --immutable --check-cache
         # cache the working directory so we can use it in other jobs without having to checkout and install
       - uses: actions/cache@v2
         with:
