@@ -26,6 +26,7 @@
     "chromatic": "env-cmd -f .env.local --silent chromatic --exit-zero-on-changes"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.1",
     "autoprefixer": "^10.3.6",
     "color": "^4.0.1",
     "just-kebab-case": "^3.0.0",
