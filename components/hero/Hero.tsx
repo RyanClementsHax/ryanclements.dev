@@ -15,7 +15,7 @@ export const Hero: React.FC = () => (
           software&nbsp;👨‍💻
         </h2>
       </div>
-      <div className="relative h-[500px] hidden md:block shadow-md lg:col-span-3">
+      <div className="relative h-[500px] hidden md:block overflow-hidden rounded-xl shadow-md lg:col-span-3">
         <Image
           src={banner}
           layout="fill"
