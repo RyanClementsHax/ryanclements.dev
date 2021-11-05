@@ -18,13 +18,12 @@ export const Hero: React.FC = () => (
       <div className="relative h-[500px] hidden md:block shadow-md lg:col-span-3">
         <Image
           src={banner}
-          layout="responsive"
+          layout="fill"
           objectFit="cover"
           objectPosition="center"
           placeholder="blur"
           priority
           alt="My wife, me, and our wedding party being silly"
-          className="h-full"
         />
       </div>
     </div>
