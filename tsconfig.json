@@ -20,7 +20,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": "."
   },
-  "exclude": ["node_modules", ".next", "out"],
+  "exclude": ["node_modules", ".next", "out", "storybook-static"],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
