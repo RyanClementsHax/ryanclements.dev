@@ -1,5 +1,0 @@
-{
-  "*.@(ts|tsx|js|jsx)": ["yarn lint:js", "yarn format"],
-  "*.json|*.*rc!.browserslistrc": ["yarn format"],
-  "*.@(css|scss)": ["yarn lint:styles", "yarn format"]
-}

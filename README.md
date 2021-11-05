@@ -45,11 +45,11 @@ Run the `Debug next and chrome` launch configuration to launch both ([MUST close
 
 ## Linting
 
-- Run `yarn lint:all` to lint all of the files
+Run `yarn lint:all` to lint all of the files
 
 Run `yarn lint:js <files>` to lint the specified files via `eslint`
 
-Run `yarn lint:js:all` to lint all of the js/jsx/ts/tsx files
+Run `yarn lint:js` to lint all of the js/jsx/ts/tsx files
 
 Run `yarn lint:styles <files>` to lint the specified files fia `stylelint`
 
