@@ -12,5 +12,7 @@
   "css.validate": false,
   "less.validate": false,
   "scss.validate": false,
-  "jest.jestCommandLine": "yarn test"
+  "jest.jestCommandLine": "yarn test",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active"
 }
