@@ -40,10 +40,12 @@ module.exports = {
                 },
                 surfaceActive: colors.gray[900]
               },
-              'border-color': colors.gray[300],
-              'focus-color': {
-                ring: defaultPrimary,
-                border: defaultPrimary
+              borderColor: {
+                DEFAULT: colors.gray[300],
+                focus: defaultPrimary
+              },
+              ringColor: {
+                focus: defaultPrimary
               },
               icon: {
                 DEFAULT: colors.gray[400],
@@ -82,10 +84,12 @@ module.exports = {
                   },
                   surfaceActive: primary[100]
                 },
-                border_color: colors.gray[700],
-                focus_color: {
-                  ring: defaultPrimary,
-                  border: defaultPrimary
+                borderColor: {
+                  DEFAULT: colors.gray[700],
+                  focus: defaultPrimary
+                },
+                ringColor: {
+                  focus: defaultPrimary
                 },
                 icon: {
                   DEFAULT: colors.gray[600],

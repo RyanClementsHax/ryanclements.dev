@@ -16,7 +16,7 @@ export const ThemeSelect: React.FC = () => {
     <div className="w-28">
       <Listbox value={theme} onChange={setTheme}>
         <div className="relative">
-          <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left border border-border_color rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 focus:ring-focus_color-ring focus:border-focus_color-border sm:text-sm">
+          <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left border border-borderColor rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 focus:ring-ringColor-focus focus:border-borderColor-focus sm:text-sm">
             <span className="block truncate text-on-surface">{theme}</span>
             <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
               <SelectorIcon className="w-5 h-5 text-icon" aria-hidden="true" />
