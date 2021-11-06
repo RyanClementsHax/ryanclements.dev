@@ -14204,7 +14204,7 @@ __metadata:
     stylelint-order: ^4.1.0
     stylelint-prettier: ^1.2.0
     stylelint-scss: ^3.21.0
-    tailwindcss: ^2.2.17
+    tailwindcss: ^2.2.19
     ts-jest: ^27.0.5
     tslib: ^2.3.1
     typescript: ^4.4.4
@@ -18871,7 +18871,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^2.2.17":
+"tailwindcss@npm:^2.2.19":
   version: 2.2.19
   resolution: "tailwindcss@npm:2.2.19"
   dependencies:

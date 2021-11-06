@@ -53,7 +53,7 @@ export const ThemeSelect: React.FC = () => {
                         {x}
                       </span>
                       {selected && (
-                        <span className="text-icon-primary absolute inset-y-0 left-0 flex items-center pl-3">
+                        <span className="text-primary absolute inset-y-0 left-0 flex items-center pl-3">
                           <CheckIcon className="w-5 h-5" aria-hidden="true" />
                         </span>
                       )}

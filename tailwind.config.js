@@ -17,6 +17,7 @@ module.exports = {
         extend: {
           colors() {
             const primary = {
+              DEFAULT: '',
               50: '#EEF1FC',
               100: '#DCE3F9',
               200: '#CBD5F6',
@@ -28,7 +29,7 @@ module.exports = {
               800: '#1E40AF',
               900: '#18338C'
             }
-            const defaultPrimary = primary[800]
+            primary.DEFAULT = primary[800]
             return {
               primary,
               surface: 'white',
@@ -42,15 +43,12 @@ module.exports = {
               },
               borderColor: {
                 DEFAULT: colors.gray[300],
-                focus: defaultPrimary
+                focus: primary.DEFAULT
               },
               ringColor: {
-                focus: defaultPrimary
+                focus: primary.DEFAULT
               },
-              icon: {
-                DEFAULT: colors.gray[400],
-                primary: defaultPrimary
-              }
+              icon: colors.gray[400]
             }
           }
         }
@@ -61,6 +59,7 @@ module.exports = {
           extend: {
             colors() {
               const primary = {
+                DEFAULT: '',
                 50: '#F1F3F8',
                 100: '#E3E7F2',
                 200: '#C8CEE5',
@@ -72,7 +71,7 @@ module.exports = {
                 800: '#3B4A7D',
                 900: '#2E3A61'
               }
-              const defaultPrimary = primary[500]
+              primary.DEFAULT = primary[500]
               return {
                 primary,
                 surface: colors.gray[900],
@@ -86,15 +85,12 @@ module.exports = {
                 },
                 borderColor: {
                   DEFAULT: colors.gray[700],
-                  focus: defaultPrimary
+                  focus: primary.DEFAULT
                 },
                 ringColor: {
-                  focus: defaultPrimary
+                  focus: primary.DEFAULT
                 },
-                icon: {
-                  DEFAULT: colors.gray[600],
-                  primary: defaultPrimary
-                }
+                icon: colors.gray[600]
               }
             }
           }
