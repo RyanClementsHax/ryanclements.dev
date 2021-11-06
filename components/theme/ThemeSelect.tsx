@@ -13,16 +13,13 @@ export const ThemeSelect: React.FC = () => {
   }
 
   return (
-    <div className="w-24">
+    <div className="w-28">
       <Listbox value={theme} onChange={setTheme}>
         <div className="relative">
-          <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left border border-gray-300 rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+          <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left border border-border_color rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 focus:ring-focus_color-ring focus:border-focus_color-border sm:text-sm">
             <span className="block truncate text-on-surface">{theme}</span>
             <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-              <SelectorIcon
-                className="w-5 h-5 text-gray-400"
-                aria-hidden="true"
-              />
+              <SelectorIcon className="w-5 h-5 text-icon" aria-hidden="true" />
             </span>
           </Listbox.Button>
           <Transition
@@ -38,8 +35,8 @@ export const ThemeSelect: React.FC = () => {
                   className={({ active }) =>
                     c(
                       active
-                        ? 'text-primary-900 bg-primary-100'
-                        : 'text-gray-900',
+                        ? 'text-on-surface-active bg-surface-active'
+                        : 'text-on-surface',
                       'cursor-default select-none relative py-2 pl-10 pr-4'
                     )
                   }
@@ -56,7 +53,7 @@ export const ThemeSelect: React.FC = () => {
                         {x}
                       </span>
                       {selected && (
-                        <span className="text-primary-600 absolute inset-y-0 left-0 flex items-center pl-3">
+                        <span className="text-icon-primary absolute inset-y-0 left-0 flex items-center pl-3">
                           <CheckIcon className="w-5 h-5" aria-hidden="true" />
                         </span>
                       )}
