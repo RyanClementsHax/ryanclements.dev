@@ -12458,6 +12458,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"just-kebab-case@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "just-kebab-case@npm:3.1.1"
+  checksum: 4909e162851436a822fd2b0b9ec4fb962c15385bef54e25f3f96793c59fcba77943d24315e356c5196e3bca020c62af2875f03ec8d42fb2fbcf44d4b3af8c5dd
+  languageName: node
+  linkType: hard
+
 "just-unique@npm:^3.3.0":
   version: 3.4.1
   resolution: "just-unique@npm:3.4.1"
@@ -14173,6 +14180,7 @@ __metadata:
     jest-mock-extended: ^2.0.4
     jest-watch-typeahead: ^0.6.5
     jest-when: ^3.4.1
+    just-kebab-case: ^3.1.1
     just-unique: ^3.3.0
     lint-staged: ^11.2.6
     lodash: ^4.17.21

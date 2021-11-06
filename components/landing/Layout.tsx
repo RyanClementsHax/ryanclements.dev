@@ -1,3 +1,3 @@
 export const Layout: React.FC = ({ children }) => (
-  <main className="font-mono bg-surface">{children}</main>
+  <main className="font-mono bg-surface-base">{children}</main>
 )

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { isColor, toRgb, withOpacity } = require('./colorUtils')
+const kebabCase = require('just-kebab-case')
 
 /**
  * @typedef {import('./colorUtils').withOpacity} withOpacity
@@ -34,6 +35,7 @@ const toCustomPropName = valuePath => {
   }
   return `--${valuePath
     .filter(step => step.toLowerCase() !== 'default')
+    .map(kebabCase)
     .join('-')}`
 }
 

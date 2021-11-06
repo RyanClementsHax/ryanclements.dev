@@ -32,14 +32,18 @@ module.exports = {
             primary.DEFAULT = primary[800]
             return {
               primary,
-              surface: 'white',
-              surfaceActive: primary[100],
+              surface: {
+                base: 'white',
+                active: primary[100]
+              },
               on: {
                 surface: {
-                  DEFAULT: colors.gray[800],
-                  muted: colors.gray[600]
-                },
-                surfaceActive: colors.gray[900]
+                  base: {
+                    DEFAULT: colors.gray[800],
+                    muted: colors.gray[600]
+                  },
+                  active: colors.gray[900]
+                }
               },
               borderColor: {
                 DEFAULT: colors.gray[300],
@@ -74,14 +78,18 @@ module.exports = {
               primary.DEFAULT = primary[500]
               return {
                 primary,
-                surface: colors.gray[900],
-                surfaceActive: primary[900],
+                surface: {
+                  base: colors.gray[900],
+                  active: primary[900]
+                },
                 on: {
                   surface: {
-                    DEFAULT: colors.gray[300],
-                    muted: colors.gray[400]
-                  },
-                  surfaceActive: primary[100]
+                    base: {
+                      DEFAULT: colors.gray[300],
+                      muted: colors.gray[400]
+                    },
+                    active: primary[100]
+                  }
                 },
                 borderColor: {
                   DEFAULT: colors.gray[700],
