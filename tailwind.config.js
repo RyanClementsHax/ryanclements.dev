@@ -82,7 +82,7 @@ module.exports = {
                 on: {
                   surface: {
                     DEFAULT: colors.gray[300],
-                    muted: colors.gray[500],
+                    muted: colors.gray[400],
                     active: primary[100]
                   }
                 },
