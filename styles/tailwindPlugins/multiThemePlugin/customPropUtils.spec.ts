@@ -31,6 +31,12 @@ describe('customPropUtils', () => {
         toCustomPropName(['default', 'that', 'DEFAULT', 'someOtherThing'])
       ).toBe('--that-someOtherThing')
     })
+
+    it('throws when whitespace is encountered', () => {
+      expect(() =>
+        toCustomPropName(['thing', '   has whitespace   '])
+      ).toThrow()
+    })
   })
 
   describe('asCustomProp', () => {

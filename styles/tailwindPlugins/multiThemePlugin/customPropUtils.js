@@ -19,12 +19,23 @@ const toCustomPropValue = value => {
   }
 }
 
+const whitespaceRegex = /\s/g
 /**
  * @param {string[]} valuePath - the path to get to the value
  * @return {string} valuePath concatenated as a kebab cased custom property
  */
-const toCustomPropName = valuePath =>
-  `--${valuePath.filter(step => step.toLowerCase() !== 'default').join('-')}`
+const toCustomPropName = valuePath => {
+  if (valuePath.some(x => whitespaceRegex.test(x))) {
+    throw new Error(
+      `cannot have whitespace in any property in a theme config, found "${valuePath.find(
+        x => whitespaceRegex.test(x)
+      )}"`
+    )
+  }
+  return `--${valuePath
+    .filter(step => step.toLowerCase() !== 'default')
+    .join('-')}`
+}
 
 /**
  * @param {string | number} value - the value of the custom prop to generate
