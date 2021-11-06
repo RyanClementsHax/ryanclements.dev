@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { isColor, toRgb, withOpacity } = require('./colorUtils')
-const kebabCase = require('just-kebab-case')
 
 /**
  * @typedef {import('./colorUtils').withOpacity} withOpacity
@@ -25,10 +24,7 @@ const toCustomPropValue = value => {
  * @return {string} valuePath concatenated as a kebab cased custom property
  */
 const toCustomPropName = valuePath =>
-  `--${valuePath
-    .filter(step => step.toLowerCase() !== 'default')
-    .map(kebabCase)
-    .join('-')}`
+  `--${valuePath.filter(step => step.toLowerCase() !== 'default').join('-')}`
 
 /**
  * @param {string | number} value - the value of the custom prop to generate

@@ -31,16 +31,14 @@ module.exports = {
             const defaultPrimary = primary[800]
             return {
               primary,
-              surface: {
-                DEFAULT: 'white',
-                active: primary[100]
-              },
+              surface: 'white',
+              surfaceActive: primary[100],
               on: {
                 surface: {
                   DEFAULT: colors.gray[800],
-                  muted: colors.gray[600],
-                  active: primary[900]
-                }
+                  muted: colors.gray[600]
+                },
+                surfaceActive: colors.gray[900]
               },
               'border-color': colors.gray[300],
               'focus-color': {
@@ -75,16 +73,14 @@ module.exports = {
               const defaultPrimary = primary[500]
               return {
                 primary,
-                surface: {
-                  DEFAULT: colors.gray[900],
-                  active: primary[900]
-                },
+                surface: colors.gray[900],
+                surfaceActive: primary[900],
                 on: {
                   surface: {
                     DEFAULT: colors.gray[300],
-                    muted: colors.gray[400],
-                    active: primary[100]
-                  }
+                    muted: colors.gray[400]
+                  },
+                  surfaceActive: primary[100]
                 },
                 border_color: colors.gray[700],
                 focus_color: {
