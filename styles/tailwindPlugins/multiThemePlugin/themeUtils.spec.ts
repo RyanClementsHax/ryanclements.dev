@@ -338,6 +338,84 @@ describe('themeUtils', () => {
       })
     })
 
+    it('merges primitive values as DEFAULT values on that key', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              colors: {
+                red: 'primitive'
+              },
+              foo: {
+                bar: {
+                  DEFAULT: 'primitive'
+                }
+              }
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              colors: {
+                red: {
+                  DEFAULT: 'non primitive'
+                }
+              },
+              foo: {
+                bar: 'primitive'
+              }
+            }
+          }
+        ])
+      ).toEqual({
+        colors: {
+          red: {
+            DEFAULT: 'var(--colors-red)'
+          }
+        },
+        foo: {
+          bar: {
+            DEFAULT: 'var(--foo-bar)'
+          }
+        }
+      })
+    })
+
+    it('doesnt convert primitives to DEFAULT values if no conflict with other themes', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              colors: {
+                red: 'primitive'
+              }
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              foo: {
+                bar: {
+                  DEFAULT: 'primitive'
+                }
+              }
+            }
+          }
+        ])
+      ).toEqual({
+        colors: {
+          red: 'var(--colors-red)'
+        },
+        foo: {
+          bar: {
+            DEFAULT: 'var(--foo-bar)'
+          }
+        }
+      })
+    })
+
     it('ignores null values', () => {
       expect(
         resolveThemeExtensionsAsTailwindExtension([
