@@ -1,4 +1,5 @@
 import { Meta, Story } from '@storybook/react'
+import { Layout } from 'components/Layout'
 
 import Index from 'pages/index'
 import { asDarkTheme, asMobile } from 'stories/storyUtils'
@@ -15,5 +16,12 @@ export const DarkTheme = asDarkTheme(Template)
 
 export default {
   title: 'pages/landing',
-  component: Index
+  component: Index,
+  decorators: [
+    Story => (
+      <Layout>
+        <Story />
+      </Layout>
+    )
+  ]
 } as Meta
