@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen } from 'tests/testUtils'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
-import { Primary } from 'stories/pages/index.stories'
+import { Primary } from './ThemeSelect.stories'
 import { Theme, ThemeContext, ThemeContextType } from '..'
 
 describe('ThemeSelect', () => {
@@ -14,7 +14,7 @@ describe('ThemeSelect', () => {
     theme = Theme.light
     setTheme = jest.fn()
     ;({ container } = render(
-      <ThemeContext.Provider value={{ theme: Theme.light, setTheme }}>
+      <ThemeContext.Provider value={{ theme, setTheme }}>
         <Primary />
       </ThemeContext.Provider>
     ))
