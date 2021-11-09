@@ -8,7 +8,6 @@ import { UPDATE_GLOBALS } from '@storybook/core-events'
 import { ThemeContext, updateTheme } from 'components/theme'
 
 import 'styles/global.scss'
-import { Layout } from 'components/Layout'
 
 /**
  * @typedef {import('components/theme/types').Theme} Theme
@@ -75,12 +74,7 @@ export const decorators = [
         <Story />
       </ThemeContext.Provider>
     )
-  },
-  Story => (
-    <Layout>
-      <Story />
-    </Layout>
-  )
+  }
 ]
 
 export const parameters = {
@@ -88,7 +82,11 @@ export const parameters = {
   nextRouter: {
     Provider: RouterContext.Provider
   },
-  theme: 'light'
+  theme: 'light',
+  backgrounds: {
+    default: 'surface',
+    values: [{ name: 'surface', value: 'rgb(var(--colors-surface-base))' }]
+  }
 }
 
 const OriginalNextImage = NextImage.default

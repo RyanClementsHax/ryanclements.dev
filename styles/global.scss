@@ -6,4 +6,8 @@
   * {
     @apply transition;
   }
+
+  body {
+    @apply bg-surface-base font-mono;
+  }
 }
