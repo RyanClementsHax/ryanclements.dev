@@ -19,7 +19,6 @@ const Button: React.FC = () => {
 
 const Option: React.FC<{ value: string }> = ({ value }) => (
   <Listbox.Option
-    key={value}
     className={({ active }) =>
       c(
         active
@@ -70,7 +69,7 @@ export const ThemeSelect: React.FC = () => {
           >
             <Listbox.Options className="absolute w-full py-1 mt-1 z-10 overflow-auto text-base bg-surface-base rounded-md shadow-lg max-h-56 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {Object.keys(Theme).map(x => (
-                <Option key={theme} value={x} />
+                <Option key={x} value={x} />
               ))}
             </Listbox.Options>
           </Transition>
