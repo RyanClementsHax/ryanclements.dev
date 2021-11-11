@@ -10,4 +10,8 @@
   body {
     @apply bg-surface-base font-mono;
   }
+
+  .dark img {
+    filter: brightness(0.8) contrast(1.2) !important;
+  }
 }
