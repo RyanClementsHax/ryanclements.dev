@@ -1,58 +1,51 @@
-import { Story } from '@storybook/react'
+import { Story, Parameters } from '@storybook/react'
 import { Theme } from 'components/theme'
+import merge from 'just-merge'
 
 export interface StoryModifier {
   <T>(story: Story<T>): Story<T>
 }
-
-export const asCopy: StoryModifier = story => story.bind({})
-
-export const asDarkTheme: StoryModifier = story => {
-  const darkThemedStory = asCopy(story)
-  darkThemedStory.parameters = {
-    ...story.parameters,
-    theme: Theme.dark
-  }
-  return darkThemedStory
-}
-
-export const asMobile: StoryModifier = story => {
-  const mobileStory = asCopy(story)
-  mobileStory.parameters = {
-    ...story.parameters,
-    viewport: {
-      ...story.parameters?.viewport,
-      defaultViewport: 'mobile1'
-    }
-  }
-  return mobileStory
-}
-
-export const withFigmaUrl =
-  (url?: string) =>
-  <T>(story: Story<T>): Story<T> => {
-    if (!url) return story
-
-    story.parameters = {
-      ...story.parameters,
-      design: {
-        type: 'figma',
-        url
-      }
-    }
-    return story
-  }
 
 export const compose =
   (...params: StoryModifier[]): StoryModifier =>
   story =>
     params.reverse().reduceRight((y, fn) => fn(y), story)
 
-export const asDarkThemedMobile = compose(asDarkTheme, asMobile)
+export const asCopy: StoryModifier = story => story.bind({})
+
+export const withParams: (params: Parameters) => StoryModifier =
+  params => story => {
+    story.parameters = merge(story.parameters || {}, params || {})
+    return story
+  }
+
+export const withDarkTheme: StoryModifier = withParams({ theme: Theme.dark })
+
+export const withMobile: StoryModifier = withParams({
+  viewport: {
+    defaultViewport: 'mobile1'
+  }
+})
+
+export const withFigmaUrl: (url?: string) => StoryModifier = url =>
+  withParams(
+    url
+      ? {
+          design: {
+            type: 'figma',
+            url
+          }
+        }
+      : {}
+  )
 
 export interface DefaultStoryConfig {
   figmaUrl?: string
 }
+
+export const withDefaults: (config?: DefaultStoryConfig) => StoryModifier =
+  config => compose(asCopy, withFigmaUrl(config?.figmaUrl))
+
 export const createDefaultStories = <T>(
   template: Story<T>,
   {
@@ -72,11 +65,12 @@ export const createDefaultStories = <T>(
   DarkTheme: Story<T>
   DarkThemedMobile: Story<T>
 } => ({
-  Primary: compose(asCopy, withFigmaUrl(primary?.figmaUrl))(template),
-  Mobile: compose(asMobile, withFigmaUrl(mobile?.figmaUrl))(template),
-  DarkTheme: compose(asDarkTheme, withFigmaUrl(darkTheme?.figmaUrl))(template),
+  Primary: withDefaults(primary)(template),
+  Mobile: compose(withDefaults(mobile), withMobile)(template),
+  DarkTheme: compose(withDefaults(darkTheme), withDarkTheme)(template),
   DarkThemedMobile: compose(
-    asDarkThemedMobile,
-    withFigmaUrl(darkThemedMobile?.figmaUrl)
+    withDefaults(darkThemedMobile),
+    withMobile,
+    withDarkTheme
   )(template)
 })

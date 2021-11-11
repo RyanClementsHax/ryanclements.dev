@@ -12498,6 +12498,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"just-merge@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "just-merge@npm:3.0.0"
+  checksum: 313c1f4e714a61d0f5390ea05a376d18a6d29a3dee644724e97890c4c5d0cb108c6476506715d49a7835a54e4d15c3548de406b30c31cb85e06c87f3fca00559
+  languageName: node
+  linkType: hard
+
 "just-unique@npm:^3.3.0":
   version: 3.4.1
   resolution: "just-unique@npm:3.4.1"
@@ -14231,6 +14238,7 @@ __metadata:
     jest-watch-typeahead: ^0.6.5
     jest-when: ^3.4.1
     just-kebab-case: ^3.1.1
+    just-merge: ^3.0.0
     just-unique: ^3.3.0
     lint-staged: ^11.2.6
     lodash: ^4.17.21
