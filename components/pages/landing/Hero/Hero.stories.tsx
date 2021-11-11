@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/react'
-import { asDarkTheme, asMobile } from 'stories/storyUtils'
+import { asDarkTheme, asDarkThemedMobile, asMobile } from 'stories/storyUtils'
 
 import { Hero } from '.'
 
@@ -10,6 +10,8 @@ export const Primary = Template.bind({})
 export const Mobile = asMobile(Template)
 
 export const DarkTheme = asDarkTheme(Template)
+
+export const DarkThemedMobile = asDarkThemedMobile(Template)
 
 export default {
   title: 'pages/landing/Hero',

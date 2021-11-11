@@ -93,6 +93,7 @@
     "prettier": "^2.4.1",
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
+    "storybook-addon-designs": "^6.2.0",
     "storybook-addon-next-router": "^3.0.8",
     "storybook-dark-mode": "^1.0.8",
     "style-loader": "^3.3.1",

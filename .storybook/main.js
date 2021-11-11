@@ -11,10 +11,11 @@ module.exports = {
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    'storybook-addon-next-router',
     '@storybook/addon-a11y',
     '@storybook/addon-storysource',
-    'storybook-dark-mode'
+    'storybook-addon-next-router',
+    'storybook-dark-mode',
+    'storybook-addon-designs'
   ],
   core: {
     builder: 'webpack5'
