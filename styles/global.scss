@@ -12,6 +12,6 @@
   }
 
   .dark img {
-    filter: brightness(0.8) contrast(1.2) !important;
+    @apply filter brightness-75 contrast-125 #{!important};
   }
 }
