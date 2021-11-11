@@ -1,8 +1,14 @@
 import { Story } from '@storybook/react'
 import { Theme } from 'components/theme'
 
-export const asDarkTheme = <T>(story: Story<T>): Story<T> => {
-  const darkThemedStory = story.bind({})
+export interface StoryModifier {
+  <T>(story: Story<T>): Story<T>
+}
+
+export const asCopy: StoryModifier = story => story.bind({})
+
+export const asDarkTheme: StoryModifier = story => {
+  const darkThemedStory = asCopy(story)
   darkThemedStory.parameters = {
     ...story.parameters,
     theme: Theme.dark
@@ -10,8 +16,8 @@ export const asDarkTheme = <T>(story: Story<T>): Story<T> => {
   return darkThemedStory
 }
 
-export const asMobile = <T>(story: Story<T>): Story<T> => {
-  const mobileStory = story.bind({})
+export const asMobile: StoryModifier = story => {
+  const mobileStory = asCopy(story)
   mobileStory.parameters = {
     ...story.parameters,
     viewport: {
@@ -23,8 +29,10 @@ export const asMobile = <T>(story: Story<T>): Story<T> => {
 }
 
 export const withFigmaUrl =
-  (url: string) =>
+  (url?: string) =>
   <T>(story: Story<T>): Story<T> => {
+    if (!url) return story
+
     story.parameters = {
       ...story.parameters,
       design: {
@@ -35,16 +43,15 @@ export const withFigmaUrl =
     return story
   }
 
-type StoryModifier<T> = (story: Story<T>) => Story<T>
 export const compose =
-  <T>(...params: StoryModifier<T>[]): StoryModifier<T> =>
+  (...params: StoryModifier[]): StoryModifier =>
   story =>
-    params.reduceRight((y, fn) => fn(y), story)
+    params.reverse().reduceRight((y, fn) => fn(y), story)
 
 export const asDarkThemedMobile = compose(asDarkTheme, asMobile)
 
 export interface DefaultStoryConfig {
-  figmaUrl: string
+  figmaUrl?: string
 }
 export const createDefaultStories = <T>(
   template: Story<T>,
@@ -54,22 +61,22 @@ export const createDefaultStories = <T>(
     darkTheme,
     darkThemedMobile
   }: {
-    primary: DefaultStoryConfig
-    mobile: DefaultStoryConfig
-    darkTheme: DefaultStoryConfig
-    darkThemedMobile: DefaultStoryConfig
-  }
+    primary?: DefaultStoryConfig
+    mobile?: DefaultStoryConfig
+    darkTheme?: DefaultStoryConfig
+    darkThemedMobile?: DefaultStoryConfig
+  } = {}
 ): {
   Primary: Story<T>
   Mobile: Story<T>
   DarkTheme: Story<T>
   DarkThemedMobile: Story<T>
 } => ({
-  Primary: withFigmaUrl(primary.figmaUrl)(template),
-  Mobile: compose(asMobile, withFigmaUrl(mobile.figmaUrl))(template),
-  DarkTheme: compose(asDarkTheme, withFigmaUrl(darkTheme.figmaUrl))(template),
+  Primary: compose(asCopy, withFigmaUrl(primary?.figmaUrl))(template),
+  Mobile: compose(asMobile, withFigmaUrl(mobile?.figmaUrl))(template),
+  DarkTheme: compose(asDarkTheme, withFigmaUrl(darkTheme?.figmaUrl))(template),
   DarkThemedMobile: compose(
     asDarkThemedMobile,
-    withFigmaUrl(darkThemedMobile.figmaUrl)
+    withFigmaUrl(darkThemedMobile?.figmaUrl)
   )(template)
 })

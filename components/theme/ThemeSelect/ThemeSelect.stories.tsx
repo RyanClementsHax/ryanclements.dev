@@ -1,15 +1,14 @@
 import { Meta, Story } from '@storybook/react'
-import { asDarkTheme } from 'stories/storyUtils'
+import { createDefaultStories } from 'stories/storyUtils'
 
 import { ThemeSelect } from '.'
 
 const Template: Story<Parameters<typeof ThemeSelect>[0]> = props => (
   <ThemeSelect {...props} />
 )
+const { Primary, DarkTheme } = createDefaultStories(Template)
 
-export const Primary = Template.bind({})
-
-export const DarkTheme = asDarkTheme(Template)
+export { Primary, DarkTheme }
 
 export default {
   title: 'components/ThemeSelect',
