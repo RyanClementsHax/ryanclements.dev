@@ -42,3 +42,34 @@ export const compose =
     params.reduceRight((y, fn) => fn(y), story)
 
 export const asDarkThemedMobile = compose(asDarkTheme, asMobile)
+
+export interface DefaultStoryConfig {
+  figmaUrl: string
+}
+export const createDefaultStories = <T>(
+  template: Story<T>,
+  {
+    primary,
+    mobile,
+    darkTheme,
+    darkThemedMobile
+  }: {
+    primary: DefaultStoryConfig
+    mobile: DefaultStoryConfig
+    darkTheme: DefaultStoryConfig
+    darkThemedMobile: DefaultStoryConfig
+  }
+): {
+  Primary: Story<T>
+  Mobile: Story<T>
+  DarkTheme: Story<T>
+  DarkThemedMobile: Story<T>
+} => ({
+  Primary: withFigmaUrl(primary.figmaUrl)(template),
+  Mobile: compose(asMobile, withFigmaUrl(mobile.figmaUrl))(template),
+  DarkTheme: compose(asDarkTheme, withFigmaUrl(darkTheme.figmaUrl))(template),
+  DarkThemedMobile: compose(
+    asDarkThemedMobile,
+    withFigmaUrl(darkThemedMobile.figmaUrl)
+  )(template)
+})
