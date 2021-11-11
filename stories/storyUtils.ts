@@ -15,7 +15,7 @@ export const asCopy: StoryModifier = story => story.bind({})
 
 export const withParams: (params: Parameters) => StoryModifier =
   params => story => {
-    story.parameters = merge(story.parameters || {}, params || {})
+    story.parameters = merge(story.parameters || {}, params)
     return story
   }
 
