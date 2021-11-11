@@ -5,10 +5,10 @@ import { Hero } from '.'
 
 const Template: Story<Parameters<typeof Hero>[0]> = props => <Hero {...props} />
 
-const { Primary, Mobile, DarkTheme, DarkThemedMobile } =
+const { Base, Mobile, DarkTheme, DarkThemedMobile } =
   createDefaultStories(Template)
 
-export { Primary, Mobile, DarkTheme, DarkThemedMobile }
+export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
   title: 'pages/landing/Hero',

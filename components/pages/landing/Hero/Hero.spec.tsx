@@ -1,13 +1,13 @@
 import React from 'react'
 import { render } from 'tests/testUtils'
 import { axe } from 'jest-axe'
-import { Primary } from './Hero.stories'
+import { Base } from './Hero.stories'
 
 describe('Hero', () => {
   let container: Element
 
   beforeEach(() => {
-    ;({ container } = render(<Primary />))
+    ;({ container } = render(<Base />))
   })
 
   it('has no axe violations', async () => {

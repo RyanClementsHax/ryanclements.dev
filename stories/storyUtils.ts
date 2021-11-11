@@ -49,23 +49,23 @@ export const withDefaults: (config?: DefaultStoryConfig) => StoryModifier =
 export const createDefaultStories = <T>(
   template: Story<T>,
   {
-    primary,
+    base,
     mobile,
     darkTheme,
     darkThemedMobile
   }: {
-    primary?: DefaultStoryConfig
+    base?: DefaultStoryConfig
     mobile?: DefaultStoryConfig
     darkTheme?: DefaultStoryConfig
     darkThemedMobile?: DefaultStoryConfig
   } = {}
 ): {
-  Primary: Story<T>
+  Base: Story<T>
   Mobile: Story<T>
   DarkTheme: Story<T>
   DarkThemedMobile: Story<T>
 } => ({
-  Primary: withDefaults(primary)(template),
+  Base: withDefaults(base)(template),
   Mobile: compose(withDefaults(mobile), withMobile)(template),
   DarkTheme: compose(withDefaults(darkTheme), withDarkTheme)(template),
   DarkThemedMobile: compose(

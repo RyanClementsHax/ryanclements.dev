@@ -8,10 +8,10 @@ const Template: Story<Parameters<typeof Index>[0]> = props => (
   <Index {...props} />
 )
 
-const { Primary, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
+const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
   Template,
   {
-    primary: {
+    base: {
       figmaUrl:
         'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1202%3A1174'
     },
@@ -30,7 +30,7 @@ const { Primary, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
   }
 )
 
-export { Primary, Mobile, DarkTheme, DarkThemedMobile }
+export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
   title: 'pages/landing',

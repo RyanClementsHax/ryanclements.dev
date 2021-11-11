@@ -6,9 +6,9 @@ import { ThemeSelect } from '.'
 const Template: Story<Parameters<typeof ThemeSelect>[0]> = props => (
   <ThemeSelect {...props} />
 )
-const { Primary, DarkTheme } = createDefaultStories(Template)
+const { Base, DarkTheme } = createDefaultStories(Template)
 
-export { Primary, DarkTheme }
+export { Base, DarkTheme }
 
 export default {
   title: 'components/ThemeSelect',

@@ -7,10 +7,10 @@ const Template: Story<Parameters<typeof Header>[0]> = props => (
   <Header {...props} />
 )
 
-const { Primary, Mobile, DarkTheme, DarkThemedMobile } =
+const { Base, Mobile, DarkTheme, DarkThemedMobile } =
   createDefaultStories(Template)
 
-export { Primary, Mobile, DarkTheme, DarkThemedMobile }
+export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
   title: 'components/Header',
