@@ -33,7 +33,12 @@ module.exports = {
             return {
               primary,
               surface: {
-                base: 'white',
+                base: {
+                  DEFAULT: 'white',
+                  elevation: {
+                    100: 'white'
+                  }
+                },
                 active: primary[100]
               },
               on: {
@@ -79,7 +84,12 @@ module.exports = {
               return {
                 primary,
                 surface: {
-                  base: '#1f2129',
+                  base: {
+                    DEFAULT: colors.gray[900],
+                    elevation: {
+                      100: '#1f2129'
+                    }
+                  },
                   active: primary[900]
                 },
                 on: {
