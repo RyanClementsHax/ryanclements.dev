@@ -79,7 +79,7 @@ module.exports = {
               return {
                 primary,
                 surface: {
-                  base: colors.gray[900],
+                  base: '#1f2129',
                   active: primary[900]
                 },
                 on: {
