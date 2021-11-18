@@ -21,11 +21,11 @@ const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
     },
     darkTheme: {
       figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1213%3A50'
+        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1304%3A25'
     },
     darkThemedMobile: {
       figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1213%3A52'
+        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1304%3A34'
     }
   }
 )

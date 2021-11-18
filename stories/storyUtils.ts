@@ -6,6 +6,8 @@ export interface StoryModifier {
   <T>(story: Story<T>): Story<T>
 }
 
+export const withNoop: StoryModifier = story => story
+
 export const compose =
   (...params: StoryModifier[]): StoryModifier =>
   story =>
@@ -27,24 +29,21 @@ export const withMobile: StoryModifier = withParams({
   }
 })
 
-export const withFigmaUrl: (url?: string) => StoryModifier = url =>
-  withParams(
-    url
-      ? {
-          design: {
-            type: 'figma',
-            url
-          }
-        }
-      : {}
-  )
+export const withFigmaUrl: (url: string) => StoryModifier = url =>
+  withParams({
+    design: {
+      type: 'figma',
+      url
+    }
+  })
 
 export interface DefaultStoryConfig {
   figmaUrl?: string
 }
 
 export const withDefaults: (config?: DefaultStoryConfig) => StoryModifier =
-  config => compose(asCopy, withFigmaUrl(config?.figmaUrl))
+  config =>
+    compose(asCopy, config?.figmaUrl ? withFigmaUrl(config.figmaUrl) : withNoop)
 
 export const createDefaultStories = <T>(
   template: Story<T>,
