@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from 'tests/testUtils'
 import { axe } from 'jest-axe'
-import { Base } from 'stories/pages/index.stories'
+import { Base } from './Hero.stories'
 
-describe('Index page', () => {
+describe('Hero', () => {
   let container: Element
 
   beforeEach(() => {

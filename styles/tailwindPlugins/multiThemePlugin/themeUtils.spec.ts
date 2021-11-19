@@ -263,6 +263,37 @@ describe('themeUtils', () => {
       })
     })
 
+    it('resolves arrays with string values', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              fontFamily: {
+                serif: ['Times New Roman', 'Times', 'serif']
+              }
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              fontFamily: {
+                serif: ['Times New Roman', 'Times', 'serif']
+              }
+            }
+          }
+        ])
+      ).toEqual({
+        fontFamily: {
+          serif: [
+            'var(--font-family-serif-0)',
+            'var(--font-family-serif-1)',
+            'var(--font-family-serif-2)'
+          ]
+        }
+      })
+    })
+
     it('drops DEFAULT keys from custom vars when resolving', () => {
       expect(
         resolveThemeExtensionsAsTailwindExtension([
@@ -304,6 +335,84 @@ describe('themeUtils', () => {
             DEFAULT: 'var(--my-array-0)'
           }
         ]
+      })
+    })
+
+    it('merges primitive values as DEFAULT values on that key', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              colors: {
+                red: 'primitive'
+              },
+              foo: {
+                bar: {
+                  DEFAULT: 'primitive'
+                }
+              }
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              colors: {
+                red: {
+                  DEFAULT: 'non primitive'
+                }
+              },
+              foo: {
+                bar: 'primitive'
+              }
+            }
+          }
+        ])
+      ).toEqual({
+        colors: {
+          red: {
+            DEFAULT: 'var(--colors-red)'
+          }
+        },
+        foo: {
+          bar: {
+            DEFAULT: 'var(--foo-bar)'
+          }
+        }
+      })
+    })
+
+    it('doesnt convert primitives to DEFAULT values if no conflict with other themes', () => {
+      expect(
+        resolveThemeExtensionsAsTailwindExtension([
+          {
+            name: 'first',
+            extend: {
+              colors: {
+                red: 'primitive'
+              }
+            }
+          },
+          {
+            name: 'second',
+            extend: {
+              foo: {
+                bar: {
+                  DEFAULT: 'primitive'
+                }
+              }
+            }
+          }
+        ])
+      ).toEqual({
+        colors: {
+          red: 'var(--colors-red)'
+        },
+        foo: {
+          bar: {
+            DEFAULT: 'var(--foo-bar)'
+          }
+        }
       })
     })
 
@@ -646,6 +755,23 @@ describe('themeUtils', () => {
       ).toEqual({
         '--foo-bar-0-thing': '1',
         '--foo-bar-1-thing': '2'
+      })
+    })
+
+    it('resolves arrays with strings', () => {
+      expect(
+        resolveThemeExtensionAsCustomProps(
+          {
+            fontFamily: {
+              serif: ['Times New Roman', 'Times', 'serif']
+            }
+          },
+          helpers
+        )
+      ).toEqual({
+        '--font-family-serif-0': 'Times New Roman',
+        '--font-family-serif-1': 'Times',
+        '--font-family-serif-2': 'serif'
       })
     })
 

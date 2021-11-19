@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
     "yzhang.markdown-all-in-one",
     "davidanson.vscode-markdownlint",
     "stylelint.vscode-stylelint",
@@ -9,7 +10,6 @@
     "austenc.tailwind-docs",
     "deque-systems.vscode-axe-linter",
     "orta.vscode-jest",
-    "csstools.postcss",
-    "esbenp.prettier-vscode"
+    "csstools.postcss"
   ]
 }

@@ -6,7 +6,7 @@ import Document, {
   DocumentContext,
   DocumentInitialProps
 } from 'next/document'
-import { ThemeScript } from 'components/Theme'
+import { ThemeScript } from 'components/theme'
 
 class MyDocument extends Document {
   static async getInitialProps(

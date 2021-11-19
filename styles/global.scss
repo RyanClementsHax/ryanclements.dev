@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  * {
+    @apply transition;
+  }
+
+  body {
+    @apply bg-surface-base font-mono;
+  }
+
+  .dark img {
+    @apply filter brightness-75 contrast-125 #{!important};
+  }
+}

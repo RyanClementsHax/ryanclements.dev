@@ -1,5 +1,5 @@
 export * from './ThemeContext'
 export * from './ThemeScript'
-export * from './ThemeToggle'
+export * from './ThemeSelect'
 export * from './types'
 export * from './utils'

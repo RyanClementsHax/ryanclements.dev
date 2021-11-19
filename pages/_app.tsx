@@ -1,12 +1,16 @@
-import 'styles/global.scss'
+import { ThemeProvider } from 'components/theme'
+import { Layout } from 'components/Layout'
 
 import type { AppProps } from 'next/app'
-import { ThemeProvider } from 'components/Theme'
+
+import 'styles/global.scss'
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ThemeProvider>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </ThemeProvider>
   )
 }

@@ -1,16 +1,18 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "npm.packageManager": "yarn",
-  "css.validate": false,
-  "less.validate": false,
-  "scss.validate": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.markdownlint": true,
     "source.fixAll.stylelint": true
   },
-  "jest.jestCommandLine": "yarn test",
   "emmet.includeLanguages": {
     "postcss": "css"
-  }
+  },
+  "npm.packageManager": "yarn",
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "jest.jestCommandLine": "yarn test",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active"
 }

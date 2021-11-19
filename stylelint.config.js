@@ -9,8 +9,7 @@ module.exports = {
   ],
   plugins: [
     'stylelint-declaration-block-no-ignored-properties',
-    'stylelint-declaration-strict-value',
-    'stylelint-no-unsupported-browser-features'
+    'stylelint-declaration-strict-value'
   ],
   rules: {
     'declaration-block-trailing-semicolon': null,
@@ -23,16 +22,17 @@ module.exports = {
         ignoreKeywords: ['initial']
       }
     ],
-    'plugin/no-unsupported-browser-features': [
-      true,
-      {
-        severity: 'warning'
-      }
-    ],
     'scss/at-rule-no-unknown': [
       true,
       {
-        ignoreAtRules: ['tailwind', 'apply', 'variants', 'responsive', 'screen']
+        ignoreAtRules: [
+          'tailwind',
+          'apply',
+          'variants',
+          'responsive',
+          'screen',
+          'layer'
+        ]
       }
     ]
   }

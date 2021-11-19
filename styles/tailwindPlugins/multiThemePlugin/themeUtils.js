@@ -1,4 +1,3 @@
-//@ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { mergeWith, merge } = require('lodash')
 const {
@@ -141,10 +140,9 @@ const resolveThemeExtensionsAsTailwindExtensionRecursionHelper = (
 
 /** @type {import('lodash').MergeWithCustomizer} */
 const mergeAndResolveCallbacks = (objectVal, srcVal) => {
-  if (
-    typeof objectVal !== 'undefined' &&
-    (typeof objectVal === 'function' || typeof srcVal === 'function')
-  ) {
+  if (typeof objectVal === 'undefined') {
+    return
+  } else if (typeof objectVal === 'function' || typeof srcVal === 'function') {
     return (/** @type {unknown[]} */ ...params) => {
       const objectValResolved =
         typeof objectVal === 'function' ? objectVal(...params) : objectVal
@@ -162,6 +160,15 @@ const mergeAndResolveCallbacks = (objectVal, srcVal) => {
       }
       return merge(objectValResolved, srcValResolved)
     }
+  } else if (
+    typeof objectVal !== typeof srcVal &&
+    (typeof objectVal === 'object' || typeof srcVal === 'object')
+  ) {
+    const objectValResolved =
+      typeof objectVal === 'object' ? objectVal : { DEFAULT: objectVal }
+    const srcValResolved =
+      typeof srcVal === 'object' ? srcVal : { DEFAULT: srcVal }
+    return merge(objectValResolved, srcValResolved)
   } else {
     return undefined
   }
