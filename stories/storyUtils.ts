@@ -25,7 +25,7 @@ export const withDarkTheme: StoryModifier = withParams({ theme: Theme.dark })
 
 export const withMobile: StoryModifier = withParams({
   viewport: {
-    defaultViewport: 'mobile1'
+    defaultViewport: 'iphone6'
   }
 })
 

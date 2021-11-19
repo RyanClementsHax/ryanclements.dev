@@ -6,6 +6,7 @@ import * as NextImage from 'next/image'
 import { addons } from '@storybook/addons'
 import { UPDATE_GLOBALS } from '@storybook/core-events'
 import { ThemeContext, updateTheme } from 'components/theme'
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 import 'styles/global.scss'
 
@@ -86,7 +87,10 @@ export const parameters = {
   backgrounds: {
     default: 'surface',
     values: [{ name: 'surface', value: 'rgb(var(--colors-surface-base))' }]
-  }
+  },
+  viewport: {
+    viewports: INITIAL_VIEWPORTS,
+  },
 }
 
 const OriginalNextImage = NextImage.default
