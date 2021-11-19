@@ -87,7 +87,7 @@ module.exports = {
                   base: {
                     DEFAULT: colors.gray[900],
                     elevation: {
-                      100: '#1f2129'
+                      100: '#1E1E24'
                     }
                   },
                   active: primary[900]
