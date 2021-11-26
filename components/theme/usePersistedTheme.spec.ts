@@ -18,27 +18,37 @@ describe('usePersistedTheme', () => {
     hydrate: () => void,
     initialTheme: Theme
 
+  const renderBaseHook = () => {
+    ;({ result, hydrate } = renderHook(() => usePersistedTheme()))
+  }
+  const renderBaseHookHydrated = () => {
+    renderBaseHook()
+    hydrate()
+  }
+
   beforeEach(() => {
     initialTheme = Theme.light
     when(getCurrentTheme).calledWith().mockReturnValue(initialTheme)
-    ;({ result, hydrate } = renderHook(() => usePersistedTheme()))
   })
 
   describe('before hydration', () => {
     it('sets the theme to undefined', () => {
+      renderBaseHook()
+
       expect(result.current[0]).toBeUndefined()
     })
   })
 
   describe('after hydration', () => {
-    beforeEach(() => hydrate())
-
     it('sets the theme to the result of getCurrentTheme', () => {
+      renderBaseHookHydrated()
+
       expect(result.current[0]).toBe(initialTheme)
     })
 
     describe('setTheme', () => {
       it('updates the theme state', () => {
+        renderBaseHookHydrated()
         const newTheme = Theme.dark
         expect(newTheme).not.toBe(initialTheme)
 
@@ -50,6 +60,7 @@ describe('usePersistedTheme', () => {
       })
 
       it('persists the theme', () => {
+        renderBaseHookHydrated()
         const newTheme = Theme.dark
         expect(newTheme).not.toBe(initialTheme)
 
