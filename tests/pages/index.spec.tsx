@@ -6,11 +6,13 @@ import { Base } from 'stories/pages/index.stories'
 describe('Index page', () => {
   let container: Element
 
-  beforeEach(() => {
+  const renderBase = () => {
     ;({ container } = render(<Base />))
-  })
+  }
 
   it('has no axe violations', async () => {
+    renderBase()
+
     expect(await axe(container)).toHaveNoViolations()
   })
 })

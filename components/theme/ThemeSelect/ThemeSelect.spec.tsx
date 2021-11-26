@@ -10,40 +10,49 @@ describe('ThemeSelect', () => {
     theme: Theme,
     setTheme: jest.MockedFunction<ThemeContextType['setTheme']>
 
-  beforeEach(() => {
-    theme = Theme.light
-    setTheme = jest.fn()
+  const renderBase = () => {
     ;({ container } = render(
       <ThemeContext.Provider value={{ theme, setTheme }}>
         <Base />
       </ThemeContext.Provider>
     ))
+  }
+
+  beforeEach(() => {
+    theme = Theme.light
+    setTheme = jest.fn()
   })
 
   it('has no axe violations', async () => {
+    renderBase()
+
     expect(await axe(container)).toHaveNoViolations()
   })
 
   describe('open', () => {
-    const openMenu = async () => {
+    const renderAndOpenMenu = async () => {
+      renderBase()
+
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
 
       userEvent.click(await screen.findByRole('button'))
     }
 
-    beforeEach(async () => {
-      await openMenu()
-    })
-
     it('has no axe violations', async () => {
+      await renderAndOpenMenu()
+
       expect(await axe(container)).toHaveNoViolations()
     })
 
     it('is opened by clicking the button', async () => {
-      expect(screen.queryByRole('listbox')).toBeInTheDocument()
+      await renderAndOpenMenu()
+
+      expect(screen.getByRole('listbox')).toBeInTheDocument()
     })
 
     it('shows all theme options', async () => {
+      await renderAndOpenMenu()
+
       for (const theme of Object.keys(Theme)) {
         expect(
           await screen.findByRole('option', {
@@ -54,6 +63,8 @@ describe('ThemeSelect', () => {
     })
 
     it('sets the theme when an option is clicked', async () => {
+      await renderAndOpenMenu()
+
       const newTheme = Object.keys(Theme).find(x => x !== theme)
 
       userEvent.click(
