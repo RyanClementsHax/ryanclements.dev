@@ -41,7 +41,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-use": "^17.3.1",
-    "tailwindcss": "^2.2.19"
+    "tailwindcss": "^3.0.6"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.0.4",
@@ -109,6 +109,7 @@
     "stylelint-order": "^5.0.0",
     "stylelint-prettier": "^2.0.0",
     "stylelint-scss": "^4.0.0",
+    "tailwindcss-themer": "^0.0.2",
     "ts-jest": "^27.0.7",
     "tslib": "^2.3.1",
     "typescript": "^4.5.2",
