@@ -47,7 +47,7 @@ describe('ThemeSelect', () => {
     it('is opened by clicking the button', async () => {
       await renderAndOpenMenu()
 
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
+      expect(await screen.findByRole('listbox')).toBeInTheDocument()
     })
 
     it('shows all theme options', async () => {
