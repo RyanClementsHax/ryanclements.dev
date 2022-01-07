@@ -8,6 +8,7 @@
   "emmet.includeLanguages": {
     "postcss": "css"
   },
+  "stylelint.validate": ["css", "scss"],
   "npm.packageManager": "yarn",
   "css.validate": false,
   "less.validate": false,

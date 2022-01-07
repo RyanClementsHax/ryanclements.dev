@@ -40,6 +40,8 @@ module.exports = {
                     100: 'white'
                   }
                 },
+                offBase: colors.coolGray[200],
+                primary: primary.DEFAULT,
                 active: primary[100]
               },
               on: {
@@ -48,6 +50,11 @@ module.exports = {
                     DEFAULT: colors.zinc[800],
                     muted: colors.zinc[600]
                   },
+                  offBase: {
+                    DEFAULT: colors.zinc[800],
+                    muted: colors.zinc[600]
+                  },
+                  primary: primary[100],
                   active: colors.zinc[900]
                 }
               },
@@ -91,6 +98,8 @@ module.exports = {
                       100: '#1E1E24'
                     }
                   },
+                  offBase: colors.coolGray[800],
+                  primary: primary[800],
                   active: primary[900]
                 },
                 on: {
@@ -99,6 +108,11 @@ module.exports = {
                       DEFAULT: colors.zinc[300],
                       muted: colors.zinc[400]
                     },
+                    offBase: {
+                      DEFAULT: colors.zinc[800],
+                      muted: colors.zinc[600]
+                    },
+                    primary: primary[100],
                     active: primary[100]
                   }
                 },

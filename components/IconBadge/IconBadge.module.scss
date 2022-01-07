@@ -1,0 +1,7 @@
+.iconBadge {
+  @apply after:box-content before:box-content box-content;
+
+  & > svg {
+    @apply w-6 h-6 text-on-surface-primary;
+  }
+}
