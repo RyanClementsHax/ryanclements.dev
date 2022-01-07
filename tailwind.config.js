@@ -2,7 +2,10 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}'
+  ],
   theme: {
     extend: {}
   },
@@ -42,20 +45,20 @@ module.exports = {
               on: {
                 surface: {
                   base: {
-                    DEFAULT: colors.gray[800],
-                    muted: colors.gray[600]
+                    DEFAULT: colors.zinc[800],
+                    muted: colors.zinc[600]
                   },
-                  active: colors.gray[900]
+                  active: colors.zinc[900]
                 }
               },
               borderColor: {
-                DEFAULT: colors.gray[300],
+                DEFAULT: colors.zinc[300],
                 focus: primary.DEFAULT
               },
               ringColor: {
                 focus: primary.DEFAULT
               },
-              icon: colors.gray[400]
+              icon: colors.zinc[400]
             }
           }
         }
@@ -83,7 +86,7 @@ module.exports = {
                 primary,
                 surface: {
                   base: {
-                    DEFAULT: colors.gray[900],
+                    DEFAULT: colors.zinc[900],
                     elevation: {
                       100: '#1E1E24'
                     }
@@ -93,20 +96,20 @@ module.exports = {
                 on: {
                   surface: {
                     base: {
-                      DEFAULT: colors.gray[300],
-                      muted: colors.gray[400]
+                      DEFAULT: colors.zinc[300],
+                      muted: colors.zinc[400]
                     },
                     active: primary[100]
                   }
                 },
                 borderColor: {
-                  DEFAULT: colors.gray[700],
+                  DEFAULT: colors.zinc[700],
                   focus: primary.DEFAULT
                 },
                 ringColor: {
                   focus: primary.DEFAULT
                 },
-                icon: colors.gray[600]
+                icon: colors.zinc[600]
               }
             }
           }
