@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 
-const { nextImageLoaderRegex } = require('next/dist/build/webpack-config')
-
 /**
  * @typedef {import('next').NextConfig} NextConfig
  * @typedef {import('webpack').Configuration} WebpackConfig
@@ -41,17 +39,16 @@ module.exports = {
  * @param {WebpackConfig} baseConfig
  * @return {void}
  */
-const configureRootAbsoluteImport = baseConfig => {
-  baseConfig.resolve?.modules?.push(path.resolve(__dirname, '..'))
-}
+const configureRootAbsoluteImport = baseConfig =>
+  void baseConfig.resolve?.modules?.push(path.resolve(__dirname, '..'))
 
 /**
  * @param {WebpackConfig} baseConfig
  * @param {NextConfig} nextConfig
  * @return {void}
  */
-const configureCss = (baseConfig, nextConfig) => {
-  baseConfig.module?.rules?.push({
+const configureCss = (baseConfig, nextConfig) =>
+  void baseConfig.module?.rules?.push({
     test: /\.(s*)css$/,
     use: [
       'style-loader',
@@ -72,7 +69,6 @@ const configureCss = (baseConfig, nextConfig) => {
       }
     ]
   })
-}
 
 /**
  * @param {WebpackConfig} baseConfig
@@ -90,10 +86,13 @@ const configureStaticImageImport = baseConfig => {
       rule.test.test('test.jpg')
     ) {
       rules[i] = {
-        test: nextImageLoaderRegex,
+        test: rule.test,
         use: [
           {
-            loader: path.resolve(__dirname, 'next-image-loader-mock')
+            loader: path.resolve(__dirname, 'next-image-loader-stub'),
+            options: {
+              filename: rule.generator?.filename
+            }
           }
         ]
       }
