@@ -7,7 +7,11 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
-    extend: {}
+    extend: {
+      fontFamily: {
+        title: ['Lato', 'sans-serif']
+      }
+    }
   },
   variants: {
     extend: {}
@@ -40,7 +44,7 @@ module.exports = {
                     100: 'white'
                   }
                 },
-                offBase: colors.coolGray[200],
+                offBase: colors.gray[200],
                 primary: primary.DEFAULT,
                 active: primary[100]
               },
@@ -98,7 +102,7 @@ module.exports = {
                       100: '#1E1E24'
                     }
                   },
-                  offBase: colors.coolGray[800],
+                  offBase: colors.gray[800],
                   primary: primary[800],
                   active: primary[900]
                 },
@@ -109,8 +113,8 @@ module.exports = {
                       muted: colors.zinc[400]
                     },
                     offBase: {
-                      DEFAULT: colors.zinc[800],
-                      muted: colors.zinc[600]
+                      DEFAULT: colors.zinc[300],
+                      muted: colors.zinc[400]
                     },
                     primary: primary[100],
                     active: primary[100]

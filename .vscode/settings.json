@@ -5,6 +5,9 @@
     "source.fixAll.markdownlint": true,
     "source.fixAll.stylelint": true
   },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "emmet.includeLanguages": {
     "postcss": "css"
   },
