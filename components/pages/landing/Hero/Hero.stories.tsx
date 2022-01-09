@@ -5,7 +5,7 @@ import { Hero } from '.'
 
 const Template: Story = () => (
   <Hero
-    title={"Hiya 👋\nI'm Ryan Clements"}
+    title={"Hiya! 👋\nI'm Ryan Clements"}
     subtitle={'I 💖 God, my wife and daughter 👨‍👩‍👧,\nand making dope software 👨‍💻'}
   />
 )
