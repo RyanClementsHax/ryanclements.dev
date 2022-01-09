@@ -4,9 +4,7 @@ import { Layout } from 'components/Layout'
 import Index from 'pages/index'
 import { createDefaultStories } from 'stories/storyUtils'
 
-const Template: Story<Parameters<typeof Index>[0]> = props => (
-  <Index {...props} />
-)
+const Template: Story = () => <Index />
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
   Template,

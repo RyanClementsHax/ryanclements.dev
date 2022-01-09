@@ -3,16 +3,12 @@ import banner from 'public/banner.jpg'
 import React from 'react'
 
 const Heading: React.FC<{
-  title: string
-  subtitle: string
+  title: React.ReactNode
+  subtitle: React.ReactNode
 }> = ({ title, subtitle }) => (
   <div className="grid gap-4 lg:col-span-2">
-    <h1 className="text-4xl font-bold text-on-surface-base">
-      <pre>{title}</pre>
-    </h1>
-    <h2 className="text-2xl text-on-surface-base-muted">
-      <pre>{subtitle}</pre>
-    </h2>
+    <h1 className="text-4xl font-bold text-on-surface-base">{title}</h1>
+    <h2 className="text-2xl text-on-surface-base-muted">{subtitle}</h2>
   </div>
 )
 
@@ -31,8 +27,8 @@ const Banner = () => (
 )
 
 export interface HeroProps {
-  title: string
-  subtitle: string
+  title: React.ReactNode
+  subtitle: React.ReactNode
 }
 
 export const Hero: React.FC<HeroProps> = ({ title, subtitle }) => (
