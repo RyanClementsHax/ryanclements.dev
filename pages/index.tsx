@@ -14,7 +14,12 @@ const Index: React.FC = () => (
       <title>Ryan Clements</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <Hero />
+    <Hero
+      title={"Hiya 👋\nI'm Ryan Clements"}
+      subtitle={
+        'I 💖 God, my wife and daughter 👨‍👩‍👧, and making dope software 👨‍💻'
+      }
+    />
     <Qualities
       title="A new kind of engineer"
       subtitle="New problems need new solutions. Here's the energy I bring to the table."

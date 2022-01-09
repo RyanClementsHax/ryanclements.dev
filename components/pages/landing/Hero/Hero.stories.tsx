@@ -3,7 +3,12 @@ import { createDefaultStories } from 'stories/storyUtils'
 
 import { Hero } from '.'
 
-const Template: Story<Parameters<typeof Hero>[0]> = props => <Hero {...props} />
+const Template: Story = () => (
+  <Hero
+    title={"Hiya 👋\nI'm Ryan Clements"}
+    subtitle={'I 💖 God, my wife and daughter 👨‍👩‍👧,\nand making dope software 👨‍💻'}
+  />
+)
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
   Template,
