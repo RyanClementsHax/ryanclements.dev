@@ -2,9 +2,16 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}'
+  ],
   theme: {
-    extend: {}
+    extend: {
+      fontFamily: {
+        title: ['Lato', 'sans-serif']
+      }
+    }
   },
   variants: {
     extend: {}
@@ -37,25 +44,32 @@ module.exports = {
                     100: 'white'
                   }
                 },
+                offBase: colors.gray[200],
+                primary: primary.DEFAULT,
                 active: primary[100]
               },
               on: {
                 surface: {
                   base: {
-                    DEFAULT: colors.gray[800],
-                    muted: colors.gray[600]
+                    DEFAULT: colors.zinc[800],
+                    muted: colors.zinc[600]
                   },
-                  active: colors.gray[900]
+                  offBase: {
+                    DEFAULT: colors.zinc[800],
+                    muted: colors.zinc[600]
+                  },
+                  primary: primary[100],
+                  active: colors.zinc[900]
                 }
               },
               borderColor: {
-                DEFAULT: colors.gray[300],
+                DEFAULT: colors.zinc[300],
                 focus: primary.DEFAULT
               },
               ringColor: {
                 focus: primary.DEFAULT
               },
-              icon: colors.gray[400]
+              icon: colors.zinc[400]
             }
           }
         }
@@ -83,30 +97,37 @@ module.exports = {
                 primary,
                 surface: {
                   base: {
-                    DEFAULT: colors.gray[900],
+                    DEFAULT: colors.zinc[900],
                     elevation: {
                       100: '#1E1E24'
                     }
                   },
+                  offBase: colors.gray[800],
+                  primary: primary[800],
                   active: primary[900]
                 },
                 on: {
                   surface: {
                     base: {
-                      DEFAULT: colors.gray[300],
-                      muted: colors.gray[400]
+                      DEFAULT: colors.zinc[300],
+                      muted: colors.zinc[400]
                     },
+                    offBase: {
+                      DEFAULT: colors.zinc[300],
+                      muted: colors.zinc[400]
+                    },
+                    primary: primary[100],
                     active: primary[100]
                   }
                 },
                 borderColor: {
-                  DEFAULT: colors.gray[700],
+                  DEFAULT: colors.zinc[700],
                   focus: primary.DEFAULT
                 },
                 ringColor: {
                   focus: primary.DEFAULT
                 },
-                icon: colors.gray[600]
+                icon: colors.zinc[600]
               }
             }
           }

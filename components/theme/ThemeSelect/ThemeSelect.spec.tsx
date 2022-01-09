@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, screen } from 'tests/testUtils'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'

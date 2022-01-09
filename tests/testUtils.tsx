@@ -1,6 +1,6 @@
-import React from 'react'
-import { render } from '@testing-library/react'
+import { render, RenderResult } from '@testing-library/react'
 import { ThemeProvider } from 'components/theme'
+import { Story } from '@storybook/react'
 
 const Providers: React.FC = ({ children }) => (
   <ThemeProvider>{children}</ThemeProvider>
@@ -13,3 +13,8 @@ const customRender: typeof render = ((ui: any, options: any) =>
 export * from '@testing-library/react'
 
 export { customRender as render }
+
+export const renderStory = <TArgs,>(
+  Story: Story<TArgs>,
+  props?: Partial<TArgs>
+): RenderResult => customRender(<Story {...(Story.args as TArgs)} {...props} />)

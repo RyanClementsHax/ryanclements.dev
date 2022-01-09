@@ -13,6 +13,7 @@ module.exports = {
   ],
   rules: {
     'declaration-block-trailing-semicolon': null,
+    'selector-class-pattern': null,
     'a11y/media-prefers-reduced-motion': null,
     'plugin/declaration-block-no-ignored-properties': true,
     'scale-unlimited/declaration-strict-value': [

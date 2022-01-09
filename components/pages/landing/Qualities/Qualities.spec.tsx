@@ -1,8 +1,8 @@
 import { renderStory } from 'tests/testUtils'
 import { axe } from 'jest-axe'
-import { Base } from './Header.stories'
+import { Base } from './Qualities.stories'
 
-describe('Header', () => {
+describe('Qualities', () => {
   it('has no axe violations', async () => {
     const { container } = renderStory(Base)
 

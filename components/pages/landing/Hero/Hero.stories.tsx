@@ -3,26 +3,31 @@ import { createDefaultStories } from 'stories/storyUtils'
 
 import { Hero } from '.'
 
-const Template: Story<Parameters<typeof Hero>[0]> = props => <Hero {...props} />
+const Template: Story = () => (
+  <Hero
+    title={"Hiya! 👋\nI'm Ryan Clements"}
+    subtitle={'I 💖 God, my wife and daughter 👨‍👩‍👧,\nand making dope software 👨‍💻'}
+  />
+)
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
   Template,
   {
     base: {
       figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1312%3A38'
+        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1319%3A70'
     },
     mobile: {
       figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1312%3A47'
+        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1319%3A65'
     },
     darkTheme: {
       figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1312%3A55'
+        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1319%3A63'
     },
     darkThemedMobile: {
       figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1312%3A64'
+        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1319%3A67'
     }
   }
 )

@@ -5,9 +5,13 @@
     "source.fixAll.markdownlint": true,
     "source.fixAll.stylelint": true
   },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "emmet.includeLanguages": {
     "postcss": "css"
   },
+  "stylelint.validate": ["css", "scss"],
   "npm.packageManager": "yarn",
   "css.validate": false,
   "less.validate": false,
