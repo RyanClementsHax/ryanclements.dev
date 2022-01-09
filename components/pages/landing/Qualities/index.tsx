@@ -10,8 +10,8 @@ export interface QualitiesProps {
 export const Qualities: React.FC<QualitiesProps> & {
   Description: typeof Description
 } = ({ children, title, subtitle, graphicSrc }) => (
-  <div className="bg-surface-offBase">
-    <section className="max-w-screen-xl mx-auto p-5 grid auto-rows-auto gap-8 md:grid-rows-[repeat(2,_auto)] md:grid-cols-[20rem_auto] lg:grid-cols-[30rem_auto] md:gap-y-16 md:gap-x-24">
+  <div className="bg-surface-offBase px-5 py-12 md:px-8 md:py-16">
+    <section className="max-w-screen-xl mx-auto grid auto-rows-auto gap-8 md:grid-rows-[repeat(2,_auto)] md:grid-cols-[auto_20rem] lg:grid-cols-[auto_30rem] md:gap-y-16 md:gap-x-24">
       <hgroup className="flex flex-col gap-6">
         <h2 className="font-bold uppercase tracking-wider text-center text-on-surface-offBase md:text-left">
           {title}
@@ -20,7 +20,7 @@ export const Qualities: React.FC<QualitiesProps> & {
           {subtitle}
         </h3>
       </hgroup>
-      <div className="md:row-span-full md:col-end-[-1] md:flex md:flex-col md:justify-center">
+      <div className="md:row-span-full md:col-start-1 md:flex md:flex-col md:justify-center">
         <Graphic src={graphicSrc} />
       </div>
       <ul className="flex flex-col gap-12">{children}</ul>
