@@ -32,7 +32,7 @@ export interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ title, subtitle }) => (
-  <section className="h-screen w-100 px-8 py-16">
+  <section className="h-screen w-100 px-5 py-12 md:px-8 md:py-16">
     <div className="h-full grid gap-4 items-center md:container md:mx-auto md:grid-cols-2 lg:grid-cols-5">
       <Heading title={title} subtitle={subtitle} />
       <Banner />
