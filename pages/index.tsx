@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { Hero } from 'components/pages/landing/Hero'
 import { Qualities } from 'components/pages/landing/Qualities'
-import { QualityDescription } from 'components/pages/landing/Qualities/QualityDescription'
 import {
   CubeIcon,
   PresentationChartLineIcon,
@@ -9,33 +8,32 @@ import {
 } from '@heroicons/react/outline'
 import graphic from 'public/graphic.jpg'
 
-export const Index: React.FC = () => (
+const Index: React.FC = () => (
   <>
     <Head>
       <title>Ryan Clements</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <Hero />
-
     <Qualities
       title="A new kind of engineer"
       subtitle="New problems need new solutions. Here's the energy I bring to the table."
       graphicSrc={graphic}
     >
-      <QualityDescription
+      <Qualities.Description
         Icon={<UserGroupIcon />}
-        title="test"
-        description="testing"
+        title="People first"
+        description="I see people as beloved by God and worth going the extra mile for. At work, I always try to help my coworkers and solve real problems for users."
       />
-      <QualityDescription
+      <Qualities.Description
         Icon={<CubeIcon />}
-        title="test"
-        description="testing"
+        title="Modern"
+        description="Up to date with the latest trends in industry, I synthesize custom solutions using the best of what modern software engineering has available to us."
       />
-      <QualityDescription
+      <Qualities.Description
         Icon={<PresentationChartLineIcon />}
-        title="test"
-        description="testing"
+        title="Always improving"
+        description="“Whether you think you can, or you think you can't - you're right” - Henry Ford. I seek to always be improving in all areas of my life, at home and work, on soft and hard skills."
       />
     </Qualities>
   </>

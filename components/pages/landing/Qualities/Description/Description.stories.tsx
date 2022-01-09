@@ -2,11 +2,11 @@ import { BookmarkIcon } from '@heroicons/react/outline'
 import { Meta, Story } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
-import { QualityDescription } from '.'
+import { Description } from '.'
 
 const Template: Story = () => (
   <ul>
-    <QualityDescription
+    <Description
       Icon={<BookmarkIcon />}
       title="Title"
       description="Description that is descriptive"
@@ -28,8 +28,8 @@ const { Base, DarkTheme } = createDefaultStories(Template, {
 export { Base, DarkTheme }
 
 export default {
-  title: 'pages/landing/Qualitites/QualityDescription',
-  component: QualityDescription,
+  title: 'pages/landing/Qualitites/Description',
+  component: Description,
   parameters: {
     layout: 'centered'
   }
