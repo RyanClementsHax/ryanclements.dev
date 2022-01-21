@@ -7,7 +7,7 @@ module.exports = {
     '@storybook/addon-storysource',
     'storybook-dark-mode',
     'storybook-addon-designs',
-    './next-preset'
+    'storybook-addon-next'
   ],
   core: {
     builder: 'webpack5'
