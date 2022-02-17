@@ -13,7 +13,13 @@ export const compose =
   story =>
     params.reverse().reduceRight((y, fn) => fn(y), story)
 
-export const asCopy: StoryModifier = story => story.bind({})
+export const asCopy: StoryModifier = story => {
+  const copiedStory = story.bind({})
+  copiedStory.args = {
+    ...story.args
+  }
+  return copiedStory
+}
 
 export const withParams: (params: Parameters) => StoryModifier =
   params => story => {
@@ -41,9 +47,10 @@ export interface DefaultStoryConfig {
   figmaUrl?: string
 }
 
-export const withDefaults: (config?: DefaultStoryConfig) => StoryModifier =
-  config =>
-    compose(asCopy, config?.figmaUrl ? withFigmaUrl(config.figmaUrl) : withNoop)
+export const withDefaults: (
+  config?: DefaultStoryConfig
+) => StoryModifier = config =>
+  compose(asCopy, config?.figmaUrl ? withFigmaUrl(config.figmaUrl) : withNoop)
 
 export const createDefaultStories = <T>(
   template: Story<T>,

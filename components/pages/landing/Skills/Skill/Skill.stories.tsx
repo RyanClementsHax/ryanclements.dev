@@ -1,9 +1,14 @@
 import { Meta, Story } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
+import jsLogo from 'public/tech-logos/javascript-logo.png'
+import { Skill, SkillProps } from '.'
 
-import { Skill } from '.'
-
-const Template: Story = () => <Skill />
+const Template: Story<SkillProps> = props => <Skill {...props} />
+Template.args = {
+  name: 'Javascript',
+  proficiency: 'proficient',
+  src: jsLogo
+}
 
 const { Base, DarkTheme } = createDefaultStories(Template, {
   base: {
