@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
-import jsLogo from 'public/tech-logos/javascript-logo.png'
+import jsLogo from 'public/tech-logos/javascript-logo.svg'
 import { Skill, SkillProps } from '.'
 
 const Template: Story<SkillProps> = props => <Skill {...props} />

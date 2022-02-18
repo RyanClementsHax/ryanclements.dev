@@ -15,7 +15,7 @@ export interface ProficiencyProps {
 const proficiencyToClassesMap: Record<ProficiencyLevel, string> = {
   proficient:
     'text-yellow-800 border-yellow-600 bg-yellow-100 dark:bg-yellow-200',
-  comfortable: 'text-zinc-800 border-zinc-600 bg-zinc-100 dark:bg-zinc-200',
+  comfortable: 'text-zinc-800 border-zinc-600 bg-zinc-100 dark:bg-zinc-300',
   novice: 'text-blue-800 border-blue-600 bg-blue-100 dark:bg-blue-200',
   learning: 'text-green-800 border-green-600 bg-green-100 dark:bg-green-200',
   exploring:
