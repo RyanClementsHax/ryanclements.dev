@@ -29,6 +29,7 @@ import dockerLogo from 'public/tech-logos/docker-logo.svg'
 import githubActionsLogo from 'public/tech-logos/github-actions-logo.svg'
 import awsLogo from 'public/tech-logos/aws-logo.svg'
 import azureLogo from 'public/tech-logos/azure-logo.svg'
+import tfLogo from 'public/tech-logos/terraform-logo.svg'
 import { SkillGroup, SkillGroupProps } from '.'
 
 const Template: Story<SkillGroupProps> = props => <SkillGroup {...props} />
@@ -133,14 +134,14 @@ Template.args = {
       logoSrc: sqlLogo
     },
     {
-      name: 'SQL Server',
-      proficiency: 'novice',
-      logoSrc: sqlServerLogo
-    },
-    {
       name: 'Postgres',
       proficiency: 'novice',
       logoSrc: postgresLogo
+    },
+    {
+      name: 'SQL Server',
+      proficiency: 'novice',
+      logoSrc: sqlServerLogo
     },
     {
       name: 'Rust',
@@ -182,6 +183,11 @@ Template.args = {
       name: 'Azure',
       proficiency: 'novice',
       logoSrc: azureLogo
+    },
+    {
+      name: 'Terraform',
+      proficiency: 'learning',
+      logoSrc: tfLogo
     }
   ]
 }
