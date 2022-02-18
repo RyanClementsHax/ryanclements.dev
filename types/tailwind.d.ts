@@ -6,3 +6,8 @@ declare module 'tailwindcss/colors' {
   declare const colors: any
   export = colors
 }
+
+declare module 'tailwindcss/defaultTheme' {
+  declare const colors: any
+  export = colors
+}

@@ -7,7 +7,7 @@ const Template: Story<SkillProps> = props => <Skill {...props} />
 Template.args = {
   name: 'Javascript',
   proficiency: 'proficient',
-  src: jsLogo
+  logoSrc: jsLogo
 }
 
 const { Base, DarkTheme } = createDefaultStories(Template, {
