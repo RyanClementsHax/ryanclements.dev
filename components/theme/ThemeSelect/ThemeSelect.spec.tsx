@@ -1,44 +1,31 @@
-import { render, screen } from 'tests/testUtils'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
-import { Base } from './ThemeSelect.stories'
-import { Theme, ThemeContext, ThemeContextType } from '..'
+import * as stories from './ThemeSelect.stories'
+import { getCurrentTheme, Theme } from '..'
+import { composeStories } from '@storybook/testing-react'
+
+const { Base } = composeStories(stories)
 
 describe('ThemeSelect', () => {
-  let container: Element,
-    theme: Theme,
-    setTheme: jest.MockedFunction<ThemeContextType['setTheme']>
-
-  const renderBase = () => {
-    ;({ container } = render(
-      <ThemeContext.Provider value={{ theme, setTheme }}>
-        <Base />
-      </ThemeContext.Provider>
-    ))
-  }
-
-  beforeEach(() => {
-    theme = Theme.light
-    setTheme = jest.fn()
-  })
-
   it('has no axe violations', async () => {
-    renderBase()
+    const { container } = render(<Base />)
 
     expect(await axe(container)).toHaveNoViolations()
   })
 
   describe('open', () => {
     const renderAndOpenMenu = async () => {
-      renderBase()
+      const view = render(<Base />)
 
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-
       userEvent.click(await screen.findByRole('button'))
+
+      return view
     }
 
     it('has no axe violations', async () => {
-      await renderAndOpenMenu()
+      const { container } = await renderAndOpenMenu()
 
       expect(await axe(container)).toHaveNoViolations()
     })
@@ -64,7 +51,8 @@ describe('ThemeSelect', () => {
     it('sets the theme when an option is clicked', async () => {
       await renderAndOpenMenu()
 
-      const newTheme = Object.keys(Theme).find(x => x !== theme)
+      const currentTheme = getCurrentTheme()
+      const newTheme = Object.keys(Theme).find(x => x !== currentTheme)
 
       userEvent.click(
         await screen.findByRole('option', {
@@ -72,7 +60,7 @@ describe('ThemeSelect', () => {
         })
       )
 
-      expect(setTheme).toHaveBeenCalledWith(newTheme)
+      await waitFor(() => expect(getCurrentTheme()).toBe(newTheme))
     })
   })
 })
