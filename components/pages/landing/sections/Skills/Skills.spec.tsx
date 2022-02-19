@@ -1,10 +1,13 @@
-import { renderStory } from 'tests/testUtils'
+import { render } from '@testing-library/react'
 import { axe } from 'jest-axe'
-import { Base } from './Skills.stories'
+import * as stories from './Skills.stories'
+import { composeStories } from '@storybook/testing-react'
+
+const { Base } = composeStories(stories)
 
 describe('Skills', () => {
   it('has no axe violations', async () => {
-    const { container } = renderStory(Base)
+    const { container } = render(<Base />)
 
     expect(await axe(container)).toHaveNoViolations()
   })

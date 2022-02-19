@@ -3,15 +3,9 @@ import {
   RenderResult,
   act
 } from '@testing-library/react-hooks/server'
-import { when } from 'jest-when'
 import { Theme } from './types'
 import { usePersistedTheme } from './usePersistedTheme'
-import { getCurrentTheme, updateAndPersistTheme } from './utils'
-
-jest.mock('./utils', () => ({
-  getCurrentTheme: jest.fn(),
-  updateAndPersistTheme: jest.fn()
-}))
+import { getCurrentTheme } from './utils'
 
 describe('usePersistedTheme', () => {
   let result: RenderResult<ReturnType<typeof usePersistedTheme>>,
@@ -28,7 +22,6 @@ describe('usePersistedTheme', () => {
 
   beforeEach(() => {
     initialTheme = Theme.light
-    when(getCurrentTheme).calledWith().mockReturnValue(initialTheme)
   })
 
   describe('before hydration', () => {
@@ -68,7 +61,7 @@ describe('usePersistedTheme', () => {
           result.current[1](newTheme)
         })
 
-        expect(updateAndPersistTheme).toHaveBeenCalledWith(newTheme)
+        expect(getCurrentTheme()).toBe(newTheme)
       })
     })
   })

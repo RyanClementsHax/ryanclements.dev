@@ -6,7 +6,7 @@ export const usePersistedTheme = (): [
   Theme | undefined,
   (newTheme: Theme) => void
 ] => {
-  const [theme, rawSetTheme] = useState<Theme | undefined>(undefined)
+  const [theme, rawSetTheme] = useState<Theme>()
 
   useEffect(() => {
     const initialTheme = getCurrentTheme()
