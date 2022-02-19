@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const colors = require('tailwindcss/colors')
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
+  darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
+    // this ensures that 'xs' gets inserted before the other breakpoints in the css order
+    screens: { xs: '480px', ...defaultTheme.screens },
     extend: {
       fontFamily: {
         title: ['Lato', 'sans-serif']

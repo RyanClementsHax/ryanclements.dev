@@ -1,21 +1,15 @@
-module.exports = {
-  preset: 'ts-jest',
+/* eslint-disable @typescript-eslint/no-var-requires */
+/** @type {import('next/jest').default} */
+const nextJest = /** @type {any} */ (require('next/jest'))
+
+const createJestConfig = nextJest()
+
+module.exports = createJestConfig({
+  setupFilesAfterEnv: ['<rootDir>/tests/testSetup.ts'],
+  moduleDirectories: ['node_modules', '<rootDir>/'],
   testEnvironment: 'jest-environment-jsdom',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'jsx'],
-  testPathIgnorePatterns: ['<rootDir>[/\\\\](node_modules|.next)[/\\\\]'],
-  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$'],
-  transform: {
-    '^.+\\.(ts|tsx)$': ['babel-jest', { configFile: './jest.babel.config.js' }]
-  },
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname'
-  ],
-  moduleNameMapper: {
-    '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
-    '\\.(gif|ttf|eot|svg|png|jpg)$': '<rootDir>/tests/__mocks__/fileMock.js',
-    '^lib/(.*)$': '<rootDir>/lib/$1'
-  },
-  moduleDirectories: ['node_modules', __dirname],
-  setupFilesAfterEnv: ['<rootDir>/tests/testSetup.ts']
-}
+  ]
+})

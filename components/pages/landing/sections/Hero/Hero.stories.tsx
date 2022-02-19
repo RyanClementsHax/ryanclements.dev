@@ -45,6 +45,6 @@ const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
 export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
-  title: 'pages/landing/Hero',
+  title: 'pages/landing/sections/Hero',
   component: Hero
 } as Meta

@@ -1,12 +1,12 @@
 import { IconBadge } from 'components/IconBadge'
 
-export interface DescriptionProps {
+export interface QualityProps {
   Icon: React.ReactNode
   title: string
   description: string
 }
 
-export const Description = ({ Icon, title, description }: DescriptionProps) => (
+export const Quality = ({ Icon, title, description }: QualityProps) => (
   <li className="flex gap-6">
     <IconBadge>{Icon}</IconBadge>
     <div className="flex flex-col gap-3">

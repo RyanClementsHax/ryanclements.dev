@@ -3,9 +3,7 @@ import { createDefaultStories } from 'stories/storyUtils'
 
 import { Header } from '.'
 
-const Template: Story<Parameters<typeof Header>[0]> = props => (
-  <Header {...props} />
-)
+const Template: Story = () => <Header />
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
   Template,

@@ -3,9 +3,7 @@ import { createDefaultStories } from 'stories/storyUtils'
 
 import { ThemeSelect } from '.'
 
-const Template: Story<Parameters<typeof ThemeSelect>[0]> = props => (
-  <ThemeSelect {...props} />
-)
+const Template: Story = () => <ThemeSelect />
 const { Base, DarkTheme } = createDefaultStories(Template, {
   base: {
     figmaUrl:
