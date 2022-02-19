@@ -15,17 +15,17 @@ const Template: Story = () => (
     subtitle="New problems need new solutions. Here's the energy I bring to the table."
     graphicSrc={graphic}
   >
-    <Qualities.Description
+    <Qualities.Quality
       Icon={<UserGroupIcon />}
       title="People first"
       description="I see people as beloved by God and worth going the extra mile for. At work, I always try to help my coworkers and solve real problems for users."
     />
-    <Qualities.Description
+    <Qualities.Quality
       Icon={<CubeIcon />}
       title="Modern"
       description="Up to date with the latest trends in industry, I synthesize custom solutions using the best of what modern software engineering has available to us."
     />
-    <Qualities.Description
+    <Qualities.Quality
       Icon={<PresentationChartLineIcon />}
       title="Always improving"
       description="“Whether you think you can, or you think you can't - you're right” - Henry Ford. I seek to always be improving in all areas of my life, at home and work, on soft and hard skills."
@@ -58,6 +58,6 @@ const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
 export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
-  title: 'pages/landing/Qualities',
+  title: 'pages/landing/sections/Qualities',
   component: Qualities
 } as Meta

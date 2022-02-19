@@ -1,13 +1,13 @@
 import { Meta, Story } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
-import { Proficiency, ProficiencyProps } from '.'
+import { Proficiency, ProficiencyLevel, ProficiencyProps } from '.'
 
 const Template: Story<ProficiencyProps> = props => <Proficiency {...props} />
 
 const Proficient = Template.bind({})
 Proficient.args = {
-  level: 'proficient'
+  level: ProficiencyLevel.Proficient
 }
 const { Base: ProficientBase, DarkTheme: ProficientDarkTheme } =
   createDefaultStories(Proficient, {
@@ -24,7 +24,7 @@ export { ProficientBase, ProficientDarkTheme }
 
 const Comfortable = Template.bind({})
 Comfortable.args = {
-  level: 'comfortable'
+  level: ProficiencyLevel.Comfortable
 }
 const { Base: ComfortableBase, DarkTheme: ComfortableDarkTheme } =
   createDefaultStories(Comfortable, {
@@ -41,7 +41,7 @@ export { ComfortableBase, ComfortableDarkTheme }
 
 const Novice = Template.bind({})
 Novice.args = {
-  level: 'novice'
+  level: ProficiencyLevel.Novice
 }
 const { Base: NoviceBase, DarkTheme: NoviceDarkTheme } = createDefaultStories(
   Novice,
@@ -60,7 +60,7 @@ export { NoviceBase, NoviceDarkTheme }
 
 const Learning = Template.bind({})
 Learning.args = {
-  level: 'learning'
+  level: ProficiencyLevel.Learning
 }
 const { Base: LearningBase, DarkTheme: LearningDarkTheme } =
   createDefaultStories(Learning, {
@@ -77,7 +77,7 @@ export { LearningBase, LearningDarkTheme }
 
 const Exploring = Template.bind({})
 Exploring.args = {
-  level: 'exploring'
+  level: ProficiencyLevel.Exploring
 }
 const { Base: ExploringBase, DarkTheme: ExploringDarkTheme } =
   createDefaultStories(Exploring, {
@@ -93,7 +93,7 @@ const { Base: ExploringBase, DarkTheme: ExploringDarkTheme } =
 export { ExploringBase, ExploringDarkTheme }
 
 export default {
-  title: 'pages/landing/Skills/Proficiency',
+  title: 'pages/landing/sections/Skills/Proficiency',
   component: Proficiency,
   parameters: {
     layout: 'centered'

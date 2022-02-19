@@ -1,24 +1,26 @@
 import Image from 'next/image'
-import { Description } from './Description'
+import { Subtitle } from '../../headings/Subtitle'
+import { Title } from '../../headings/Title'
+import { Quality } from './Quality'
 
 export interface QualitiesProps {
   title: string
   subtitle: string
   graphicSrc: StaticImageData
+  children?: React.ReactNode
 }
 
-export const Qualities: React.FC<QualitiesProps> & {
-  Description: typeof Description
-} = ({ children, title, subtitle, graphicSrc }) => (
+export const Qualities = ({
+  children,
+  title,
+  subtitle,
+  graphicSrc
+}: QualitiesProps) => (
   <div className="bg-surface-offBase px-5 py-12 md:px-8 md:py-16">
     <section className="max-w-screen-xl mx-auto grid auto-rows-auto gap-8 md:grid-rows-[repeat(2,_auto)] md:grid-cols-[auto_20rem] lg:grid-cols-[auto_30rem] md:gap-y-16 md:gap-x-24">
       <hgroup className="flex flex-col gap-6">
-        <h2 className="font-bold uppercase tracking-wider text-center text-on-surface-offBase md:text-left">
-          {title}
-        </h2>
-        <h3 className="font-title font-black text-3xl text-center text-on-surface-offBase md:text-left">
-          {subtitle}
-        </h3>
+        <Title>{title}</Title>
+        <Subtitle>{subtitle}</Subtitle>
       </hgroup>
       <div className="md:row-span-full md:col-start-1 md:flex md:flex-col md:justify-center">
         <Graphic src={graphicSrc} />
@@ -28,7 +30,7 @@ export const Qualities: React.FC<QualitiesProps> & {
   </div>
 )
 
-Qualities.Description = Description
+Qualities.Quality = Quality
 
 const Graphic = ({ src }: { src: StaticImageData }) => (
   <div className="overflow-hidden rounded-xl shadow-md">
