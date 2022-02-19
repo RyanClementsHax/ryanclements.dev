@@ -1,11 +1,8 @@
+import { SkillInfo } from 'lib/skills'
 import Image from 'next/image'
-import { Proficiency, ProficiencyLevel } from '../Proficiency'
+import { Proficiency } from '../Proficiency'
 
-export interface SkillProps {
-  name: string
-  logoSrc: StaticImageData
-  proficiency: ProficiencyLevel
-}
+export type SkillProps = SkillInfo
 
 export const Skill = ({ name, logoSrc, proficiency }: SkillProps) => (
   <div className="p-3 rounded-md shadow-md flex gap-3 bg-surface-base-elevation-100">

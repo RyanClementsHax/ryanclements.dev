@@ -1,7 +1,8 @@
 import { Meta, Story } from '@storybook/react'
+import { ProficiencyLevel } from 'lib/skills'
 import { createDefaultStories } from 'stories/storyUtils'
 
-import { Proficiency, ProficiencyLevel, ProficiencyProps } from '.'
+import { Proficiency, ProficiencyProps } from '.'
 
 const Template: Story<ProficiencyProps> = props => <Proficiency {...props} />
 

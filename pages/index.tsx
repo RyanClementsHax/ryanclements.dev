@@ -7,6 +7,12 @@ import {
   UserGroupIcon
 } from '@heroicons/react/outline'
 import graphic from 'public/graphic.jpg'
+import { Skills } from 'components/pages/landing/sections/Skills'
+import { Title } from 'components/pages/landing/headings/Title'
+import { Subtitle } from 'components/pages/landing/headings/Subtitle'
+import { ProficiencyLegend } from 'components/pages/landing/sections/Skills/ProficiencyLegend'
+import { SkillGroup } from 'components/pages/landing/sections/Skills/SkillGroup'
+import { backendSkills, devopsSkills, frontendSkills } from 'lib/skills'
 
 const Index = () => (
   <>
@@ -50,6 +56,37 @@ const Index = () => (
         description="“Whether you think you can, or you think you can't - you're right” - Henry Ford. I seek to always be improving in all areas of my life, at home and work, on soft and hard skills."
       />
     </Qualities>
+    <Skills>
+      <Skills.Header>
+        <Title>A lifelong learner</Title>
+        <Subtitle>Here is the tech I know and love</Subtitle>
+      </Skills.Header>
+      <ProficiencyLegend />
+      <SkillGroup>
+        <SkillGroup.Title>Frontend</SkillGroup.Title>
+        <SkillGroup.Content>
+          {frontendSkills.map(x => (
+            <SkillGroup.Skill key={x.name} {...x} />
+          ))}
+        </SkillGroup.Content>
+      </SkillGroup>
+      <SkillGroup>
+        <SkillGroup.Title>Backend</SkillGroup.Title>
+        <SkillGroup.Content>
+          {backendSkills.map(x => (
+            <SkillGroup.Skill key={x.name} {...x} />
+          ))}
+        </SkillGroup.Content>
+      </SkillGroup>
+      <SkillGroup>
+        <SkillGroup.Title>Devops</SkillGroup.Title>
+        <SkillGroup.Content>
+          {devopsSkills.map(x => (
+            <SkillGroup.Skill key={x.name} {...x} />
+          ))}
+        </SkillGroup.Content>
+      </SkillGroup>
+    </Skills>
   </>
 )
 

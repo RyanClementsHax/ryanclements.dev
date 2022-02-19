@@ -1,7 +1,7 @@
 import { Meta, Story } from '@storybook/react'
+import { allSkills } from 'lib/skills'
 import { createDefaultStories } from 'stories/storyUtils'
 import { SkillGroup } from '.'
-import { allSkills } from '../storyUtils'
 
 const Template: Story = () => (
   <SkillGroup>

@@ -1,12 +1,5 @@
 import c from 'classnames'
-
-export enum ProficiencyLevel {
-  Proficient = 'Proficient',
-  Comfortable = 'Comfortable',
-  Novice = 'Novice',
-  Learning = 'Learning',
-  Exploring = 'Exploring'
-}
+import { ProficiencyLevel } from 'lib/skills'
 
 export interface ProficiencyProps {
   level: ProficiencyLevel

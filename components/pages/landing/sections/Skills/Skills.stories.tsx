@@ -6,14 +6,14 @@ import { Subtitle } from '../../headings/Subtitle'
 import { Title } from '../../headings/Title'
 import { ProficiencyLegend } from './ProficiencyLegend'
 import { SkillGroup } from './SkillGroup'
-import { backendSkills, devopsSkills, frontendSkills } from './storyUtils'
+import { backendSkills, devopsSkills, frontendSkills } from 'lib/skills'
 
 const Template: Story = () => (
   <Skills>
-    <hgroup>
+    <Skills.Header>
       <Title>A lifelong learner</Title>
       <Subtitle>Here is the tech I know and love</Subtitle>
-    </hgroup>
+    </Skills.Header>
     <ProficiencyLegend />
     <SkillGroup>
       <SkillGroup.Title>Frontend</SkillGroup.Title>

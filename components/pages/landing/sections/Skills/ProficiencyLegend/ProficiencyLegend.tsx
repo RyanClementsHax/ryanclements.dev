@@ -1,5 +1,6 @@
+import { ProficiencyLevel } from 'lib/skills'
 import { Fragment } from 'react'
-import { Proficiency, ProficiencyLevel } from '../Proficiency'
+import { Proficiency } from '../Proficiency'
 
 const proficiencyToDescriptionMap = new Map<ProficiencyLevel, string>([
   [
@@ -25,16 +26,18 @@ const proficiencyToDescriptionMap = new Map<ProficiencyLevel, string>([
 ])
 
 export const ProficiencyLegend = () => (
-  <dl className="grid grid-cols-[auto,_minmax(0,1fr)] gap-4">
-    {Array.from(proficiencyToDescriptionMap).map(
-      ([proficiency, description]) => (
-        <Fragment key={proficiency}>
-          <dt className="justify-self-start">
-            <Proficiency level={proficiency} />
-          </dt>
-          <dd className="text-on-surface-base-muted">{description}</dd>
-        </Fragment>
-      )
-    )}
-  </dl>
+  <div className="flex justify-center">
+    <dl className="grid grid-cols-[auto,_minmax(0,1fr)] gap-4 max-w-md">
+      {Array.from(proficiencyToDescriptionMap).map(
+        ([proficiency, description]) => (
+          <Fragment key={proficiency}>
+            <dt className="justify-self-start">
+              <Proficiency level={proficiency} />
+            </dt>
+            <dd className="text-on-surface-base-muted">{description}</dd>
+          </Fragment>
+        )
+      )}
+    </dl>
+  </div>
 )

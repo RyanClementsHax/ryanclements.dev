@@ -9,6 +9,7 @@ import cssLogo from 'public/tech-logos/css-logo.svg'
 import htmlLogo from 'public/tech-logos/html-logo.svg'
 import sassLogo from 'public/tech-logos/sass-logo.svg'
 import tailwindLogo from 'public/tech-logos/tailwindcss-logo.svg'
+import styledComponentsLogo from 'public/tech-logos/styled-components-logo.svg'
 import jestLogo from 'public/tech-logos/jest-logo.svg'
 import cyLogo from 'public/tech-logos/cypress-logo.svg'
 import csharpLogo from 'public/tech-logos/csharp-logo.svg'
@@ -28,10 +29,22 @@ import githubActionsLogo from 'public/tech-logos/github-actions-logo.svg'
 import awsLogo from 'public/tech-logos/aws-logo.svg'
 import azureLogo from 'public/tech-logos/azure-logo.svg'
 import tfLogo from 'public/tech-logos/terraform-logo.svg'
-import { ProficiencyLevel } from './Proficiency'
-import { SkillProps } from './Skill'
 
-export const frontendSkills: SkillProps[] = [
+export interface SkillInfo {
+  name: string
+  logoSrc: StaticImageData
+  proficiency: ProficiencyLevel
+}
+
+export enum ProficiencyLevel {
+  Proficient = 'Proficient',
+  Comfortable = 'Comfortable',
+  Novice = 'Novice',
+  Learning = 'Learning',
+  Exploring = 'Exploring'
+}
+
+export const frontendSkills: SkillInfo[] = [
   {
     name: 'Javascript',
     proficiency: ProficiencyLevel.Proficient,
@@ -59,7 +72,7 @@ export const frontendSkills: SkillProps[] = [
   },
   {
     name: 'Vue',
-    proficiency: ProficiencyLevel.Proficient,
+    proficiency: ProficiencyLevel.Comfortable,
     logoSrc: vueLogo
   },
   {
@@ -88,6 +101,11 @@ export const frontendSkills: SkillProps[] = [
     logoSrc: tailwindLogo
   },
   {
+    name: 'Styled Components',
+    proficiency: ProficiencyLevel.Comfortable,
+    logoSrc: styledComponentsLogo
+  },
+  {
     name: 'Jest',
     proficiency: ProficiencyLevel.Proficient,
     logoSrc: jestLogo
@@ -99,7 +117,7 @@ export const frontendSkills: SkillProps[] = [
   }
 ]
 
-export const backendSkills: SkillProps[] = [
+export const backendSkills: SkillInfo[] = [
   {
     name: 'C#',
     proficiency: ProficiencyLevel.Comfortable,
@@ -162,7 +180,7 @@ export const backendSkills: SkillProps[] = [
   }
 ]
 
-export const devopsSkills: SkillProps[] = [
+export const devopsSkills: SkillInfo[] = [
   {
     name: 'Docker',
     proficiency: ProficiencyLevel.Comfortable,
