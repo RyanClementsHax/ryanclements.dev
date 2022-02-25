@@ -3,7 +3,7 @@ export interface SkillsProps {
 }
 
 export const Skills = ({ children }: SkillsProps) => (
-  <section className="p-5 flex flex-col gap-8 md:py-12 md:px-0 md:gap-20 justify-center">
+  <section className="p-5 flex flex-col gap-8 md:p-8 md:gap-20 justify-center">
     {children}
   </section>
 )

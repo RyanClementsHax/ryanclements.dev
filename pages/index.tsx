@@ -13,6 +13,9 @@ import { Subtitle } from 'components/pages/landing/headings/Subtitle'
 import { ProficiencyLegend } from 'components/pages/landing/sections/Skills/ProficiencyLegend'
 import { SkillGroup } from 'components/pages/landing/sections/Skills/SkillGroup'
 import { backendSkills, devopsSkills, frontendSkills } from 'lib/skills'
+import { Projects } from 'components/pages/landing/sections/Projects'
+import { Project } from 'components/pages/landing/sections/Projects/Project'
+import { projects } from 'lib/projects'
 
 const Index = () => (
   <>
@@ -87,6 +90,19 @@ const Index = () => (
         </SkillGroup.Content>
       </SkillGroup>
     </Skills>
+    <Projects>
+      <Projects.Header>
+        <Title>One Giant Nerd</Title>
+        <Subtitle>
+          I love what I do. Here are some projects I like to work on.
+        </Subtitle>
+      </Projects.Header>
+      <Projects.Group>
+        {projects.map(x => (
+          <Project key={x.name} {...x} />
+        ))}
+      </Projects.Group>
+    </Projects>
   </>
 )
 
