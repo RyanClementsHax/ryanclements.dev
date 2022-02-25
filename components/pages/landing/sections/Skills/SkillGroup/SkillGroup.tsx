@@ -5,7 +5,7 @@ export interface SkillGroupProps {
 }
 
 export const SkillGroup = ({ children }: SkillGroupProps) => (
-  <div className="flex flex-col gap-6 px-5">{children}</div>
+  <div className="flex flex-col gap-6">{children}</div>
 )
 
 const Title: React.FC = ({ children }) => (

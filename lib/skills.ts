@@ -9,6 +9,8 @@ import cssLogo from 'public/tech-logos/css-logo.svg'
 import htmlLogo from 'public/tech-logos/html-logo.svg'
 import sassLogo from 'public/tech-logos/sass-logo.svg'
 import tailwindLogo from 'public/tech-logos/tailwindcss-logo.svg'
+import sbLogo from 'public/tech-logos/storybook-logo.svg'
+import figmaLogo from 'public/tech-logos/figma-logo.svg'
 import styledComponentsLogo from 'public/tech-logos/styled-components-logo.svg'
 import jestLogo from 'public/tech-logos/jest-logo.svg'
 import cyLogo from 'public/tech-logos/cypress-logo.svg'
@@ -104,6 +106,16 @@ export const frontendSkills: SkillInfo[] = [
     name: 'Styled Components',
     proficiency: ProficiencyLevel.Comfortable,
     logoSrc: styledComponentsLogo
+  },
+  {
+    name: 'Storybook',
+    proficiency: ProficiencyLevel.Proficient,
+    logoSrc: sbLogo
+  },
+  {
+    name: 'Figma',
+    proficiency: ProficiencyLevel.Novice,
+    logoSrc: figmaLogo
   },
   {
     name: 'Jest',
