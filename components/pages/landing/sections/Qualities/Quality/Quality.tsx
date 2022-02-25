@@ -1,4 +1,4 @@
-import { IconBadge } from 'components/IconBadge'
+import { IconBadge } from 'components/icons/IconBadge'
 
 export interface QualityProps {
   Icon: React.ReactNode

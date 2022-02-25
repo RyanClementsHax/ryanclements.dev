@@ -45,7 +45,9 @@ module.exports = {
                 base: {
                   DEFAULT: 'white',
                   elevation: {
-                    100: 'white'
+                    100: 'white',
+                    200: 'white',
+                    300: 'white'
                   }
                 },
                 offBase: colors.gray[200],
@@ -103,7 +105,9 @@ module.exports = {
                   base: {
                     DEFAULT: colors.zinc[900],
                     elevation: {
-                      100: '#1E1E24'
+                      100: '#1D1D23',
+                      200: '#1E2026',
+                      300: '#1F2128'
                     }
                   },
                   offBase: colors.gray[800],
