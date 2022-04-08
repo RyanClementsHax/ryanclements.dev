@@ -1,7 +1,7 @@
 import { ThemeSelect } from 'components/theme'
 
 export const Header = () => (
-  <header className="absolute p-3 w-full flex justify-end">
+  <header className="absolute flex w-full justify-end p-3">
     <ThemeSelect />
   </header>
 )

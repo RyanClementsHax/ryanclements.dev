@@ -20,7 +20,7 @@ export const Proficiency = ({ level, className }: ProficiencyProps) => (
   <span
     className={c(
       proficiencyToClassesMap[level],
-      'block rounded-full first-letter:uppercase px-2 py-0.5 border text-xs',
+      'block rounded-full border px-2 py-0.5 text-xs first-letter:uppercase',
       className
     )}
   >

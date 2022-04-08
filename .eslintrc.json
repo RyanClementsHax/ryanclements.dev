@@ -4,6 +4,7 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "typescript",
+    "plugin:storybook/recommended",
     // jest
     "plugin:jest/recommended",
     "plugin:jest/style",
@@ -24,13 +25,6 @@
     "react/no-danger": "error"
   },
   "overrides": [
-    {
-      // storybook specific files
-      "files": ["**/*.stories.{js|jsx|ts|tsx}"],
-      "rules": {
-        "import/no-anonymous-default-export": "off"
-      }
-    },
     {
       "files": ["**/*.ts?(x)"],
       "parserOptions": {

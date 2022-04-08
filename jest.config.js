@@ -5,7 +5,7 @@ const nextJest = /** @type {any} */ (require('next/jest'))
 const createJestConfig = nextJest()
 
 module.exports = createJestConfig({
-  setupFilesAfterEnv: ['<rootDir>/tests/testSetup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/tests/testSetup.tsx'],
   moduleDirectories: ['node_modules', '<rootDir>/'],
   testEnvironment: 'jest-environment-jsdom',
   watchPlugins: [

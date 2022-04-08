@@ -3,12 +3,12 @@ export interface SkillsProps {
 }
 
 export const Skills = ({ children }: SkillsProps) => (
-  <section className="p-5 flex flex-col gap-8 md:p-8 md:gap-20 justify-center">
+  <section className="flex flex-col justify-center gap-8 p-5 md:gap-20 md:p-8">
     {children}
   </section>
 )
 
-const Header: React.FC = ({ children }) => (
+const Header = ({ children }: { children?: React.ReactNode }) => (
   <hgroup className="flex flex-col gap-4 md:gap-6">{children}</hgroup>
 )
 
