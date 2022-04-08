@@ -9,7 +9,7 @@ export const Subtitle = ({ children, className }: SubtitleProps) => (
   <h3
     className={c(
       className,
-      'font-title font-black text-3xl text-center text-on-surface-offBase'
+      'text-center font-title text-3xl font-black text-on-surface-offBase'
     )}
   >
     {children}

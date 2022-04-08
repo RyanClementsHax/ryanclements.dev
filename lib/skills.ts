@@ -31,6 +31,7 @@ import githubActionsLogo from 'public/tech-logos/github-actions-logo.svg'
 import awsLogo from 'public/tech-logos/aws-logo.svg'
 import azureLogo from 'public/tech-logos/azure-logo.svg'
 import tfLogo from 'public/tech-logos/terraform-logo.svg'
+import { StaticImageData } from 'next/image'
 
 export interface SkillInfo {
   name: string

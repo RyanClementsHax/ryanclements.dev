@@ -11,3 +11,8 @@ declare module 'tailwindcss/defaultTheme' {
   declare const colors: any
   export = colors
 }
+
+declare module 'prettier-plugin-tailwindcss' {
+  declare const plugin: any
+  export default plugin
+}

@@ -16,7 +16,7 @@ const Heading = ({
 )
 
 const Banner = () => (
-  <div className="relative h-full max-h-[500px] hidden md:block overflow-hidden rounded-xl shadow-md lg:col-span-3">
+  <div className="relative hidden h-full max-h-[500px] overflow-hidden rounded-xl shadow-md md:block lg:col-span-3">
     <Image
       src={banner}
       layout="fill"
@@ -35,8 +35,8 @@ export interface HeroProps {
 }
 
 export const Hero = ({ title, subtitle }: HeroProps) => (
-  <section className="h-screen w-100 px-5 py-12 md:px-8 md:py-16">
-    <div className="h-full grid gap-4 items-center md:container md:mx-auto md:grid-cols-2 lg:grid-cols-5">
+  <section className="w-100 h-screen px-5 py-12 md:px-8 md:py-16">
+    <div className="grid h-full items-center gap-4 md:container md:mx-auto md:grid-cols-2 lg:grid-cols-5">
       <Heading title={title} subtitle={subtitle} />
       <Banner />
     </div>

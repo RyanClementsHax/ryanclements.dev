@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import React, { createContext, useContext } from 'react'
 import { usePersistedTheme } from './usePersistedTheme'
 import { Theme } from './types'
 
@@ -17,7 +17,7 @@ export const ThemeContext = createContext<ThemeContextType>({
 
 export const useTheme = (): ThemeContextType => useContext(ThemeContext)
 
-export const ThemeProvider: React.FC = ({ children }) => {
+export const ThemeProvider = ({ children }: { children?: React.ReactNode }) => {
   const [theme, setTheme] = usePersistedTheme()
 
   return (

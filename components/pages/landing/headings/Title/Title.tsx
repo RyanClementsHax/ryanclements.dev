@@ -9,7 +9,7 @@ export const Title = ({ children, className }: TitleProps) => (
   <h2
     className={c(
       className,
-      'font-bold uppercase tracking-wider text-center text-on-surface-offBase'
+      'text-center font-bold uppercase tracking-wider text-on-surface-offBase'
     )}
   >
     {children}

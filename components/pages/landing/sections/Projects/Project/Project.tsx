@@ -13,9 +13,9 @@ export const Project = ({
   siteUrl,
   techs
 }: ProjectProps) => (
-  <div className="shadow-md rounded-xl overflow-hidden bg-surface-base-elevation-100">
-    <div className="p-8 flex flex-col gap-4">
-      <div className="flex justify-between items-center">
+  <div className="overflow-hidden rounded-xl bg-surface-base-elevation-100 shadow-md">
+    <div className="flex flex-col gap-4 p-8">
+      <div className="flex items-center justify-between">
         <span className="font-bold text-on-surface-base">{name}</span>
         {githubUrl && (
           <Link href={githubUrl} passHref>
@@ -29,17 +29,17 @@ export const Project = ({
       <p className="text-on-surface-base">{description}</p>
       {siteUrl && (
         <Link href={siteUrl} passHref>
-          <a className="flex gap-1 text-primary-700 dark:text-primary-400 w-fit">
+          <a className="flex w-fit gap-1 text-primary-700 dark:text-primary-400">
             Go to site
             <ArrowNarrowRightIcon
               aria-hidden="true"
-              className="text-primary-500 dark:text-primary-400 w-6 h-6"
+              className="h-6 w-6 text-primary-500 dark:text-primary-400"
             />
           </a>
         </Link>
       )}
     </div>
-    <div className="flex flex-wrap px-8 py-4 gap-4 bg-gray-50 dark:bg-surface-base-elevation-300">
+    <div className="flex flex-wrap gap-4 bg-gray-50 px-8 py-4 dark:bg-surface-base-elevation-300">
       {techs.map(x => (
         <div key={x.name} className="flex gap-1.5">
           <Image

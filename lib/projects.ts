@@ -8,6 +8,7 @@ import aspnetCoreLogo from 'public/tech-logos/aspnet-core-logo.svg'
 import postgresLogo from 'public/tech-logos/postgres-logo.svg'
 import auth0Logo from 'public/tech-logos/auth0-logo.svg'
 import csharpLogo from 'public/tech-logos/csharp-logo.svg'
+import { StaticImageData } from 'next/image'
 
 export interface Tech {
   name: string

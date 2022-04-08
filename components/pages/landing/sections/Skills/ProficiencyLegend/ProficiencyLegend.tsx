@@ -27,7 +27,7 @@ const proficiencyToDescriptionMap = new Map<ProficiencyLevel, string>([
 
 export const ProficiencyLegend = () => (
   <div className="flex justify-center">
-    <dl className="grid grid-cols-[auto,_minmax(0,1fr)] gap-4 max-w-md">
+    <dl className="grid max-w-md grid-cols-[auto,_minmax(0,1fr)] gap-4">
       {Array.from(proficiencyToDescriptionMap).map(
         ([proficiency, description]) => (
           <Fragment key={proficiency}>
