@@ -1,68 +1,52 @@
-import {
-  renderHook,
-  RenderResult,
-  act
-} from '@testing-library/react-hooks/server'
+import { renderHook, RenderHookResult, act } from '@testing-library/react'
 import { Theme } from './types'
 import { usePersistedTheme } from './usePersistedTheme'
 import { getCurrentTheme } from './utils'
 
 describe('usePersistedTheme', () => {
-  let result: RenderResult<ReturnType<typeof usePersistedTheme>>,
-    hydrate: () => void,
+  let result: RenderHookResult<
+      ReturnType<typeof usePersistedTheme>,
+      void
+    >['result'],
     initialTheme: Theme
 
   const renderBaseHook = () => {
-    ;({ result, hydrate } = renderHook(() => usePersistedTheme()))
-  }
-  const renderBaseHookHydrated = () => {
-    renderBaseHook()
-    hydrate()
+    ;({ result } = renderHook(() => usePersistedTheme()))
   }
 
   beforeEach(() => {
     initialTheme = Theme.light
   })
 
-  describe('before hydration', () => {
-    it('sets the theme to undefined', () => {
-      renderBaseHook()
+  it('sets the theme to the result of getCurrentTheme', () => {
+    renderBaseHook()
 
-      expect(result.current[0]).toBeUndefined()
-    })
+    expect(result.current[0]).toBe(initialTheme)
   })
 
-  describe('after hydration', () => {
-    it('sets the theme to the result of getCurrentTheme', () => {
-      renderBaseHookHydrated()
+  describe('setTheme', () => {
+    it('updates the theme state', () => {
+      renderBaseHook()
+      const newTheme = Theme.dark
+      expect(newTheme).not.toBe(initialTheme)
 
-      expect(result.current[0]).toBe(initialTheme)
+      act(() => {
+        result.current[1](newTheme)
+      })
+
+      expect(result.current[0]).toBe(newTheme)
     })
 
-    describe('setTheme', () => {
-      it('updates the theme state', () => {
-        renderBaseHookHydrated()
-        const newTheme = Theme.dark
-        expect(newTheme).not.toBe(initialTheme)
+    it('persists the theme', () => {
+      renderBaseHook()
+      const newTheme = Theme.dark
+      expect(newTheme).not.toBe(initialTheme)
 
-        act(() => {
-          result.current[1](newTheme)
-        })
-
-        expect(result.current[0]).toBe(newTheme)
+      act(() => {
+        result.current[1](newTheme)
       })
 
-      it('persists the theme', () => {
-        renderBaseHookHydrated()
-        const newTheme = Theme.dark
-        expect(newTheme).not.toBe(initialTheme)
-
-        act(() => {
-          result.current[1](newTheme)
-        })
-
-        expect(getCurrentTheme()).toBe(newTheme)
-      })
+      expect(getCurrentTheme()).toBe(newTheme)
     })
   })
 })
