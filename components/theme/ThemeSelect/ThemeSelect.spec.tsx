@@ -19,7 +19,7 @@ describe('ThemeSelect', () => {
       const view = render(<Base />)
 
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-      userEvent.click(await screen.findByRole('button'))
+      await userEvent.click(await screen.findByRole('button'))
 
       return view
     }
@@ -54,7 +54,7 @@ describe('ThemeSelect', () => {
       const currentTheme = getCurrentTheme()
       const newTheme = Object.keys(Theme).find(x => x !== currentTheme)
 
-      userEvent.click(
+      await userEvent.click(
         await screen.findByRole('option', {
           name: newTheme
         })
