@@ -10,7 +10,7 @@ module.exports = {
   ],
   theme: {
     // this ensures that 'xs' gets inserted before the other breakpoints in the css order
-    screens: { xs: '480px', ...defaultTheme.screens },
+    screens: { xs: '480px', ...defaultTheme?.screens },
     extend: {
       fontFamily: {
         title: ['Lato', 'sans-serif']

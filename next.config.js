@@ -1,9 +1,8 @@
-// I'd love to convert this to .mjs but typescript doesn't suport .mjs yet https://github.com/microsoft/TypeScript/issues/15416
+// I'd love to convert this to .mjs but storybook-addon-next doesn't support importing mjs yet
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 // @ts-expect-error: there are no typings for this module
 const withPlugins = require('next-compose-plugins')
-// @ts-expect-error: there are no typings for this module
 const withBundleAnalyzer = require('@next/bundle-analyzer')
 
 /**
@@ -13,6 +12,7 @@ const config = {}
 
 module.exports = withPlugins(
   [
+    // @ts-expect-error: the typings are wrong for thsi module
     withBundleAnalyzer({
       enabled: process.env.ANALYZE === 'true'
     })
