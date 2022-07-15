@@ -8,7 +8,7 @@ import { Theme } from 'components/theme/types'
 const Button = () => {
   const { theme } = useTheme()
   return (
-    <Listbox.Button className="relative w-full cursor-default overflow-hidden rounded-md border border-borderColor bg-surface-base py-2 pl-3 pr-10 text-left shadow-sm focus:border-borderColor-focus focus:outline-none focus:ring-1 focus:ring-ringColor-focus sm:text-sm">
+    <Listbox.Button className="relative w-full cursor-pointer overflow-hidden rounded-md border border-borderColor bg-surface-base py-2 pl-3 pr-10 text-left shadow-sm focus:border-borderColor-focus focus:outline-none focus:ring-1 focus:ring-ringColor-focus sm:text-sm">
       <span className="block truncate text-on-surface-base">{theme}</span>
       <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
         <SelectorIcon className="h-5 w-5 text-icon" aria-hidden="true" />
@@ -24,7 +24,7 @@ const Option = ({ value }: { value: string }) => (
         active
           ? 'bg-surface-active text-on-surface-active'
           : 'text-on-surface-base',
-        'relative cursor-default select-none py-2 pl-10 pr-4'
+        'relative cursor-pointer select-none py-2 pl-10 pr-4'
       )
     }
     value={value}
