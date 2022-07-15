@@ -26,18 +26,32 @@ const proficiencyToDescriptionMap = new Map<ProficiencyLevel, string>([
 ])
 
 export const ProficiencyLegend = () => (
+  <Container>
+    {Array.from(proficiencyToDescriptionMap).map(([level, description]) => (
+      <ProficiencyRow key={level} level={level} description={description} />
+    ))}
+  </Container>
+)
+
+const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="flex justify-center">
     <dl className="grid max-w-md grid-cols-[auto,_minmax(0,1fr)] gap-4">
-      {Array.from(proficiencyToDescriptionMap).map(
-        ([proficiency, description]) => (
-          <Fragment key={proficiency}>
-            <dt className="justify-self-start">
-              <Proficiency level={proficiency} />
-            </dt>
-            <dd className="text-on-surface-base-muted">{description}</dd>
-          </Fragment>
-        )
-      )}
+      {children}
     </dl>
   </div>
+)
+
+const ProficiencyRow = ({
+  level,
+  description
+}: {
+  level: ProficiencyLevel
+  description: string
+}) => (
+  <>
+    <dt className="justify-self-start">
+      <Proficiency level={level} />
+    </dt>
+    <dd className="text-on-surface-base-muted">{description}</dd>
+  </>
 )

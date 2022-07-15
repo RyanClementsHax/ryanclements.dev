@@ -1,4 +1,3 @@
-import { BookmarkIcon } from '@heroicons/react/outline'
 import { Meta, Story } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
@@ -7,7 +6,7 @@ import { Quality } from '.'
 const Template: Story = () => (
   <ul>
     <Quality
-      Icon={<BookmarkIcon />}
+      icon="UserGroup"
       title="Title"
       description="Description that is descriptive"
     />

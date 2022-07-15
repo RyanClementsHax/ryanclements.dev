@@ -25,19 +25,6 @@ export interface ProjectInfo {
 
 export const projects: ProjectInfo[] = [
   {
-    name: 'nPool',
-    description:
-      'A side business of mine designed to help NKN (a crypto coin) miners pool earnings',
-    techs: [
-      { name: 'Next.js', logoSrc: nextjsLogo },
-      { name: 'Typescript', logoSrc: tsLogo },
-      { name: 'C#', logoSrc: csharpLogo },
-      { name: 'ASP.NET Core', logoSrc: aspnetCoreLogo },
-      { name: 'Postgres', logoSrc: postgresLogo },
-      { name: 'Auth0', logoSrc: auth0Logo }
-    ]
-  },
-  {
     name: 'ryanclements.dev',
     description: 'My personal website that I built from scratch! 😁',
     githubUrl: 'https://github.com/RyanClementsHax/ryanclements.dev',
@@ -72,6 +59,19 @@ export const projects: ProjectInfo[] = [
       { name: 'Typescript', logoSrc: tsLogo },
       { name: 'Tailwindcss', logoSrc: tailwindLogo },
       { name: 'Jest', logoSrc: jestLogo }
+    ]
+  },
+  {
+    name: 'nPool',
+    description:
+      'A side project of mine designed to help NKN (a crypto coin) miners pool earnings',
+    techs: [
+      { name: 'Next.js', logoSrc: nextjsLogo },
+      { name: 'Typescript', logoSrc: tsLogo },
+      { name: 'C#', logoSrc: csharpLogo },
+      { name: 'ASP.NET Core', logoSrc: aspnetCoreLogo },
+      { name: 'Postgres', logoSrc: postgresLogo },
+      { name: 'Auth0', logoSrc: auth0Logo }
     ]
   }
 ]

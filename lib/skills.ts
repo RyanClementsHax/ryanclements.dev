@@ -31,12 +31,19 @@ import githubActionsLogo from 'public/tech-logos/github-actions-logo.svg'
 import awsLogo from 'public/tech-logos/aws-logo.svg'
 import azureLogo from 'public/tech-logos/azure-logo.svg'
 import tfLogo from 'public/tech-logos/terraform-logo.svg'
+import javaLogo from 'public/tech-logos/java-logo.svg'
+import kotlinLogo from 'public/tech-logos/kotlin-logo.svg'
 import { StaticImageData } from 'next/image'
 
 export interface SkillInfo {
   name: string
   logoSrc: StaticImageData
   proficiency: ProficiencyLevel
+}
+
+export interface SkillGroupInfo {
+  name: string
+  skills: SkillInfo[]
 }
 
 export enum ProficiencyLevel {
@@ -47,178 +54,197 @@ export enum ProficiencyLevel {
   Exploring = 'Exploring'
 }
 
-export const frontendSkills: SkillInfo[] = [
+export const skillGroups: SkillGroupInfo[] = [
   {
-    name: 'Javascript',
-    proficiency: ProficiencyLevel.Proficient,
-    logoSrc: jsLogo
+    name: 'Frontend',
+    skills: [
+      {
+        name: 'Javascript',
+        proficiency: ProficiencyLevel.Proficient,
+        logoSrc: jsLogo
+      },
+      {
+        name: 'Typescript',
+        proficiency: ProficiencyLevel.Proficient,
+        logoSrc: tsLogo
+      },
+      {
+        name: 'React',
+        proficiency: ProficiencyLevel.Proficient,
+        logoSrc: reactLogo
+      },
+      {
+        name: 'Next.js',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: nextjsLogo
+      },
+      {
+        name: 'Gatsby',
+        proficiency: ProficiencyLevel.Exploring,
+        logoSrc: gatsbyLogo
+      },
+      {
+        name: 'Vue',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: vueLogo
+      },
+      {
+        name: 'Webpack',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: webpackLogo
+      },
+      {
+        name: 'CSS',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: cssLogo
+      },
+      {
+        name: 'HTML',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: htmlLogo
+      },
+      {
+        name: 'SASS/SCSS',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: sassLogo
+      },
+      {
+        name: 'Tailwindcss',
+        proficiency: ProficiencyLevel.Proficient,
+        logoSrc: tailwindLogo
+      },
+      {
+        name: 'Styled Components',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: styledComponentsLogo
+      },
+      {
+        name: 'Storybook',
+        proficiency: ProficiencyLevel.Proficient,
+        logoSrc: sbLogo
+      },
+      {
+        name: 'Figma',
+        proficiency: ProficiencyLevel.Novice,
+        logoSrc: figmaLogo
+      },
+      {
+        name: 'Jest',
+        proficiency: ProficiencyLevel.Proficient,
+        logoSrc: jestLogo
+      },
+      {
+        name: 'Cypress',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: cyLogo
+      }
+    ]
   },
   {
-    name: 'Typescript',
-    proficiency: ProficiencyLevel.Proficient,
-    logoSrc: tsLogo
+    name: 'Backend',
+    skills: [
+      {
+        name: 'C#',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: csharpLogo
+      },
+      {
+        name: '.Net Core',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: dotnetCoreLogo
+      },
+      {
+        name: 'ASP.NET Core',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: aspnetCoreLogo
+      },
+      {
+        name: 'Entity Framework Core',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: efCoreLogo
+      },
+      {
+        name: 'Java',
+        proficiency: ProficiencyLevel.Learning,
+        logoSrc: javaLogo
+      },
+      {
+        name: 'Kotlin',
+        proficiency: ProficiencyLevel.Learning,
+        logoSrc: kotlinLogo
+      },
+      {
+        name: 'Node.js',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: nodeLogo
+      },
+      {
+        name: 'SQL',
+        proficiency: ProficiencyLevel.Novice,
+        logoSrc: sqlLogo
+      },
+      {
+        name: 'Postgres',
+        proficiency: ProficiencyLevel.Novice,
+        logoSrc: postgresLogo
+      },
+      {
+        name: 'SQL Server',
+        proficiency: ProficiencyLevel.Novice,
+        logoSrc: sqlServerLogo
+      },
+      {
+        name: 'Rust',
+        proficiency: ProficiencyLevel.Learning,
+        logoSrc: rustLogo
+      },
+      {
+        name: 'Deno',
+        proficiency: ProficiencyLevel.Learning,
+        logoSrc: denoLogo
+      },
+      {
+        name: 'Auth0',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: auth0Logo
+      },
+      {
+        name: 'GraphQL',
+        proficiency: ProficiencyLevel.Exploring,
+        logoSrc: graphqlLogo
+      }
+    ]
   },
   {
-    name: 'React',
-    proficiency: ProficiencyLevel.Proficient,
-    logoSrc: reactLogo
-  },
-  {
-    name: 'Next.js',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: nextjsLogo
-  },
-  {
-    name: 'Gatsby',
-    proficiency: ProficiencyLevel.Exploring,
-    logoSrc: gatsbyLogo
-  },
-  {
-    name: 'Vue',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: vueLogo
-  },
-  {
-    name: 'Webpack',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: webpackLogo
-  },
-  {
-    name: 'CSS',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: cssLogo
-  },
-  {
-    name: 'HTML',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: htmlLogo
-  },
-  {
-    name: 'SASS/SCSS',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: sassLogo
-  },
-  {
-    name: 'Tailwindcss',
-    proficiency: ProficiencyLevel.Proficient,
-    logoSrc: tailwindLogo
-  },
-  {
-    name: 'Styled Components',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: styledComponentsLogo
-  },
-  {
-    name: 'Storybook',
-    proficiency: ProficiencyLevel.Proficient,
-    logoSrc: sbLogo
-  },
-  {
-    name: 'Figma',
-    proficiency: ProficiencyLevel.Novice,
-    logoSrc: figmaLogo
-  },
-  {
-    name: 'Jest',
-    proficiency: ProficiencyLevel.Proficient,
-    logoSrc: jestLogo
-  },
-  {
-    name: 'Cypress',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: cyLogo
+    name: 'Devops',
+    skills: [
+      {
+        name: 'Docker',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: dockerLogo
+      },
+      {
+        name: 'Github Actions',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: githubActionsLogo
+      },
+      {
+        name: 'AWS',
+        proficiency: ProficiencyLevel.Novice,
+        logoSrc: awsLogo
+      },
+      {
+        name: 'Azure',
+        proficiency: ProficiencyLevel.Novice,
+        logoSrc: azureLogo
+      },
+      {
+        name: 'Terraform',
+        proficiency: ProficiencyLevel.Learning,
+        logoSrc: tfLogo
+      }
+    ]
   }
 ]
 
-export const backendSkills: SkillInfo[] = [
-  {
-    name: 'C#',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: csharpLogo
-  },
-  {
-    name: '.Net Core',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: dotnetCoreLogo
-  },
-  {
-    name: 'ASP.NET Core',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: aspnetCoreLogo
-  },
-  {
-    name: 'Entity Framework Core',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: efCoreLogo
-  },
-  {
-    name: 'Node.js',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: nodeLogo
-  },
-  {
-    name: 'SQL',
-    proficiency: ProficiencyLevel.Novice,
-    logoSrc: sqlLogo
-  },
-  {
-    name: 'Postgres',
-    proficiency: ProficiencyLevel.Novice,
-    logoSrc: postgresLogo
-  },
-  {
-    name: 'SQL Server',
-    proficiency: ProficiencyLevel.Novice,
-    logoSrc: sqlServerLogo
-  },
-  {
-    name: 'Rust',
-    proficiency: ProficiencyLevel.Learning,
-    logoSrc: rustLogo
-  },
-  {
-    name: 'Deno',
-    proficiency: ProficiencyLevel.Learning,
-    logoSrc: denoLogo
-  },
-  {
-    name: 'Auth0',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: auth0Logo
-  },
-  {
-    name: 'GraphQL',
-    proficiency: ProficiencyLevel.Exploring,
-    logoSrc: graphqlLogo
-  }
-]
-
-export const devopsSkills: SkillInfo[] = [
-  {
-    name: 'Docker',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: dockerLogo
-  },
-  {
-    name: 'Github Actions',
-    proficiency: ProficiencyLevel.Comfortable,
-    logoSrc: githubActionsLogo
-  },
-  {
-    name: 'AWS',
-    proficiency: ProficiencyLevel.Novice,
-    logoSrc: awsLogo
-  },
-  {
-    name: 'Azure',
-    proficiency: ProficiencyLevel.Novice,
-    logoSrc: azureLogo
-  },
-  {
-    name: 'Terraform',
-    proficiency: ProficiencyLevel.Learning,
-    logoSrc: tfLogo
-  }
-]
-
-export const allSkills = [...frontendSkills, ...backendSkills, ...devopsSkills]
+export const allSkills = skillGroups.flatMap(x => x.skills)

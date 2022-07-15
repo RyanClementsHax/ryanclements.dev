@@ -2,44 +2,14 @@ import { Meta, Story } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Skills } from '.'
-import { Subtitle } from '../../headings/Subtitle'
-import { Title } from '../../headings/Title'
-import { ProficiencyLegend } from './ProficiencyLegend'
-import { SkillGroup } from './SkillGroup'
-import { backendSkills, devopsSkills, frontendSkills } from 'lib/skills'
+import { skillGroups } from 'lib/skills'
 
 const Template: Story = () => (
-  <Skills>
-    <Skills.Header>
-      <Title>A lifelong learner</Title>
-      <Subtitle>Here is the tech I know and love</Subtitle>
-    </Skills.Header>
-    <ProficiencyLegend />
-    <SkillGroup>
-      <SkillGroup.Title>Frontend</SkillGroup.Title>
-      <SkillGroup.Content>
-        {frontendSkills.map(x => (
-          <SkillGroup.Skill key={x.name} {...x} />
-        ))}
-      </SkillGroup.Content>
-    </SkillGroup>
-    <SkillGroup>
-      <SkillGroup.Title>Backend</SkillGroup.Title>
-      <SkillGroup.Content>
-        {backendSkills.map(x => (
-          <SkillGroup.Skill key={x.name} {...x} />
-        ))}
-      </SkillGroup.Content>
-    </SkillGroup>
-    <SkillGroup>
-      <SkillGroup.Title>Devops</SkillGroup.Title>
-      <SkillGroup.Content>
-        {devopsSkills.map(x => (
-          <SkillGroup.Skill key={x.name} {...x} />
-        ))}
-      </SkillGroup.Content>
-    </SkillGroup>
-  </Skills>
+  <Skills
+    title="A lifelong learner"
+    subtitle="Here is the tech I know and love"
+    groups={skillGroups}
+  />
 )
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(

@@ -1,10 +1,22 @@
-import { Skill, SkillProps } from '../Skill'
+import { SkillGroupInfo } from 'lib/skills'
+import { Skill } from '../Skill'
 
-export interface SkillGroupProps {
-  children?: React.ReactNode
-}
+export type SkillGroupProps = SkillGroupInfo
 
-export const SkillGroup = ({ children }: SkillGroupProps) => (
+export const SkillGroup = ({ name, skills }: SkillGroupProps) => (
+  <Container>
+    <Title>{name}</Title>
+    <Content>
+      {skills.map(x => (
+        <li key={x.name}>
+          <Skill {...x} />
+        </li>
+      ))}
+    </Content>
+  </Container>
+)
+
+const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="flex flex-col gap-6">{children}</div>
 )
 
@@ -14,20 +26,8 @@ const Title = ({ children }: { children?: React.ReactNode }) => (
   </h3>
 )
 
-SkillGroup.Title = Title
-
 const Content = ({ children }: { children?: React.ReactNode }) => (
   <ul className="grid grid-cols-1 gap-6 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
     {children}
   </ul>
 )
-
-SkillGroup.Content = Content
-
-const _Skill = (props: SkillProps) => (
-  <li>
-    <Skill {...props} />
-  </li>
-)
-
-SkillGroup.Skill = _Skill
