@@ -35,6 +35,12 @@ module.exports = {
           'layer'
         ]
       }
+    ],
+    'selector-pseudo-class-no-unknown': [
+      true,
+      {
+        ignorePseudoClasses: ['global']
+      }
     ]
   }
 }
