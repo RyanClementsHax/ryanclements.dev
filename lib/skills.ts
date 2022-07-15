@@ -31,6 +31,8 @@ import githubActionsLogo from 'public/tech-logos/github-actions-logo.svg'
 import awsLogo from 'public/tech-logos/aws-logo.svg'
 import azureLogo from 'public/tech-logos/azure-logo.svg'
 import tfLogo from 'public/tech-logos/terraform-logo.svg'
+import javaLogo from 'public/tech-logos/java-logo.svg'
+import kotlinLogo from 'public/tech-logos/kotlin-logo.svg'
 import { StaticImageData } from 'next/image'
 
 export interface SkillInfo {
@@ -150,6 +152,16 @@ export const backendSkills: SkillInfo[] = [
     name: 'Entity Framework Core',
     proficiency: ProficiencyLevel.Comfortable,
     logoSrc: efCoreLogo
+  },
+  {
+    name: 'Java',
+    proficiency: ProficiencyLevel.Learning,
+    logoSrc: javaLogo
+  },
+  {
+    name: 'Kotlin',
+    proficiency: ProficiencyLevel.Learning,
+    logoSrc: kotlinLogo
   },
   {
     name: 'Node.js',
