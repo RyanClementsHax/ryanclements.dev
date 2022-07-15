@@ -4,14 +4,7 @@ import { createDefaultStories } from 'stories/storyUtils'
 import { SkillGroup } from '.'
 
 const Template: Story = () => (
-  <SkillGroup>
-    <SkillGroup.Title>Everything</SkillGroup.Title>
-    <SkillGroup.Content>
-      {allSkills.map(x => (
-        <SkillGroup.Skill key={x.name} {...x} />
-      ))}
-    </SkillGroup.Content>
-  </SkillGroup>
+  <SkillGroup name="Everything" skills={allSkills} />
 )
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(

@@ -3,24 +3,13 @@ import { projects } from 'lib/projects'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Projects } from '.'
-import { Subtitle } from '../../headings/Subtitle'
-import { Title } from '../../headings/Title'
-import { Project } from './Project'
 
 const Template: Story = () => (
-  <Projects>
-    <Projects.Header>
-      <Title>One Giant Nerd</Title>
-      <Subtitle>
-        I love what I do. Here are some projects I like to work on.
-      </Subtitle>
-    </Projects.Header>
-    <Projects.Group>
-      {projects.map(x => (
-        <Project key={x.name} {...x} />
-      ))}
-    </Projects.Group>
-  </Projects>
+  <Projects
+    title="One Giant Nerd"
+    subtitle="I love what I do. Here are some projects I like to work on."
+    projects={projects}
+  />
 )
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
