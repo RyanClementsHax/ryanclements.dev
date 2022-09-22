@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
-import { BookmarkIcon } from '@heroicons/react/outline'
+import { BookmarkIcon } from '@heroicons/react/24/outline'
 
 import { IconBadge } from '.'
 

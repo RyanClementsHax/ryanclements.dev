@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { GithubIcon } from 'components/icons/GithubIcon'
-import { ArrowNarrowRightIcon } from '@heroicons/react/solid'
+import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import { ProjectInfo, Tech } from 'lib/projects'
 
 export type ProjectProps = ProjectInfo
@@ -73,7 +73,7 @@ const SiteLink = ({ href }: { href: string }) => (
   <Link href={href} passHref>
     <a className="flex w-fit gap-1 text-primary-700 dark:text-primary-400">
       Go to site
-      <ArrowNarrowRightIcon
+      <ArrowLongRightIcon
         aria-hidden="true"
         className="h-6 w-6 text-primary-500 dark:text-primary-400"
       />

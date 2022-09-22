@@ -3,7 +3,7 @@ import {
   CubeIcon,
   PresentationChartLineIcon,
   UserGroupIcon
-} from '@heroicons/react/outline'
+} from '@heroicons/react/24/outline'
 import { QualityInfo } from 'lib/qualities'
 
 export type QualityProps = QualityInfo
