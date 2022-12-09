@@ -56,14 +56,10 @@ const GraphicContainer = ({ children }: { children: React.ReactNode }) => (
 )
 
 const Graphic = ({ src }: { src: StaticImageData }) => (
-  <div className="overflow-hidden rounded-xl shadow-md">
-    <Image
-      src={src}
-      layout="responsive"
-      objectFit="cover"
-      objectPosition="center"
-      placeholder="blur"
-      alt="Some graphic"
-    />
-  </div>
+  <Image
+    src={src}
+    placeholder="blur"
+    alt="Some graphic"
+    className="w-full overflow-hidden rounded-xl object-cover object-center shadow-md"
+  />
 )

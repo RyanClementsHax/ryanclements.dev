@@ -25,24 +25,24 @@ describe('usePersistedTheme', () => {
   })
 
   describe('setTheme', () => {
-    it('updates the theme state', () => {
+    it('updates the theme state', async () => {
       renderBaseHook()
       const newTheme = Theme.dark
       expect(newTheme).not.toBe(initialTheme)
 
-      act(() => {
+      await act(() => {
         result.current[1](newTheme)
       })
 
       expect(result.current[0]).toBe(newTheme)
     })
 
-    it('persists the theme', () => {
+    it('persists the theme', async () => {
       renderBaseHook()
       const newTheme = Theme.dark
       expect(newTheme).not.toBe(initialTheme)
 
-      act(() => {
+      await act(() => {
         result.current[1](newTheme)
       })
 

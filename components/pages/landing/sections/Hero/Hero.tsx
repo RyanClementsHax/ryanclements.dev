@@ -30,15 +30,11 @@ const Heading = ({
 )
 
 const Banner = () => (
-  <div className="relative hidden h-full max-h-[500px] overflow-hidden rounded-xl shadow-md md:block lg:col-span-3">
-    <Image
-      src={banner}
-      layout="fill"
-      objectFit="cover"
-      objectPosition="center"
-      placeholder="blur"
-      priority
-      alt="My wife, me, and our wedding party being silly"
-    />
-  </div>
+  <Image
+    src={banner}
+    placeholder="blur"
+    priority
+    alt="My wife, me, and our wedding party being silly"
+    className="hidden h-full max-h-[500px] overflow-hidden rounded-xl object-cover object-center shadow-md md:block lg:col-span-3"
+  />
 )

@@ -17,6 +17,7 @@
   "less.validate": false,
   "scss.validate": false,
   "jest.jestCommandLine": "yarn test",
+  "jest.autoRun": { "watch": false, "onSave": "test-src-file" },
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active"
 }
