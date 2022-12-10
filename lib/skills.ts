@@ -2,7 +2,8 @@ import jsLogo from 'public/tech-logos/javascript-logo.svg'
 import tsLogo from 'public/tech-logos/typescript-logo.svg'
 import reactLogo from 'public/tech-logos/react-logo.svg'
 import nextjsLogo from 'public/tech-logos/nextjs-logo.svg'
-import gatsbyLogo from 'public/tech-logos/gatsby-logo.svg'
+import androidLogo from 'public/tech-logos/android-logo.svg'
+import gradleLogo from 'public/tech-logos/gradle-logo.svg'
 import vueLogo from 'public/tech-logos/vue-logo.svg'
 import webpackLogo from 'public/tech-logos/webpack-logo.svg'
 import cssLogo from 'public/tech-logos/css-logo.svg'
@@ -24,13 +25,10 @@ import sqlServerLogo from 'public/tech-logos/sql-server-logo.svg'
 import postgresLogo from 'public/tech-logos/postgres-logo.svg'
 import rustLogo from 'public/tech-logos/rust-logo.svg'
 import denoLogo from 'public/tech-logos/deno-logo.svg'
-import auth0Logo from 'public/tech-logos/auth0-logo.svg'
-import graphqlLogo from 'public/tech-logos/graphql-logo.svg'
 import dockerLogo from 'public/tech-logos/docker-logo.svg'
 import githubActionsLogo from 'public/tech-logos/github-actions-logo.svg'
 import awsLogo from 'public/tech-logos/aws-logo.svg'
 import azureLogo from 'public/tech-logos/azure-logo.svg'
-import tfLogo from 'public/tech-logos/terraform-logo.svg'
 import javaLogo from 'public/tech-logos/java-logo.svg'
 import kotlinLogo from 'public/tech-logos/kotlin-logo.svg'
 import { StaticImageData } from 'next/image'
@@ -79,9 +77,9 @@ export const skillGroups: SkillGroupInfo[] = [
         logoSrc: nextjsLogo
       },
       {
-        name: 'Gatsby',
-        proficiency: ProficiencyLevel.Exploring,
-        logoSrc: gatsbyLogo
+        name: 'Android',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: androidLogo
       },
       {
         name: 'Vue',
@@ -125,7 +123,7 @@ export const skillGroups: SkillGroupInfo[] = [
       },
       {
         name: 'Figma',
-        proficiency: ProficiencyLevel.Novice,
+        proficiency: ProficiencyLevel.Comfortable,
         logoSrc: figmaLogo
       },
       {
@@ -164,14 +162,19 @@ export const skillGroups: SkillGroupInfo[] = [
         logoSrc: efCoreLogo
       },
       {
-        name: 'Java',
-        proficiency: ProficiencyLevel.Learning,
-        logoSrc: javaLogo
+        name: 'Kotlin',
+        proficiency: ProficiencyLevel.Proficient,
+        logoSrc: kotlinLogo
       },
       {
-        name: 'Kotlin',
-        proficiency: ProficiencyLevel.Learning,
-        logoSrc: kotlinLogo
+        name: 'Gradle',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: gradleLogo
+      },
+      {
+        name: 'Java',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: javaLogo
       },
       {
         name: 'Node.js',
@@ -202,16 +205,6 @@ export const skillGroups: SkillGroupInfo[] = [
         name: 'Deno',
         proficiency: ProficiencyLevel.Learning,
         logoSrc: denoLogo
-      },
-      {
-        name: 'Auth0',
-        proficiency: ProficiencyLevel.Comfortable,
-        logoSrc: auth0Logo
-      },
-      {
-        name: 'GraphQL',
-        proficiency: ProficiencyLevel.Exploring,
-        logoSrc: graphqlLogo
       }
     ]
   },
@@ -237,11 +230,6 @@ export const skillGroups: SkillGroupInfo[] = [
         name: 'Azure',
         proficiency: ProficiencyLevel.Novice,
         logoSrc: azureLogo
-      },
-      {
-        name: 'Terraform',
-        proficiency: ProficiencyLevel.Learning,
-        logoSrc: tfLogo
       }
     ]
   }
