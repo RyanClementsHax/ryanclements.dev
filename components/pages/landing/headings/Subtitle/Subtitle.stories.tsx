@@ -9,21 +9,11 @@ const Template: Story = () => (
   </Subtitle>
 )
 
-const { Base, DarkTheme } = createDefaultStories(Template, {
-  base: {
-    figmaUrl:
-      'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1712%3A1238'
-  },
-  darkTheme: {
-    figmaUrl:
-      'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1712%3A1240'
-  }
-})
+const { Base, DarkTheme } = createDefaultStories(Template)
 
 export { Base, DarkTheme }
 
 export default {
-  title: 'pages/landing/headings/Subtitle',
   component: Subtitle,
   parameters: {
     layout: 'centered'

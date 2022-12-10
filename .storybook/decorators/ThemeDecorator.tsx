@@ -2,30 +2,19 @@ import { useEffect } from 'react'
 import { usePrevious } from 'react-use'
 import { addons } from '@storybook/addons'
 import { UPDATE_GLOBALS } from '@storybook/core-events'
-import { ThemeContext, updateTheme } from 'components/theme'
+import { Theme, ThemeContext, updateTheme } from 'components/theme'
+import { ReactFramework } from '@storybook/react'
+import { DecoratorFunction } from '@storybook/csf'
 
-/**
- * @typedef {import('components/theme/types').Theme} Theme
- * @typedef {import('@storybook/react').Story} Story
- * @typedef {import('@storybook/react').ReactFramework} ReactFramework
- */
-
-/**
- * @template T
- * @typedef {import('@storybook/csf').DecoratorFunction<T>} DecoratorFunction<T>
- */
-
-/**
- * @param {Theme} theme
- * @return {void}
- */
-const updateThemeGlobal = theme =>
+const updateThemeGlobal = (theme: Theme) =>
   void addons.getChannel().emit(UPDATE_GLOBALS, {
     globals: { theme }
   })
 
-/** @type {(DecoratorFunction<ReactFramework>)} */
-export const ThemeDecorator = (Story, { globals, parameters }) => {
+export const ThemeDecorator: DecoratorFunction<ReactFramework> = (
+  Story,
+  { globals, parameters }
+) => {
   const previousParametersTheme = usePrevious(parameters.theme)
 
   useEffect(() => {

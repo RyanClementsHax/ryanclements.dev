@@ -29,6 +29,8 @@
     "**/*.mjs",
     "**/*.jsx",
     ".storybook/**/*.js",
-    ".storybook/**/*.jsx"
+    ".storybook/**/*.jsx",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx"
   ]
 }

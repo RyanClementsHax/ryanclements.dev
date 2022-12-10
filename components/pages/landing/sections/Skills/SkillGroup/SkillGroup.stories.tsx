@@ -7,31 +7,11 @@ const Template: Story = () => (
   <SkillGroup name="Everything" skills={allSkills} />
 )
 
-const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
-  Template,
-  {
-    base: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1746%3A6475'
-    },
-    mobile: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1746%3A6473'
-    },
-    darkTheme: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1746%3A2892'
-    },
-    darkThemedMobile: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1746%3A2364'
-    }
-  }
-)
+const { Base, Mobile, DarkTheme, DarkThemedMobile } =
+  createDefaultStories(Template)
 
 export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
-  title: 'pages/landing/sections/Skills/SkillGroup',
   component: SkillGroup
 } as Meta

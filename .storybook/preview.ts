@@ -1,20 +1,11 @@
-import { ThemeDecorator } from './decorators/ThemeDecorator'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { ReactFramework } from '@storybook/react'
+import { DecoratorFunction, Parameters, GlobalTypes } from '@storybook/csf'
 
+import { ThemeDecorator } from './decorators/ThemeDecorator'
 import 'styles/global.scss'
 
-/**
- * @typedef {import('components/theme/types').Theme} Theme
- * @typedef {import('@storybook/react').Story} Story
- * @typedef {import('@storybook/react').ReactFramework} ReactFramework
- */
-
-/**
- * @template T
- * @typedef {import('@storybook/csf').DecoratorFunction<T>} DecoratorFunction<T>
- */
-
-export const globalTypes = {
+export const globalTypes: GlobalTypes = {
   theme: {
     name: 'Theme',
     description: 'Color theme',
@@ -29,10 +20,9 @@ export const globalTypes = {
   }
 }
 
-/** @type {(DecoratorFunction<ReactFramework>)[]} */
-export const decorators = [ThemeDecorator]
+export const decorators: DecoratorFunction<ReactFramework>[] = [ThemeDecorator]
 
-export const parameters = {
+export const parameters: Parameters = {
   layout: 'fullscreen',
   theme: 'light',
   backgrounds: {

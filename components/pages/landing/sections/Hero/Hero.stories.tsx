@@ -20,31 +20,11 @@ const Template: Story = () => (
   />
 )
 
-const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
-  Template,
-  {
-    base: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1319%3A70'
-    },
-    mobile: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1319%3A65'
-    },
-    darkTheme: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1319%3A63'
-    },
-    darkThemedMobile: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1319%3A67'
-    }
-  }
-)
+const { Base, Mobile, DarkTheme, DarkThemedMobile } =
+  createDefaultStories(Template)
 
 export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
-  title: 'pages/landing/sections/Hero',
   component: Hero
 } as Meta

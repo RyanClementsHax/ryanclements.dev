@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/** @type {import('next/jest').default} */
-const nextJest = /** @type {any} */ (require('next/jest'))
+import nextJest from 'next/jest'
 
 const createJestConfig = nextJest()
 
-module.exports = createJestConfig({
+export default createJestConfig({
   setupFilesAfterEnv: ['<rootDir>/tests/testSetup.tsx'],
   moduleDirectories: ['node_modules', '<rootDir>/'],
   testEnvironment: 'jest-environment-jsdom',
