@@ -52,31 +52,28 @@ const TechDisplay = ({ tech }: { tech: Tech }) => (
       aria-hidden="true"
       src={tech.logoSrc}
       alt="tech logo"
-      layout="fixed"
-      height="24"
-      width="24"
+      className="h-[24px] w-[24px]"
     />
     <span className="text-on-surface-offBase">{tech.name}</span>
   </div>
 )
 
 const GithubLink = ({ href }: { href: string }) => (
-  <Link href={href} passHref>
-    <a className="flex">
-      <span className="sr-only">Github project url</span>
-      <GithubIcon aria-hidden="true" className="text-on-surface-base" />
-    </a>
+  <Link href={href} className="flex">
+    <span className="sr-only">Github project url</span>
+    <GithubIcon aria-hidden="true" className="text-on-surface-base" />
   </Link>
 )
 
 const SiteLink = ({ href }: { href: string }) => (
-  <Link href={href} passHref>
-    <a className="flex w-fit gap-1 text-primary-700 dark:text-primary-400">
-      Go to site
-      <ArrowLongRightIcon
-        aria-hidden="true"
-        className="h-6 w-6 text-primary-500 dark:text-primary-400"
-      />
-    </a>
+  <Link
+    href={href}
+    className="flex w-fit gap-1 text-primary-700 dark:text-primary-400"
+  >
+    Go to site
+    <ArrowLongRightIcon
+      aria-hidden="true"
+      className="h-6 w-6 text-primary-500 dark:text-primary-400"
+    />
   </Link>
 )
