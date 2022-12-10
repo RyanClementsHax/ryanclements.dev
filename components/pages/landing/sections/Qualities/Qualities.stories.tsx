@@ -14,31 +14,11 @@ const Template: Story = () => (
   />
 )
 
-const { Base, Mobile, DarkTheme, DarkThemedMobile } = createDefaultStories(
-  Template,
-  {
-    base: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1404%3A362'
-    },
-    mobile: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1404%3A352'
-    },
-    darkTheme: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1413%3A597'
-    },
-    darkThemedMobile: {
-      figmaUrl:
-        'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1413%3A595'
-    }
-  }
-)
+const { Base, Mobile, DarkTheme, DarkThemedMobile } =
+  createDefaultStories(Template)
 
 export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
-  title: 'pages/landing/sections/Qualities',
   component: Qualities
 } as Meta

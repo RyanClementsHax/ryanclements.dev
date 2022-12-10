@@ -10,21 +10,11 @@ const Template: Story = () => (
   </IconBadge>
 )
 
-const { Base, DarkTheme } = createDefaultStories(Template, {
-  base: {
-    figmaUrl:
-      'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1478%3A620'
-  },
-  darkTheme: {
-    figmaUrl:
-      'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1478%3A635'
-  }
-})
+const { Base, DarkTheme } = createDefaultStories(Template)
 
 export { Base, DarkTheme }
 
 export default {
-  title: 'components/IconBadge',
   component: IconBadge,
   parameters: {
     layout: 'centered'

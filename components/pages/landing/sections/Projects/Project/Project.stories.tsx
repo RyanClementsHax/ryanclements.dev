@@ -21,21 +21,11 @@ Template.args = {
   ]
 }
 
-const { Base, DarkTheme } = createDefaultStories(Template, {
-  base: {
-    figmaUrl:
-      'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1820%3A3077'
-  },
-  darkTheme: {
-    figmaUrl:
-      'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1820%3A3079'
-  }
-})
+const { Base, DarkTheme } = createDefaultStories(Template)
 
 export { Base, DarkTheme }
 
 export default {
-  title: 'pages/landing/sections/Projects/Project',
   component: Project,
   parameters: {
     layout: 'centered'

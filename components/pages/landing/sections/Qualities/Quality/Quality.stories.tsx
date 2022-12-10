@@ -13,21 +13,11 @@ const Template: Story = () => (
   </ul>
 )
 
-const { Base, DarkTheme } = createDefaultStories(Template, {
-  base: {
-    figmaUrl:
-      'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1503%3A652'
-  },
-  darkTheme: {
-    figmaUrl:
-      'https://www.figma.com/file/PdMqvzKJHKcSHXkdQ2SEp3/Personal-Website?node-id=1503%3A654'
-  }
-})
+const { Base, DarkTheme } = createDefaultStories(Template)
 
 export { Base, DarkTheme }
 
 export default {
-  title: 'pages/landing/sections/Qualities/Quality',
   component: Quality,
   parameters: {
     layout: 'centered'
