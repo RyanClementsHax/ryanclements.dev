@@ -1,20 +1,27 @@
-import { SkillGroupInfo } from 'lib/skills'
+import { SkillGroupInfo, SkillInfo } from 'lib/skills'
+import { useMemo } from 'react'
 import { Skill } from '../Skill'
 
 export type SkillGroupProps = SkillGroupInfo
 
-export const SkillGroup = ({ name, skills }: SkillGroupProps) => (
-  <Container>
-    <Title>{name}</Title>
-    <Content>
-      {skills.map(x => (
-        <li key={x.name}>
-          <Skill {...x} />
-        </li>
-      ))}
-    </Content>
-  </Container>
-)
+export const SkillGroup = ({ name, skills }: SkillGroupProps) => {
+  const sortedSkills = useMemo(
+    () => skills.slice().sort(compareSkills),
+    [skills]
+  )
+  return (
+    <Container>
+      <Title>{name}</Title>
+      <Content>
+        {sortedSkills.map(x => (
+          <li key={x.name} data-testid={`skill-${x.name}`}>
+            <Skill {...x} />
+          </li>
+        ))}
+      </Content>
+    </Container>
+  )
+}
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <div className="flex flex-col gap-6">{children}</div>
@@ -31,3 +38,12 @@ const Content = ({ children }: { children?: React.ReactNode }) => (
     {children}
   </ul>
 )
+
+const compareSkills = (a: SkillInfo, b: SkillInfo) => {
+  const cleanSkillName = (name: string) => name.replace('.', '')
+  const cleanedAName = cleanSkillName(a.name)
+  const cleanedBName = cleanSkillName(b.name)
+  return cleanedAName.localeCompare(cleanedBName, undefined, {
+    sensitivity: 'base'
+  })
+}

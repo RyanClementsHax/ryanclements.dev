@@ -1,10 +1,10 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 import jsLogo from 'public/tech-logos/javascript-logo.svg'
 import { Skill, SkillProps } from '.'
 import { ProficiencyLevel } from 'lib/skills'
 
-const Template: Story<SkillProps> = props => <Skill {...props} />
+const Template: StoryFn<SkillProps> = props => <Skill {...props} />
 Template.args = {
   name: 'Javascript',
   proficiency: ProficiencyLevel.Proficient,

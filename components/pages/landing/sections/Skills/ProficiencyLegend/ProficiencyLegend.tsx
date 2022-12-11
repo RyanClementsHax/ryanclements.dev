@@ -1,5 +1,4 @@
 import { ProficiencyLevel } from 'lib/skills'
-import { Fragment } from 'react'
 import { Proficiency } from '../Proficiency'
 
 const proficiencyToDescriptionMap = new Map<ProficiencyLevel, string>([

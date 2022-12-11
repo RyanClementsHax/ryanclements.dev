@@ -61,7 +61,7 @@ const TechDisplay = ({ tech }: { tech: Tech }) => (
 const GithubLink = ({ href }: { href: string }) => (
   <Link href={href} className="flex">
     <span className="sr-only">Github project url</span>
-    <GithubIcon aria-hidden="true" className="text-on-surface-base" />
+    <GithubIcon className="text-on-surface-base" />
   </Link>
 )
 

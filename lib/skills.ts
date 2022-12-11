@@ -203,7 +203,7 @@ export const skillGroups: SkillGroupInfo[] = [
       },
       {
         name: 'Deno',
-        proficiency: ProficiencyLevel.Learning,
+        proficiency: ProficiencyLevel.Exploring,
         logoSrc: denoLogo
       }
     ]

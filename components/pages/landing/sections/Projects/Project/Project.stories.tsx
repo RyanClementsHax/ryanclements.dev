@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 import sbLogo from 'public/tech-logos/storybook-logo.svg'
 import nextjsLogo from 'public/tech-logos/nextjs-logo.svg'
@@ -6,7 +6,7 @@ import tsLogo from 'public/tech-logos/typescript-logo.svg'
 import webpackLogo from 'public/tech-logos/webpack-logo.svg'
 import { Project, ProjectProps } from '.'
 
-const Template: Story<ProjectProps> = props => <Project {...props} />
+const Template: StoryFn<ProjectProps> = props => <Project {...props} />
 Template.args = {
   name: 'Storybook Addon Next',
   description:

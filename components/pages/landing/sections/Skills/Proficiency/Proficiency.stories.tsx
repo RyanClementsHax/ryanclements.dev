@@ -1,10 +1,10 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { ProficiencyLevel } from 'lib/skills'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Proficiency, ProficiencyProps } from '.'
 
-const Template: Story<ProficiencyProps> = props => <Proficiency {...props} />
+const Template: StoryFn<ProficiencyProps> = props => <Proficiency {...props} />
 
 const Proficient = Template.bind({})
 Proficient.args = {

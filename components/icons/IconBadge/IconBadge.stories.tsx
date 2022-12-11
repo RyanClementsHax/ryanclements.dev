@@ -1,10 +1,10 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 import { BookmarkIcon } from '@heroicons/react/24/outline'
 
 import { IconBadge } from '.'
 
-const Template: Story = () => (
+const Template: StoryFn = () => (
   <IconBadge>
     <BookmarkIcon />
   </IconBadge>
