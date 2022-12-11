@@ -1,9 +1,9 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Subtitle } from '.'
 
-const Template: Story = () => (
+const Template: StoryFn = () => (
   <Subtitle>
     New problems need new solutions. Here’s the energy I bring to the table.
   </Subtitle>

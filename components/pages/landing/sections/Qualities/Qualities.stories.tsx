@@ -1,11 +1,11 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 import graphic from 'public/graphic.jpg'
 
 import { Qualities } from '.'
 import { qualities } from 'lib/qualities'
 
-const Template: Story = () => (
+const Template: StoryFn = () => (
   <Qualities
     title="A new kind of engineer"
     subtitle="New problems need new solutions. Here's the energy I bring to the table."

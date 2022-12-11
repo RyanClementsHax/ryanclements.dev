@@ -5,7 +5,7 @@ import { composeStories } from '@storybook/testing-react'
 
 const { Base } = composeStories(stories)
 
-describe('IconBadge.stories', () => {
+describe('IconBadge', () => {
   it('has no axe violations', async () => {
     const { container } = render(<Base />)
 

@@ -1,9 +1,9 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Title } from '.'
 
-const Template: Story = () => <Title>A new kind of engineer</Title>
+const Template: StoryFn = () => <Title>A new kind of engineer</Title>
 
 const { Base, DarkTheme } = createDefaultStories(Template)
 

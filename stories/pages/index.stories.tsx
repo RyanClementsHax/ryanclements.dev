@@ -1,10 +1,10 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { Layout } from 'components/Layout'
 
 import Index from 'pages/index'
 import { createDefaultStories } from 'stories/storyUtils'
 
-const Template: Story = () => <Index />
+const Template: StoryFn = () => <Index />
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } =
   createDefaultStories(Template)

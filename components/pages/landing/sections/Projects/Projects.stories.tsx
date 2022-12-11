@@ -1,10 +1,10 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { projects } from 'lib/projects'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Projects } from '.'
 
-const Template: Story = () => (
+const Template: StoryFn = () => (
   <Projects
     title="One Giant Nerd"
     subtitle="I love what I do. Here are some projects I like to work on."

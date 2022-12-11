@@ -1,9 +1,9 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Hero } from '.'
 
-const Template: Story = () => (
+const Template: StoryFn = () => (
   <Hero
     title={
       <>

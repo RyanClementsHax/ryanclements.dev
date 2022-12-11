@@ -1,10 +1,10 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Skills } from '.'
 import { skillGroups } from 'lib/skills'
 
-const Template: Story = () => (
+const Template: StoryFn = () => (
   <Skills
     title="A lifelong learner"
     subtitle="Here is the tech I know and love"

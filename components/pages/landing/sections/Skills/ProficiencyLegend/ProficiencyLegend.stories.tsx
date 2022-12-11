@@ -1,9 +1,9 @@
-import { Meta, Story } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { ProficiencyLegend } from '.'
 
-const Template: Story = () => <ProficiencyLegend />
+const Template: StoryFn = () => <ProficiencyLegend />
 
 const { Base, DarkTheme } = createDefaultStories(Template)
 export { Base, DarkTheme }
