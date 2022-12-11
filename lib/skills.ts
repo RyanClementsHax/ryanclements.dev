@@ -198,7 +198,7 @@ export const skillGroups: SkillGroupInfo[] = [
       },
       {
         name: 'Rust',
-        proficiency: ProficiencyLevel.Learning,
+        proficiency: ProficiencyLevel.Exploring,
         logoSrc: rustLogo
       },
       {
