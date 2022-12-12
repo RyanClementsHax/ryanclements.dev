@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import { Hero } from 'components/pages/landing/sections/Hero'
 import { Qualities } from 'components/pages/landing/sections/Qualities'
-import graphic from 'public/graphic.jpg'
 import { Skills } from 'components/pages/landing/sections/Skills'
 import { skillGroups } from 'lib/skills'
 import { Projects } from 'components/pages/landing/sections/Projects'
 import { projects } from 'lib/projects'
 import { qualities } from 'lib/qualities'
+import { heroImageData, qualitiesImageData } from 'lib/images'
 
 const Index = () => (
   <>
@@ -28,11 +28,12 @@ const Index = () => (
           software&nbsp;👨‍💻
         </>
       }
+      bannerSrc={heroImageData}
     />
     <Qualities
       title="A new kind of engineer"
       subtitle="New problems need new solutions. Here's the energy I bring to the table."
-      graphicSrc={graphic}
+      graphicSrc={qualitiesImageData}
       qualities={qualities}
     />
     <Skills
