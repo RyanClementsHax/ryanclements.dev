@@ -2,6 +2,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Hero } from '.'
+import { heroImageData } from 'lib/images'
 
 const Template: StoryFn = () => (
   <Hero
@@ -17,6 +18,7 @@ const Template: StoryFn = () => (
         I 💖 God, my wife and daughter&nbsp;👨‍👩‍👧, and making dope software&nbsp;👨‍💻
       </>
     }
+    bannerSrc={heroImageData}
   />
 )
 

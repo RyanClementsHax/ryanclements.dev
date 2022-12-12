@@ -1,5 +1,6 @@
+import Image from 'next/image'
+import { A11yStaticImageData } from 'lib/images'
 import { QualityInfo } from 'lib/qualities'
-import Image, { StaticImageData } from 'next/image'
 import { Subtitle } from '../../headings/Subtitle'
 import { Title } from '../../headings/Title'
 import { Quality } from './Quality'
@@ -7,7 +8,7 @@ import { Quality } from './Quality'
 export interface QualitiesProps {
   title: string
   subtitle: string
-  graphicSrc: StaticImageData
+  graphicSrc: A11yStaticImageData
   qualities: QualityInfo[]
 }
 
@@ -55,11 +56,15 @@ const GraphicContainer = ({ children }: { children: React.ReactNode }) => (
   </div>
 )
 
-const Graphic = ({ src }: { src: StaticImageData }) => (
+const Graphic = ({
+  src: { alt, ...imageData }
+}: {
+  src: A11yStaticImageData
+}) => (
   <Image
-    src={src}
+    src={imageData}
     placeholder="blur"
-    alt="Some graphic"
+    alt={alt}
     className="w-full overflow-hidden rounded-xl object-cover object-center shadow-md"
   />
 )
