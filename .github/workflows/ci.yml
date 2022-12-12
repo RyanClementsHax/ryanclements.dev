@@ -48,7 +48,7 @@ jobs:
       - name: restore dependencies
         uses: bahmutov/npm-install@v1
       - name: awaiting preview url
-        uses: patrickedqvist/wait-for-vercel-preview@v1.1.1
+        uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
         id: vercel_preview_url
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -63,27 +63,27 @@ jobs:
             🚦 Running Lighthouse audit...
       - name: audit urls using lighthouse emulating desktop
         id: lighthouse_audit_desktop
-        uses: treosh/lighthouse-ci-action@v7
+        uses: treosh/lighthouse-ci-action@v9
         with:
           urls: |
             ${{ steps.vercel_preview_url.outputs.url }}
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
-          configPath: './.github/lighthouse/desktop.lighthouserc.json'
+          configPath: './.github/lighthouse/desktop.lighthouserc.js'
       - name: audit urls using lighthouse emulating mobile
         id: lighthouse_audit_mobile
-        uses: treosh/lighthouse-ci-action@v7
+        uses: treosh/lighthouse-ci-action@v9
         with:
           urls: |
             ${{ steps.vercel_preview_url.outputs.url }}
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
-          configPath: './.github/lighthouse/mobile.lighthouserc.json'
+          configPath: './.github/lighthouse/mobile.lighthouserc.js'
       - name: format lighthouse result
         id: lighthouse_result
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -132,7 +132,7 @@ jobs:
 
             core.setOutput("comment", comment);
       - name: add lighthouse comment to PR
-        uses: marocchino/sticky-pull-request-comment@v1
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.pull_request.number }}
