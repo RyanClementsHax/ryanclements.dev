@@ -28,8 +28,8 @@ export const Qualities = ({
 )
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="bg-surface-offBase px-5 py-12 md:px-8 md:py-16">
-    <section className="mx-auto grid max-w-screen-xl auto-rows-auto gap-8 md:grid-cols-[auto_20rem] md:grid-rows-[repeat(2,_auto)] md:gap-y-16 md:gap-x-24 lg:grid-cols-[auto_30rem]">
+  <div className="bg-surface-offBase px-5 py-16 md:px-8 md:py-24">
+    <section className="mx-auto grid max-w-screen-xl auto-rows-auto gap-8 md:grid-cols-[auto_20rem] md:grid-rows-[repeat(2,_auto)] md:gap-24 lg:grid-cols-[auto_30rem]">
       {children}
     </section>
   </div>

@@ -22,7 +22,7 @@ export const Projects = ({ title, subtitle, projects }: ProjectsProps) => (
 )
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <section className="flex flex-col justify-center gap-8 p-5 md:gap-20 md:p-8">
+  <section className="flex flex-col justify-center gap-8 bg-surface-offBase p-5 py-16 md:gap-24 md:p-8 md:py-24">
     {children}
   </section>
 )
