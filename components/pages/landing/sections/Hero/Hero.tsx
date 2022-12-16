@@ -2,18 +2,19 @@ import Image from 'next/image'
 import { SocialLink } from 'components/icons/SocialLink'
 import { A11yStaticImageData } from 'lib/images'
 import { socialAccounts } from 'lib/socialAccounts'
+import { Theme, useTheme } from 'components/theme'
 
 export interface HeroProps {
   title: React.ReactNode
   subtitle: React.ReactNode
-  bannerSrc: A11yStaticImageData
+  bannerSrcMap: Record<Theme, A11yStaticImageData>
 }
 
-export const Hero = ({ title, subtitle, bannerSrc }: HeroProps) => (
+export const Hero = ({ title, subtitle, bannerSrcMap }: HeroProps) => (
   <section className="w-100 h-screen px-5 py-12 md:px-8 md:py-16">
     <div className="grid h-full items-center gap-4 md:container md:mx-auto md:grid-cols-2 lg:grid-cols-5">
       <Heading title={title} subtitle={subtitle} />
-      <Banner src={bannerSrc} />
+      <Banner srcMap={bannerSrcMap} />
     </div>
   </section>
 )
@@ -32,19 +33,19 @@ const Heading = ({
   </div>
 )
 
-const Banner = ({
-  src: { alt, ...imageData }
-}: {
-  src: A11yStaticImageData
-}) => (
-  <Image
-    src={imageData}
-    placeholder="blur"
-    priority
-    alt={alt}
-    className="hidden h-full max-h-[500px] overflow-hidden rounded-xl object-cover object-center shadow-md md:block lg:col-span-3"
-  />
-)
+const Banner = ({ srcMap }: { srcMap: Record<Theme, A11yStaticImageData> }) => {
+  const { theme } = useTheme()
+  if (!theme) return null
+  const { alt, ...src } = srcMap[theme]
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      priority
+      className="hidden w-full md:block lg:col-span-3"
+    />
+  )
+}
 
 const SocialLinks = () => (
   <div className="flex gap-6">
