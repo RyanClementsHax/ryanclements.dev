@@ -6,7 +6,7 @@ import { skillGroups } from 'lib/skills'
 import { Projects } from 'components/pages/landing/sections/Projects'
 import { projects } from 'lib/projects'
 import { qualities } from 'lib/qualities'
-import { heroImageData, qualitiesImageData } from 'lib/images'
+import { heroBannerSrcMap, qualitiesImageData } from 'lib/images'
 
 const Index = () => (
   <>
@@ -28,7 +28,7 @@ const Index = () => (
           software&nbsp;👨‍💻
         </>
       }
-      bannerSrc={heroImageData}
+      bannerSrcMap={heroBannerSrcMap}
     />
     <Qualities
       title="A new kind of engineer"

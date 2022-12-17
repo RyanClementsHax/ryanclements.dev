@@ -1,25 +1,12 @@
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentContext,
-  DocumentInitialProps
-} from 'next/document'
-import { ThemeScript } from 'components/theme'
+import Document, { Html, Head, Main, NextScript } from 'next/document'
+import { ThemeMeta, ThemeScript } from 'components/theme'
 
-class MyDocument extends Document {
-  static async getInitialProps(
-    ctx: DocumentContext
-  ): Promise<DocumentInitialProps> {
-    const initialProps = await Document.getInitialProps(ctx)
-    return initialProps
-  }
-
+export default class MyDocument extends Document {
   render(): JSX.Element {
     return (
       <Html lang="en">
         <Head>
+          <ThemeMeta />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
@@ -40,5 +27,3 @@ class MyDocument extends Document {
     )
   }
 }
-
-export default MyDocument
