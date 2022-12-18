@@ -6,9 +6,13 @@ import {
 } from '@heroicons/react/24/outline'
 import { QualityInfo } from 'lib/qualities'
 
-export type QualityProps = QualityInfo
+export interface QualityProps {
+  quality: QualityInfo
+}
 
-export const Quality = ({ icon, title, description }: QualityProps) => (
+export const Quality: React.FC<QualityProps> = ({
+  quality: { icon, title, description }
+}) => (
   <li className="flex gap-6">
     <IconBadge>{iconMap[icon]}</IconBadge>
     <div className="flex flex-col gap-3">

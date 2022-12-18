@@ -8,17 +8,19 @@ import { Project, ProjectProps } from '.'
 
 const Template: StoryFn<ProjectProps> = props => <Project {...props} />
 Template.args = {
-  name: 'Storybook Addon Next',
-  description:
-    'A no config Storybook addon that makes Next.js features just work in Storybook',
-  githubUrl: 'https://github.com/RyanClementsHax/storybook-addon-next',
-  siteUrl: 'https://www.npmjs.com/package/storybook-addon-next',
-  techs: [
-    { name: 'Typescript', logoSrc: tsLogo },
-    { name: 'Storybook', logoSrc: sbLogo },
-    { name: 'Webpack', logoSrc: webpackLogo },
-    { name: 'Next.js', logoSrc: nextjsLogo }
-  ]
+  project: {
+    name: 'Storybook Addon Next',
+    description:
+      'A no config Storybook addon that makes Next.js features just work in Storybook',
+    githubUrl: 'https://github.com/RyanClementsHax/storybook-addon-next',
+    siteUrl: 'https://www.npmjs.com/package/storybook-addon-next',
+    techs: [
+      { name: 'Typescript', logoSrc: tsLogo },
+      { name: 'Storybook', logoSrc: sbLogo },
+      { name: 'Webpack', logoSrc: webpackLogo },
+      { name: 'Next.js', logoSrc: nextjsLogo }
+    ]
+  }
 }
 
 const { Base, DarkTheme } = createDefaultStories(Template)

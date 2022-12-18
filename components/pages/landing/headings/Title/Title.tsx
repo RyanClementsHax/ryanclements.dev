@@ -5,7 +5,7 @@ export interface TitleProps {
   className?: string
 }
 
-export const Title = ({ children, className }: TitleProps) => (
+export const Title: React.FC<TitleProps> = ({ children, className }) => (
   <h2
     className={c(
       className,

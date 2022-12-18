@@ -7,7 +7,10 @@ export interface ProficiencyProps {
   className?: string
 }
 
-export const Proficiency = ({ level, className }: ProficiencyProps) => (
+export const Proficiency: React.FC<ProficiencyProps> = ({
+  level,
+  className
+}) => (
   <span className={c(s.proficiency, s[level.toLocaleLowerCase()], className)}>
     {level}
   </span>

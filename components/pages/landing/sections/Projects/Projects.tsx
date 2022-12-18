@@ -10,12 +10,16 @@ export interface ProjectsProps {
   projects: ProjectInfo[]
 }
 
-export const Projects = ({ title, subtitle, projects }: ProjectsProps) => (
+export const Projects: React.FC<ProjectsProps> = ({
+  title,
+  subtitle,
+  projects
+}) => (
   <Container>
     <Header title={title} subtitle={subtitle} />
     <Group>
       {projects.map(x => (
-        <Project key={x.name} {...x} />
+        <Project key={x.name} project={x} />
       ))}
     </Group>
   </Container>

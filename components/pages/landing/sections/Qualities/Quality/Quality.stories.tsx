@@ -6,9 +6,11 @@ import { Quality } from '.'
 const Template: StoryFn = () => (
   <ul>
     <Quality
-      icon="UserGroup"
-      title="Title"
-      description="Description that is descriptive"
+      quality={{
+        icon: 'UserGroup',
+        title: 'Title',
+        description: 'Description that is descriptive'
+      }}
     />
   </ul>
 )

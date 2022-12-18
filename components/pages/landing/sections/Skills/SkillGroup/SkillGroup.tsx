@@ -2,9 +2,13 @@ import { SkillGroupInfo, SkillInfo } from 'lib/skills'
 import { useMemo } from 'react'
 import { Skill } from '../Skill'
 
-export type SkillGroupProps = SkillGroupInfo
+export interface SkillGroupProps {
+  skillGroup: SkillGroupInfo
+}
 
-export const SkillGroup = ({ name, skills }: SkillGroupProps) => {
+export const SkillGroup: React.FC<SkillGroupProps> = ({
+  skillGroup: { name, skills }
+}) => {
   const sortedSkills = useMemo(
     () => skills.slice().sort(compareSkills),
     [skills]
@@ -15,7 +19,7 @@ export const SkillGroup = ({ name, skills }: SkillGroupProps) => {
       <Content>
         {sortedSkills.map(x => (
           <li key={x.name} data-testid={`skill-${x.name}`}>
-            <Skill {...x} />
+            <Skill skill={x} />
           </li>
         ))}
       </Content>

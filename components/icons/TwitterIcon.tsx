@@ -1,4 +1,4 @@
-export const TwitterIcon = (props: React.ComponentProps<'svg'>) => (
+export const TwitterIcon: React.FC<React.ComponentProps<'svg'>> = props => (
   <svg
     width="24"
     height="24"

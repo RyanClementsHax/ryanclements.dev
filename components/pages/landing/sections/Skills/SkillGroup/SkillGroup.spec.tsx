@@ -26,7 +26,7 @@ describe('SkillGroup', () => {
         name: 'c'
       })
     ]
-    render(<SkillGroup name="Skills" skills={skills} />)
+    render(<SkillGroup skillGroup={{ name: 'Skills', skills }} />)
 
     const renderedSkills = await getSkillsInDom()
     expect(renderedSkills.map(extractSkillName)).toEqual(
@@ -51,7 +51,7 @@ describe('SkillGroup', () => {
         name: 'a'
       })
     ]
-    render(<SkillGroup name="Skills" skills={skills} />)
+    render(<SkillGroup skillGroup={{ name: 'Skills', skills }} />)
 
     const renderedSkills = await getSkillsInDom()
     expect(renderedSkills.map(extractSkillName)).toEqual(
@@ -82,7 +82,7 @@ describe('SkillGroup', () => {
         name: '.NET'
       })
     ]
-    render(<SkillGroup name="Skills" skills={skills} />)
+    render(<SkillGroup skillGroup={{ name: 'Skills', skills }} />)
 
     const renderedSkills = await getSkillsInDom()
     expect(renderedSkills.map(extractSkillName)).toEqual(

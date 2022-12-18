@@ -1,4 +1,4 @@
-export const GithubIcon = (props: React.ComponentProps<'svg'>) => (
+export const GithubIcon: React.FC<React.ComponentProps<'svg'>> = props => (
   <svg
     width="22"
     height="23"

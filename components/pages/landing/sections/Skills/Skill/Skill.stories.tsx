@@ -6,9 +6,11 @@ import { ProficiencyLevel } from 'lib/skills'
 
 const Template: StoryFn<SkillProps> = props => <Skill {...props} />
 Template.args = {
-  name: 'Javascript',
-  proficiency: ProficiencyLevel.Proficient,
-  logoSrc: jsLogo
+  skill: {
+    name: 'Javascript',
+    proficiency: ProficiencyLevel.Proficient,
+    logoSrc: jsLogo
+  }
 }
 
 const { Base, DarkTheme } = createDefaultStories(Template)

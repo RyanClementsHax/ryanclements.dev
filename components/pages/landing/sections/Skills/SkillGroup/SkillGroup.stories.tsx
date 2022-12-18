@@ -4,7 +4,7 @@ import { createDefaultStories } from 'stories/storyUtils'
 import { SkillGroup } from '.'
 
 const Template: StoryFn = () => (
-  <SkillGroup name="Everything" skills={allSkills} />
+  <SkillGroup skillGroup={{ name: 'Everything', skills: allSkills }} />
 )
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } =

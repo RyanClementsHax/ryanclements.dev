@@ -1,6 +1,6 @@
 import { setInitialTheme, getInitialTheme } from './utils'
 
-export const ThemeScript = () => {
+export const ThemeScript: React.FC = () => {
   const getInitialThemeAsString = String(getInitialTheme)
   const setInitialThemeAsString = String(setInitialTheme)
   const themeSetupScript = `(function() {const getInitialTheme = ${getInitialThemeAsString}; (${setInitialThemeAsString})();})()`

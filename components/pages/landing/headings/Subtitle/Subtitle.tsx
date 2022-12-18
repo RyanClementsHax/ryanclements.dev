@@ -5,7 +5,7 @@ export interface SubtitleProps {
   className?: string
 }
 
-export const Subtitle = ({ children, className }: SubtitleProps) => (
+export const Subtitle: React.FC<SubtitleProps> = ({ children, className }) => (
   <h3
     className={c(
       className,

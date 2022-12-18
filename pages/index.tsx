@@ -8,7 +8,7 @@ import { projects } from 'lib/projects'
 import { qualities } from 'lib/qualities'
 import { heroBannerSrcMap, qualitiesImageData } from 'lib/images'
 
-const Index = () => (
+const Index: React.FC = () => (
   <>
     <Head>
       <title>Ryan Clements</title>

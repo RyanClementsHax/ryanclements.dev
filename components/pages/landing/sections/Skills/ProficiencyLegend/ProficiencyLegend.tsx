@@ -24,7 +24,7 @@ const proficiencyToDescriptionMap = new Map<ProficiencyLevel, string>([
   ]
 ])
 
-export const ProficiencyLegend = () => (
+export const ProficiencyLegend: React.FC = () => (
   <Container>
     {Array.from(proficiencyToDescriptionMap).map(([level, description]) => (
       <ProficiencyRow key={level} level={level} description={description} />

@@ -12,12 +12,12 @@ export interface QualitiesProps {
   qualities: QualityInfo[]
 }
 
-export const Qualities = ({
+export const Qualities: React.FC<QualitiesProps> = ({
   title,
   subtitle,
   graphicSrc,
   qualities
-}: QualitiesProps) => (
+}) => (
   <Container>
     <Header title={title} subtitle={subtitle} />
     <GraphicContainer>
@@ -45,7 +45,7 @@ const Header = ({ title, subtitle }: { title: string; subtitle: string }) => (
 const QualitiesList = ({ qualities }: { qualities: QualityInfo[] }) => (
   <ul className="flex flex-col gap-12">
     {qualities.map(x => (
-      <Quality key={x.title} {...x} />
+      <Quality key={x.title} quality={x} />
     ))}
   </ul>
 )

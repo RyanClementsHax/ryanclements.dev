@@ -17,7 +17,9 @@ export const ThemeContext = createContext<ThemeContextType>({
 
 export const useTheme = (): ThemeContextType => useContext(ThemeContext)
 
-export const ThemeProvider = ({ children }: { children?: React.ReactNode }) => {
+export const ThemeProvider: React.FC<{ children?: React.ReactNode }> = ({
+  children
+}) => {
   const [theme, setTheme] = usePersistedTheme()
 
   return (
