@@ -39,6 +39,7 @@
     "react-use": "^17.3.1",
     "rehype-parse": "^8.0.4",
     "rehype-react": "^7.1.1",
+    "rehype-sanitize": "^5.0.1",
     "rehype-stringify": "^9.0.3",
     "remark-frontmatter": "^4.0.1",
     "remark-parse": "^10.0.1",

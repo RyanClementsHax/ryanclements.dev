@@ -6,6 +6,7 @@ import remarkParse from 'remark-parse'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
+import rehypeSanitize from 'rehype-sanitize'
 import * as yup from 'yup'
 import { InferType } from 'yup'
 import { log } from './logs'
@@ -47,6 +48,7 @@ const convertRawStringContentsToHtml = async (rawString: string) => {
     .use(remarkParse)
     .use(remarkFrontmatter)
     .use(remarkRehype)
+    .use(rehypeSanitize)
     .use(rehypeStringify)
     .process(rawString)
   return html.value.toString()
@@ -59,6 +61,5 @@ const postMetaSchema = yup.object({
 
 const getMetaFromRawString = async (rawString: string): Promise<PostMeta> => {
   const frontMatter = matter(rawString).data
-  const validatedFrontMatter = await postMetaSchema.validate(frontMatter)
-  return validatedFrontMatter
+  return await postMetaSchema.validate(frontMatter)
 }
