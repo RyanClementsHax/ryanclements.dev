@@ -1,4 +1,4 @@
-import { getAllPostSlugs, getPost, Post } from 'lib/posts'
+import { getAllPostSlugs, getPost, HastTree, Post, PostMeta } from 'lib/posts'
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -9,7 +9,6 @@ import { ParsedUrlQuery } from 'querystring'
 import rehypeReact from 'rehype-react'
 import { unified } from 'unified'
 import { createElement, Fragment, useMemo } from 'react'
-import rehypeParse from 'rehype-parse'
 import { deserialize, Serializable, serialize } from 'lib/serialization'
 
 interface StaticPathParams extends ParsedUrlQuery {
@@ -37,18 +36,16 @@ export const getStaticProps: GetStaticProps<
   const { slug } = params as StaticPathParams
   const post = await getPost(slug)
   return {
-    props: serialize({
-      post
-    })
+    props: {
+      post: serializePost(post)
+    }
   }
 }
 
 const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
-  function (props) {
-    const {
-      post: { meta, content }
-    } = deserialize<PostPageProps>(props)
-    const children = useParsedHtml(content)
+  function ({ post }) {
+    const { content, meta } = deserializePost(post)
+    const children = useReactFromHast(content)
 
     return (
       <div className="text-on-surface-base">
@@ -62,12 +59,21 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
 
 export default PostPage
 
-const useParsedHtml = (content: string) =>
+const useReactFromHast = (content: HastTree) =>
   useMemo(
     () =>
       unified()
-        .use(rehypeParse, { fragment: true })
         .use(rehypeReact, { createElement, Fragment })
-        .processSync(content).result,
+        .stringify(content),
     [content]
   )
+
+const serializePost = (post: Post): Serializable<Post> => ({
+  ...post,
+  meta: serialize(post.meta)
+})
+
+const deserializePost = (post: Serializable<Post>): Post => ({
+  ...post,
+  meta: deserialize<PostMeta>(post.meta)
+})

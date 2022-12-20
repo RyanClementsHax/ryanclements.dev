@@ -7,11 +7,20 @@ export type Serializable<T> = T extends
   ? T
   : T extends Date
   ? string
+  : unknown extends T
+  ? unknown
+  : // eslint-disable-next-line @typescript-eslint/ban-types
+  T extends Function
+  ? never
   : T extends (infer U)[]
   ? Serializable<U>[]
-  : {
+  : T extends object
+  ? {
       [Key in keyof T]: Serializable<T[Key]>
     }
+  : never
+
+// These are not very performant solutions
 
 // consider upgrading to superjson if this gets complicated
 // https://github.com/blitz-js/superjson#using-with-nextjs

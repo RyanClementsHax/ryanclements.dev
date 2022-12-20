@@ -5,11 +5,10 @@ import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkRehype from 'remark-rehype'
-import rehypeStringify from 'rehype-stringify'
 import rehypeSanitize from 'rehype-sanitize'
 import * as yup from 'yup'
-import { InferType } from 'yup'
 import { log } from './logs'
+import { Root } from 'hast'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
@@ -18,12 +17,17 @@ export const getAllPostSlugs = async (): Promise<string[]> => {
   return files.map(x => x.replace('.md', ''))
 }
 
+export type HastTree = Root
+
 export interface Post {
   meta: PostMeta
-  content: string
+  content: HastTree
 }
 
-export type PostMeta = InferType<typeof postMetaSchema>
+export interface PostMeta {
+  date: Date
+  title: string
+}
 
 export const getPost = async (slug: string): Promise<Post> => {
   try {
@@ -40,19 +44,17 @@ const getRawPostString = async (slug: string): Promise<string> =>
 
 const convertRawStringToPost = async (rawString: string): Promise<Post> => ({
   meta: await getMetaFromRawString(rawString),
-  content: await convertRawStringContentsToHtml(rawString)
+  content: await convertRawStringContentsToHast(rawString)
 })
 
-const convertRawStringContentsToHtml = async (rawString: string) => {
-  const html = await unified()
-    .use(remarkParse)
-    .use(remarkFrontmatter)
-    .use(remarkRehype)
-    .use(rehypeSanitize)
-    .use(rehypeStringify)
-    .process(rawString)
-  return html.value.toString()
-}
+const processor = unified()
+  .use(remarkParse)
+  .use(remarkFrontmatter)
+  .use(remarkRehype)
+  .use(rehypeSanitize)
+
+const convertRawStringContentsToHast = async (rawString: string) =>
+  await processor.run(processor.parse(rawString))
 
 const postMetaSchema = yup.object({
   title: yup.string().required(),
