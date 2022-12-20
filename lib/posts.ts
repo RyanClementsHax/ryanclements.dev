@@ -25,8 +25,8 @@ export interface Post {
 }
 
 export interface PostMeta {
-  date: Date
   title: string
+  publishedOn: Date
 }
 
 export const getPost = async (slug: string): Promise<Post> => {
@@ -58,7 +58,7 @@ const convertRawStringContentsToHast = async (rawString: string) =>
 
 const postMetaSchema = yup.object({
   title: yup.string().required(),
-  date: yup.date().required()
+  publishedOn: yup.date().required()
 })
 
 const getMetaFromRawString = async (rawString: string): Promise<PostMeta> => {
