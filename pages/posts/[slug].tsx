@@ -1,4 +1,3 @@
-import { getAllPostSlugs, getPost, Post, PostMeta } from 'lib/content'
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -6,14 +5,9 @@ import {
   NextPage
 } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import {
-  deserialize,
-  Serializable,
-  serialize,
-  parseToHast,
-  HastTree,
-  useReactFromHast
-} from 'lib/util'
+import { deserialize, Serializable, serialize } from 'lib/util'
+import { HastTree, parseToHast, useReactFromHast } from 'lib/util/parsing'
+import { getAllPostSlugs, getPost, Post, PostMeta } from 'lib/content/posts'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string

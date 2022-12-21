@@ -1,5 +1,4 @@
 export * from './dates'
 export * from './images'
 export * from './logs'
-export * from './parsing'
 export * from './serialization'

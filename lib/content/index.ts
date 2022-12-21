@@ -1,4 +1,3 @@
-export * from './posts'
 export * from './projects'
 export * from './qualities'
 export * from './skills'
