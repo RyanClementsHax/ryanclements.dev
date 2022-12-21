@@ -1,4 +1,4 @@
-import { ProficiencyLevel } from 'lib/skills'
+import { ProficiencyLevel } from 'lib/content'
 import { Proficiency } from '../Proficiency'
 
 const proficiencyToDescriptionMap = new Map<ProficiencyLevel, string>([
@@ -24,7 +24,7 @@ const proficiencyToDescriptionMap = new Map<ProficiencyLevel, string>([
   ]
 ])
 
-export const ProficiencyLegend = () => (
+export const ProficiencyLegend: React.FC = () => (
   <Container>
     {Array.from(proficiencyToDescriptionMap).map(([level, description]) => (
       <ProficiencyRow key={level} level={level} description={description} />

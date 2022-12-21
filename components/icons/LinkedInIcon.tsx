@@ -1,4 +1,4 @@
-export const LinkedInIcon = (props: React.ComponentProps<'svg'>) => (
+export const LinkedInIcon: React.FC<React.ComponentProps<'svg'>> = props => (
   <svg
     width="24"
     height="24"

@@ -22,7 +22,8 @@
       { "avoidEscape": true, "allowTemplateLiterals": false }
     ],
     "no-console": "warn",
-    "react/no-danger": "error"
+    "react/no-danger": "error",
+    "import/no-duplicates": "warn"
   },
   "overrides": [
     {
@@ -31,7 +32,8 @@
         "project": "./tsconfig.json"
       },
       "rules": {
-        "@typescript-eslint/no-floating-promises": "error"
+        "@typescript-eslint/no-floating-promises": "error",
+        "@typescript-eslint/explicit-module-boundary-types": "warn"
       }
     }
   ]

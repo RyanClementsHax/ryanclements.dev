@@ -2,17 +2,15 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { GithubIcon } from 'components/icons/GithubIcon'
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
-import { ProjectInfo, Tech } from 'lib/projects'
+import { ProjectInfo, Tech } from 'lib/content'
 
-export type ProjectProps = ProjectInfo
+export interface ProjectProps {
+  project: ProjectInfo
+}
 
-export const Project = ({
-  name,
-  description,
-  githubUrl,
-  siteUrl,
-  techs
-}: ProjectProps) => (
+export const Project: React.FC<ProjectProps> = ({
+  project: { name, description, githubUrl, siteUrl, techs }
+}) => (
   <Container>
     <div className="flex flex-col gap-4 p-8">
       <Header name={name} githubUrl={githubUrl} />

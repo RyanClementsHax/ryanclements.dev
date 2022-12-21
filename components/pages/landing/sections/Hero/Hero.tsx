@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { SocialLink } from 'components/icons/SocialLink'
-import { A11yStaticImageData } from 'lib/images'
-import { socialAccounts } from 'lib/socialAccounts'
+import { A11yStaticImageData } from 'lib/util'
+import { socialAccounts } from 'lib/content'
 import { Theme, useTheme } from 'components/theme'
 
 export interface HeroProps {
@@ -10,7 +10,11 @@ export interface HeroProps {
   bannerSrcMap: Record<Theme, A11yStaticImageData>
 }
 
-export const Hero = ({ title, subtitle, bannerSrcMap }: HeroProps) => (
+export const Hero: React.FC<HeroProps> = ({
+  title,
+  subtitle,
+  bannerSrcMap
+}) => (
   <section className="w-100 h-screen px-5 py-12 md:px-8 md:py-16">
     <div className="grid h-full items-center gap-4 md:container md:mx-auto md:grid-cols-2">
       <Heading title={title} subtitle={subtitle} />

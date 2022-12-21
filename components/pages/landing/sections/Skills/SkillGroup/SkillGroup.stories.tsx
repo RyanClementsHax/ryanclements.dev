@@ -1,10 +1,10 @@
 import { Meta, StoryFn } from '@storybook/react'
-import { allSkills } from 'lib/skills'
+import { allSkills } from 'lib/content'
 import { createDefaultStories } from 'stories/storyUtils'
 import { SkillGroup } from '.'
 
 const Template: StoryFn = () => (
-  <SkillGroup name="Everything" skills={allSkills} />
+  <SkillGroup skillGroup={{ name: 'Everything', skills: allSkills }} />
 )
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } =

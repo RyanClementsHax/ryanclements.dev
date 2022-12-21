@@ -1,6 +1,6 @@
 import { Subtitle } from 'components/pages/landing/headings/Subtitle'
 import { Title } from 'components/pages/landing/headings/Title'
-import { SkillGroupInfo } from 'lib/skills'
+import { SkillGroupInfo } from 'lib/content'
 import { ProficiencyLegend } from './ProficiencyLegend'
 import { SkillGroup } from './SkillGroup'
 
@@ -10,12 +10,12 @@ export interface SkillsProps {
   groups: SkillGroupInfo[]
 }
 
-export const Skills = ({ title, subtitle, groups }: SkillsProps) => (
+export const Skills: React.FC<SkillsProps> = ({ title, subtitle, groups }) => (
   <Container>
     <Header title={title} subtitle={subtitle} />
     <ProficiencyLegend />
     {groups.map(x => (
-      <SkillGroup key={x.name} {...x} />
+      <SkillGroup key={x.name} skillGroup={x} />
     ))}
   </Container>
 )

@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import { A11yStaticImageData } from 'lib/images'
-import { QualityInfo } from 'lib/qualities'
+import { A11yStaticImageData } from 'lib/util'
+import { QualityInfo } from 'lib/content'
 import { Subtitle } from '../../headings/Subtitle'
 import { Title } from '../../headings/Title'
 import { Quality } from './Quality'
@@ -12,12 +12,12 @@ export interface QualitiesProps {
   qualities: QualityInfo[]
 }
 
-export const Qualities = ({
+export const Qualities: React.FC<QualitiesProps> = ({
   title,
   subtitle,
   graphicSrc,
   qualities
-}: QualitiesProps) => (
+}) => (
   <Container>
     <Header title={title} subtitle={subtitle} />
     <GraphicContainer>
@@ -45,7 +45,7 @@ const Header = ({ title, subtitle }: { title: string; subtitle: string }) => (
 const QualitiesList = ({ qualities }: { qualities: QualityInfo[] }) => (
   <ul className="flex flex-col gap-12">
     {qualities.map(x => (
-      <Quality key={x.title} {...x} />
+      <Quality key={x.title} quality={x} />
     ))}
   </ul>
 )

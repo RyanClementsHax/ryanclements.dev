@@ -49,7 +49,7 @@ const Option = ({ value }: { value: string }) => (
   </Listbox.Option>
 )
 
-export const ThemeSelect = () => {
+export const ThemeSelect: React.FC = () => {
   const { theme, setTheme } = useTheme()
 
   if (!theme) {
