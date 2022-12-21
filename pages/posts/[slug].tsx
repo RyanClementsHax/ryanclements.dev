@@ -1,4 +1,4 @@
-import { getAllPostSlugs, getPost, HastTree, Post, PostMeta } from 'lib/posts'
+import { getAllPostSlugs, getPost, Post, PostMeta } from 'lib/content/posts'
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -6,10 +6,8 @@ import {
   NextPage
 } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import rehypeReact from 'rehype-react'
-import { unified } from 'unified'
-import { createElement, Fragment, useMemo } from 'react'
-import { deserialize, Serializable, serialize } from 'lib/serialization'
+import { deserialize, Serializable, serialize } from 'lib/util/serialization'
+import { parseToHast, HastTree, useReactFromHast } from 'lib/util/parsing'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string
@@ -23,21 +21,24 @@ export const getStaticPaths: GetStaticPaths<StaticPathParams> = async () => {
   }
 }
 
-interface PostPageProps {
-  post: Post
+interface ParsedPost extends Omit<Post, 'content'> {
+  content: HastTree
 }
 
-type StaticProps = Serializable<PostPageProps>
+interface PostPageProps {
+  post: ParsedPost
+}
 
 export const getStaticProps: GetStaticProps<
-  StaticProps,
+  Serializable<PostPageProps>,
   StaticPathParams
 > = async ({ params }) => {
   const { slug } = params as StaticPathParams
   const post = await getPost(slug)
+  const parsedPost = await parsePost(post)
   return {
     props: {
-      post: serializePost(post)
+      post: serializePost(parsedPost)
     }
   }
 }
@@ -59,21 +60,17 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
 
 export default PostPage
 
-const useReactFromHast = (content: HastTree) =>
-  useMemo(
-    () =>
-      unified()
-        .use(rehypeReact, { createElement, Fragment })
-        .stringify(content),
-    [content]
-  )
+const parsePost = async (post: Post): Promise<ParsedPost> => ({
+  ...post,
+  content: await parseToHast(post.content)
+})
 
-const serializePost = (post: Post): Serializable<Post> => ({
+const serializePost = (post: ParsedPost): Serializable<ParsedPost> => ({
   ...post,
   meta: serialize(post.meta)
 })
 
-const deserializePost = (post: Serializable<Post>): Post => ({
+const deserializePost = (post: Serializable<ParsedPost>): ParsedPost => ({
   ...post,
   meta: deserialize<PostMeta>(post.meta)
 })

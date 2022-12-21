@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { SocialAccount } from 'lib/socialAccounts'
-import { SocialPlatform } from 'lib/socialAccounts'
+import { SocialAccount } from 'lib/content/socialAccounts'
+import { SocialPlatform } from 'lib/content/socialAccounts'
 import { GithubIcon } from 'components/icons/GithubIcon'
 import { LinkedInIcon } from 'components/icons/LinkedInIcon'
 import { TwitterIcon } from 'components/icons/TwitterIcon'

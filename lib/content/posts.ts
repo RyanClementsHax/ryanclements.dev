@@ -1,14 +1,8 @@
 import { promises as fs } from 'fs'
 import path from 'path'
-import matter from 'gray-matter'
-import { unified } from 'unified'
-import remarkParse from 'remark-parse'
-import remarkFrontmatter from 'remark-frontmatter'
-import remarkRehype from 'remark-rehype'
-import rehypeSanitize from 'rehype-sanitize'
 import * as yup from 'yup'
-import { log } from './logs'
-import { Root } from 'hast'
+import { log } from 'lib/util/logs'
+import { parseFrontMatter } from 'lib/util/parsing'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
@@ -22,11 +16,9 @@ export const getAllPostSlugs = async (): Promise<string[]> => {
   }
 }
 
-export type HastTree = Root
-
 export interface Post {
   meta: PostMeta
-  content: HastTree
+  content: string
 }
 
 export interface PostMeta {
@@ -49,17 +41,8 @@ const getRawPostString = async (slug: string): Promise<string> =>
 
 const convertRawStringToPost = async (rawString: string): Promise<Post> => ({
   meta: await getMetaFromRawString(rawString),
-  content: await convertRawStringContentsToHast(rawString)
+  content: rawString
 })
-
-const processor = unified()
-  .use(remarkParse)
-  .use(remarkFrontmatter)
-  .use(remarkRehype)
-  .use(rehypeSanitize)
-
-const convertRawStringContentsToHast = async (rawString: string) =>
-  await processor.run(processor.parse(rawString))
 
 const postMetaSchema = yup.object({
   title: yup.string().required(),
@@ -67,6 +50,6 @@ const postMetaSchema = yup.object({
 })
 
 const getMetaFromRawString = async (rawString: string): Promise<PostMeta> => {
-  const frontMatter = matter(rawString).data
+  const frontMatter = parseFrontMatter(rawString)
   return await postMetaSchema.validate(frontMatter)
 }

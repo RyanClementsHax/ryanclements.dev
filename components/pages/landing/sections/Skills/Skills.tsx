@@ -1,6 +1,6 @@
 import { Subtitle } from 'components/pages/landing/headings/Subtitle'
 import { Title } from 'components/pages/landing/headings/Title'
-import { SkillGroupInfo } from 'lib/skills'
+import { SkillGroupInfo } from 'lib/content/skills'
 import { ProficiencyLegend } from './ProficiencyLegend'
 import { SkillGroup } from './SkillGroup'
 

@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Skills } from '.'
-import { skillGroups } from 'lib/skills'
+import { skillGroups } from 'lib/content/skills'
 
 const Template: StoryFn = () => (
   <Skills

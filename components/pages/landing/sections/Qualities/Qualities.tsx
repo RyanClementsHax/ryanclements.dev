@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import { A11yStaticImageData } from 'lib/images'
-import { QualityInfo } from 'lib/qualities'
+import { A11yStaticImageData } from 'lib/util/images'
+import { QualityInfo } from 'lib/content/qualities'
 import { Subtitle } from '../../headings/Subtitle'
 import { Title } from '../../headings/Title'
 import { Quality } from './Quality'

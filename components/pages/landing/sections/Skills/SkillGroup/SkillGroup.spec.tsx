@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { ProficiencyLevel, SkillInfo } from 'lib/skills'
+import { ProficiencyLevel, SkillInfo } from 'lib/content/skills'
 import { SkillGroup } from './SkillGroup'
 
 describe('SkillGroup', () => {

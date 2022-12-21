@@ -1,7 +1,7 @@
 import { SocialLink } from 'components/icons/SocialLink'
 import { INITIAL_YEAR } from 'lib/constants'
-import { getCurrentYear } from 'lib/dates'
-import { socialAccounts } from 'lib/socialAccounts'
+import { getCurrentYear } from 'lib/util/dates'
+import { socialAccounts } from 'lib/content/socialAccounts'
 
 export const Footer: React.FC = () => (
   <footer className="flex flex-col items-center gap-8 border-t border-t-borderColor px-5 pt-10 pb-16 text-center md:flex-row md:items-end md:justify-between md:px-8 md:text-start">

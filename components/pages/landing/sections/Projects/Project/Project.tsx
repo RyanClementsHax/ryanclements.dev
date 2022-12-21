@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { GithubIcon } from 'components/icons/GithubIcon'
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
-import { ProjectInfo, Tech } from 'lib/projects'
+import { ProjectInfo, Tech } from 'lib/content/projects'
 
 export interface ProjectProps {
   project: ProjectInfo

@@ -1,4 +1,4 @@
-import { ProficiencyLevel } from 'lib/skills'
+import { ProficiencyLevel } from 'lib/content/skills'
 import { Proficiency } from '../Proficiency'
 
 const proficiencyToDescriptionMap = new Map<ProficiencyLevel, string>([

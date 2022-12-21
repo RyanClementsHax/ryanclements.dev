@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { SocialLink } from 'components/icons/SocialLink'
-import { A11yStaticImageData } from 'lib/images'
-import { socialAccounts } from 'lib/socialAccounts'
+import { A11yStaticImageData } from 'lib/util/images'
+import { socialAccounts } from 'lib/content/socialAccounts'
 import { Theme, useTheme } from 'components/theme'
 
 export interface HeroProps {
