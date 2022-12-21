@@ -1,4 +1,4 @@
-import { SkillInfo } from 'lib/content/skills'
+import { SkillInfo } from 'lib/content'
 import Image from 'next/image'
 import { Proficiency } from '../Proficiency'
 

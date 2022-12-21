@@ -2,11 +2,9 @@ import Head from 'next/head'
 import { Hero } from 'components/pages/landing/sections/Hero'
 import { Qualities } from 'components/pages/landing/sections/Qualities'
 import { Skills } from 'components/pages/landing/sections/Skills'
-import { skillGroups } from 'lib/content/skills'
+import { skillGroups, projects, qualities } from 'lib/content'
 import { Projects } from 'components/pages/landing/sections/Projects'
-import { projects } from 'lib/content/projects'
-import { qualities } from 'lib/content/qualities'
-import { heroBannerSrcMap, qualitiesImageData } from 'lib/util/images'
+import { heroBannerSrcMap, qualitiesImageData } from 'lib/util'
 
 const Index: React.FC = () => (
   <>

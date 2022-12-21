@@ -2,8 +2,8 @@ import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Qualities } from '.'
-import { qualities } from 'lib/content/qualities'
-import { qualitiesImageData } from 'lib/util/images'
+import { qualities } from 'lib/content'
+import { qualitiesImageData } from 'lib/util'
 
 const Template: StoryFn = () => (
   <Qualities

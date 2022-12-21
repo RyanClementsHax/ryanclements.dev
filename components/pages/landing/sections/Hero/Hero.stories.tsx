@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Hero } from '.'
-import { heroBannerSrcMap } from 'lib/util/images'
+import { heroBannerSrcMap } from 'lib/util'
 
 const Template: StoryFn = () => (
   <Hero

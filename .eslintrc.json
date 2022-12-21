@@ -22,7 +22,8 @@
       { "avoidEscape": true, "allowTemplateLiterals": false }
     ],
     "no-console": "warn",
-    "react/no-danger": "error"
+    "react/no-danger": "error",
+    "import/no-duplicates": "warn"
   },
   "overrides": [
     {

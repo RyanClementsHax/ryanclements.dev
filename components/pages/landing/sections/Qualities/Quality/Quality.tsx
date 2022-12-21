@@ -4,7 +4,7 @@ import {
   PresentationChartLineIcon,
   UserGroupIcon
 } from '@heroicons/react/24/outline'
-import { QualityInfo } from 'lib/content/qualities'
+import { QualityInfo } from 'lib/content'
 
 export interface QualityProps {
   quality: QualityInfo
