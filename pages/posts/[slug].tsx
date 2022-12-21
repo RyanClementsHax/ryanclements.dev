@@ -6,10 +6,12 @@ import {
 } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import { deserialize, Serializable, serialize } from 'lib/util'
-import { HastTree, parseToHast, useReactFromHast } from 'lib/util/parsing'
+import { parseToHast } from 'lib/util/parsing/server'
 import { getAllPostSlugs, getPost, Post, PostMeta } from 'lib/content/posts'
 import Image from 'next/image'
 import { A11yStaticImageData, postsImageSrcMap } from 'lib/content'
+import { HastTree } from 'lib/util/parsing/types'
+import { useReactFromHast } from 'lib/util/parsing/client'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string

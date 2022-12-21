@@ -2,7 +2,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import * as yup from 'yup'
 import { log } from 'lib/util'
-import { parseFrontMatter } from 'lib/util/parsing'
+import { parseFrontMatter } from 'lib/util/parsing/server'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
