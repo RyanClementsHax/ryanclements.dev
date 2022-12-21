@@ -8,6 +8,8 @@ import { ParsedUrlQuery } from 'querystring'
 import { deserialize, Serializable, serialize } from 'lib/util'
 import { HastTree, parseToHast, useReactFromHast } from 'lib/util/parsing'
 import { getAllPostSlugs, getPost, Post, PostMeta } from 'lib/content/posts'
+import Image from 'next/image'
+import { A11yStaticImageData, postsImageSrcMap } from 'lib/content'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string
@@ -21,12 +23,17 @@ export const getStaticPaths: GetStaticPaths<StaticPathParams> = async () => {
   }
 }
 
-interface ParsedPost extends Omit<Post, 'content'> {
+interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
   content: HastTree
+  meta: RenderablePostMeta
+}
+
+interface RenderablePostMeta extends Omit<PostMeta, 'bannerSrc'> {
+  bannerSrc: A11yStaticImageData
 }
 
 interface PostPageProps {
-  post: ParsedPost
+  post: RenderablePost
 }
 
 export const getStaticProps: GetStaticProps<
@@ -35,10 +42,10 @@ export const getStaticProps: GetStaticProps<
 > = async ({ params }) => {
   const { slug } = params as StaticPathParams
   const post = await getPost(slug)
-  const parsedPost = await parsePost(post)
+  const renderablePost = await convertToRenderablePost(post)
   return {
     props: {
-      post: serializePost(parsedPost)
+      post: serializePost(renderablePost)
     }
   }
 }
@@ -46,31 +53,44 @@ export const getStaticProps: GetStaticProps<
 const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
   function ({ post }) {
     const { content, meta } = deserializePost(post)
+    const { alt, ...bannerSrc } = meta.bannerSrc
     const children = useReactFromHast(content)
 
     return (
-      <div className="text-on-surface-base">
-        <pre>
-          <code>{JSON.stringify(meta, null, 2)}</code>
-        </pre>
-        <div>{children}</div>
-      </div>
+      <>
+        <Image
+          src={bannerSrc}
+          alt={alt}
+          sizes="100vw"
+          placeholder="blur"
+          className="h-[33vh] w-full object-cover"
+        />
+        <div className="text-on-surface-base">{children}</div>
+      </>
     )
   }
 
 export default PostPage
 
-const parsePost = async (post: Post): Promise<ParsedPost> => ({
+const convertToRenderablePost = async (
+  post: Post
+): Promise<RenderablePost> => ({
   ...post,
-  content: await parseToHast(post.content)
+  content: await parseToHast(post.content),
+  meta: {
+    ...post.meta,
+    bannerSrc: postsImageSrcMap[post.meta.bannerSrc]
+  }
 })
 
-const serializePost = (post: ParsedPost): Serializable<ParsedPost> => ({
+const serializePost = (post: RenderablePost): Serializable<RenderablePost> => ({
   ...post,
   meta: serialize(post.meta)
 })
 
-const deserializePost = (post: Serializable<ParsedPost>): ParsedPost => ({
+const deserializePost = (
+  post: Serializable<RenderablePost>
+): RenderablePost => ({
   ...post,
-  meta: deserialize<PostMeta>(post.meta)
+  meta: deserialize<RenderablePostMeta>(post.meta)
 })

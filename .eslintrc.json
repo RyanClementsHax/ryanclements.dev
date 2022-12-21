@@ -5,11 +5,6 @@
     "plugin:@typescript-eslint/recommended",
     "typescript",
     "plugin:storybook/recommended",
-    // jest
-    "plugin:jest/recommended",
-    "plugin:jest/style",
-    "plugin:jest-dom/recommended",
-    "plugin:testing-library/react",
     // react/next
     "next/core-web-vitals",
     // must be last for prettier to work well with eslint
@@ -35,6 +30,15 @@
         "@typescript-eslint/no-floating-promises": "error",
         "@typescript-eslint/explicit-module-boundary-types": "warn"
       }
+    },
+    {
+      "files": ["**/*@(spec|test).@(t|j)s?(x)"],
+      "extends": [
+        "plugin:jest/recommended",
+        "plugin:jest/style",
+        "plugin:jest-dom/recommended",
+        "plugin:testing-library/react"
+      ]
     }
   ]
 }

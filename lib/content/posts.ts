@@ -11,8 +11,8 @@ export const getAllPostSlugs = async (): Promise<string[]> => {
     const files = await fs.readdir(postsDirectory).catch(() => [] as string[])
     return files.map(x => x.replace('.md', ''))
   } catch (e) {
-    log.warn(`Was not able to read ${postsDirectory}`, e)
-    return []
+    log.error(`Was not able to read ${postsDirectory}`, e)
+    throw e
   }
 }
 
@@ -24,6 +24,7 @@ export interface Post {
 export interface PostMeta {
   title: string
   publishedOn: Date
+  bannerSrc: string
 }
 
 export const getPost = async (slug: string): Promise<Post> => {
@@ -46,7 +47,8 @@ const convertRawStringToPost = async (rawString: string): Promise<Post> => ({
 
 const postMetaSchema = yup.object({
   title: yup.string().required(),
-  publishedOn: yup.date().required()
+  publishedOn: yup.date().required(),
+  bannerSrc: yup.string().required()
 })
 
 const getMetaFromRawString = async (rawString: string): Promise<PostMeta> => {
