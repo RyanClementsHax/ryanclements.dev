@@ -13,8 +13,13 @@ import { Root } from 'hast'
 const postsDirectory = path.join(process.cwd(), 'posts')
 
 export const getAllPostSlugs = async (): Promise<string[]> => {
-  const files = await fs.readdir(postsDirectory)
-  return files.map(x => x.replace('.md', ''))
+  try {
+    const files = await fs.readdir(postsDirectory).catch(() => [] as string[])
+    return files.map(x => x.replace('.md', ''))
+  } catch (e) {
+    log.warn(`Was not able to read ${postsDirectory}`, e)
+    return []
+  }
 }
 
 export type HastTree = Root
