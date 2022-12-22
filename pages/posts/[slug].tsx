@@ -12,6 +12,7 @@ import Image from 'next/image'
 import { A11yStaticImageData, postsImageSrcMap } from 'lib/content'
 import { HastTree } from 'lib/util/parsing/types'
 import { useReactFromHast } from 'lib/util/parsing/client'
+import { Title } from 'components/pages/posts/[slug]/Title'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string
@@ -65,9 +66,12 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
           alt={alt}
           sizes="100vw"
           placeholder="blur"
-          className="h-[33vh] w-full object-cover"
+          className="relative -z-10 mx-auto aspect-[5/1] max-h-[30rem] w-full max-w-[100rem] object-cover"
         />
-        <div className="text-on-surface-base">{children}</div>
+        <div className="mx-auto max-w-[70ch]">
+          <Title>{meta.title}</Title>
+          <div className="text-on-surface-base">{children}</div>
+        </div>
       </>
     )
   }
