@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react'
-import { Layout } from 'components/Layout'
+import { Layout } from 'components/pages/landing/Layout'
 
 import Index from 'pages/index'
 import { createDefaultStories } from 'stories/storyUtils'

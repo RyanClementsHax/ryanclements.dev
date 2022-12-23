@@ -13,6 +13,7 @@ import { A11yStaticImageData, postsImageSrcMap } from 'lib/content'
 import { HastTree } from 'lib/util/parsing/types'
 import { MetaCard } from 'components/pages/posts/[slug]/MetaCard'
 import { Content } from 'components/pages/posts/[slug]/Content'
+import { Layout } from 'components/pages/posts/[slug]/Layout'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string
@@ -58,13 +59,13 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
     const { content, meta } = deserializePost(post)
 
     return (
-      <>
+      <Layout>
         <Banner src={meta.bannerSrc} />
         <ContentContainer>
           <MetaCard title={meta.title} publishedOn={meta.publishedOn} />
           <Content root={content} />
         </ContentContainer>
-      </>
+      </Layout>
     )
   }
 

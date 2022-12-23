@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { ThemeProvider } from 'components/theme'
-import { Layout } from 'components/Layout'
 
 import type { AppProps } from 'next/app'
 
@@ -18,9 +17,7 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
 
   return (
     <ThemeProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <Component {...pageProps} />
     </ThemeProvider>
   )
 }

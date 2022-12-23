@@ -8,7 +8,7 @@ import { Theme } from 'components/theme/types'
 const Button = () => {
   const { theme } = useTheme()
   return (
-    <Listbox.Button className="relative w-full cursor-pointer overflow-hidden rounded-md border border-borderColor bg-surface-base py-2 pl-3 pr-10 text-left shadow-sm focus:border-borderColor-focus focus:outline-none focus:ring-1 focus:ring-ringColor-focus sm:text-sm">
+    <Listbox.Button className="relative w-full cursor-pointer overflow-hidden rounded-md border border-borderColor bg-surface-base py-2 pl-3 pr-10 text-left text-sm shadow-sm focus:border-borderColor-focus focus:outline-none focus:ring-1 focus:ring-ringColor-focus">
       <span className="block truncate text-on-surface-base">{theme}</span>
       <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
         <ChevronUpDownIcon className="h-5 w-5 text-icon" aria-hidden="true" />
@@ -67,7 +67,7 @@ export const ThemeSelect: React.FC = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-surface-base-elevation-100 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-surface-base-elevation-100 py-1 text-sm shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               {Object.keys(Theme).map(x => (
                 <Option key={x} value={x} />
               ))}

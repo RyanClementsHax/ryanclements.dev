@@ -10,9 +10,10 @@ import {
   qualitiesImageData
 } from 'lib/content'
 import { Projects } from 'components/pages/landing/sections/Projects'
+import { Layout } from 'components/pages/landing/Layout'
 
 const Index: React.FC = () => (
-  <>
+  <Layout>
     <Head>
       <title>Ryan Clements</title>
       <link rel="icon" href="/favicon.ico" />
@@ -49,7 +50,7 @@ const Index: React.FC = () => (
       subtitle="I love what I do. Here are some projects I like to work on."
       projects={projects}
     />
-  </>
+  </Layout>
 )
 
 export default Index
