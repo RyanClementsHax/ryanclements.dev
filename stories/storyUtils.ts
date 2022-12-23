@@ -6,7 +6,14 @@ export interface StoryModifier {
   <T>(story: StoryFn<T>): StoryFn<T>
 }
 
-export const createDefaultStories = <T>(template: StoryFn<T>) => ({
+export const createDefaultStories = <T>(
+  template: StoryFn<T>
+): {
+  Base: StoryFn<T>
+  Mobile: StoryFn<T>
+  DarkTheme: StoryFn<T>
+  DarkThemedMobile: StoryFn<T>
+} => ({
   Base: withDefaults(template),
   Mobile: compose(withDefaults, withMobile)(template),
   DarkTheme: compose(withDefaults, withDarkTheme)(template),
@@ -14,7 +21,7 @@ export const createDefaultStories = <T>(template: StoryFn<T>) => ({
 })
 
 export const asCopy: StoryModifier = story => {
-  const copiedStory = story.bind({})
+  const copiedStory = story.bind({}) as typeof story
   copiedStory.args = {
     ...story.args
   }

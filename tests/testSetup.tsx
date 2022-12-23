@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom'
 import { toHaveNoViolations } from 'jest-axe'
-import { setGlobalConfig } from '@storybook/testing-react'
+import { setProjectAnnotations } from '@storybook/testing-react'
 import * as globalStorybookConfig from '../.storybook/preview'
 import { LinkProps } from 'next/link'
 
-setGlobalConfig(globalStorybookConfig)
+setProjectAnnotations(globalStorybookConfig)
 
 expect.extend(toHaveNoViolations)
 

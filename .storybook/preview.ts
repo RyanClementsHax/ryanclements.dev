@@ -1,5 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { ReactFramework } from '@storybook/react'
+import { ReactRenderer } from '@storybook/react'
 import { DecoratorFunction, Parameters, GlobalTypes } from '@storybook/csf'
 
 import { ThemeDecorator } from './decorators/ThemeDecorator'
@@ -20,7 +20,7 @@ export const globalTypes: GlobalTypes = {
   }
 }
 
-export const decorators: DecoratorFunction<ReactFramework>[] = [ThemeDecorator]
+export const decorators: DecoratorFunction<ReactRenderer>[] = [ThemeDecorator]
 
 export const parameters: Parameters = {
   layout: 'fullscreen',

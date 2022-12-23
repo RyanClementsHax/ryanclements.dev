@@ -21,6 +21,7 @@ const { Base: LinkedInIconBase, DarkTheme: LinkedInIconDarkTheme } =
 export { LinkedInIconBase, LinkedInIconDarkTheme }
 
 export default {
+  component: GithubIcon,
   parameters: {
     layout: 'centered'
   }
