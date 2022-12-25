@@ -1,4 +1,5 @@
 import { ThemeSelect } from 'components/theme'
+import { useHideAndShowWithScroll } from 'lib/util/useHideAndShowWithScroll'
 
 export interface HeaderProps {
   backgroundType?: 'ghostAtTop' | 'normal'
@@ -23,9 +24,17 @@ const GhostAtTopWrapper: React.FC<{ children?: React.ReactNode }> = ({
 
 const NormalWrapper: React.FC<{ children?: React.ReactNode }> = ({
   children
-}) => (
-  <header className="flex justify-end bg-surface-base p-3">{children}</header>
-)
+}) => {
+  const nodeRef = useHideAndShowWithScroll()
+  return (
+    <header
+      ref={nodeRef}
+      className="sticky top-0 z-10 flex justify-end bg-surface-base p-3"
+    >
+      {children}
+    </header>
+  )
+}
 
 const backgroundTypeToWrapperMap: Record<
   NonNullable<HeaderProps['backgroundType']>,

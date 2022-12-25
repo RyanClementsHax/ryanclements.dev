@@ -1,6 +1,4 @@
 import { Meta, StoryFn } from '@storybook/react'
-import { Layout } from 'components/pages/landing/Layout'
-
 import Index from 'pages/index'
 import { createDefaultStories } from 'stories/storyUtils'
 
@@ -12,12 +10,5 @@ const { Base, Mobile, DarkTheme, DarkThemedMobile } =
 export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
-  component: Index,
-  decorators: [
-    Story => (
-      <Layout>
-        <Story />
-      </Layout>
-    )
-  ]
+  component: Index
 } as Meta

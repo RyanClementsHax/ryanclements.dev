@@ -28,7 +28,8 @@
       },
       "rules": {
         "@typescript-eslint/no-floating-promises": "error",
-        "@typescript-eslint/explicit-module-boundary-types": "warn"
+        "@typescript-eslint/explicit-module-boundary-types": "warn",
+        "@typescript-eslint/no-empty-function": "off"
       }
     },
     {
