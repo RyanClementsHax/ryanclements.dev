@@ -23,7 +23,7 @@ const PublishedDate: React.FC<{ children?: React.ReactNode }> = ({
 const MetaContainer: React.FC<{ children?: React.ReactNode }> = ({
   children
 }) => (
-  <div className="flex flex-col gap-3 rounded-md bg-gray-100 bg-opacity-60 p-5 text-on-surface-offBase shadow-lg backdrop-blur-xl backdrop-filter dark:bg-zinc-700 dark:bg-opacity-60 md:gap-8 md:p-14">
+  <div className="flex flex-col gap-3 rounded-md bg-gray-100 bg-opacity-60 p-5 text-on-surface-offBase shadow-lg backdrop-blur-xl backdrop-filter dark:bg-zinc-800 dark:bg-opacity-60 md:gap-8 md:p-14">
     {children}
   </div>
 )

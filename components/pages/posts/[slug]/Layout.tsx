@@ -5,7 +5,7 @@ export const Layout: React.FC<{ children?: React.ReactNode }> = ({
   children
 }) => (
   <main>
-    <Header />
+    <Header hideWithScroll />
     {children}
     <Footer />
   </main>

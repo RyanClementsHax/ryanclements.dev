@@ -1,45 +1,33 @@
 import { ThemeSelect } from 'components/theme'
 import { useHideAndShowWithScroll } from 'lib/util/useHideAndShowWithScroll'
+import { useWindowScroll } from 'react-use'
+import c from 'classnames'
 
 export interface HeaderProps {
-  backgroundType?: 'ghostAtTop' | 'normal'
+  fixed?: boolean
+  hideWithScroll?: boolean
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  backgroundType = 'normal'
+  hideWithScroll = false,
+  fixed = false
 }) => {
-  const Wrapper = backgroundTypeToWrapperMap[backgroundType]
-  return (
-    <Wrapper>
-      <ThemeSelect />
-    </Wrapper>
-  )
-}
-
-const GhostAtTopWrapper: React.FC<{ children?: React.ReactNode }> = ({
-  children
-}) => (
-  <header className="absolute flex w-full justify-end p-3">{children}</header>
-)
-
-const NormalWrapper: React.FC<{ children?: React.ReactNode }> = ({
-  children
-}) => {
-  const nodeRef = useHideAndShowWithScroll()
+  const isScrolledToTop = useIsScrolledToTop()
+  const nodeRef = useHideAndShowWithScroll({ enabled: hideWithScroll })
   return (
     <header
       ref={nodeRef}
-      className="sticky top-0 z-10 flex justify-end bg-surface-base p-3"
+      className={c(
+        'top-0 z-10 flex justify-end border-b bg-surface-base p-3 duration-500',
+        isScrolledToTop
+          ? 'border-transparent'
+          : 'border-borderColor/75 bg-opacity-60 backdrop-blur-xl backdrop-filter',
+        fixed ? 'fixed w-full' : 'sticky'
+      )}
     >
-      {children}
+      <ThemeSelect />
     </header>
   )
 }
 
-const backgroundTypeToWrapperMap: Record<
-  NonNullable<HeaderProps['backgroundType']>,
-  React.FC<{ children?: React.ReactNode }>
-> = {
-  ghostAtTop: GhostAtTopWrapper,
-  normal: NormalWrapper
-}
+const useIsScrolledToTop = () => useWindowScroll().y === 0

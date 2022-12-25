@@ -2,11 +2,20 @@ import { useState } from 'react'
 import { useIsomorphicLayoutEffect } from 'react-use'
 
 // man I'm really not sure how to clean this up lol
-export const useHideAndShowWithScroll = (): ((ref: HTMLElement) => void) => {
+export const useHideAndShowWithScroll = (
+  { enabled }: { enabled: boolean } = { enabled: true }
+): ((ref: HTMLElement) => void) => {
   const [ref, setRef] = useState<HTMLElement | null>(null)
 
   useIsomorphicLayoutEffect(() => {
     if (!ref) return
+    const updateTranslationYTo = (translationY: number) => {
+      ref.style.transform = `translateY(${translationY}px)`
+    }
+    if (!enabled) {
+      updateTranslationYTo(0)
+      return
+    }
     let height: number | undefined
     const observer = new ResizeObserver(entries => {
       if (entries[0]) {
@@ -38,7 +47,7 @@ export const useHideAndShowWithScroll = (): ((ref: HTMLElement) => void) => {
       previousY = currentY
 
       updateTranslationYFrame = requestAnimationFrame(() => {
-        ref.style.transform = `translateY(${translationY}px)`
+        updateTranslationYTo(translationY)
       })
     }
 
@@ -48,7 +57,7 @@ export const useHideAndShowWithScroll = (): ((ref: HTMLElement) => void) => {
       window.removeEventListener('scroll', handler)
       observer.disconnect()
     }
-  }, [ref])
+  }, [ref, enabled])
 
   return setRef
 }
