@@ -4,15 +4,11 @@ publishedOn: '2022-01-01'
 bannerSrc: posts/this-is-a-test.jpg
 ---
 
+<!-- markdownlint-disable MD029 -->
+
 ## h2 Heading
 
 ### h3 Heading
-
-#### h4 Heading
-
-##### h5 Heading
-
-###### h6 Heading
 
 ## Horizontal Rules
 
@@ -22,27 +18,11 @@ bannerSrc: posts/this-is-a-test.jpg
 
 ---
 
-## Typographic replacements
-
-Enable typographer option to see result.
-
-(c) (C) (r) (R) (tm) (TM) (p) (P) +-
-
-test.. test... test..... test?..... test!....
-
-!!!!!! ???? ,, -- ---
-
-"Smartypants, double quotes" and 'single quotes'
-
 ## Emphasis
 
-**This is bold text**
+**This is bold text** that begins a paragraph
 
-**This is bold text**
-
-_This is italic text_
-
-_This is italic text_
+_This is italic text_ that begins a paragraph
 
 ~~Strikethrough~~
 
@@ -77,23 +57,16 @@ Ordered
 
 Start numbering with offset:
 
-57. foo
-1. bar
+1. foo
+2. bar
 
 ## Code
 
 Inline `code`
 
-Indented code
-
-    // Some comments
-    line 1 of code
-    line 2 of code
-    line 3 of code
-
 Block code "fences"
 
-```
+```text
 Sample text here...
 ```
 
@@ -129,7 +102,7 @@ Right aligned columns
 
 [link with title](http://nodeca.github.io/pica/demo/ 'title text!')
 
-Autoconverted link <https://github.com/nodeca/pica> (enable linkify to see)
+Autoconverted link <https://github.com/nodeca/pica>
 
 ## Images
 

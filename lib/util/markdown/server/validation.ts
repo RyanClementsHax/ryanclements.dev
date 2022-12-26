@@ -6,6 +6,7 @@ import { visit } from 'unist-util-visit'
 import { reporter } from 'vfile-reporter'
 import { pointStart } from 'unist-util-position'
 import remarkLint from 'remark-lint'
+import { Heading } from 'mdast'
 
 /**
  * To make rules disable-able, you need to name them with the source 'remark-lint'
@@ -23,12 +24,29 @@ const remarkLintNoH1 = lintRule('remark-lint:no-h1', (tree, file) => {
   })
 })
 
+const remarkLintNoDeeperThanH3 = lintRule(
+  'remark-lint:no-deeper-than-h3',
+  (tree, file) => {
+    visit(tree, 'heading', (node: Heading) => {
+      if (node.depth > 3) {
+        file.fail(
+          "Don't use headings deeper than h3 (e.g. '#### This is a level 4 heading (h4)') as this can easily confuse readers and make the content harder to follow",
+          pointStart(node)
+        )
+      }
+    })
+  }
+)
+
 // docs on how to configure
 // https://github.com/remarkjs/remark-lint
 // example preset
 // https://github.com/remarkjs/remark-lint/blob/cabbe86d1bd12ab5120196474ff08731644142d3/packages/remark-preset-lint-consistent/index.js
 const postQualityPreset: Preset = {
-  plugins: [[remarkLintNoH1, ['error']]]
+  plugins: [
+    [remarkLintNoH1, ['error']],
+    [remarkLintNoDeeperThanH3, ['error']]
+  ]
 }
 
 const validator = unified()

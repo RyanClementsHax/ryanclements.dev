@@ -22,6 +22,7 @@ module.exports = {
     extend: {}
   },
   plugins: [
+    require('@tailwindcss/typography'),
     require('tailwindcss-themer')({
       defaultTheme: {
         extend: {
