@@ -34,6 +34,20 @@ _This is italic text_ that begins a paragraph
 > >
 > > > ...or with spaces between arrows.
 
+## Callouts
+
+<aside class="info">
+  I realize that using GitHub as my CMS is a little odd, but wonderful people
+  like you contribute improvements to my open source content all the time and I
+  appreciate that. So by keeping things in GitHub, that can continue. (Note the
+  edit link at the bottom of every post).
+</aside>
+
+## Tasklist
+
+- [ ] to do
+- [x] done
+
 ## Lists
 
 Unordered
@@ -57,8 +71,8 @@ Ordered
 
 Start numbering with offset:
 
-1. foo
-2. bar
+57. foo
+1. bar
 
 ## Code
 
