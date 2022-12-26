@@ -4,7 +4,7 @@ import remarkFrontmatter from 'remark-frontmatter'
 import remarkRehype from 'remark-rehype'
 import rehypeSanitize from 'rehype-sanitize'
 import matter, { GrayMatterFile } from 'gray-matter'
-import { HastTree } from './types'
+import { HastTree } from '../types'
 
 const processor = unified()
   .use(remarkParse)

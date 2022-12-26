@@ -1,14 +1,11 @@
-export type Serializable<T> = T extends
-  | string
-  | number
-  | boolean
-  | undefined
-  | null
+export type Serializable<T> = T extends string | number | boolean | null
   ? T
   : T extends Date
   ? string
   : unknown extends T
   ? unknown
+  : undefined extends T
+  ? never
   : // eslint-disable-next-line @typescript-eslint/ban-types
   T extends Function
   ? never
@@ -29,7 +26,6 @@ export const serialize = <T>(obj: T): Serializable<T> => {
     typeof obj === 'number' ||
     typeof obj === 'string' ||
     typeof obj === 'boolean' ||
-    obj === undefined ||
     obj === null
   ) {
     return obj as Serializable<T>
@@ -39,7 +35,8 @@ export const serialize = <T>(obj: T): Serializable<T> => {
     return obj.map(x => serialize(x)) as Serializable<T>
   } else if (typeof obj === 'object') {
     return Object.entries(obj).reduce(
-      (acc, [key, value]) => ({ ...acc, [key]: serialize(value) }),
+      (acc, [key, value]) =>
+        value === undefined ? acc : { ...acc, [key]: serialize(value) },
       {}
     ) as Serializable<T>
   } else {

@@ -2,7 +2,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import * as yup from 'yup'
 import { log } from 'lib/util'
-import { parseFrontMatter } from 'lib/util/parsing/server'
+import { parseFrontMatter, validateMarkdown } from 'lib/util/markdown/server'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
@@ -30,6 +30,7 @@ export interface PostMeta {
 export const getPost = async (slug: string): Promise<Post> => {
   try {
     const rawPostString = await getRawPostString(slug)
+    await validateMarkdown(rawPostString)
     return await convertRawStringToPost(rawPostString)
   } catch (e: unknown) {
     log.error(`Could not get post for ${slug}`, e)

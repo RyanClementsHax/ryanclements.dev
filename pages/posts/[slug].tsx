@@ -6,11 +6,11 @@ import {
 } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import { deserialize, Serializable, serialize } from 'lib/util'
-import { parseToHast } from 'lib/util/parsing/server'
+import { parseToHast } from 'lib/util/markdown/server'
 import { getAllPostSlugs, getPost, Post, PostMeta } from 'lib/content/posts'
 import Image from 'next/image'
 import { A11yStaticImageData, postsImageSrcMap } from 'lib/content'
-import { HastTree } from 'lib/util/parsing/types'
+import { HastTree } from 'lib/util/markdown/types'
 import { MetaCard } from 'components/pages/posts/[slug]/MetaCard'
 import { Content } from 'components/pages/posts/[slug]/Content'
 import { Layout } from 'components/pages/posts/[slug]/Layout'
@@ -49,14 +49,14 @@ export const getStaticProps: GetStaticProps<
   const renderablePost = await convertToRenderablePost(post)
   return {
     props: {
-      post: serializePost(renderablePost)
+      post: serialize(renderablePost)
     }
   }
 }
 
 const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
   function ({ post }) {
-    const { content, meta } = deserializePost(post)
+    const { content, meta } = deserialize<RenderablePost>(post)
 
     return (
       <Layout>
@@ -100,16 +100,4 @@ const convertToRenderablePost = async (
     ...post.meta,
     bannerSrc: postsImageSrcMap[post.meta.bannerSrc]
   }
-})
-
-const serializePost = (post: RenderablePost): Serializable<RenderablePost> => ({
-  ...post,
-  meta: serialize(post.meta)
-})
-
-const deserializePost = (
-  post: Serializable<RenderablePost>
-): RenderablePost => ({
-  ...post,
-  meta: deserialize<RenderablePostMeta>(post.meta)
 })

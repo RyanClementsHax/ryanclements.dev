@@ -18,7 +18,7 @@ export const Header: React.FC<HeaderProps> = ({
     <header
       ref={nodeRef}
       className={c(
-        'top-0 z-10 flex justify-end border-b bg-surface-base p-3 duration-500',
+        'top-0 z-10 flex justify-end border-b bg-surface-base p-3',
         isScrolledToTop
           ? 'border-transparent'
           : 'border-borderColor/75 bg-opacity-60 backdrop-blur-xl backdrop-filter',
