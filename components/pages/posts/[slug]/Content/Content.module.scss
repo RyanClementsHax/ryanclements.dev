@@ -1,0 +1,14 @@
+.content {
+  :not(pre) > code {
+    @apply rounded-md bg-surface-offBase text-on-surface-offBase;
+    // stole these numbers from how github styles inline code
+    @apply px-[0.4em] py-[0.2em] text-[85%];
+
+    // overriding default @tailwindcss/typography styles
+    // https://github.com/tailwindlabs/tailwindcss-typography/blob/5231af5bdd392404025330256f3797f8572d8067/src/styles.js#L1361
+    &::before,
+    &::after {
+      content: '';
+    }
+  }
+}
