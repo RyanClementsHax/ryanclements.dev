@@ -5,18 +5,30 @@ import { GithubIcon } from './GithubIcon'
 import { TwitterIcon } from './TwitterIcon'
 import { LinkedInIcon } from './LinkedInIcon'
 
-const { Base: GithubIconBase, DarkTheme: GithubIconDarkTheme } =
-  createDefaultStories(() => <GithubIcon className="text-on-surface-base" />)
+const { GithubIconBase, GithubIconDarkTheme } = createDefaultStories(
+  () => <GithubIcon className="text-on-surface-base" />,
+  {
+    prefix: 'GithubIcon'
+  }
+)
 
 export { GithubIconBase, GithubIconDarkTheme }
 
-const { Base: TwitterIconBase, DarkTheme: TwitterIconDarkTheme } =
-  createDefaultStories(() => <TwitterIcon className="text-on-surface-base" />)
+const { TwitterIconBase, TwitterIconDarkTheme } = createDefaultStories(
+  () => <TwitterIcon className="text-on-surface-base" />,
+  {
+    prefix: 'TwitterIcon'
+  }
+)
 
 export { TwitterIconBase, TwitterIconDarkTheme }
 
-const { Base: LinkedInIconBase, DarkTheme: LinkedInIconDarkTheme } =
-  createDefaultStories(() => <LinkedInIcon className="text-on-surface-base" />)
+const { LinkedInIconBase, LinkedInIconDarkTheme } = createDefaultStories(
+  () => <LinkedInIcon className="text-on-surface-base" />,
+  {
+    prefix: 'LinkedInIcon'
+  }
+)
 
 export { LinkedInIconBase, LinkedInIconDarkTheme }
 

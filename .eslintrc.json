@@ -39,7 +39,14 @@
         "plugin:jest/style",
         "plugin:jest-dom/recommended",
         "plugin:testing-library/react"
-      ]
+      ],
+      "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "jest/no-standalone-expect": [
+          "error",
+          { "additionalTestBlockFunctions": ["each.it"] }
+        ]
+      }
     }
   ]
 }

@@ -6,44 +6,47 @@ import { Proficiency, ProficiencyProps } from '.'
 
 const Template: StoryFn<ProficiencyProps> = props => <Proficiency {...props} />
 
-const Proficient = Template.bind({})
-Proficient.args = {
-  level: ProficiencyLevel.Proficient
-}
-const { Base: ProficientBase, DarkTheme: ProficientDarkTheme } =
-  createDefaultStories(Proficient)
+const { ProficientBase, ProficientDarkTheme } = createDefaultStories(Template, {
+  prefix: ProficiencyLevel.Proficient,
+  additionalArgs: {
+    level: ProficiencyLevel.Proficient
+  }
+})
 export { ProficientBase, ProficientDarkTheme }
 
-const Comfortable = Template.bind({})
-Comfortable.args = {
-  level: ProficiencyLevel.Comfortable
-}
-const { Base: ComfortableBase, DarkTheme: ComfortableDarkTheme } =
-  createDefaultStories(Comfortable)
+const { ComfortableBase, ComfortableDarkTheme } = createDefaultStories(
+  Template,
+  {
+    prefix: ProficiencyLevel.Comfortable,
+    additionalArgs: {
+      level: ProficiencyLevel.Comfortable
+    }
+  }
+)
 export { ComfortableBase, ComfortableDarkTheme }
 
-const Novice = Template.bind({})
-Novice.args = {
-  level: ProficiencyLevel.Novice
-}
-const { Base: NoviceBase, DarkTheme: NoviceDarkTheme } =
-  createDefaultStories(Novice)
+const { NoviceBase, NoviceDarkTheme } = createDefaultStories(Template, {
+  prefix: ProficiencyLevel.Novice,
+  additionalArgs: {
+    level: ProficiencyLevel.Novice
+  }
+})
 export { NoviceBase, NoviceDarkTheme }
 
-const Learning = Template.bind({})
-Learning.args = {
-  level: ProficiencyLevel.Learning
-}
-const { Base: LearningBase, DarkTheme: LearningDarkTheme } =
-  createDefaultStories(Learning)
+const { LearningBase, LearningDarkTheme } = createDefaultStories(Template, {
+  prefix: ProficiencyLevel.Learning,
+  additionalArgs: {
+    level: ProficiencyLevel.Learning
+  }
+})
 export { LearningBase, LearningDarkTheme }
 
-const Exploring = Template.bind({})
-Exploring.args = {
-  level: ProficiencyLevel.Exploring
-}
-const { Base: ExploringBase, DarkTheme: ExploringDarkTheme } =
-  createDefaultStories(Exploring)
+const { ExploringBase, ExploringDarkTheme } = createDefaultStories(Template, {
+  prefix: ProficiencyLevel.Exploring,
+  additionalArgs: {
+    level: ProficiencyLevel.Exploring
+  }
+})
 export { ExploringBase, ExploringDarkTheme }
 
 export default {

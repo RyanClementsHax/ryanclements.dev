@@ -1,6 +1,5 @@
 ---
 title: 'Post Design System for ryanclements.dev'
-publishedOn: '2022-01-01'
 bannerSrc: posts/post-design-system.jpg
 ---
 

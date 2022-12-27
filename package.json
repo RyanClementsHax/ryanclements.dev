@@ -95,6 +95,7 @@
     "jest-mock-extended": "^3.0.1",
     "jest-watch-typeahead": "^2.2.1",
     "jest-when": "^3.5.2",
+    "just-clone": "^6.2.0",
     "just-merge": "^3.1.1",
     "lint-staged": "^13.1.0",
     "next-router-mock": "^0.8.0",

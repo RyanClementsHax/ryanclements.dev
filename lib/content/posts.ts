@@ -23,7 +23,7 @@ export interface Post {
 
 export interface PostMeta {
   title: string
-  publishedOn: Date
+  publishedOn?: Date
   bannerSrc: string
 }
 
@@ -48,7 +48,7 @@ const convertRawStringToPost = async (rawString: string): Promise<Post> => ({
 
 const postMetaSchema = yup.object({
   title: yup.string().required(),
-  publishedOn: yup.date().required(),
+  publishedOn: yup.date(),
   bannerSrc: yup.string().required()
 })
 

@@ -2,13 +2,19 @@ import { format } from 'date-fns'
 
 export interface MetaCardProps {
   title: string
-  publishedOn: Date
+  publishedOn?: Date
 }
 
 export const MetaCard: React.FC<MetaCardProps> = ({ title, publishedOn }) => (
   <MetaContainer>
     <Title>{title}</Title>
-    <PublishedDate>{format(publishedOn, 'MMM Do, y')}</PublishedDate>
+    <PublishedDate>
+      {publishedOn ? (
+        format(publishedOn, 'MMM Do, y')
+      ) : (
+        <span className="italic">Draft</span>
+      )}
+    </PublishedDate>
   </MetaContainer>
 )
 
