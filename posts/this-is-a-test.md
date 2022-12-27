@@ -45,8 +45,8 @@ _This is italic text_ that begins a paragraph
 
 ## Tasklist
 
-- [ ] to do
-- [x] done
+- [ ] To do
+- [x] Done
 
 ## Lists
 

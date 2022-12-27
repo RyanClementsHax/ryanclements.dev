@@ -1,4 +1,4 @@
-import { Theme } from './types'
+import { ContentMeta, Theme, themeToContentMetaMap } from './types'
 
 export const getInitialTheme = (): string => {
   const persistedThemePreference = localStorage.getItem('themePreference')
@@ -17,7 +17,9 @@ export const getInitialTheme = (): string => {
 }
 
 export const setInitialTheme = (): void => {
-  document.documentElement.classList.add(getInitialTheme())
+  const theme = getInitialTheme()
+  document.documentElement.classList.add(theme)
+  updateContentMeta(theme as Theme)
 }
 
 export const getCurrentTheme = (): Theme =>
@@ -34,5 +36,17 @@ export const updateTheme = (newTheme: Theme): void => {
 
 export const updateAndPersistTheme = (newTheme: Theme): void => {
   updateTheme(newTheme)
+  updateContentMeta(newTheme)
   localStorage.setItem('themePreference', newTheme)
 }
+
+// need to curry so this works well when stringified
+export const createUpdateContentMeta =
+  (themeToContentMetaMap: Record<Theme, ContentMeta>) =>
+  (theme: Theme): void => {
+    document
+      .querySelector('meta[name="color-scheme"]')
+      ?.setAttribute('content', themeToContentMetaMap[theme])
+  }
+
+const updateContentMeta = createUpdateContentMeta(themeToContentMetaMap)
