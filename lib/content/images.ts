@@ -3,7 +3,7 @@ import { StaticImageData } from 'next/image'
 import heroBannerLight from 'public/office-light.svg'
 import heroBannerDark from 'public/office-dark.svg'
 import qualitiesPicture from 'public/qualities-picture.jpg'
-import thisIsATest from 'public/posts/this-is-a-test.jpg'
+import postDesignSystem from 'public/posts/post-design-system.jpg'
 
 export interface A11yStaticImageData extends StaticImageData {
   alt: string
@@ -26,8 +26,8 @@ export const qualitiesImageData: A11yStaticImageData = {
 }
 
 export const postsImageSrcMap: Record<string, A11yStaticImageData> = {
-  'posts/this-is-a-test.jpg': {
-    ...thisIsATest,
+  'posts/post-design-system.jpg': {
+    ...postDesignSystem,
     alt: 'Tomatoes'
   }
 }

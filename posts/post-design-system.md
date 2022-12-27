@@ -1,7 +1,7 @@
 ---
-title: 'This is a test'
+title: 'Post Design System for ryanclements.dev'
 publishedOn: '2022-01-01'
-bannerSrc: posts/this-is-a-test.jpg
+bannerSrc: posts/post-design-system.jpg
 ---
 
 <!-- markdownlint-disable MD029 -->
