@@ -79,6 +79,7 @@ const Banner: React.FC<{ src: A11yStaticImageData }> = ({
     alt={alt}
     sizes="100vw"
     placeholder="blur"
+    priority
     className="relative -z-10 mx-auto aspect-[5/1] max-h-[20rem] w-full max-w-[100rem] object-cover"
   />
 )
