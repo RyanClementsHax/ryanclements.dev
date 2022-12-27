@@ -1,25 +1,33 @@
-import { ContentMeta, Theme, themeToContentMetaMap } from './types'
+import { Theme, themeToContentMetaMap } from './types'
 
-export const getInitialTheme = (): string => {
-  const persistedThemePreference = localStorage.getItem('themePreference')
-  const hasPersistedPreference = typeof persistedThemePreference === 'string'
-  if (hasPersistedPreference) {
-    return persistedThemePreference
+const _Theme = Theme
+const _themeToContentMetaMap = themeToContentMetaMap
+
+export const initTheme = (
+  Theme: typeof _Theme,
+  themeToContentMetaMap: typeof _themeToContentMetaMap
+): void => {
+  const getInitialTheme = (): Theme => {
+    const persistedThemePreference = localStorage.getItem('themePreference')
+    const hasPersistedPreference = typeof persistedThemePreference === 'string'
+    if (hasPersistedPreference) {
+      return persistedThemePreference as Theme
+    }
+
+    const mql = matchMedia('(prefers-color-scheme: dark)')
+    const hasMediaQueryPreference = typeof mql.matches === 'boolean'
+    if (hasMediaQueryPreference) {
+      return mql.matches ? Theme.dark : Theme.light
+    }
+
+    return Theme.light
   }
-
-  const mql = matchMedia('(prefers-color-scheme: dark)')
-  const hasMediaQueryPreference = typeof mql.matches === 'boolean'
-  if (hasMediaQueryPreference) {
-    return mql.matches ? 'dark' : 'light'
-  }
-
-  return 'light'
-}
-
-export const setInitialTheme = (): void => {
   const theme = getInitialTheme()
   document.documentElement.classList.add(theme)
-  updateContentMeta(theme as Theme)
+
+  document
+    .querySelector('meta[name="color-scheme"]')
+    ?.setAttribute('content', themeToContentMetaMap[theme])
 }
 
 export const getCurrentTheme = (): Theme =>
@@ -40,13 +48,8 @@ export const updateAndPersistTheme = (newTheme: Theme): void => {
   localStorage.setItem('themePreference', newTheme)
 }
 
-// need to curry so this works well when stringified
-export const createUpdateContentMeta =
-  (themeToContentMetaMap: Record<Theme, ContentMeta>) =>
-  (theme: Theme): void => {
-    document
-      .querySelector('meta[name="color-scheme"]')
-      ?.setAttribute('content', themeToContentMetaMap[theme])
-  }
-
-const updateContentMeta = createUpdateContentMeta(themeToContentMetaMap)
+const updateContentMeta = (theme: Theme): void => {
+  document
+    .querySelector('meta[name="color-scheme"]')
+    ?.setAttribute('content', themeToContentMetaMap[theme])
+}

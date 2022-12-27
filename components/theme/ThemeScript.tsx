@@ -1,17 +1,18 @@
-import { themeToContentMetaMap } from './types'
-import {
-  setInitialTheme,
-  getInitialTheme,
-  createUpdateContentMeta
-} from './utils'
+import { Theme, themeToContentMetaMap } from './types'
+import { initTheme } from './utils'
 
-export const ThemeScript: React.FC = () => {
-  const themeToContentMetaMapAsString = JSON.stringify(themeToContentMetaMap)
-  const getInitialThemeAsString = String(getInitialTheme)
-  const setInitialThemeAsString = String(setInitialTheme)
-  const createUpdateContentMetaAsString = String(createUpdateContentMeta)
-  const themeSetupScript = `(function() {const getInitialTheme = ${getInitialThemeAsString}; const updateContentMeta = (${createUpdateContentMetaAsString})(${themeToContentMetaMapAsString}); (${setInitialThemeAsString})();})()`
-  // I would love to use next/script, but it doesn't work for beforeInteractive scripts https://github.com/vercel/next.js/issues/26343
-  // eslint-disable-next-line react/no-danger
-  return <script dangerouslySetInnerHTML={{ __html: themeSetupScript }} />
-}
+// I would love to use next/script, but it doesn't block rendering which this needs https://nextjs.org/docs/api-reference/next/script#beforeinteractive
+export const ThemeScript: React.FC = () => (
+  <script
+    // eslint-disable-next-line react/no-danger
+    dangerouslySetInnerHTML={{
+      __html: stringifyFunctionCall(initTheme, Theme, themeToContentMetaMap)
+    }}
+  />
+)
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const stringifyFunctionCall = <T extends (...params: any) => unknown>(
+  func: T,
+  ...params: Parameters<T>
+) => `(${func})(${params.map((x: unknown) => JSON.stringify(x)).join(',')})`

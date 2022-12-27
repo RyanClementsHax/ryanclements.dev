@@ -1,11 +1,6 @@
-import { themeToContentMetaMap } from './types'
-import unique from 'just-unique'
-
 // https://web.dev/color-scheme/
 
+// This will be updated by ThemeScript
 export const ThemeMeta: React.FC = () => (
-  <meta
-    name="color-scheme"
-    content={unique(Object.values(themeToContentMetaMap)).join(' ')}
-  />
+  <meta name="color-scheme" content="normal" />
 )

@@ -18,7 +18,10 @@ export const Header: React.FC<HeaderProps> = ({
     <header
       ref={nodeRef}
       className={c(
-        'top-0 z-10 flex justify-end border-b bg-surface-base p-3',
+        // some elements in the header might not render on first paint
+        // which is why I specify a min height to prevent layout shift
+        // min height needs to be tuned with the hight of what renders
+        'top-0 z-10 flex min-h-[63px] justify-end border-b bg-surface-base p-3',
         isScrolledToTop
           ? 'border-transparent'
           : 'border-borderColor/75 bg-opacity-60 backdrop-blur-xl backdrop-filter',
