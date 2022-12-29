@@ -1,6 +1,7 @@
 ---
 title: 'Post Design System for ryanclements.dev'
-bannerSrc: posts/post-design-system.jpg
+publishedOn: '12/29/2022'
+bannerSrc: posts/post-design-system/banner.jpg
 ---
 
 <!-- markdownlint-disable MD029 -->
@@ -119,8 +120,15 @@ Autoconverted link <https://github.com/nodeca/pica>
 
 ## Images
 
-![Minion](https://octodex.github.com/images/minion.png)
-![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg 'The Stormtroopocat')
+### Normal
+
+![Minion](/posts/post-design-system/minion.png)
+
+### With title
+
+![Stormtroopocat](/posts/post-design-system/stormtroopocat.jpg 'The Stormtroopocat')
+
+### With image path as footnote
 
 Like links, Images also have a footnote style syntax
 
@@ -128,4 +136,4 @@ Like links, Images also have a footnote style syntax
 
 With a reference later in the document defining the URL location:
 
-[id]: https://octodex.github.com/images/dojocat.jpg 'The Dojocat'
+[id]: /posts/post-design-system/dojocat.jpg 'The Dojocat'
