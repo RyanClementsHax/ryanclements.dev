@@ -1,7 +1,7 @@
 ---
 title: 'Post Design System for ryanclements.dev'
 publishedOn: '12/29/2022'
-bannerSrc: posts/post-design-system/banner.jpg
+bannerAlt: 'tomatoes'
 ---
 
 <!-- markdownlint-disable MD029 -->
@@ -122,11 +122,11 @@ Autoconverted link <https://github.com/nodeca/pica>
 
 ### Normal
 
-![Minion](/posts/post-design-system/minion.png)
+![Minion](minion.png)
 
 ### With title
 
-![Stormtroopocat](/posts/post-design-system/stormtroopocat.jpg 'The Stormtroopocat')
+![Stormtroopocat](stormtroopocat.jpg 'The Stormtroopocat')
 
 ### With image path as footnote
 
@@ -136,4 +136,4 @@ Like links, Images also have a footnote style syntax
 
 With a reference later in the document defining the URL location:
 
-[id]: /posts/post-design-system/dojocat.jpg 'The Dojocat'
+[id]: dojocat.jpg 'The Dojocat'

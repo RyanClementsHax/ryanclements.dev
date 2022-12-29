@@ -17,6 +17,7 @@ export interface PostMeta {
   title: string
   publishedOn?: Date
   bannerSrc: string
+  bannerAlt: string
 }
 
 export const getAllPostSlugs = async (): Promise<string[]> =>
@@ -54,20 +55,21 @@ const convertRawStringToPost = async (
   slug: string,
   rawString: string
 ): Promise<Post> => ({
-  meta: {
-    slug,
-    ...(await getMetaFromRawString(rawString))
-  },
+  meta: await getMetaFromRawString(slug, rawString),
   content: rawString
 })
 
 const postMetaSchema = yup.object({
   title: yup.string().required(),
   publishedOn: yup.date(),
-  bannerSrc: yup.string().required()
+  bannerSrc: yup.string().required(),
+  bannerAlt: yup.string().required()
 })
 
-const getMetaFromRawString = async (rawString: string) => {
-  const frontMatter = parseFrontMatter(rawString)
-  return await postMetaSchema.validate(frontMatter)
+const getMetaFromRawString = async (slug: string, rawString: string) => {
+  const frontMatter = await parseFrontMatter(slug, rawString)
+  return {
+    slug,
+    ...(await postMetaSchema.validate(frontMatter))
+  }
 }

@@ -3,7 +3,6 @@ import { StaticImageData } from 'next/image'
 import heroBannerLight from 'public/office-light.svg'
 import heroBannerDark from 'public/office-dark.svg'
 import qualitiesPicture from 'public/qualities-picture.jpg'
-import postDesignSystem from 'public/posts/post-design-system/banner.jpg'
 
 export interface A11yStaticImageData extends StaticImageData {
   alt: string
@@ -23,11 +22,4 @@ export const heroBannerSrcMap: Record<Theme, A11yStaticImageData> = {
 export const qualitiesImageData: A11yStaticImageData = {
   ...qualitiesPicture,
   alt: 'Me and my daughter coding'
-}
-
-export const postsImageSrcMap: Record<string, A11yStaticImageData> = {
-  'posts/post-design-system/banner.jpg': {
-    ...postDesignSystem,
-    alt: 'Tomatoes'
-  }
 }

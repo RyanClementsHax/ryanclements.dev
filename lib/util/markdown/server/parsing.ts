@@ -1,35 +1,67 @@
-import { Plugin, unified } from 'unified'
+import { CompilerFunction, Plugin, Preset, unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkRehype from 'remark-rehype'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
-import matter, { GrayMatterFile } from 'gray-matter'
 import { HastElement, HastTree } from '../types'
 import { Schema } from 'hast-util-sanitize'
 import deepmerge from '@fastify/deepmerge'
 import { visit } from 'unist-util-visit'
 import { pointStart } from 'unist-util-position'
-import { stat } from 'fs/promises'
 import path from 'path'
-import { getPlaiceholder } from 'plaiceholder'
+import { YAML } from 'mdast'
+import { parse } from 'yaml'
+import { VFile } from 'vfile'
+import { Node } from 'unist'
+import { ImageManager, imageManager } from 'lib/util/images'
 
-export const parseToHast = async (rawString: string): Promise<HastTree> =>
-  await processor.run(processor.parse(rawString))
-
-export const parseFrontMatter = (
+export const parseToHast = async (
+  slug: string,
   rawString: string
-): GrayMatterFile<string>['data'] => matter(rawString).data
+): Promise<HastTree> => {
+  const vfile = new VFile({
+    stem: slug,
+    value: rawString
+  })
+  return await processor.run(processor.parse(vfile), vfile)
+}
 
-const rehypeOptimizeImages: Plugin<[{ rootDir: string }]> = options => {
-  if (!options?.rootDir) {
-    throw new Error(
-      'No root dir specified for rehype image optimization plugin'
-    )
+export const parseFrontMatter = async (
+  slug: string,
+  rawString: string
+): Promise<Record<string, unknown>> => {
+  const vfile = new VFile({
+    stem: slug,
+    value: rawString
+  })
+  const { result } = await unified()
+    .use(remarkParse)
+    .use(frontMatterProcessor)
+    .use(frontMatterCompiler)
+    .process(vfile)
+  return result as Record<string, unknown>
+}
+
+const frontMatterCompiler: Plugin<
+  [],
+  Node,
+  Record<string, unknown>
+> = function () {
+  const compile: CompilerFunction<Node, Record<string, unknown>> = function (
+    _,
+    file
+  ) {
+    return file.data.frontMatter as Record<string, unknown>
   }
-  const imageManager = new ImageManager(options.rootDir)
-  return async (tree, file) => {
+
+  Object.assign(this, { Compiler: compile })
+}
+
+const rehypeOptimizeImages: Plugin<[{ rootDir: string }]> =
+  ({ rootDir }) =>
+  async (tree, file) => {
     const imageOptimizationJobs: Promise<void>[] = []
     const optimizeImage = async (
       node: HastElement,
@@ -38,19 +70,25 @@ const rehypeOptimizeImages: Plugin<[{ rootDir: string }]> = options => {
     ) => {
       if (!(await imageManager.exists(src))) {
         file.fail(
-          `The src "${src}" does not exist as a file within root dir "${options.rootDir}"`,
+          `The src "${src}" does not exist as a file within root dir "${rootDir}"`,
           pointStart(node)
         )
         return
       }
+      const { blurDataURL, ...props } =
+        await imageManager.getOptimizedImageProperties(src)
       node.properties = {
         ...node.properties,
-        ...(await imageManager.getOptimizedImageProperties(src))
+        ...props,
+        'data-blurdataurl': blurDataURL
       }
     }
     visit(tree, { type: 'element', tagName: 'img' }, (node: HastElement) => {
       if (!node.properties?.src || typeof node.properties.src !== 'string') {
-        file.fail('All images need a src property', pointStart(node))
+        file.fail(
+          'All images need a src property of type string',
+          pointStart(node)
+        )
         return
       }
       imageOptimizationJobs.push(
@@ -59,48 +97,121 @@ const rehypeOptimizeImages: Plugin<[{ rootDir: string }]> = options => {
     })
     await Promise.all(imageOptimizationJobs)
   }
-}
 
-class ImageManager {
-  constructor(private rootDir: string) {}
+const remarkParseFrontmatter: Plugin = () => async (tree, file) => {
+  let yamlNode: YAML | undefined
 
-  public async exists(src: string) {
-    return await stat(this.getFullPath(src))
-      .then(() => true)
-      .catch(() => false)
-  }
-
-  public async getOptimizedImageProperties(src: string) {
-    const { base64, img } = await getPlaiceholder(src, {
-      dir: this.rootDir,
-      removeAlpha: false
-    })
-    return {
-      ...img,
-      'data-blurdataurl': base64
+  visit(tree, 'yaml', (node: YAML) => {
+    if (yamlNode) {
+      file.fail(
+        'Cannot have multiple yaml nodes in one markdown file',
+        pointStart(node)
+      )
+      return
+    } else {
+      yamlNode = node
     }
-  }
+  })
 
-  private getFullPath(src: string) {
-    return path.join(this.rootDir, src)
-  }
+  file.data.frontMatter = yamlNode ? parse(yamlNode.value) : {}
 }
 
-const rehypeImageTransform: Plugin = function () {
-  this.use(rehypeOptimizeImages, { rootDir: 'public' })
+const frontMatterAddBannerSrc: Plugin<
+  [{ postsDir: string; bannerFileName: string }]
+> =
+  ({ postsDir, bannerFileName }) =>
+  async (_, file) => {
+    if (!file.stem) {
+      file.fail(
+        'In order for a banner src to be automatically added, the file slug must be included with the content'
+      )
+      return
+    }
+    if (!file.data.frontMatter) {
+      file.fail(
+        'Must include the banner src plugin after the front matter parsing plugin'
+      )
+      return
+    }
+    const frontMatter = file.data.frontMatter as Record<string, unknown>
+    frontMatter.bannerSrc = path.join(postsDir, file.stem, bannerFileName)
+  }
+
+const frontMatterOptimizeBannerSrc: Plugin<[{ rootDir: string }]> =
+  ({ rootDir }) =>
+  async (_, file) => {
+    const frontMatter = file.data.frontMatter as
+      | Record<string, unknown>
+      | undefined
+    if (!frontMatter?.bannerSrc) {
+      file.fail(
+        'Must include the banner src optimization plugin after the banner src plugin'
+      )
+      return
+    }
+    const bannerSrc = frontMatter.bannerSrc
+    if (typeof bannerSrc !== 'string') {
+      file.fail('bannerSrc must be a string in order for it to be optimized')
+      return
+    }
+    if (!(await imageManager.exists(bannerSrc))) {
+      file.fail(
+        `The bannerSrc "${bannerSrc}" does not exist as a file within root dir "${rootDir}"`
+      )
+    }
+    frontMatter.bannerSrc = await imageManager.getOptimizedImageProperties(
+      bannerSrc
+    )
+  }
+
+const rehypeRewriteImageSrcs: Plugin<[{ postsDir: string }]> =
+  ({ postsDir }) =>
+  async (tree, file) => {
+    visit(tree, { type: 'element', tagName: 'img' }, (node: HastElement) => {
+      if (!file.stem) {
+        file.fail(
+          'In order for image paths to be rewritten properly, the file slug must be included with the content'
+        )
+        return
+      }
+      if (!node.properties?.src || typeof node.properties.src !== 'string') {
+        file.fail(
+          'All images need a src property of type string',
+          pointStart(node)
+        )
+        return
+      }
+      node.properties.src = path.join(postsDir, file.stem, node.properties.src)
+    })
+  }
+
+const frontMatterProcessor: Preset = {
+  plugins: [
+    [remarkFrontmatter],
+    [remarkParseFrontmatter],
+    [
+      frontMatterAddBannerSrc,
+      {
+        postsDir: 'posts',
+        bannerFileName: 'banner.jpg'
+      }
+    ]
+  ]
 }
 
 const processor = unified()
   .use(remarkParse)
-  .use(remarkFrontmatter)
+  .use(frontMatterProcessor)
   .use(remarkGfm)
   .use(remarkRehype, { allowDangerousHtml: true })
   .use(rehypeRaw)
-  .use(rehypeImageTransform)
+  .use(frontMatterOptimizeBannerSrc, { rootDir: 'public' })
+  .use(rehypeRewriteImageSrcs, { postsDir: 'posts' })
+  .use(rehypeOptimizeImages, { rootDir: 'public' })
   .use(
     rehypeSanitize,
     deepmerge()<Schema, Schema>(defaultSchema, {
       tagNames: ['aside'],
-      attributes: { '*': ['className'] }
+      attributes: { '*': ['className'], img: ['data-blurdataurl'] }
     })
   )

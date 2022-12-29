@@ -8,12 +8,12 @@ import { ParsedUrlQuery } from 'querystring'
 import { deserialize, Serializable, serialize } from 'lib/util'
 import { parseToHast } from 'lib/util/markdown/server'
 import { getAllPostSlugs, getPost, Post, PostMeta } from 'lib/content/posts'
-import Image from 'next/image'
-import { A11yStaticImageData, postsImageSrcMap } from 'lib/content'
+import Image, { StaticImageData } from 'next/image'
 import { HastTree } from 'lib/util/markdown/types'
 import { MetaCard } from 'components/pages/posts/[slug]/MetaCard'
 import { Content } from 'components/pages/posts/[slug]/Content'
 import { Layout } from 'components/pages/posts/[slug]/Layout'
+import { imageManager } from 'lib/util/images'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string
@@ -33,7 +33,7 @@ interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
 }
 
 interface RenderablePostMeta extends Omit<PostMeta, 'bannerSrc'> {
-  bannerSrc: A11yStaticImageData
+  bannerSrc: StaticImageData
 }
 
 interface PostPageProps {
@@ -60,7 +60,7 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
 
     return (
       <Layout>
-        <Banner src={meta.bannerSrc} />
+        <Banner alt={meta.bannerAlt} src={meta.bannerSrc} />
         <ContentContainer>
           <MetaCard title={meta.title} publishedOn={meta.publishedOn} />
           <Content root={content} />
@@ -71,11 +71,12 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
 
 export default PostPage
 
-const Banner: React.FC<{ src: A11yStaticImageData }> = ({
-  src: { alt, ...bannerSrc }
+const Banner: React.FC<{ src: StaticImageData; alt: string }> = ({
+  alt,
+  src
 }) => (
   <Image
-    src={bannerSrc}
+    src={src}
     alt={alt}
     sizes="100vw"
     placeholder="blur"
@@ -96,9 +97,11 @@ const convertToRenderablePost = async (
   post: Post
 ): Promise<RenderablePost> => ({
   ...post,
-  content: await parseToHast(post.content),
+  content: await parseToHast(post.meta.slug, post.content),
   meta: {
     ...post.meta,
-    bannerSrc: postsImageSrcMap[post.meta.bannerSrc]
+    bannerSrc: await imageManager.getOptimizedImageProperties(
+      post.meta.bannerSrc
+    )
   }
 })
