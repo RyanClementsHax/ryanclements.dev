@@ -28,7 +28,7 @@ const ContentImage: React.FC<
       blurDataURL={blurDataURL}
       // md breakpoint
       sizes="(max-width: 768px) 100vw, 768px"
-      className="object-cover"
+      className="w-full rounded-lg object-cover shadow-md"
     />
     // <figcaption>{alt}</figcaption>
     // </figure>

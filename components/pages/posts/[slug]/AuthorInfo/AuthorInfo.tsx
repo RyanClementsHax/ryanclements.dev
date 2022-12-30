@@ -24,7 +24,14 @@ const AuthorInfoContainer: React.FC<{ children?: React.ReactNode }> = ({
 const Avatar: React.FC<{ src: A11yStaticImageData }> = ({
   src: { alt, ...src }
 }) => (
-  <Image className="rounded-full" height={64} width={64} src={src} alt={alt} />
+  <Image
+    className="rounded-full"
+    height={64}
+    width={64}
+    sizes="64px"
+    src={src}
+    alt={alt}
+  />
 )
 
 const SocialLinks: React.FC<{ socialAccounts: SocialAccount[] }> = ({

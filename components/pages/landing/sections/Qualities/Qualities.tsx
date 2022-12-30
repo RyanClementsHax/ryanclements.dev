@@ -62,10 +62,10 @@ const Graphic = ({
 }) => (
   <Image
     src={imageData}
+    alt={alt}
     placeholder="blur"
     // md breakpoint
     sizes="(max-width: 768px) 100vw, 50vw"
-    alt={alt}
-    className="w-full overflow-hidden rounded-xl object-cover object-center shadow-md"
+    className="w-full rounded-xl object-cover shadow-md"
   />
 )
