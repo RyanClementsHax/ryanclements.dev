@@ -8,12 +8,13 @@ import { ParsedUrlQuery } from 'querystring'
 import { deserialize, Serializable, serialize } from 'lib/util'
 import { parseToHast } from 'lib/util/markdown/server'
 import { getAllPostSlugs, getPost, Post, PostMeta } from 'lib/content/posts'
-import Image, { StaticImageData } from 'next/image'
+import Image from 'next/image'
 import { HastTree } from 'lib/util/markdown/types'
 import { MetaCard } from 'components/pages/posts/[slug]/MetaCard'
 import { Content } from 'components/pages/posts/[slug]/Content'
 import { Layout } from 'components/pages/posts/[slug]/Layout'
-import { imageManager } from 'lib/util/images'
+import { imageService } from 'lib/util/images'
+import { A11yStaticImageData } from 'lib/content'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string
@@ -32,8 +33,8 @@ interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
   meta: RenderablePostMeta
 }
 
-interface RenderablePostMeta extends Omit<PostMeta, 'bannerSrc'> {
-  bannerSrc: StaticImageData
+interface RenderablePostMeta extends Omit<PostMeta, 'bannerSrc' | 'bannerAlt'> {
+  bannerSrc: A11yStaticImageData
 }
 
 interface PostPageProps {
@@ -60,7 +61,7 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
 
     return (
       <Layout>
-        <Banner alt={meta.bannerAlt} src={meta.bannerSrc} />
+        <Banner src={meta.bannerSrc} />
         <ContentContainer>
           <MetaCard title={meta.title} publishedOn={meta.publishedOn} />
           <Content root={content} />
@@ -71,9 +72,8 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
 
 export default PostPage
 
-const Banner: React.FC<{ src: StaticImageData; alt: string }> = ({
-  alt,
-  src
+const Banner: React.FC<{ src: A11yStaticImageData }> = ({
+  src: { alt, ...src }
 }) => (
   <Image
     src={src}
@@ -93,15 +93,20 @@ const ContentContainer: React.FC<{ children?: React.ReactNode }> = ({
   </div>
 )
 
-const convertToRenderablePost = async (
-  post: Post
-): Promise<RenderablePost> => ({
-  ...post,
-  content: await parseToHast(post.meta.slug, post.content),
-  meta: {
-    ...post.meta,
-    bannerSrc: await imageManager.getOptimizedImageProperties(
-      post.meta.bannerSrc
-    )
+const convertToRenderablePost = async (post: Post): Promise<RenderablePost> => {
+  const { bannerAlt, ...meta } = post.meta
+  const imgProps = await imageService.getOptimizedImageProperties(
+    post.meta.bannerSrc
+  )
+  return {
+    ...post,
+    content: await parseToHast(post.meta.slug, post.content),
+    meta: {
+      ...meta,
+      bannerSrc: {
+        ...imgProps,
+        alt: bannerAlt
+      }
+    }
   }
-})
+}

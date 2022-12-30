@@ -10,8 +10,14 @@ export interface OptimizedImageProps {
   type?: string
 }
 
-export class ImageManager {
-  constructor(private rootDir: string) {}
+export interface ImageServiceConfig {
+  readonly rootDir: string
+  readonly postsDir: string
+  readonly postBannerFileName: string
+}
+
+export class ImageService {
+  constructor(readonly config: ImageServiceConfig) {}
 
   public async exists(src: string): Promise<boolean> {
     return await stat(this.getFullPath(src))
@@ -23,7 +29,7 @@ export class ImageManager {
     src: string
   ): Promise<OptimizedImageProps> {
     const { base64, img } = await getPlaiceholder(this.asAbsolutePath(src), {
-      dir: this.rootDir,
+      dir: this.config.rootDir,
       removeAlpha: false
     })
     return {
@@ -32,13 +38,25 @@ export class ImageManager {
     }
   }
 
+  public getPostBannerFilePath(slug: string): string {
+    return path.join(this.config.postsDir, slug, this.config.postBannerFileName)
+  }
+
+  public rewriteSrcForPost(src: string, slug: string): string {
+    return path.join(this.config.postsDir, slug, src)
+  }
+
   private asAbsolutePath(src: string) {
     return path.join('/', src)
   }
 
   private getFullPath(src: string) {
-    return path.join(this.rootDir, src)
+    return path.join(this.config.rootDir, src)
   }
 }
 
-export const imageManager = new ImageManager('public')
+export const imageService = new ImageService({
+  rootDir: 'public',
+  postsDir: 'posts',
+  postBannerFileName: 'banner.jpg'
+})

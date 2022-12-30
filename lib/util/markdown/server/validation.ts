@@ -1,4 +1,4 @@
-import { unified, Preset } from 'unified'
+import { unified } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkStringify from 'remark-stringify'
 import { lintRule } from 'unified-lint-rule'
@@ -7,6 +7,7 @@ import { reporter } from 'vfile-reporter'
 import { pointStart } from 'unist-util-position'
 import remarkLint from 'remark-lint'
 import { Heading } from 'mdast'
+import { PresetBuilder } from './presetBuilder'
 
 /**
  * To make rules disable-able, you need to name them with the source 'remark-lint'
@@ -42,12 +43,10 @@ const remarkLintNoDeeperThanH3 = lintRule(
 // https://github.com/remarkjs/remark-lint
 // example preset
 // https://github.com/remarkjs/remark-lint/blob/cabbe86d1bd12ab5120196474ff08731644142d3/packages/remark-preset-lint-consistent/index.js
-const postQualityPreset: Preset = {
-  plugins: [
-    [remarkLintNoH1, ['error']],
-    [remarkLintNoDeeperThanH3, ['error']]
-  ]
-}
+const postQualityPreset = new PresetBuilder()
+  .use(remarkLintNoH1, ['error'])
+  .use(remarkLintNoDeeperThanH3, ['error'])
+  .build()
 
 const validator = unified()
   .use(remarkParse)
