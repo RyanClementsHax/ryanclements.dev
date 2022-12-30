@@ -67,3 +67,68 @@ export const useReactFromHast = (root: Root): React.ReactNode =>
       unified().use(rehypeReact, { createElement, Fragment }).stringify(root),
     [root]
   );
+
+const hastThatWorks: Root = {
+  type: "root",
+  children: [
+    {
+      type: "element",
+      tagName: "figure",
+      properties: {},
+      children: [
+        {
+          type: "element",
+          tagName: "img",
+          properties: { src: "/minion.png", alt: "Minion" },
+          children: [],
+          position: {
+            start: { line: 3, column: 1, offset: 8 },
+            end: { line: 3, column: 23, offset: 30 },
+          },
+        },
+      ],
+    },
+  ],
+  position: {
+    start: { line: 1, column: 1, offset: 0 },
+    end: { line: 4, column: 1, offset: 31 },
+  },
+};
+
+const hastThatDoesntWork: Root = {
+  type: "root",
+  children: [
+    {
+      type: "element",
+      tagName: "p",
+      properties: {},
+      children: [
+        {
+          type: "element",
+          tagName: "figure",
+          properties: {},
+          children: [
+            {
+              type: "element",
+              tagName: "img",
+              properties: { src: "/minion.png", alt: "Minion" },
+              children: [],
+              position: {
+                start: { line: 3, column: 1, offset: 8 },
+                end: { line: 3, column: 23, offset: 30 },
+              },
+            },
+          ],
+        },
+      ],
+      position: {
+        start: { line: 3, column: 1, offset: 8 },
+        end: { line: 3, column: 23, offset: 30 },
+      },
+    },
+  ],
+  position: {
+    start: { line: 1, column: 1, offset: 0 },
+    end: { line: 4, column: 1, offset: 31 },
+  },
+};
