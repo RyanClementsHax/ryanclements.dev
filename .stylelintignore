@@ -1,9 +1,0 @@
-node_modules
-.next
-out
-yarn.lock
-package-lock.json
-public
-next-env.d.ts
-storybook-static
-!.storybook

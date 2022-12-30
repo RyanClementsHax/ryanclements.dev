@@ -1,56 +1,69 @@
-import Head from 'next/head'
-import { Hero } from 'components/pages/landing/sections/Hero'
-import { Qualities } from 'components/pages/landing/sections/Qualities'
-import { Skills } from 'components/pages/landing/sections/Skills'
-import {
-  skillGroups,
-  projects,
-  qualities,
-  heroBannerSrcMap,
-  qualitiesImageData
-} from 'lib/content'
-import { Projects } from 'components/pages/landing/sections/Projects'
-import { Layout } from 'components/pages/landing/Layout'
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
+import fs from "fs/promises";
+import path from "path";
+import { createElement, Fragment, useMemo } from "react";
+import rehypeReact from "rehype-react";
+import { unified } from "unified";
 
-const Index: React.FC = () => (
-  <Layout>
-    <Head>
-      <title>Ryan Clements</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-    <Hero
-      title={
-        <>
-          {'Hiya! 👋'}
-          <br />
-          {"I'm Ryan Clements"}
-        </>
-      }
-      subtitle={
-        <>
-          I 💖 God, my wife and daughter&nbsp;👨‍👩‍👧, and making dope
-          software&nbsp;👨‍💻
-        </>
-      }
-      bannerSrcMap={heroBannerSrcMap}
-    />
-    <Qualities
-      title="A new kind of engineer"
-      subtitle="New problems need new solutions. Here's the energy I bring to the table."
-      graphicSrc={qualitiesImageData}
-      qualities={qualities}
-    />
-    <Skills
-      title="A lifelong learner"
-      subtitle="Here is the tech I know and love"
-      groups={skillGroups}
-    />
-    <Projects
-      title="One Giant Nerd"
-      subtitle="I love what I do. Here are some projects I like to work on."
-      projects={projects}
-    />
-  </Layout>
-)
+import { Plugin } from "unified";
+import { Node } from "unist";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { Root } from "hast";
+import { visit } from "unist-util-visit";
+import { Element } from "hast";
 
-export default Index
+export const parseToHast = async (rawString: string): Promise<Root> =>
+  (await contentProcessor.process(rawString)).result.tree;
+
+const rehypeImageToFigure: Plugin = () => async (tree) => {
+  visit(
+    tree,
+    { type: "element", tagName: "img" },
+    (node: Element, index: number, parent: Element) => {
+      parent.children[index] = {
+        type: "element",
+        tagName: "figure", // change this to 'picture' and its fine
+        properties: {},
+        children: [node],
+      };
+    }
+  );
+};
+
+const contentProcessor = unified()
+  .use(remarkParse)
+  .use(remarkRehype)
+  .use(rehypeImageToFigure)
+  .use(function () {
+    this.Compiler = (tree) => ({ tree });
+  } as Plugin<[], Node, { tree: Root }>);
+
+interface PostPageProps {
+  root: Root;
+}
+
+export const getStaticProps: GetStaticProps<PostPageProps> = async () => {
+  const post = await fs.readFile(path.join("posts", `test.md`), "utf-8");
+  const root = await parseToHast(post);
+  return {
+    props: {
+      root,
+    },
+  };
+};
+
+const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
+  function ({ root }) {
+    const children = useReactFromHast(root);
+    return <div>{children}</div>;
+  };
+
+export default PostPage;
+
+export const useReactFromHast = (root: Root): React.ReactNode =>
+  useMemo(
+    () =>
+      unified().use(rehypeReact, { createElement, Fragment }).stringify(root),
+    [root]
+  );
