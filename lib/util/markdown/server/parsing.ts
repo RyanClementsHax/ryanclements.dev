@@ -10,6 +10,7 @@ import { Schema } from 'hast-util-sanitize'
 import deepmerge from '@fastify/deepmerge'
 import { frontMatterTransformer } from './frontMatter'
 import { imageTransformer } from './images'
+import rehypePicture from 'rehype-picture'
 
 export const parseToHast = async (
   slug: string,
@@ -27,15 +28,15 @@ const contentProcessor = unified()
   .use(remarkGfm)
   .use(frontMatterTransformer)
   .use(remarkRehype, { allowDangerousHtml: true })
-  .use(rehypeRaw)
   .use(imageTransformer)
-  .use(
-    rehypeSanitize,
-    deepmerge()<Schema, Schema>(defaultSchema, {
-      tagNames: ['aside'],
-      attributes: { '*': ['className'], img: ['data-blurdataurl'] }
-    })
-  )
+  // .use(rehypeRaw)
+  // .use(
+  //   rehypeSanitize,
+  //   deepmerge()<Schema, Schema>(defaultSchema, {
+  //     tagNames: ['aside'],
+  //     attributes: { '*': ['className'], img: ['data-blurdataurl'] }
+  //   })
+  // )
   .use(function () {
     this.Compiler = tree => ({ tree })
   } as Plugin<[], Node, { tree: HastTree }>)

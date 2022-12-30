@@ -20,18 +20,17 @@ const ContentImage: React.FC<
   React.ImgHTMLAttributes<HTMLImageElement> & { 'data-blurdataurl'?: string }
 > = ({ alt, 'data-blurdataurl': blurDataURL, ...props }) => {
   return (
-    // <figure>
-    <Image
-      {...(props as ImageProps)}
-      alt={alt as string}
-      placeholder="blur"
-      blurDataURL={blurDataURL}
-      // md breakpoint
-      sizes="(max-width: 768px) 100vw, 768px"
-      className="w-full rounded-lg object-cover shadow-md"
-    />
-    // <figcaption>{alt}</figcaption>
-    // </figure>
+    <picture>
+      <Image
+        {...(props as ImageProps)}
+        alt={alt as string}
+        placeholder="blur"
+        blurDataURL={blurDataURL}
+        // md breakpoint
+        sizes="(max-width: 768px) 100vw, 768px"
+        className="w-full rounded-lg object-cover shadow-md"
+      />
+    </picture>
   )
 }
 

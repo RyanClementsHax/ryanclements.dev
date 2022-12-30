@@ -4,6 +4,10 @@ import { visit } from 'unist-util-visit'
 import { pointStart } from 'unist-util-position'
 import { ImageService, imageService } from 'lib/util/images'
 import { PresetBuilder } from './presetBuilder'
+import { Element } from 'hast'
+import { h } from 'hastscript'
+import rehypePicture from 'rehype-picture'
+import { isElement } from 'hast-util-is-element'
 
 const rehypeOptimizeImages: Plugin = () => async (tree, file) => {
   const imageOptimizationJobs: Promise<void>[] = []
@@ -64,7 +68,26 @@ const rehypeRewriteImageSrcs: Plugin = () => async (tree, file) => {
   })
 }
 
+const rehypeImageToFigure: Plugin = () => async tree => {
+  visit(
+    tree,
+    { type: 'element', tagName: 'img' },
+    (node: Element, index: number, parent: Element) => {
+      parent.children[index] = {
+        type: 'element',
+        tagName: 'picture',
+        properties: {},
+        children: [node]
+      }
+    }
+  )
+}
+
 export const imageTransformer = new PresetBuilder()
   .use(rehypeRewriteImageSrcs)
   .use(rehypeOptimizeImages)
+  // .use(rehypeImageToFigure, {
+  //   jpg: { webp: 'image/webp' },
+  //   png: { svg: 'image/svg+xml' }
+  // })
   .build()
