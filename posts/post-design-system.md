@@ -120,9 +120,13 @@ Autoconverted link <https://github.com/nodeca/pica>
 
 ## Images
 
-### Normal
+### Figure
 
 ![Minion](minion.png)
+
+### Image between text
+
+This is a test for an image in between text ![Stormtroopocat](stormtroopocat.jpg 'The Stormtroopocat') cuz I need a test case
 
 ### With title
 

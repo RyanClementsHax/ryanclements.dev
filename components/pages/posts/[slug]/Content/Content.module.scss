@@ -21,4 +21,10 @@
       vertical-align: middle;
     }
   }
+
+  figure {
+    figcaption {
+      @apply text-center;
+    }
+  }
 }

@@ -1,5 +1,4 @@
 import { unified, Plugin } from 'unified'
-import { Node } from 'unist'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
@@ -38,4 +37,4 @@ const contentProcessor = unified()
   )
   .use(function () {
     this.Compiler = tree => ({ tree })
-  } as Plugin<[], Node, { tree: HastTree }>)
+  } as Plugin<[], HastTree, { tree: HastTree }>)
