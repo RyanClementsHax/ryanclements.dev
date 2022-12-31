@@ -86,7 +86,7 @@ Sample text here...
 
 Syntax highlighting
 
-```js
+```js {1-3,4}
 var foo = function (bar) {
   return bar++
 }
