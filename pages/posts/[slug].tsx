@@ -15,6 +15,7 @@ import { Content } from 'components/pages/posts/[slug]/Content'
 import { Layout } from 'components/pages/posts/[slug]/Layout'
 import { imageService } from 'lib/util/images'
 import { A11yStaticImageData } from 'lib/content'
+import { format } from 'date-fns'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string
@@ -33,7 +34,9 @@ interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
   meta: RenderablePostMeta
 }
 
-interface RenderablePostMeta extends Omit<PostMeta, 'bannerSrc' | 'bannerAlt'> {
+interface RenderablePostMeta
+  extends Omit<PostMeta, 'bannerSrc' | 'bannerAlt' | 'publishedOn'> {
+  publishedOn?: string
   bannerSrc: A11yStaticImageData
 }
 
@@ -103,6 +106,9 @@ const convertToRenderablePost = async (post: Post): Promise<RenderablePost> => {
     content: await parseToHast(post.meta.slug, post.content),
     meta: {
       ...meta,
+      publishedOn: meta.publishedOn
+        ? format(meta.publishedOn, 'MMM do, y')
+        : undefined,
       bannerSrc: {
         ...imgProps,
         alt: bannerAlt

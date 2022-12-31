@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react'
 import { axe } from 'jest-axe'
 import * as stories from './MetaCard.stories'
 import { composeStories } from '@storybook/testing-react'
-import { format } from 'date-fns'
 
 const { Base, DraftBase } = composeStories(stories)
 
@@ -16,9 +15,7 @@ describe('MetaCard', () => {
   it('displays the date when given a publish date', async () => {
     render(<Base />)
 
-    expect(
-      await screen.findByText(format(Base.args!.publishedOn!, 'MMM Do, y'))
-    ).toBeInTheDocument()
+    expect(await screen.findByText(Base.args!.publishedOn!)).toBeInTheDocument()
   })
 
   it('displays "Draft" when not given a publish date', async () => {

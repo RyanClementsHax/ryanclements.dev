@@ -14,7 +14,7 @@ const Template: StoryFn<MetaCardProps> = props => (
 
 Template.args = {
   title: 'Storybook is super coolio',
-  publishedOn: new Date(2022, 11, 22)
+  publishedOn: 'Dec 22nd, 2022'
 }
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } =
