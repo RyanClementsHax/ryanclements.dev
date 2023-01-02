@@ -88,12 +88,45 @@ Sample text here...
 
 Syntax highlighting
 
-```js {1-3,4}
+```js
 var foo = function (bar) {
   return bar++
 }
 
 console.log(foo(5))
+```
+
+Line highlighting
+
+```rust {9, 16-18}
+impl<T: 'static> AsyncRefCell<T> {
+  /// Create a new `AsyncRefCell` that encapsulates the specified value.
+  /// Note that in order to borrow the inner value, the `AsyncRefCell`
+  /// needs to be wrapped in an `Rc` or an `RcRef`. These can be created
+  /// either manually, or by using the convenience method
+  /// `AsyncRefCell::new_rc()`.
+  pub fn new(value: T) -> Self {
+    Self {
+      value: UnsafeCell::new(value),
+      borrow_count: Default::default(),
+      waiters: Default::default(),
+      turn: Default::default(),
+    }
+  }
+
+  pub fn new_rc(value: T) -> Rc<Self> {
+    Rc::new(Self::new(value))
+  }
+
+  pub fn as_ptr(&self) -> *mut T {
+    self.value.get()
+  }
+
+  pub fn into_inner(self) -> T {
+    assert!(self.borrow_count.get().is_empty());
+    self.value.into_inner()
+  }
+}
 ```
 
 ## Tables

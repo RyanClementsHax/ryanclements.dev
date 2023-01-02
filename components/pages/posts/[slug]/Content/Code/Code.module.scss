@@ -1,11 +1,16 @@
 /* stylelint-disable no-descending-specificity */
-
-/* This is a theme distributed by `starry-night`.
- * It’s based on what GitHub uses on their site.
- * See <https://github.com/wooorm/starry-night> for more info. */
 @use 'styles/utils';
 
+.code:has(:global(.highlighted)) {
+  > :global.line:not(.highlighted) {
+    @apply opacity-30;
+  }
+}
+
 .code :global {
+  /* This is a theme distributed by `starry-night`.
+   * It’s based on what GitHub uses on their site.
+   * See <https://github.com/wooorm/starry-night> for more info. */
   --color-prettylights-syntax-comment: #6e7781;
   --color-prettylights-syntax-constant: #0550ae;
   --color-prettylights-syntax-entity: #8250df;

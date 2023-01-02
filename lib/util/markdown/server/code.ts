@@ -5,9 +5,10 @@ import { createStarryNight, common } from '@wooorm/starry-night'
 import { visit } from 'unist-util-visit'
 import { toString } from 'hast-util-to-string'
 import { HastElement, HastTree } from '../types'
-import { ElementContent } from 'hast'
+import { ElementContent, Properties } from 'hast'
 import { h } from 'hastscript'
 import { pointStart } from 'unist-util-position'
+import parseRange from 'parse-numeric-range'
 
 const starryNightPromise = createStarryNight(common)
 
@@ -133,7 +134,160 @@ const rehypeHighlightInlineCode: Plugin<[], HastTree> =
     })
   }
 
+const rehypeGroupCodeBlockLines: Plugin<[], HastTree> = () => async code => {
+  visit(code, { type: 'element', tagName: 'pre' }, (node, _, parent) => {
+    if (!parent) {
+      return
+    }
+
+    const code = node.children[0]
+
+    if (
+      !code ||
+      code.type !== 'element' ||
+      code.tagName !== 'code' ||
+      !code.properties
+    ) {
+      return
+    }
+
+    const replacement: ElementContent[] = []
+    const search = /\r?\n|\r/g
+    let index = -1
+    let start = 0
+    let startTextRemainder = ''
+    let lineNumber = 0
+
+    while (++index < code.children.length) {
+      const child = code.children[index]
+
+      if (child.type === 'text') {
+        let textStart = 0
+        let match = search.exec(child.value)
+
+        while (match) {
+          // Nodes in this line.
+          const line = code.children.slice(start, index) as ElementContent[]
+
+          // Prepend text from a partial matched earlier text.
+          if (startTextRemainder) {
+            line.unshift({ type: 'text', value: startTextRemainder })
+            startTextRemainder = ''
+          }
+
+          // Append text from this text.
+          if (match.index > textStart) {
+            line.push({
+              type: 'text',
+              value: child.value.slice(textStart, match.index)
+            })
+          }
+
+          // Add a line, and the eol.
+          lineNumber += 1
+          replacement.push(createLine(line, lineNumber), {
+            type: 'text',
+            value: match[0]
+          })
+
+          start = index + 1
+          textStart = match.index + match[0].length
+          match = search.exec(child.value)
+        }
+
+        // If we matched, make sure to not drop the text after the last line ending.
+        if (start === index + 1) {
+          startTextRemainder = child.value.slice(textStart)
+        }
+      }
+    }
+
+    const line = code.children.slice(start) as ElementContent[]
+    // Prepend text from a partial matched earlier text.
+    if (startTextRemainder) {
+      line.unshift({ type: 'text', value: startTextRemainder })
+      startTextRemainder = ''
+    }
+
+    if (line.length > 0) {
+      lineNumber += 1
+      replacement.push(createLine(line, lineNumber))
+    }
+
+    // Replace children with new array.
+    code.children = replacement
+  })
+}
+
+const createLine = (
+  children: ElementContent[],
+  line: number
+): ElementContent => ({
+  type: 'element',
+  tagName: 'span',
+  properties: { className: 'line', dataLineNumber: line },
+  children
+})
+
+const numericRangeMatcher = /{([0-9,.-\s]*)}/
+
+const rehypeHighlightCodeBlockLines: Plugin<[], HastTree> =
+  () => async tree => {
+    visit(tree, { type: 'element', tagName: 'pre' }, (node, index, parent) => {
+      if (!parent || index === null) {
+        return
+      }
+
+      const code = node.children[0]
+
+      if (
+        !code ||
+        code.type !== 'element' ||
+        code.tagName !== 'code' ||
+        !code.properties
+      ) {
+        return
+      }
+
+      const meta = code.data?.meta
+      if (typeof meta !== 'string') {
+        return
+      }
+
+      const numericRange = meta.match(numericRangeMatcher)?.[1]
+
+      if (!numericRange) {
+        return
+      }
+
+      const linesToHighlight = parseRange(numericRange)
+
+      code.children
+        .filter((x): x is HastElement => x.type === 'element')
+        .map(
+          (x, i) =>
+            [x, normalizeClassName(x.properties?.className), i + 1] as const
+        )
+        .filter(([, , lineNumber]) => linesToHighlight.includes(lineNumber))
+        .forEach(([line, className]) => {
+          line.properties = {
+            ...line.properties,
+            className: [...className, 'highlighted']
+          }
+        })
+    })
+  }
+
+const normalizeClassName = (className: Properties['className']) =>
+  Array.isArray(className)
+    ? className
+    : typeof className == 'string' || typeof className === 'number'
+    ? [className]
+    : []
+
 export const codeTransformer = new PresetBuilder()
   .use(rehypeHighlightCodeBlocks)
   .use(rehypeHighlightInlineCode)
+  .use(rehypeGroupCodeBlockLines)
+  .use(rehypeHighlightCodeBlockLines)
   .build()
