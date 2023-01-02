@@ -1,6 +1,24 @@
-.content {
+@use 'styles/utils';
+
+@mixin code-block {
+  pre:has(code) {
+    @content;
+  }
+}
+
+@mixin inline-code {
   :not(pre) > code {
-    @apply rounded-md bg-surface-offBase text-on-surface-offBase;
+    @content;
+  }
+}
+
+.content {
+  @include code-block() {
+    @apply bg-gray-100 text-on-surface-offBase shadow;
+  }
+
+  @include inline-code() {
+    @apply rounded-md bg-gray-200 text-on-surface-offBase shadow-sm;
     // stole these numbers from how github styles inline code
     @apply px-[0.4em] py-[0.2em] text-[85%];
 
@@ -25,6 +43,18 @@
   figure {
     figcaption {
       @apply text-center;
+    }
+  }
+}
+
+@include utils.dark {
+  .content {
+    @include code-block() {
+      @apply bg-surface-base-elevation-100;
+    }
+
+    @include inline-code() {
+      @apply bg-surface-base-elevation-200;
     }
   }
 }

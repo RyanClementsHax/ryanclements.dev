@@ -9,7 +9,7 @@ import { Schema } from 'hast-util-sanitize'
 import deepmerge from '@fastify/deepmerge'
 import { frontMatterTransformer } from './frontMatter'
 import { imageTransformer } from './images'
-import rehypePrettyCode from 'rehype-pretty-code'
+import { codeTransformer } from './code'
 
 export const parseToHast = async (
   slug: string,
@@ -27,30 +27,14 @@ const contentProcessor = unified()
   .use(remarkGfm)
   .use(frontMatterTransformer)
   .use(remarkRehype, { allowDangerousHtml: true })
-  .use(rehypePrettyCode, {
-    theme: 'one-dark-pro',
-    onVisitLine(node) {
-      // Prevent lines from collapsing in `display: grid` mode, and allow empty
-      // lines to be copy/pasted
-      if (node.children.length === 0) {
-        node.children = [{ type: 'text', value: ' ' }]
-      }
-    },
-    onVisitHighlightedLine(node) {
-      node.properties.className.push('line--highlighted')
-    },
-    onVisitHighlightedWord(node) {
-      node.properties.className = ['word']
-    }
-  })
+  .use(codeTransformer)
   .use(rehypeRaw)
   .use(imageTransformer)
   .use(
     rehypeSanitize,
     deepmerge()<Schema, Schema>(defaultSchema, {
       tagNames: ['aside'],
-      // TODO: find a better way to allow syntax highlighting than to allow all styles
-      attributes: { '*': ['className', 'style'], img: ['data-blurdataurl'] }
+      attributes: { '*': ['className'], img: ['data-blurdataurl'] }
     })
   )
   .use(function () {
