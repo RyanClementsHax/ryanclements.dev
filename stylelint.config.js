@@ -16,6 +16,8 @@ module.exports = {
     'selector-class-pattern': null,
     'a11y/media-prefers-reduced-motion': null,
     'plugin/declaration-block-no-ignored-properties': true,
+    'scss/at-import-partial-extension': null,
+    'import-notation': null,
     'scale-unlimited/declaration-strict-value': [
       ['/color$/'],
       {

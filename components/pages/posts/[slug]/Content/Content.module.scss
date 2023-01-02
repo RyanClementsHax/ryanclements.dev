@@ -1,61 +1,6 @@
 @use 'styles/utils';
 
-@mixin code-block-wrapper {
-  :global(.highlight) {
-    @content;
-  }
-}
-
-@mixin with-code-block-title {
-  &:has(pre:not(:only-child)) {
-    @content;
-  }
-}
-
-@mixin code-block {
-  pre:has(code) {
-    @content;
-  }
-}
-
-@mixin inline-code {
-  :not(pre) > code {
-    @content;
-  }
-}
-
 .content {
-  @include code-block() {
-    @apply bg-gray-100 text-on-surface-base;
-  }
-
-  @include code-block-wrapper() {
-    @apply shadow;
-
-    @include with-code-block-title() {
-      > :first-child {
-        @apply rounded-t-md border-b border-borderColor bg-gray-100 py-2 px-4 text-sm italic text-on-surface-offBase-muted;
-      }
-
-      @include code-block() {
-        @apply mt-0 rounded-none;
-      }
-    }
-  }
-
-  @include inline-code() {
-    @apply rounded-md bg-gray-100 font-normal text-on-surface-offBase shadow-sm;
-    // stole these numbers from how github styles inline code
-    @apply px-[0.4em] py-[0.2em] text-[85%];
-
-    // overriding default @tailwindcss/typography styles
-    // https://github.com/tailwindlabs/tailwindcss-typography/blob/5231af5bdd392404025330256f3797f8572d8067/src/styles.js#L1361
-    &::before,
-    &::after {
-      content: '';
-    }
-  }
-
   ul,
   ol {
     & > li > input {
@@ -69,26 +14,6 @@
   figure {
     figcaption {
       @apply text-center;
-    }
-  }
-}
-
-@include utils.dark {
-  .content {
-    @include code-block-wrapper() {
-      @include with-code-block-title() {
-        > :first-child {
-          @apply bg-surface-base-elevation-100;
-        }
-      }
-    }
-
-    @include code-block() {
-      @apply bg-surface-base-elevation-100;
-    }
-
-    @include inline-code() {
-      @apply bg-surface-base-elevation-100;
     }
   }
 }
