@@ -3,8 +3,9 @@ import { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 import { HastTree } from '../../types'
 import { h } from 'hastscript'
+import { isMetaValid } from './utils'
 
-const titleMatcher = /title=([\w.-]+)/
+const TITLE_MATCHER = /title=([\w.-]+)/
 
 export const rehypeAddCodeBlockTitle: Plugin<[], HastTree> =
   () => async tree => {
@@ -14,11 +15,11 @@ export const rehypeAddCodeBlockTitle: Plugin<[], HastTree> =
       }
 
       const meta = node.data?.meta
-      if (typeof meta !== 'string') {
+      if (!isMetaValid(meta)) {
         return
       }
 
-      const title = meta.match(titleMatcher)?.[1]
+      const title = meta.match(TITLE_MATCHER)?.[1]
       if (!title) {
         return
       }

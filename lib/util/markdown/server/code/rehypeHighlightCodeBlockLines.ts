@@ -4,35 +4,25 @@ import { visit } from 'unist-util-visit'
 import { Properties } from 'hast'
 import { HastElement, HastTree } from '../../types'
 import parseRange from 'parse-numeric-range'
+import { isMetaValid, isPreElement } from './utils'
 
-const numericRangeMatcher = /{([0-9,.-\s]*)}/
+const NUMERIC_RANGE_MATCHER = /{([0-9,.-\s]*)}/
 
 // inspired by
 // https://github.com/Microflash/rehype-starry-night#example-highlight-lines
 export const rehypeHighlightCodeBlockLines: Plugin<[], HastTree> =
   () => async tree => {
-    visit(tree, { type: 'element', tagName: 'pre' }, (node, index, parent) => {
-      if (!parent || index === null) {
+    visit(tree, { type: 'element', tagName: 'code' }, (node, _, parent) => {
+      if (!isPreElement(parent)) {
         return
       }
 
-      const code = node.children[0]
-
-      if (
-        !code ||
-        code.type !== 'element' ||
-        code.tagName !== 'code' ||
-        !code.properties
-      ) {
+      const meta = node.data?.meta
+      if (!isMetaValid(meta)) {
         return
       }
 
-      const meta = code.data?.meta
-      if (typeof meta !== 'string') {
-        return
-      }
-
-      const numericRange = meta.match(numericRangeMatcher)?.[1]
+      const numericRange = meta.match(NUMERIC_RANGE_MATCHER)?.[1]
 
       if (!numericRange) {
         return
@@ -40,7 +30,7 @@ export const rehypeHighlightCodeBlockLines: Plugin<[], HastTree> =
 
       const linesToHighlight = parseRange(numericRange)
 
-      code.children
+      node.children
         .filter((x): x is HastElement => x.type === 'element')
         .map(
           (x, i) =>

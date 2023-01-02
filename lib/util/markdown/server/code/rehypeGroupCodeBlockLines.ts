@@ -3,24 +3,14 @@ import { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 import { HastTree } from '../../types'
 import { ElementContent } from 'hast'
+import { isPreElement } from './utils'
 
 // modified from
 // https://github.com/wooorm/starry-night#example-adding-line-numbers
 export const rehypeGroupCodeBlockLines: Plugin<[], HastTree> =
   () => async code => {
-    visit(code, { type: 'element', tagName: 'pre' }, (node, _, parent) => {
-      if (!parent) {
-        return
-      }
-
-      const code = node.children[0]
-
-      if (
-        !code ||
-        code.type !== 'element' ||
-        code.tagName !== 'code' ||
-        !code.properties
-      ) {
+    visit(code, { type: 'element', tagName: 'code' }, (node, _, parent) => {
+      if (!isPreElement(parent)) {
         return
       }
 
@@ -31,8 +21,8 @@ export const rehypeGroupCodeBlockLines: Plugin<[], HastTree> =
       let startTextRemainder = ''
       let lineNumber = 0
 
-      while (++index < code.children.length) {
-        const child = code.children[index]
+      while (++index < node.children.length) {
+        const child = node.children[index]
 
         if (child.type === 'text') {
           let textStart = 0
@@ -40,7 +30,7 @@ export const rehypeGroupCodeBlockLines: Plugin<[], HastTree> =
 
           while (match) {
             // Nodes in this line.
-            const line = code.children.slice(start, index) as ElementContent[]
+            const line = node.children.slice(start, index) as ElementContent[]
 
             // Prepend text from a partial matched earlier text.
             if (startTextRemainder) {
@@ -75,7 +65,7 @@ export const rehypeGroupCodeBlockLines: Plugin<[], HastTree> =
         }
       }
 
-      const line = code.children.slice(start) as ElementContent[]
+      const line = node.children.slice(start) as ElementContent[]
       // Prepend text from a partial matched earlier text.
       if (startTextRemainder) {
         line.unshift({ type: 'text', value: startTextRemainder })
@@ -88,7 +78,7 @@ export const rehypeGroupCodeBlockLines: Plugin<[], HastTree> =
       }
 
       // Replace children with new array.
-      code.children = replacement
+      node.children = replacement
     })
   }
 
