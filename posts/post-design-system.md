@@ -78,6 +78,8 @@ Start numbering with offset:
 
 Inline `code`
 
+Inline highlighted code `const code = "test"{:js}`
+
 Block code "fences"
 
 ```text

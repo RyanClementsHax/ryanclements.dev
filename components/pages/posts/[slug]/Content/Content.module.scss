@@ -18,7 +18,7 @@
   }
 
   @include inline-code() {
-    @apply rounded-md bg-gray-200 text-on-surface-offBase shadow-sm;
+    @apply rounded-md bg-gray-200 font-normal text-on-surface-offBase shadow-sm;
     // stole these numbers from how github styles inline code
     @apply px-[0.4em] py-[0.2em] text-[85%];
 

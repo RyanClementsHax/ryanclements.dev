@@ -27,8 +27,8 @@ const contentProcessor = unified()
   .use(remarkGfm)
   .use(frontMatterTransformer)
   .use(remarkRehype, { allowDangerousHtml: true })
-  .use(codeTransformer)
   .use(rehypeRaw)
+  .use(codeTransformer)
   .use(imageTransformer)
   .use(
     rehypeSanitize,
