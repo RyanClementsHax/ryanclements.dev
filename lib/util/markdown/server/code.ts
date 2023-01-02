@@ -67,10 +67,11 @@ const rehypeHighlightCodeBlocks: Plugin<[], HastElement> =
 
       const fragment = starryNight.highlight(toString(node), scope)
 
-      parent.children[index] = h(
+      const codeBlockRoot = h(
         'div',
         {
-          className: getClassNamesFromScope(scope)
+          className: getClassNamesFromScope(scope),
+          dataCodeBlockRoot: true
         },
         [
           {
@@ -81,6 +82,11 @@ const rehypeHighlightCodeBlocks: Plugin<[], HastElement> =
           }
         ]
       )
+      codeBlockRoot.data = {
+        ...codeBlockRoot.data,
+        meta: code.data?.meta
+      }
+      parent.children[index] = codeBlockRoot
     })
   }
 
@@ -134,6 +140,8 @@ const rehypeHighlightInlineCode: Plugin<[], HastTree> =
     })
   }
 
+// modified from
+// https://github.com/wooorm/starry-night#example-adding-line-numbers
 const rehypeGroupCodeBlockLines: Plugin<[], HastTree> = () => async code => {
   visit(code, { type: 'element', tagName: 'pre' }, (node, _, parent) => {
     if (!parent) {
@@ -231,6 +239,8 @@ const createLine = (
 
 const numericRangeMatcher = /{([0-9,.-\s]*)}/
 
+// inspired by
+// https://github.com/Microflash/rehype-starry-night#example-highlight-lines
 const rehypeHighlightCodeBlockLines: Plugin<[], HastTree> =
   () => async tree => {
     visit(tree, { type: 'element', tagName: 'pre' }, (node, index, parent) => {
@@ -285,9 +295,32 @@ const normalizeClassName = (className: Properties['className']) =>
     ? [className]
     : []
 
+const titleMatcher = /title=([\w.-]+)/
+
+const rehypeAddCodeBlockTitle: Plugin<[], HastTree> = () => async tree => {
+  visit(tree, { type: 'element', tagName: 'div' }, node => {
+    if (!node.properties?.dataCodeBlockRoot) {
+      return
+    }
+
+    const meta = node.data?.meta
+    if (typeof meta !== 'string') {
+      return
+    }
+
+    const title = meta.match(titleMatcher)?.[1]
+    if (!title) {
+      return
+    }
+
+    node.children = [h('div', title), ...node.children]
+  })
+}
+
 export const codeTransformer = new PresetBuilder()
   .use(rehypeHighlightCodeBlocks)
   .use(rehypeHighlightInlineCode)
   .use(rehypeGroupCodeBlockLines)
   .use(rehypeHighlightCodeBlockLines)
+  .use(rehypeAddCodeBlockTitle)
   .build()
