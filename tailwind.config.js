@@ -57,7 +57,7 @@ module.exports = {
                 },
                 offBase: colors.gray[200],
                 brand: primary.DEFAULT,
-                primary: primary[800],
+                primary: primary[100],
                 active: primary[100],
                 success: colors.green[100],
                 warning: colors.yellow[50],
