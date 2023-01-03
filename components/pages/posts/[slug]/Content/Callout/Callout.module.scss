@@ -1,0 +1,21 @@
+.callout {
+  @apply my-5 flex gap-4 rounded-md border border-l-4 px-4 py-2 md:px-5 md:py-5;
+
+  @apply border-borderColor-primary border-l-primary bg-surface-primary text-on-surface-primary;
+
+  .content {
+    @apply self-center;
+  }
+
+  &:global(.success) {
+    @apply border-borderColor-success border-l-success bg-surface-success text-on-surface-success;
+  }
+
+  &:global(.warning) {
+    @apply border-borderColor-warning border-l-warning bg-surface-warning text-on-surface-warning;
+  }
+
+  &:global(.danger) {
+    @apply border-borderColor-danger border-l-danger bg-surface-danger text-on-surface-danger;
+  }
+}

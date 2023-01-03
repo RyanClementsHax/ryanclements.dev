@@ -5,6 +5,7 @@ import s from './Content.module.scss'
 import c from 'classnames'
 import Image, { ImageProps } from 'next/image'
 import { Code } from './Code'
+import { Callout } from './Callout'
 
 export const Content: React.FC<{ root: HastTree }> = ({ root }) => {
   const children = useReactFromHast(root, components)
@@ -33,5 +34,6 @@ const ContentImage: React.FC<
 
 const components: ComponentsWithoutNodeOptions['components'] = {
   img: ContentImage,
-  code: Code
+  code: Code,
+  aside: Callout
 }

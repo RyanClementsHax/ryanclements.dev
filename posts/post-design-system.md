@@ -36,7 +36,32 @@ _This is italic text_ that begins a paragraph
 
 ## Callouts
 
+<aside>
+  I realize that using GitHub as my CMS is a little odd, but wonderful people
+  like you contribute improvements to my open source content all the time and I
+  appreciate that. So by keeping things in GitHub, that can continue. (Note the
+  edit link at the bottom of every post).
+</aside>
+
 <aside class="info">
+  This is like the one above but with the type explicitly "info"
+</aside>
+
+<aside class="success">
+  I realize that using GitHub as my CMS is a little odd, but wonderful people
+  like you contribute improvements to my open source content all the time and I
+  appreciate that. So by keeping things in GitHub, that can continue. (Note the
+  edit link at the bottom of every post).
+</aside>
+
+<aside class="warning">
+  I realize that using GitHub as my CMS is a little odd, but wonderful people
+  like you contribute improvements to my open source content all the time and I
+  appreciate that. So by keeping things in GitHub, that can continue. (Note the
+  edit link at the bottom of every post).
+</aside>
+
+<aside class="danger">
   I realize that using GitHub as my CMS is a little odd, but wonderful people
   like you contribute improvements to my open source content all the time and I
   appreciate that. So by keeping things in GitHub, that can continue. (Note the
