@@ -5,6 +5,10 @@
 
   .content {
     @apply self-center;
+
+    > p {
+      @apply m-0;
+    }
   }
 
   &:global(.success) {

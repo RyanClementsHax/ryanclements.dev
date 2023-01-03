@@ -47,6 +47,18 @@ _This is italic text_ that begins a paragraph
   This is like the one above but with the type explicitly "info"
 </aside>
 
+<aside class="info">
+
+A `mix` of _markdown_ and <em>HTML</em>.
+
+```js
+const test = 'this is a code block in the aside'
+```
+
+`[1, 2, 3]{:js}`
+
+</aside>
+
 <aside class="success">
   I realize that using GitHub as my CMS is a little odd, but wonderful people
   like you contribute improvements to my open source content all the time and I
