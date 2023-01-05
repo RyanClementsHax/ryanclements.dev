@@ -8,7 +8,7 @@ import { HastTree } from '../types'
 import { Schema } from 'hast-util-sanitize'
 import deepmerge from '@fastify/deepmerge'
 import { frontMatterTransformer } from './frontMatter'
-import { imageTransformer } from './images'
+import { imageTransformer } from './imageTransformer'
 import { codeTransformer } from './code'
 
 export const parseToHast = async (

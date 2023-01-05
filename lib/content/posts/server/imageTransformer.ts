@@ -2,7 +2,7 @@ import { Plugin } from 'unified'
 import { HastElement, HastTree } from '../types'
 import { visit } from 'unist-util-visit'
 import { pointStart } from 'unist-util-position'
-import { ImageService, imageService } from 'lib/util/images'
+import { ImageService, imageService } from './imageService'
 import { PresetBuilder } from './presetBuilder'
 import { h } from 'hastscript'
 

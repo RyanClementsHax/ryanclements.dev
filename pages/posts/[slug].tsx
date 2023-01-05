@@ -7,7 +7,7 @@ import {
 import { ParsedUrlQuery } from 'querystring'
 import { deserialize, Serializable, serialize } from 'lib/util'
 import { getAllPostSlugs, getPost } from 'lib/content/posts/server'
-import { imageService } from 'lib/util/images'
+import { imageService } from 'lib/content/posts/server/imageService'
 import { format } from 'date-fns'
 import { Post, PostPageProps, RenderablePost } from 'dist/lib/content/posts'
 import { PostDetails } from 'components/pages/posts/[slug]'

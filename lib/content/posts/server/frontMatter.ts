@@ -7,7 +7,7 @@ import { PresetBuilder } from './presetBuilder'
 import remarkFrontmatter from 'remark-frontmatter'
 import { visit } from 'unist-util-visit'
 import { pointStart } from 'unist-util-position'
-import { imageService } from 'lib/util/images'
+import { imageService } from './imageService'
 
 export const parseFrontMatter = async (
   slug: string,
