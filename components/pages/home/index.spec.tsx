@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 import { axe } from 'jest-axe'
-import * as stories from 'stories/pages/index.stories'
+import * as stories from './index.stories'
 import { composeStories } from '@storybook/testing-react'
 
 const { Base } = composeStories(stories)

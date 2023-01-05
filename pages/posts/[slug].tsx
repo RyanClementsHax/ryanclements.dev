@@ -9,9 +9,13 @@ import { deserialize, Serializable, serialize } from 'lib/util'
 import { getAllPostSlugs, getPost } from 'lib/content/posts/server'
 import { imageService } from 'lib/content/posts/server/imageService'
 import { format } from 'date-fns'
-import { Post, PostPageProps, RenderablePost } from 'dist/lib/content/posts'
-import { PostDetails } from 'components/pages/posts/[slug]'
+import {
+  PostDetails,
+  PostPageProps,
+  RenderablePost
+} from 'components/pages/posts/[slug]'
 import { parseToHast } from 'lib/content/posts/server/parsing'
+import { Post } from 'lib/content/posts/types'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string

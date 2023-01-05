@@ -1,8 +1,8 @@
 import { Meta, StoryFn } from '@storybook/react'
-import Index from 'pages/index'
+import { Home } from '.'
 import { createDefaultStories } from 'stories/storyUtils'
 
-const Template: StoryFn = () => <Index />
+const Template: StoryFn = () => <Home />
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } =
   createDefaultStories(Template)
@@ -10,5 +10,5 @@ const { Base, Mobile, DarkTheme, DarkThemedMobile } =
 export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
-  component: Index
+  component: Home
 } as Meta

@@ -1,7 +1,7 @@
 import { ProjectInfo } from 'lib/content'
 import React from 'react'
-import { Subtitle } from 'components/pages/landing/headings/Subtitle'
-import { Title } from 'components/pages/landing/headings/Title'
+import { Subtitle } from 'components/pages/home/headings/Subtitle'
+import { Title } from 'components/pages/home/headings/Title'
 import { Project } from './Project'
 
 export interface ProjectsProps {
