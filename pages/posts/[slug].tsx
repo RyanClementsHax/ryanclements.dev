@@ -6,12 +6,12 @@ import {
 } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import { deserialize, Serializable, serialize } from 'lib/util'
-import { parseToHast } from 'lib/util/markdown/server'
-import { getAllPostSlugs, getPost, Post } from 'lib/content/posts'
+import { getAllPostSlugs, getPost } from 'lib/content/posts/server'
 import { imageService } from 'lib/util/images'
 import { format } from 'date-fns'
-import { PostPageProps, RenderablePost } from 'dist/lib/content/posts'
+import { Post, PostPageProps, RenderablePost } from 'dist/lib/content/posts'
 import { PostDetails } from 'components/pages/posts/[slug]'
+import { parseToHast } from 'lib/content/posts/server/parsing'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string

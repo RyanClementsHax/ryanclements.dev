@@ -2,23 +2,12 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import * as yup from 'yup'
 import { log } from 'lib/util'
-import { parseFrontMatter, validateMarkdown } from 'lib/util/markdown/server'
 import { isDev } from 'lib/constants'
+import { parseFrontMatter } from './frontMatter'
+import { validateMarkdown } from './validation'
+import { Post } from '../types'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
-
-export interface Post {
-  meta: PostMeta
-  content: string
-}
-
-export interface PostMeta {
-  slug: string
-  title: string
-  publishedOn?: Date
-  bannerSrc: string
-  bannerAlt: string
-}
 
 export const getAllPostSlugs = async (): Promise<string[]> =>
   (await getAllPosts())

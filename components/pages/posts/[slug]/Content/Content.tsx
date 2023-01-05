@@ -1,5 +1,5 @@
-import { useReactFromHast } from 'lib/util/markdown/client'
-import { HastTree } from 'lib/util/markdown/types'
+import { useReactFromHast } from 'lib/content/posts/client'
+import { HastTree } from 'lib/content/posts/types'
 import { ComponentsWithoutNodeOptions } from 'rehype-react/lib/complex-types'
 import s from './Content.module.scss'
 import c from 'classnames'

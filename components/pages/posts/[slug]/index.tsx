@@ -1,6 +1,5 @@
-import { Post, PostMeta } from 'lib/content/posts'
 import Image from 'next/image'
-import { HastTree } from 'lib/util/markdown/types'
+import { HastTree, Post, PostMeta } from 'lib/content/posts/types'
 import { MetaCard } from 'components/pages/posts/[slug]/MetaCard'
 import { Content } from 'components/pages/posts/[slug]/Content'
 import { Layout } from 'components/pages/posts/[slug]/Layout'
