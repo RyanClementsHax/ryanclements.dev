@@ -6,12 +6,10 @@ import {
 } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import { deserialize, Serializable } from 'lib/utils'
-import {
-  getAllPostSlugs,
-  getSerializableRenderablePost
-} from 'lib/content/posts/server'
+import { getAllPostSlugs } from 'lib/content/posts/server'
 import { PostDetails, PostDetailsProps } from 'components/pages/posts/[slug]'
 import { RenderablePost } from 'lib/content/posts/types'
+import { getSerializableRenderablePost } from 'lib/content/posts/server/renderable'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string
@@ -41,7 +39,6 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   post
 }) => {
   const deserializedPost = deserialize<RenderablePost>(post)
-
   return <PostDetails post={deserializedPost} />
 }
 

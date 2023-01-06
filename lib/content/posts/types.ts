@@ -17,6 +17,18 @@ export interface PostMeta {
   bannerAlt: string
 }
 
+export interface PostSummary {
+  slug: string
+  title: string
+  publishedOn?: Date
+  description: string
+}
+
+export interface RenderablePostSummary
+  extends Omit<PostSummary, 'publishedOn'> {
+  publishedOn?: string
+}
+
 export interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
   content: HastTree
   meta: RenderablePostMeta

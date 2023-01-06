@@ -69,9 +69,6 @@ const SiteLink = ({ href }: { href: string }) => (
     className="flex w-fit gap-1 text-primary-700 dark:text-primary-400"
   >
     Go to site
-    <ArrowLongRightIcon
-      aria-hidden="true"
-      className="h-6 w-6 text-primary-500 dark:text-primary-400"
-    />
+    <ArrowLongRightIcon className="h-6 w-6 text-primary-500 dark:text-primary-400" />
   </Link>
 )
