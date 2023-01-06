@@ -1,26 +1,15 @@
 import Image from 'next/image'
-import { HastTree, Post, PostMeta } from 'lib/content/posts/types'
+import { RenderablePost } from 'lib/content/posts/types'
 import { MetaCard } from 'components/pages/posts/[slug]/MetaCard'
 import { Content } from 'components/pages/posts/[slug]/Content'
 import { Layout } from 'components/pages/posts/[slug]/Layout'
 import { A11yStaticImageData } from 'lib/content'
 
-export interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
-  content: HastTree
-  meta: RenderablePostMeta
-}
-
-export interface RenderablePostMeta
-  extends Omit<PostMeta, 'bannerSrc' | 'bannerAlt' | 'publishedOn'> {
-  publishedOn?: string
-  bannerSrc: A11yStaticImageData
-}
-
-export interface PostPageProps {
+export interface PostDetailsProps {
   post: RenderablePost
 }
 
-export const PostDetails: React.FC<PostPageProps> = ({
+export const PostDetails: React.FC<PostDetailsProps> = ({
   post: { meta, content }
 }) => (
   <Layout>

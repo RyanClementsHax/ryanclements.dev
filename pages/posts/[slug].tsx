@@ -5,17 +5,13 @@ import {
   NextPage
 } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import { deserialize, Serializable, serialize } from 'lib/util'
-import { getAllPostSlugs, getPost } from 'lib/content/posts/server'
-import { imageService } from 'lib/content/posts/server/imageService'
-import { format } from 'date-fns'
+import { deserialize, Serializable } from 'lib/util'
 import {
-  PostDetails,
-  PostPageProps,
-  RenderablePost
-} from 'components/pages/posts/[slug]'
-import { parseToHast } from 'lib/content/posts/server/parsing'
-import { Post } from 'lib/content/posts/types'
+  getAllPostSlugs,
+  getSerializableRenderablePost
+} from 'lib/content/posts/server'
+import { PostDetails, PostDetailsProps } from 'components/pages/posts/[slug]'
+import { RenderablePost } from 'lib/content/posts/types'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string
@@ -30,15 +26,13 @@ export const getStaticPaths: GetStaticPaths<StaticPathParams> = async () => {
 }
 
 export const getStaticProps: GetStaticProps<
-  Serializable<PostPageProps>,
+  Serializable<PostDetailsProps>,
   StaticPathParams
 > = async ({ params }) => {
   const { slug } = params as StaticPathParams
-  const post = await getPost(slug)
-  const renderablePost = await convertToRenderablePost(post)
   return {
     props: {
-      post: serialize(renderablePost)
+      post: await getSerializableRenderablePost(slug)
     }
   }
 }
@@ -52,24 +46,3 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 }
 
 export default PostPage
-
-const convertToRenderablePost = async (post: Post): Promise<RenderablePost> => {
-  const { bannerAlt, ...meta } = post.meta
-  const imgProps = await imageService.getOptimizedImageProperties(
-    post.meta.bannerSrc
-  )
-  return {
-    ...post,
-    content: await parseToHast(post.meta.slug, post.content),
-    meta: {
-      ...meta,
-      publishedOn: meta.publishedOn
-        ? format(meta.publishedOn, 'MMM do, y')
-        : undefined,
-      bannerSrc: {
-        ...imgProps,
-        alt: bannerAlt
-      }
-    }
-  }
-}

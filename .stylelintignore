@@ -7,3 +7,4 @@ public
 next-env.d.ts
 storybook-static
 !.storybook
+dist

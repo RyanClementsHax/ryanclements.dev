@@ -1,11 +1,14 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 import * as yup from 'yup'
-import { log } from 'lib/util'
+import { log, Serializable, serialize } from 'lib/util'
 import { isDev } from 'lib/constants'
 import { parseFrontMatter } from './frontMatter'
 import { validateMarkdown } from './validation'
-import { Post } from '../types'
+import { Post, RenderablePost } from '../types'
+import { parseToHast } from './parsing'
+import { format } from 'date-fns'
+import { imageService } from './imageService'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
@@ -29,7 +32,6 @@ export const getAllPosts = async (): Promise<Post[]> => {
 export const getPost = async (slug: string): Promise<Post> => {
   try {
     const rawPostString = await getRawPostString(slug)
-    await validateMarkdown(rawPostString)
     return await convertRawStringToPost(slug, rawPostString)
   } catch (e: unknown) {
     log.error(`Could not get post for ${slug}`, e)
@@ -40,13 +42,33 @@ export const getPost = async (slug: string): Promise<Post> => {
 const getRawPostString = async (slug: string): Promise<string> =>
   await fs.readFile(path.join(postsDirectory, `${slug}.md`), 'utf-8')
 
+export const getSerializableRenderablePost = async (
+  slug: string
+): Promise<Serializable<RenderablePost>> => {
+  const post = await getPost(slug)
+  const renderablePost = await convertToRenderablePost(post)
+  return serialize(renderablePost)
+}
+
+export const convertRawStringToSerializableRenderablePost = async (
+  slug: string,
+  rawString: string
+): Promise<Serializable<RenderablePost>> => {
+  const post = await convertRawStringToPost(slug, rawString)
+  const renderablePost = await convertToRenderablePost(post)
+  return serialize(renderablePost)
+}
+
 const convertRawStringToPost = async (
   slug: string,
   rawString: string
-): Promise<Post> => ({
-  meta: await getMetaFromRawString(slug, rawString),
-  content: rawString
-})
+): Promise<Post> => {
+  await validateMarkdown(rawString)
+  return {
+    meta: await getMetaFromRawString(slug, rawString),
+    content: rawString
+  }
+}
 
 const postMetaSchema = yup.object({
   title: yup.string().required(),
@@ -60,5 +82,28 @@ const getMetaFromRawString = async (slug: string, rawString: string) => {
   return {
     slug,
     ...(await postMetaSchema.validate(frontMatter))
+  }
+}
+
+export const convertToRenderablePost = async (
+  post: Post
+): Promise<RenderablePost> => {
+  const { bannerAlt, ...meta } = post.meta
+  const imgProps = await imageService.getOptimizedImageProperties(
+    post.meta.bannerSrc
+  )
+  return {
+    ...post,
+    content: await parseToHast(post.meta.slug, post.content),
+    meta: {
+      ...meta,
+      publishedOn: meta.publishedOn
+        ? format(meta.publishedOn, 'MMM do, y')
+        : undefined,
+      bannerSrc: {
+        ...imgProps,
+        alt: bannerAlt
+      }
+    }
   }
 }
