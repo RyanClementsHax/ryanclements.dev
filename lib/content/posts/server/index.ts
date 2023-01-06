@@ -2,7 +2,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import * as yup from 'yup'
 import { log, Serializable, serialize } from 'lib/utils'
-import { isDev } from 'lib/constants'
+import { isDev, isPreview } from 'lib/constants'
 import { parseFrontMatter } from './frontMatter'
 import { validateMarkdown } from './validation'
 import { Post, RenderablePost } from '../types'
@@ -14,7 +14,7 @@ const postsDirectory = path.join(process.cwd(), 'posts')
 
 export const getAllPostSlugs = async (): Promise<string[]> =>
   (await getAllPosts())
-    .filter(x => isDev || !!x.meta.publishedOn)
+    .filter(x => isDev || isPreview || !!x.meta.publishedOn)
     .map(x => x.meta.slug)
 
 export const getAllPosts = async (): Promise<Post[]> => {
