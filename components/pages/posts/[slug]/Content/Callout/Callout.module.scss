@@ -4,7 +4,7 @@
   @apply border-borderColor-primary border-l-primary bg-surface-primary text-on-surface-primary;
 
   .content {
-    @apply self-center;
+    @apply w-full self-center;
 
     > p {
       @apply m-0;
