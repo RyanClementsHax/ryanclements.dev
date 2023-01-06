@@ -5,7 +5,7 @@ import {
   NextPage
 } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import { deserialize, Serializable } from 'lib/util'
+import { deserialize, Serializable } from 'lib/utils'
 import {
   getAllPostSlugs,
   getSerializableRenderablePost

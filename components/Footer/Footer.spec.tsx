@@ -2,12 +2,12 @@ import { render, screen } from '@testing-library/react'
 import { axe } from 'jest-axe'
 import * as stories from './Footer.stories'
 import { composeStories } from '@storybook/testing-react'
-import { getCurrentYear } from 'lib/util'
+import { getCurrentYear } from 'lib/utils'
 import { INITIAL_YEAR } from 'lib/constants'
 
 const { Base } = composeStories(stories)
 
-jest.mock('lib/util', () => ({
+jest.mock('lib/utils', () => ({
   getCurrentYear: jest.fn()
 }))
 

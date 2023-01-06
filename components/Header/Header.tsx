@@ -1,5 +1,5 @@
 import { ThemeSelect } from 'components/theme'
-import { useHideAndShowWithScroll } from 'lib/util/useHideAndShowWithScroll'
+import { useHideAndShowWithScroll } from 'lib/utils/useHideAndShowWithScroll'
 import { useWindowScroll } from 'react-use'
 import c from 'classnames'
 

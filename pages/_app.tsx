@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app'
 
 import 'styles/global.scss'
 import { useEffect } from 'react'
-import { log } from 'lib/util'
+import { log } from 'lib/utils'
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   useEffect(() => {
