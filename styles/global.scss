@@ -6,10 +6,10 @@
 
 @layer base {
   * {
-    @apply transition;
+    @apply transition-colors;
   }
 
   body {
-    @apply bg-surface-base font-mono;
+    @apply bg-surface-base;
   }
 }

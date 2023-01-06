@@ -10,6 +10,16 @@ const config = {
   ],
   core: {
     builder: 'webpack5'
+  },
+  async webpackFinal(config) {
+    config.module?.rules.push({
+      test: /\.md$/,
+      loader: require.resolve('./loaders/dist/postLoader'),
+      // without this, webpack treats .md files like strings
+      // but this loader converts it to json
+      type: 'javascript/auto'
+    })
+    return config
   }
 }
 

@@ -1,47 +1,90 @@
-import { StoryFn, Parameters } from '@storybook/react'
+import { StoryFn } from '@storybook/react'
 import { Theme } from 'components/theme'
 import merge from 'just-merge'
+import clone from 'just-clone'
 
-export interface StoryModifier {
-  <T>(story: StoryFn<T>): StoryFn<T>
+export interface StoryModifier<T> {
+  (story: StoryFn<T>): StoryFn<T>
 }
 
-export const createDefaultStories = <T>(template: StoryFn<T>) => ({
-  Base: withDefaults(template),
-  Mobile: compose(withDefaults, withMobile)(template),
-  DarkTheme: compose(withDefaults, withDarkTheme)(template),
-  DarkThemedMobile: compose(withDefaults, withMobile, withDarkTheme)(template)
-})
+type DefaultStory = 'Base' | 'Mobile' | 'DarkTheme' | 'DarkThemedMobile'
+type PrefixedDefaultStory<TPrefix extends string> = `${TPrefix}${DefaultStory}`
 
-export const asCopy: StoryModifier = story => {
-  const copiedStory = story.bind({})
-  copiedStory.args = {
-    ...story.args
+export const createDefaultStories = <T, TPrefix extends string = ''>(
+  template: StoryFn<T>,
+  options?: {
+    additionalArgs?: StoryFn<T>['args']
+    prefix?: TPrefix
   }
-  return copiedStory
+): Record<PrefixedDefaultStory<TPrefix>, StoryFn<T>> => {
+  const prefix = options?.prefix ?? ('' as TPrefix)
+  return {
+    [`${prefix}Base`]: createStory(template, options?.additionalArgs),
+    [`${prefix}Mobile`]: createStory(
+      template,
+      options?.additionalArgs,
+      withMobile
+    ),
+    [`${prefix}DarkTheme`]: createStory(
+      template,
+      options?.additionalArgs,
+      withDarkTheme
+    ),
+    [`${prefix}DarkThemedMobile`]: createStory(
+      template,
+      options?.additionalArgs,
+      withMobile,
+      withDarkTheme
+    )
+  } as Record<PrefixedDefaultStory<TPrefix>, StoryFn<T>>
 }
 
-export const withNoop: StoryModifier = story => story
+export const createStory = <T>(
+  template: StoryFn<T>,
+  args: StoryFn<T>['args'],
+  ...modifiers: StoryModifier<T>[]
+): StoryFn<T> => compose(withDefaults({ args }), ...modifiers)(template)
 
-export const compose =
-  (...params: StoryModifier[]): StoryModifier =>
-  story =>
-    params.reverse().reduceRight((y, fn) => fn(y), story)
+export const asCopy = <T>(story: StoryFn<T>): StoryFn<T> => {
+  const newStory = story.bind({})
+  newStory.args = story.args ? clone(story.args) : story.args
+  return newStory
+}
 
-export const withParams: (params: Parameters) => StoryModifier =
-  params => story => {
-    story.parameters = merge(story.parameters || {}, params)
+export const withArgs: <T>(params?: StoryFn<T>['args']) => StoryModifier<T> =
+  args => story => {
+    story.args = merge(story.args || {}, args || {})
     return story
   }
 
-export const withDarkTheme = withParams({ theme: Theme.dark })
+export const withNoop = <T>(story: StoryFn<T>): StoryFn<T> => story
 
-export const withMobile = withParams({
-  viewport: {
-    defaultViewport: 'iphone6'
-  },
-  // https://github.com/chromaui/chromatic-cli/issues/611
-  chromatic: { viewports: [375] }
-})
+export const compose =
+  <T>(...params: StoryModifier<T>[]): StoryModifier<T> =>
+  story =>
+    params.reverse().reduceRight((y, fn) => fn(y), story)
 
-export const withDefaults = compose(asCopy)
+export const withParams: <T>(
+  params?: StoryFn<T>['parameters']
+) => StoryModifier<T> = params => story => {
+  story.parameters = merge(story.parameters || {}, params || {})
+  return story
+}
+
+export const withDarkTheme = <T>(story: StoryFn<T>): StoryFn<T> =>
+  withParams<T>({ theme: Theme.dark })(story)
+
+export const withMobile = <T>(story: StoryFn<T>): StoryFn<T> =>
+  withParams<T>({
+    viewport: {
+      defaultViewport: 'iphone6'
+    },
+    // https://github.com/chromaui/chromatic-cli/issues/611
+    chromatic: { viewports: [375] }
+  })(story)
+
+export const withDefaults = <T>({
+  args
+}: {
+  args?: StoryFn<T>['args']
+}): StoryModifier<T> => compose(asCopy, withArgs<T>(args))

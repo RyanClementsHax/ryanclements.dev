@@ -8,6 +8,12 @@ setGlobalConfig(globalStorybookConfig)
 
 expect.extend(toHaveNoViolations)
 
+global.ResizeObserver = class ResizeObserver {
+  observe() {}
+  disconnect() {}
+  unobserve() {}
+}
+
 jest.mock('next/router', () => require('next-router-mock'))
 jest.mock('next/link', () => ({
   __esModule: true,
