@@ -1,13 +1,12 @@
-# ryanclements.dev
+# ryanclements.dev <!-- omit in toc -->
 
-- [ryanclements.dev](#ryanclementsdev)
-  - [Setup](#setup)
-  - [Developing](#developing)
-    - [Debugging in VSCode](#debugging-in-vscode)
-  - [Linting](#linting)
-  - [Testing](#testing)
-    - [Lighthouse](#lighthouse)
-  - [Deployment](#deployment)
+- [Setup](#setup)
+- [Developing](#developing)
+  - [Debugging in VSCode](#debugging-in-vscode)
+- [Linting](#linting)
+- [Testing](#testing)
+  - [Lighthouse](#lighthouse)
+- [Deployment](#deployment)
 
 ## Setup
 
