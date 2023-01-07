@@ -1,6 +1,8 @@
 import { Posts } from 'components/pages/posts'
-import { getSerializableRenderablePostSummaries } from 'lib/content/posts/server/renderable'
-import { RenderablePostSummary } from 'lib/content/posts/types'
+import {
+  getSerializableRenderablePostSummaries,
+  RenderablePostSummary
+} from 'lib/pages/posts/[slug]'
 import { deserialize } from 'lib/utils'
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 

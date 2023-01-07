@@ -5,10 +5,6 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply transition-colors;
-  }
-
   body {
     @apply bg-surface-base;
   }

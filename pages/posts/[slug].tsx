@@ -8,8 +8,7 @@ import { ParsedUrlQuery } from 'querystring'
 import { deserialize, Serializable } from 'lib/utils'
 import { getAllPostSlugs } from 'lib/content/posts/server'
 import { PostDetails, PostDetailsProps } from 'components/pages/posts/[slug]'
-import { RenderablePost } from 'lib/content/posts/types'
-import { getSerializableRenderablePost } from 'lib/content/posts/server/renderable'
+import { RenderablePost, getSerializableRenderablePost } from 'lib/pages/posts'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string

@@ -1,14 +1,22 @@
-import { format } from 'date-fns'
 import { Serializable, serialize } from 'lib/utils'
-import { convertRawStringToPost, getAllPostSummaries, getPost } from '.'
-import {
-  Post,
-  PostSummary,
-  RenderablePost,
-  RenderablePostSummary
-} from '../types'
-import { imageService } from './imageService'
-import { parseToHast } from './parsing'
+import { convertRawStringToPost, getPost } from 'lib/content/posts/server'
+import { HastTree, Post, PostMeta } from 'lib/content/posts/types'
+import { imageService } from 'lib/content/posts/server/imageService'
+import { parseToHast } from 'lib/content/posts/server/parsing'
+
+import { A11yStaticImageData } from 'lib/content'
+import { formatDate } from './utils'
+
+export interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
+  content: HastTree
+  meta: RenderablePostMeta
+}
+
+export interface RenderablePostMeta
+  extends Omit<PostMeta, 'bannerSrc' | 'bannerAlt' | 'publishedOn'> {
+  publishedOn?: string
+  bannerSrc: A11yStaticImageData
+}
 
 export const getSerializableRenderablePost = async (
   slug: string
@@ -26,23 +34,6 @@ export const convertRawStringToSerializableRenderablePost = async (
   const renderablePost = await convertToRenderablePost(post)
   return serialize(renderablePost)
 }
-
-export const getSerializableRenderablePostSummaries = async (): Promise<
-  Serializable<RenderablePostSummary[]>
-> => {
-  const postSummaries = await getAllPostSummaries()
-  const renderablePostSummaries = postSummaries.map(x =>
-    convertToRenderablePostSummary(x)
-  )
-  return serialize(renderablePostSummaries)
-}
-
-const convertToRenderablePostSummary = (
-  postSummary: PostSummary
-): RenderablePostSummary => ({
-  ...postSummary,
-  publishedOn: formatDate(postSummary.publishedOn)
-})
 
 const convertToRenderablePost = async (post: Post): Promise<RenderablePost> => {
   const { bannerAlt, ...meta } = post.meta
@@ -62,6 +53,3 @@ const convertToRenderablePost = async (post: Post): Promise<RenderablePost> => {
     }
   }
 }
-
-const formatDate = (date?: Date) =>
-  date ? format(date, 'MMM do, y') : undefined

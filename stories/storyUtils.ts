@@ -13,7 +13,7 @@ type PrefixedDefaultStory<TPrefix extends string> = `${TPrefix}${DefaultStory}`
 export const createDefaultStories = <T, TPrefix extends string = ''>(
   template: StoryFn<T>,
   options?: {
-    additionalArgs?: StoryFn<T>['args']
+    additionalArgs?: Args<T>
     prefix?: TPrefix
   }
 ): Record<PrefixedDefaultStory<TPrefix>, StoryFn<T>> => {
@@ -41,7 +41,7 @@ export const createDefaultStories = <T, TPrefix extends string = ''>(
 
 export const createStory = <T>(
   template: StoryFn<T>,
-  args: StoryFn<T>['args'],
+  args: Args<T>,
   ...modifiers: StoryModifier<T>[]
 ): StoryFn<T> => compose(withDefaults({ args }), ...modifiers)(template)
 
@@ -51,9 +51,10 @@ export const asCopy = <T>(story: StoryFn<T>): StoryFn<T> => {
   return newStory
 }
 
-export const withArgs: <T>(params?: StoryFn<T>['args']) => StoryModifier<T> =
+export const withArgs: <T>(args?: Args<T>) => StoryModifier<T> =
   args => story => {
-    story.args = merge(story.args || {}, args || {})
+    const nextArgs = typeof args === 'function' ? args(story.args ?? {}) : args
+    story.args = merge(story.args || {}, nextArgs || {})
     return story
   }
 
@@ -86,5 +87,9 @@ export const withMobile = <T>(story: StoryFn<T>): StoryFn<T> =>
 export const withDefaults = <T>({
   args
 }: {
-  args?: StoryFn<T>['args']
+  args?: Args<T>
 }): StoryModifier<T> => compose(asCopy, withArgs<T>(args))
+
+export type Args<T> =
+  | StoryFn<T>['args']
+  | ((args: NonNullable<StoryFn<T>['args']>) => StoryFn<T>['args'])

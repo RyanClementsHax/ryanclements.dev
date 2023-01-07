@@ -33,6 +33,15 @@
       }
     },
     {
+      "files": ["**/*.stories.ts?(x)"],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off"
+      }
+    },
+    {
       "files": ["**/*@(spec|test).@(t|j)s?(x)"],
       "extends": [
         "plugin:jest/recommended",

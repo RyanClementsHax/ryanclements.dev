@@ -47,6 +47,7 @@ export const convertRawStringToPost = async (
 
 const postMetaSchema = yup.object({
   title: yup.string().required(),
+  description: yup.string().required(),
   publishedOn: yup.date(),
   bannerSrc: yup.string().required(),
   bannerAlt: yup.string().required()
@@ -66,7 +67,7 @@ const getPostSummary = async (slug: string): Promise<PostSummary> => {
     title: post.meta.title,
     slug,
     publishedOn: post.meta.publishedOn,
-    description: 'testing'
+    description: post.meta.description
   }
 }
 
