@@ -37,7 +37,7 @@ const Banner: React.FC<{ src: A11yStaticImageData }> = ({
 const ContentContainer: React.FC<{ children?: React.ReactNode }> = ({
   children
 }) => (
-  <article className="mx-auto -mt-8 mb-16 flex max-w-2xl flex-col gap-10 px-5 text-on-surface-base md:mb-16 md:-mt-16 md:gap-16">
+  <article className="mx-auto -mt-8 mb-16 flex max-w-2xl flex-col gap-10 px-5 md:mb-16 md:-mt-16 md:gap-16">
     {children}
   </article>
 )

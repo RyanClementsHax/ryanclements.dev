@@ -14,7 +14,7 @@ export const Project: React.FC<ProjectProps> = ({
   <Container>
     <div className="flex flex-col gap-4 p-8">
       <Header name={name} githubUrl={githubUrl} />
-      <p className="text-on-surface-base">{description}</p>
+      <p>{description}</p>
       {siteUrl && <SiteLink href={siteUrl} />}
     </div>
     <Footer>
@@ -33,7 +33,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 
 const Header = ({ name, githubUrl }: { name: string; githubUrl?: string }) => (
   <div className="flex items-center justify-between">
-    <span className="font-bold text-on-surface-base">{name}</span>
+    <span className="font-bold">{name}</span>
     {githubUrl && <GithubLink href={githubUrl} />}
   </div>
 )
@@ -59,7 +59,7 @@ const TechDisplay = ({ tech }: { tech: Tech }) => (
 const GithubLink = ({ href }: { href: string }) => (
   <Link href={href} className="flex">
     <span className="sr-only">Github project url</span>
-    <GithubIcon className="text-on-surface-base" />
+    <GithubIcon />
   </Link>
 )
 

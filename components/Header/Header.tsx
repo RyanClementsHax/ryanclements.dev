@@ -102,7 +102,7 @@ const DesktopNavItem: React.FC<{ item: NavItem }> = ({
 
 const MobileNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
   <div className="md:hidden">
-    <Popover.Button className="inline-flex items-center rounded-md border border-borderColor bg-surface-base px-3 py-2 text-sm text-on-surface-base focus:border-borderColor-focus focus:outline-none focus:ring-1 focus:ring-ringColor-focus">
+    <Popover.Button className="inline-flex items-center rounded-md border border-borderColor bg-surface-base px-3 py-2 text-sm focus:border-borderColor-focus focus:outline-none focus:ring-1 focus:ring-ringColor-focus">
       Menu
       <ChevronDownIcon className="ml-2 h-4 w-4 text-icon" />
     </Popover.Button>
@@ -163,7 +163,7 @@ const MobileNavItem: React.FC<{ item: NavItem }> = ({
         as={Link}
         href={href}
         className={c(
-          'block py-4 text-base text-on-surface-base transition',
+          'block py-4 text-base transition',
           isActive
             ? 'text-secondary-700 dark:text-secondary-400'
             : 'hover:text-secondary-700 dark:hover:text-secondary-400'

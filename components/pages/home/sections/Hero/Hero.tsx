@@ -30,7 +30,7 @@ const Heading = ({
   subtitle: React.ReactNode
 }) => (
   <div className="grid gap-6">
-    <h1 className="text-4xl font-bold text-on-surface-base">{title}</h1>
+    <h1 className="text-4xl font-bold">{title}</h1>
     <h2 className="text-2xl text-on-surface-base-muted">{subtitle}</h2>
     <SocialLinks />
   </div>

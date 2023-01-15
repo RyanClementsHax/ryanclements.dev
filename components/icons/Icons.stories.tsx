@@ -6,7 +6,7 @@ import { TwitterIcon } from './TwitterIcon'
 import { LinkedInIcon } from './LinkedInIcon'
 
 const { GithubIconBase, GithubIconDarkTheme } = createDefaultStories(
-  () => <GithubIcon className="text-on-surface-base" />,
+  () => <GithubIcon />,
   {
     prefix: 'GithubIcon'
   }
@@ -15,7 +15,7 @@ const { GithubIconBase, GithubIconDarkTheme } = createDefaultStories(
 export { GithubIconBase, GithubIconDarkTheme }
 
 const { TwitterIconBase, TwitterIconDarkTheme } = createDefaultStories(
-  () => <TwitterIcon className="text-on-surface-base" />,
+  () => <TwitterIcon />,
   {
     prefix: 'TwitterIcon'
   }
@@ -24,7 +24,7 @@ const { TwitterIconBase, TwitterIconDarkTheme } = createDefaultStories(
 export { TwitterIconBase, TwitterIconDarkTheme }
 
 const { LinkedInIconBase, LinkedInIconDarkTheme } = createDefaultStories(
-  () => <LinkedInIcon className="text-on-surface-base" />,
+  () => <LinkedInIcon />,
   {
     prefix: 'LinkedInIcon'
   }

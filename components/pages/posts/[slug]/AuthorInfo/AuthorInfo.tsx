@@ -10,7 +10,7 @@ export interface AuthorInfoProps {
 export const AuthorInfo: React.FC<AuthorInfoProps> = ({ author }) => (
   <AuthorInfoContainer>
     <Avatar src={{ ...author.avatar, alt: author.name }} />
-    <div className="flex flex-col gap-1 text-on-surface-base">
+    <div className="flex flex-col gap-1">
       <p>{author.name}</p>
       <SocialLinks socialAccounts={author.socialAccounts} />
     </div>

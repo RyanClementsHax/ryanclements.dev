@@ -32,9 +32,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 )
 
 const Title = ({ children }: { children?: React.ReactNode }) => (
-  <h3 className="text-center text-xl font-light text-on-surface-base">
-    {children}
-  </h3>
+  <h3 className="text-center text-xl font-light">{children}</h3>
 )
 
 const Content = ({ children }: { children?: React.ReactNode }) => (
