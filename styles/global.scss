@@ -9,3 +9,13 @@
     @apply bg-surface-base text-on-surface-base;
   }
 }
+
+@layer components {
+  a {
+    @apply hover:text-secondary-700 dark:hover:text-secondary-400;
+
+    &.active {
+      @apply text-secondary-700 dark:text-secondary-400;
+    }
+  }
+}

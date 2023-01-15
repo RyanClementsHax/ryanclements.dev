@@ -79,17 +79,12 @@ const DesktopNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
 const DesktopNavItem: React.FC<{ item: NavItem }> = ({
   item: { href, name }
 }) => {
-  const isActive = useRouter().pathname === href
+  const isActive = useIsActive(href)
   return (
     <li>
       <Link
         href={href}
-        className={c(
-          'relative block transition',
-          isActive
-            ? 'text-secondary-700 dark:text-secondary-400'
-            : 'hover:text-secondary-700 dark:hover:text-secondary-400'
-        )}
+        className={c('relative block transition', { active: isActive })}
       >
         {name}
         {isActive && (
@@ -156,21 +151,18 @@ const MobileNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
 const MobileNavItem: React.FC<{ item: NavItem }> = ({
   item: { href, name }
 }) => {
-  const isActive = useRouter().pathname === href
+  const isActive = useIsActive(href)
   return (
     <li>
       <Popover.Button
         as={Link}
         href={href}
-        className={c(
-          'block py-4 text-base transition',
-          isActive
-            ? 'text-secondary-700 dark:text-secondary-400'
-            : 'hover:text-secondary-700 dark:hover:text-secondary-400'
-        )}
+        className={c('block py-4 text-base transition', { active: isActive })}
       >
         {name}
       </Popover.Button>
     </li>
   )
 }
+
+const useIsActive = (href: string) => useRouter().pathname === href
