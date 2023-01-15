@@ -4,10 +4,11 @@ import { useWindowScroll } from 'react-use'
 import c from 'classnames'
 
 import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid'
-import { Popover } from '@headlessui/react'
+import { Popover, Transition } from '@headlessui/react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Fragment } from 'react'
 
 interface NavItem {
   href: string
@@ -105,28 +106,50 @@ const MobileNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
       Menu
       <ChevronDownIcon className="ml-2 h-4 w-4 text-icon" />
     </Popover.Button>
-    <Popover.Overlay className="fixed inset-0 z-50 bg-zinc-800/40 backdrop-blur-sm dark:bg-black/80" />
-    <Popover.Panel
-      focus
-      className="fixed inset-x-4 top-8 z-50 origin-top rounded-xl bg-surface-base p-8"
-    >
-      <div className="flex items-center justify-between">
-        <h2 className="text-sm font-medium text-on-surface-base-muted">
-          Navigation
-        </h2>
-        <Popover.Button aria-label="Close menu" className="-m-1 p-1">
-          <XMarkIcon className="h-6 w-6 text-icon" />
-        </Popover.Button>
-      </div>
-      <nav className="my-2">
-        <ul className="divide-y divide-borderColor/50">
-          {items.map(x => (
-            <MobileNavItem key={x.href} item={x} />
-          ))}
-        </ul>
-      </nav>
-      <ThemeSelect />
-    </Popover.Panel>
+    <Transition.Root>
+      <Transition.Child
+        as={Fragment}
+        enter="duration-150 ease-out"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="duration-150 ease-in"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <Popover.Overlay className="fixed inset-0 z-50 bg-zinc-800/40 backdrop-blur-sm dark:bg-black/80" />
+      </Transition.Child>
+      <Transition.Child
+        as={Fragment}
+        enter="duration-150 ease-out"
+        enterFrom="opacity-0 scale-95"
+        enterTo="opacity-100 scale-100"
+        leave="duration-150 ease-in"
+        leaveFrom="opacity-100 scale-100"
+        leaveTo="opacity-0 scale-95"
+      >
+        <Popover.Panel
+          focus
+          className="fixed inset-x-4 top-8 z-50 origin-top rounded-xl bg-surface-base p-8"
+        >
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-medium text-on-surface-base-muted">
+              Navigation
+            </h2>
+            <Popover.Button aria-label="Close menu" className="-m-1 p-1">
+              <XMarkIcon className="h-6 w-6 text-icon" />
+            </Popover.Button>
+          </div>
+          <nav className="my-2">
+            <ul className="divide-y divide-borderColor/50">
+              {items.map(x => (
+                <MobileNavItem key={x.href} item={x} />
+              ))}
+            </ul>
+          </nav>
+          <ThemeSelect />
+        </Popover.Panel>
+      </Transition.Child>
+    </Transition.Root>
   </div>
 )
 
