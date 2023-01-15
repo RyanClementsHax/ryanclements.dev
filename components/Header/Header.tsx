@@ -44,6 +44,7 @@ export const Header: React.FC<HeaderProps> = ({ fixed = false }) => {
                 ? 'border-transparent'
                 : [
                     'border-borderColor/75',
+                    // background blur causes problems with the overlay and popover panel
                     !open
                       ? 'bg-opacity-60 backdrop-blur-xl backdrop-filter'
                       : ''
@@ -85,13 +86,13 @@ const DesktopNavItem: React.FC<{ item: NavItem }> = ({
         className={c(
           'relative block transition',
           isActive
-            ? 'text-amber-700 dark:text-amber-400'
-            : 'hover:text-amber-700 dark:hover:text-amber-400'
+            ? 'text-secondary-700 dark:text-secondary-400'
+            : 'hover:text-secondary-700 dark:hover:text-secondary-400'
         )}
       >
         {name}
         {isActive && (
-          <span className="absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-amber-700/0 via-amber-700/40 to-amber-700/0 dark:from-amber-400/0 dark:via-amber-400/40 dark:to-amber-400/0" />
+          <span className="absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-secondary-700/0 via-secondary-700/40 to-secondary-700/0 dark:from-secondary-400/0 dark:via-secondary-400/40 dark:to-secondary-400/0" />
         )}
       </Link>
     </li>
@@ -141,8 +142,8 @@ const MobileNavItem: React.FC<{ item: NavItem }> = ({
         className={c(
           'block py-4 text-base text-on-surface-base transition',
           isActive
-            ? 'text-amber-700 dark:text-amber-400'
-            : 'hover:text-amber-700 dark:hover:text-amber-400'
+            ? 'text-secondary-700 dark:text-secondary-400'
+            : 'hover:text-secondary-700 dark:hover:text-secondary-400'
         )}
       >
         {name}
