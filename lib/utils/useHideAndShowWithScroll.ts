@@ -17,8 +17,7 @@ export const useHideAndShowWithScroll = <
   useEffect(() => {
     const updater = new StyleUpdater(headerRef, contentRef)
     if (enabled) {
-      updater.register()
-      return () => updater.dispose()
+      return updater.register()
     } else {
       updater.reset()
       return
@@ -40,26 +39,26 @@ class StyleUpdater<THeader extends HTMLElement, TContent extends HTMLElement> {
     position: 'sticky',
     top: 0
   }
-
   private frame: ReturnType<typeof requestAnimationFrame> = -1
+  private headerRef: RefObject<THeader>
+  private contentRef: RefObject<TContent>
 
-  constructor(
-    private readonly headerRef: RefObject<THeader>,
-    private readonly contentRef: RefObject<TContent>
-  ) {}
+  // using typescripts inline field constructor syntax breaks storybook's babel for some reason *shrug*
+  // worth looking into again when upgrading to storybook 7
+  constructor(headerRef: RefObject<THeader>, contentRef: RefObject<TContent>) {
+    this.headerRef = headerRef
+    this.contentRef = contentRef
+  }
 
   public register() {
     this.setupStyles()
     this.handleScroll()
     window.addEventListener('scroll', this.handleScroll, { passive: true })
-  }
-
-  public dispose() {
-    cancelAnimationFrame(this.frame)
-    window.removeEventListener('scroll', this.handleScroll)
+    return () => this.dispose()
   }
 
   public reset() {
+    this.dispose()
     this.cleanupStyles()
   }
 
@@ -86,6 +85,11 @@ class StyleUpdater<THeader extends HTMLElement, TContent extends HTMLElement> {
       this.setHeaderHeight(scrollY + height)
       this.setHeaderMarginBottom(-scrollY)
     }
+  }
+
+  private dispose() {
+    cancelAnimationFrame(this.frame)
+    window.removeEventListener('scroll', this.handleScroll)
   }
 
   private setupStyles() {
