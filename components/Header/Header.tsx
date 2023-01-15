@@ -122,7 +122,7 @@ const MobileNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
       >
         <Popover.Panel
           focus
-          className="fixed inset-x-4 top-8 z-50 origin-top rounded-xl bg-surface-base p-8"
+          className="card fixed inset-x-4 top-8 z-50 origin-top"
         >
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-medium text-on-surface-base-muted">

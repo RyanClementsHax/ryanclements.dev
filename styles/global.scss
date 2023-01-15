@@ -18,4 +18,8 @@
       @apply text-secondary-700 dark:text-secondary-400;
     }
   }
+
+  .card {
+    @apply rounded-xl bg-surface-base p-8;
+  }
 }

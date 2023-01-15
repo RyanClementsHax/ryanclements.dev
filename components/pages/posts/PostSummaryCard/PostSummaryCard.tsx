@@ -19,8 +19,8 @@ const Container: React.FC<{ href: string; children?: React.ReactNode }> = ({
   href,
   children
 }) => (
-  <article className="rounded-xl border border-borderColor bg-surface-base-elevation-100 shadow-md">
-    <Link href={href} className="flex flex-col gap-4 p-8">
+  <article className="card border border-borderColor bg-surface-base-elevation-100 shadow-md">
+    <Link href={href} className="flex flex-col gap-4">
       {children}
     </Link>
   </article>

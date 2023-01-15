@@ -26,7 +26,7 @@ export const Project: React.FC<ProjectProps> = ({
 )
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="overflow-hidden rounded-xl bg-surface-base-elevation-100 shadow-md">
+  <div className="card overflow-hidden bg-surface-base-elevation-100 p-0">
     {children}
   </div>
 )
