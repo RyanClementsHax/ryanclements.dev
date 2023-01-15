@@ -46,9 +46,7 @@ export const Header: React.FC<HeaderProps> = ({ fixed = false }) => {
                 : [
                     'border-borderColor/75',
                     // background blur causes problems with the overlay and popover panel
-                    !open
-                      ? 'bg-opacity-60 backdrop-blur-xl backdrop-filter'
-                      : ''
+                    !open && 'bg-opacity-60 backdrop-blur-xl backdrop-filter'
                   ]
             )}
           >
@@ -68,7 +66,9 @@ const DesktopNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
     <nav>
       <ul className="flex h-full items-center gap-6">
         {items.map(x => (
-          <DesktopNavItem key={x.href} item={x} />
+          <li key={x.href}>
+            <DesktopNavItem item={x} />
+          </li>
         ))}
       </ul>
     </nav>
@@ -81,17 +81,15 @@ const DesktopNavItem: React.FC<{ item: NavItem }> = ({
 }) => {
   const isActive = useIsActive(href)
   return (
-    <li>
-      <Link
-        href={href}
-        className={c('relative block transition', { active: isActive })}
-      >
-        {name}
-        {isActive && (
-          <span className="absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-secondary-700/0 via-secondary-700/40 to-secondary-700/0 dark:from-secondary-400/0 dark:via-secondary-400/40 dark:to-secondary-400/0" />
-        )}
-      </Link>
-    </li>
+    <Link
+      href={href}
+      className={c('relative block transition', { active: isActive })}
+    >
+      {name}
+      {isActive && (
+        <span className="absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-secondary-700/0 via-secondary-700/40 to-secondary-700/0 dark:from-secondary-400/0 dark:via-secondary-400/40 dark:to-secondary-400/0" />
+      )}
+    </Link>
   )
 }
 
@@ -137,7 +135,9 @@ const MobileNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
           <nav className="my-2">
             <ul className="divide-y divide-borderColor/50">
               {items.map(x => (
-                <MobileNavItem key={x.href} item={x} />
+                <li key={x.href}>
+                  <MobileNavItem item={x} />
+                </li>
               ))}
             </ul>
           </nav>
@@ -153,15 +153,13 @@ const MobileNavItem: React.FC<{ item: NavItem }> = ({
 }) => {
   const isActive = useIsActive(href)
   return (
-    <li>
-      <Popover.Button
-        as={Link}
-        href={href}
-        className={c('block py-4 text-base transition', { active: isActive })}
-      >
-        {name}
-      </Popover.Button>
-    </li>
+    <Popover.Button
+      as={Link}
+      href={href}
+      className={c('block py-4 text-base transition', { active: isActive })}
+    >
+      {name}
+    </Popover.Button>
   )
 }
 
