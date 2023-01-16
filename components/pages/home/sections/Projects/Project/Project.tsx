@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { GithubIcon } from 'components/icons/GithubIcon'
-import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import { ProjectInfo, Tech } from 'lib/content/projects'
+import { ArrowLink } from 'components/ArrowLink'
 
 export interface ProjectProps {
   project: ProjectInfo
@@ -15,7 +15,7 @@ export const Project: React.FC<ProjectProps> = ({
     <div className="flex flex-col gap-4 p-8">
       <Header name={name} githubUrl={githubUrl} />
       <p>{description}</p>
-      {siteUrl && <SiteLink href={siteUrl} />}
+      {siteUrl && <ArrowLink href={siteUrl}>Go to site</ArrowLink>}
     </div>
     <Footer>
       {techs.map(x => (
@@ -60,15 +60,5 @@ const GithubLink = ({ href }: { href: string }) => (
   <Link href={href} className="flex">
     <span className="sr-only">Github project url</span>
     <GithubIcon />
-  </Link>
-)
-
-const SiteLink = ({ href }: { href: string }) => (
-  <Link
-    href={href}
-    className="flex w-fit gap-1 text-primary-700 dark:text-primary-400"
-  >
-    Go to site
-    <ArrowLongRightIcon className="h-6 w-6 text-primary-500 dark:text-primary-400" />
   </Link>
 )

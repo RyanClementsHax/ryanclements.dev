@@ -1,4 +1,4 @@
-import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
+import { ArrowLinkIcon } from 'components/ArrowLink'
 import { RenderablePostSummary } from 'lib/pages/posts'
 import Link from 'next/link'
 
@@ -19,8 +19,8 @@ const Container: React.FC<{ href: string; children?: React.ReactNode }> = ({
   href,
   children
 }) => (
-  <article className="card bg-surface-base-elevation-100">
-    <Link href={href} className="flex flex-col gap-4">
+  <article className="card bg-surface-base-elevation-100 !p-0">
+    <Link href={href} className="group flex flex-col gap-4 p-8">
       {children}
     </Link>
   </article>
@@ -41,8 +41,8 @@ const Description: React.FC<{ children?: React.ReactNode }> = ({
 }) => <p>{children}</p>
 
 const ReadMore: React.FC = () => (
-  <p className="flex gap-1 text-primary-700 dark:text-primary-400">
+  <p className="flex gap-1 text-primary-700 group-hover:text-accent-700 dark:text-primary-400 dark:group-hover:text-accent-400">
     Read more
-    <ArrowLongRightIcon className="h-6 w-6 translate-y-[2px] text-primary-500 dark:text-primary-400" />
+    <ArrowLinkIcon />
   </p>
 )
