@@ -10,7 +10,7 @@ import {
   qualitiesImageData
 } from 'lib/content'
 import { Projects } from './sections/Projects'
-import { Layout } from './Layout'
+import { Layout } from 'components/Layout'
 
 export const Home: React.FC = () => (
   <Layout>

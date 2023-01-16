@@ -43,7 +43,7 @@ module.exports = {
             primary.DEFAULT = primary[800]
             return {
               primary,
-              secondary: colors.amber,
+              accent: colors.amber,
               success: colors.green[500],
               warning: colors.yellow[400],
               danger: colors.red[500],
@@ -119,7 +119,7 @@ module.exports = {
               primary.DEFAULT = primary[500]
               return {
                 primary,
-                secondary: colors.amber,
+                accent: colors.amber,
                 success: colors.green[500],
                 warning: colors.yellow[500],
                 danger: colors.red[500],

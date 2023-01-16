@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import { RenderablePost } from 'lib/pages/posts'
-import { MetaCard } from 'components/pages/posts/[slug]/MetaCard'
-import { Content } from 'components/pages/posts/[slug]/Content'
-import { Layout } from 'components/pages/posts/Layout'
+import { MetaCard } from './MetaCard'
+import { Content } from './Content'
+import { Layout } from 'components/Layout'
 import { A11yStaticImageData } from 'lib/content'
 
 export interface PostDetailsProps {
@@ -12,7 +12,7 @@ export interface PostDetailsProps {
 export const PostDetails: React.FC<PostDetailsProps> = ({
   post: { meta, content }
 }) => (
-  <Layout>
+  <Layout hideHeaderWithScroll>
     <Banner src={meta.bannerSrc} />
     <ContentContainer>
       <MetaCard title={meta.title} publishedOn={meta.publishedOn} />

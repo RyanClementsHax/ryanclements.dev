@@ -1,4 +1,4 @@
-import { Layout } from 'components/pages/posts/Layout'
+import { Layout } from 'components/Layout'
 import { RenderablePostSummary } from 'lib/pages/posts/[slug]'
 import { PostSummaryCard } from './PostSummaryCard'
 
@@ -15,14 +15,14 @@ export const Posts: React.FC<PostsProps> = ({ posts }) => (
   </Layout>
 )
 
-const Title: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
-  <h1 className="my-10 text-4xl font-bold md:text-6xl">{children}</h1>
-)
-
 const Container: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
-  <div className="mx-auto mb-16 flex max-w-2xl flex-col gap-10 px-5">
+  <div className="mx-auto mb-16 flex max-w-2xl flex-col gap-10 px-5 pt-16">
     {children}
   </div>
+)
+
+const Title: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
+  <h1 className="my-10 text-4xl font-bold md:text-6xl">{children}</h1>
 )
 
 const PostsList: React.FC<{ posts: RenderablePostSummary[] }> = ({ posts }) => (

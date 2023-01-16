@@ -12,10 +12,10 @@
 
 @layer components {
   a {
-    @apply hover:text-secondary-700 dark:hover:text-secondary-400;
+    @apply hover:text-accent-700 dark:hover:text-accent-400;
 
     &.active {
-      @apply text-secondary-700 dark:text-secondary-400;
+      @apply text-accent-700 dark:text-accent-400;
     }
   }
 

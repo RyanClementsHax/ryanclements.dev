@@ -9,29 +9,23 @@ import { Popover, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
-
-interface NavItem {
-  href: string
-  name: string
-}
-
-const NAV_ITEMS: NavItem[] = [
-  { href: '/', name: 'Home' },
-  { href: '/posts', name: 'Posts' }
-]
+import { NavItem, navItems } from 'lib/nav'
 
 export interface HeaderProps {
-  fixed?: boolean
+  hideWithScroll?: boolean
 }
 
-export const Header: React.FC<HeaderProps> = ({ fixed = false }) => {
+export const Header: React.FC<HeaderProps> = ({ hideWithScroll = false }) => {
   const isScrolledToTop = useIsScrolledToTop()
   const { contentRef, headerRef } = useHideAndShowWithScroll<
     HTMLElement,
     HTMLDivElement
-  >({ enabled: !fixed })
+  >({ enabled: hideWithScroll })
   return (
-    <header ref={headerRef} className={c('z-50', { 'fixed w-full': fixed })}>
+    <header
+      ref={headerRef}
+      className={c('z-50', { 'fixed w-full': !hideWithScroll })}
+    >
       <Popover ref={contentRef}>
         {({ open }) => (
           <div
@@ -50,8 +44,8 @@ export const Header: React.FC<HeaderProps> = ({ fixed = false }) => {
                   ]
             )}
           >
-            <MobileNav items={NAV_ITEMS} />
-            <DesktopNav items={NAV_ITEMS} />
+            <MobileNav items={navItems} />
+            <DesktopNav items={navItems} />
           </div>
         )}
       </Popover>
@@ -87,7 +81,7 @@ const DesktopNavItem: React.FC<{ item: NavItem }> = ({
     >
       {name}
       {isActive && (
-        <span className="absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-secondary-700/0 via-secondary-700/40 to-secondary-700/0 dark:from-secondary-400/0 dark:via-secondary-400/40 dark:to-secondary-400/0" />
+        <span className="absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-accent-700/0 via-accent-700/40 to-accent-700/0 dark:from-accent-400/0 dark:via-accent-400/40 dark:to-accent-400/0" />
       )}
     </Link>
   )
