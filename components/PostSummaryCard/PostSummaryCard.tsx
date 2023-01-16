@@ -1,5 +1,5 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
-import { RenderablePostSummary } from 'lib/pages/posts/[slug]'
+import { RenderablePostSummary } from 'lib/posts'
 import Link from 'next/link'
 
 export interface PostSummaryCardProps {
@@ -19,7 +19,7 @@ const Container: React.FC<{ href: string; children?: React.ReactNode }> = ({
   href,
   children
 }) => (
-  <article className="card border border-borderColor bg-surface-base-elevation-100 shadow-md">
+  <article className="card border border-borderColor bg-surface-base-elevation-100">
     <Link href={href} className="flex flex-col gap-4">
       {children}
     </Link>

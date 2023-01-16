@@ -1,12 +1,14 @@
-import { Posts } from 'components/pages/posts'
+import { Posts, PostsProps } from 'components/pages/posts'
 import {
   getSerializableRenderablePostSummaries,
   RenderablePostSummary
-} from 'lib/pages/posts/[slug]'
-import { deserialize } from 'lib/utils'
+} from 'lib/posts'
+import { deserialize, Serializable } from 'lib/utils'
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<
+  Serializable<PostsProps>
+> = async () => {
   return {
     props: {
       posts: await getSerializableRenderablePostSummaries()

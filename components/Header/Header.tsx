@@ -9,7 +9,7 @@ import { Popover, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
-import { NavItem, navItems } from 'lib/nav'
+import { NavItem, NAV_ITEMS } from 'lib/nav'
 
 export interface HeaderProps {
   hideWithScroll?: boolean
@@ -44,8 +44,8 @@ export const Header: React.FC<HeaderProps> = ({ hideWithScroll = false }) => {
                   ]
             )}
           >
-            <MobileNav items={navItems} />
-            <DesktopNav items={navItems} />
+            <MobileNav items={NAV_ITEMS} />
+            <DesktopNav items={NAV_ITEMS} />
           </div>
         )}
       </Popover>
@@ -61,7 +61,7 @@ const DesktopNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
       <ul className="flex h-full items-center gap-6">
         {items.map(x => (
           <li key={x.href}>
-            <DesktopNavItem item={x} />
+            <DesktopNavLink item={x} />
           </li>
         ))}
       </ul>
@@ -70,7 +70,7 @@ const DesktopNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
   </div>
 )
 
-const DesktopNavItem: React.FC<{ item: NavItem }> = ({
+const DesktopNavLink: React.FC<{ item: NavItem }> = ({
   item: { href, name }
 }) => {
   const isActive = useIsActive(href)
@@ -130,7 +130,7 @@ const MobileNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
             <ul className="divide-y divide-borderColor/50">
               {items.map(x => (
                 <li key={x.href}>
-                  <MobileNavItem item={x} />
+                  <MobileNavLink item={x} />
                 </li>
               ))}
             </ul>
@@ -142,7 +142,7 @@ const MobileNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
   </div>
 )
 
-const MobileNavItem: React.FC<{ item: NavItem }> = ({
+const MobileNavLink: React.FC<{ item: NavItem }> = ({
   item: { href, name }
 }) => {
   const isActive = useIsActive(href)

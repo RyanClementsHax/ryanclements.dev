@@ -11,8 +11,14 @@ import {
 } from 'lib/content'
 import { Projects } from './sections/Projects'
 import { Layout } from 'components/Layout'
+import { RecentlyPublished } from './sections/RecentlyPublished'
+import { RenderablePostSummary } from 'lib/posts'
 
-export const Home: React.FC = () => (
+export interface HomeProps {
+  recentPostSummaries: RenderablePostSummary[]
+}
+
+export const Home: React.FC<HomeProps> = ({ recentPostSummaries }) => (
   <Layout>
     <Head>
       <title>Ryan Clements</title>
@@ -33,6 +39,7 @@ export const Home: React.FC = () => (
       }
       bannerSrcMap={heroBannerSrcMap}
     />
+    <RecentlyPublished postSummaries={recentPostSummaries} />
     <Qualities
       title="A new kind of engineer"
       subtitle="New problems need new solutions. Here's the energy I bring to the table."

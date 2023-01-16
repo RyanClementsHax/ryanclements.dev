@@ -20,6 +20,6 @@
   }
 
   .card {
-    @apply rounded-xl bg-surface-base p-8;
+    @apply rounded-xl bg-surface-base p-8 shadow-md;
   }
 }

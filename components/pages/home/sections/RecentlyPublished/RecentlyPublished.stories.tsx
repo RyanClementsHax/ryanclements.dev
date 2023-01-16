@@ -2,12 +2,13 @@ import { Meta, StoryFn } from '@storybook/react'
 import { postSummaries } from 'stories/posts'
 import { createDefaultStories } from 'stories/storyUtils'
 
-import { Posts, PostsProps } from '.'
+import { RecentlyPublished, RecentlyPublishedProps } from '.'
 
-const Template: StoryFn<PostsProps> = props => <Posts {...props} />
-
+const Template: StoryFn<RecentlyPublishedProps> = props => (
+  <RecentlyPublished {...props} />
+)
 Template.args = {
-  posts: postSummaries
+  postSummaries: postSummaries
 }
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } =
@@ -16,5 +17,5 @@ const { Base, Mobile, DarkTheme, DarkThemedMobile } =
 export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
-  component: Posts
+  component: RecentlyPublished
 } as Meta

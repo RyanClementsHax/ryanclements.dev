@@ -5,7 +5,7 @@ import { imageService } from 'lib/content/posts/server/imageService'
 import { parseToHast } from 'lib/content/posts/server/parsing'
 
 import { A11yStaticImageData } from 'lib/content'
-import { formatDate } from './utils'
+import { formatDate } from 'lib/posts/utils'
 
 export interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
   content: HastTree

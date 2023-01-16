@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
-import post from './storyUtils/post-design-system.md'
+import post from 'stories/post-design-system.md'
 
 import { PostDetails, PostDetailsProps } from '.'
 

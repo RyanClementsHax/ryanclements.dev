@@ -1,8 +1,12 @@
 import { Meta, StoryFn } from '@storybook/react'
-import { Home } from '.'
+import { Home, HomeProps } from '.'
 import { createDefaultStories } from 'stories/storyUtils'
+import { postSummaries } from 'stories/posts'
 
-const Template: StoryFn = () => <Home />
+const Template: StoryFn<HomeProps> = props => <Home {...props} />
+Template.args = {
+  recentPostSummaries: postSummaries
+}
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } =
   createDefaultStories(Template)
