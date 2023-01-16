@@ -8,7 +8,9 @@ const Template: StoryFn<RecentlyPublishedProps> = props => (
   <RecentlyPublished {...props} />
 )
 Template.args = {
-  postSummaries: postSummaries
+  postSummaries: postSummaries,
+  title: 'Recently published posts',
+  subtitle: 'Just my thoughts on software engineering'
 }
 
 const { Base, Mobile, DarkTheme, DarkThemedMobile } =

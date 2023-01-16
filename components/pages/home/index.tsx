@@ -39,7 +39,11 @@ export const Home: React.FC<HomeProps> = ({ recentPostSummaries }) => (
       }
       bannerSrcMap={heroBannerSrcMap}
     />
-    <RecentlyPublished postSummaries={recentPostSummaries} />
+    <RecentlyPublished
+      title="Recently published posts"
+      subtitle="Just my thoughts on software engineering"
+      postSummaries={recentPostSummaries}
+    />
     <Qualities
       title="A new kind of engineer"
       subtitle="New problems need new solutions. Here's the energy I bring to the table."
