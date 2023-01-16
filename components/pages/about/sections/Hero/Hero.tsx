@@ -39,7 +39,7 @@ const Banner = ({ src: { alt, ...src } }: { src: A11yStaticImageData }) => (
     priority
     // md/lg breakpoints
     sizes="(max-width: 768px) 0, (max-width: 1024px) 50vw, 60vw"
-    className="hidden h-full max-h-[500px] rounded-xl object-cover shadow-lg md:block  lg:col-span-3"
+    className="hidden h-full max-h-[500px] rounded-2xl object-cover shadow-lg md:block  lg:col-span-3"
   />
 )
 

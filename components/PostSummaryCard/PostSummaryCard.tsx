@@ -1,4 +1,4 @@
-import { ArrowLinkIcon } from 'components/ArrowLink'
+import { FakeArrowLink } from 'components/FakeArrowLink'
 import { RenderablePostSummary } from 'lib/pages/posts'
 import Link from 'next/link'
 
@@ -11,7 +11,7 @@ export const PostSummaryCard: React.FC<PostSummaryCardProps> = ({ post }) => (
     <PublishedOn date={post.publishedOn} />
     <Title>{post.title}</Title>
     <Description>{post.description}</Description>
-    <ReadMore />
+    <FakeArrowLink>Read more</FakeArrowLink>
   </Container>
 )
 
@@ -19,7 +19,7 @@ const Container: React.FC<{ href: string; children?: React.ReactNode }> = ({
   href,
   children
 }) => (
-  <article className="card bg-surface-base-elevation-100 !p-0">
+  <article className="card bg-surface-base-elevation-100 p-0">
     <Link href={href} className="group flex flex-col gap-4 p-8">
       {children}
     </Link>
@@ -39,10 +39,3 @@ const Title: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
 const Description: React.FC<{ children?: React.ReactNode }> = ({
   children
 }) => <p>{children}</p>
-
-const ReadMore: React.FC = () => (
-  <p className="flex gap-1 text-primary-700 group-hover:text-accent-700 dark:text-primary-400 dark:group-hover:text-accent-400">
-    Read more
-    <ArrowLinkIcon />
-  </p>
-)
