@@ -10,5 +10,10 @@ const { Base, Mobile, DarkTheme, DarkThemedMobile } =
 export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
-  component: About
+  component: About,
+  parameters: {
+    nextRouter: {
+      pathname: '/about'
+    }
+  }
 } as Meta

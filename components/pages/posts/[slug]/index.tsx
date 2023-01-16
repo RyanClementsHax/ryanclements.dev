@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { RenderablePost } from 'lib/pages/posts'
+import { RenderablePost } from 'lib/pages/posts/[slug]'
 import { MetaCard } from './MetaCard'
 import { Content } from './Content'
 import { Layout } from 'components/Layout'

@@ -16,5 +16,10 @@ const { Base, Mobile, DarkTheme, DarkThemedMobile } =
 export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
-  component: PostDetails
+  component: PostDetails,
+  parameters: {
+    nextRouter: {
+      pathname: '/posts/post-design-system'
+    }
+  }
 } as Meta

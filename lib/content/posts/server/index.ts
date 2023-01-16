@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 import * as yup from 'yup'
-import { log } from 'lib/utils'
+import { log } from 'lib/utils/logs'
 import { IS_DEV, IS_PREVIEW } from 'lib/constants'
 import { parseFrontMatter } from './frontMatter'
 import { validateMarkdown } from './validation'

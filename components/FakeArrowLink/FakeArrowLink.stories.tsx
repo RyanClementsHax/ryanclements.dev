@@ -3,7 +3,9 @@ import { createDefaultStories } from 'stories/storyUtils'
 import { FakeArrowLink, FakeArrowLinkProps } from '.'
 
 const Template: StoryFn<FakeArrowLinkProps> = props => (
-  <FakeArrowLink {...props} />
+  <div className="group">
+    <FakeArrowLink {...props} />
+  </div>
 )
 Template.args = {
   children: 'Click me!'

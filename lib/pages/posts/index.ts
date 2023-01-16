@@ -1,4 +1,4 @@
-import { Serializable, serialize } from 'lib/utils'
+import { Serializable, serialize } from 'lib/utils/serialization'
 import { getAllPostSummaries } from 'lib/content/posts/server'
 import { PostSummary } from 'lib/content/posts/types'
 import { formatDate, sortPostSummaries } from './utils'

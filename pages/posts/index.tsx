@@ -3,7 +3,7 @@ import {
   getSerializableRenderablePostSummaries,
   RenderablePostSummary
 } from 'lib/pages/posts'
-import { deserialize, Serializable } from 'lib/utils'
+import { deserialize, Serializable } from 'lib/utils/serialization'
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 
 export const getStaticProps: GetStaticProps<

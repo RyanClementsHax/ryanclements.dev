@@ -5,7 +5,7 @@ import {
   NextPage
 } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import { deserialize, Serializable } from 'lib/utils'
+import { deserialize, Serializable } from 'lib/utils/serialization'
 import { getAllPostSlugs } from 'lib/content/posts/server'
 import { PostDetails, PostDetailsProps } from 'components/pages/posts/[slug]'
 import {

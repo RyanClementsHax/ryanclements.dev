@@ -1,6 +1,6 @@
 import { SocialLink } from 'components/icons/SocialLink'
 import { INITIAL_YEAR } from 'lib/constants'
-import { getCurrentYear } from 'lib/utils'
+import { getCurrentYear } from 'lib/utils/dates'
 import { socialAccounts } from 'lib/content/socialAccounts'
 import Link from 'next/link'
 import { NavItem, NAV_ITEMS } from 'lib/nav'

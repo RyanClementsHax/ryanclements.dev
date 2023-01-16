@@ -1,4 +1,4 @@
-import { Serializable, serialize } from 'lib/utils'
+import { Serializable, serialize } from 'lib/utils/serialization'
 import { convertRawStringToPost, getPost } from 'lib/content/posts/server'
 import { HastTree, Post, PostMeta } from 'lib/content/posts/types'
 import { imageService } from 'lib/content/posts/server/imageService'
