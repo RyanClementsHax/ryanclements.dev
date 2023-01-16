@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { A11yStaticImageData, QualityInfo } from 'lib/content'
-import { Subtitle } from '../../headings/Subtitle'
-import { Title } from '../../headings/Title'
+import { Subtitle } from 'components/headings/Subtitle'
+import { Title } from 'components/headings/Title'
 import { Quality } from './Quality'
 
 export interface QualitiesProps {

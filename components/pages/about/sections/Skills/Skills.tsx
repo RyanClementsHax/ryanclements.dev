@@ -1,5 +1,5 @@
-import { Subtitle } from 'components/pages/home/headings/Subtitle'
-import { Title } from 'components/pages/home/headings/Title'
+import { Subtitle } from 'components/headings/Subtitle'
+import { Title } from 'components/headings/Title'
 import { SkillGroupInfo } from 'lib/content'
 import { ProficiencyLegend } from './ProficiencyLegend'
 import { SkillGroup } from './SkillGroup'

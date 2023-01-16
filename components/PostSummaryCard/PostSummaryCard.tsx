@@ -19,7 +19,7 @@ const Container: React.FC<{ href: string; children?: React.ReactNode }> = ({
   href,
   children
 }) => (
-  <article className="card border border-borderColor bg-surface-base-elevation-100">
+  <article className="card bg-surface-base-elevation-100">
     <Link href={href} className="flex flex-col gap-4">
       {children}
     </Link>

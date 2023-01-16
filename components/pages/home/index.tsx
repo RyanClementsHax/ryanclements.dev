@@ -1,14 +1,6 @@
 import Head from 'next/head'
 import { Hero } from './sections/Hero'
-import { Qualities } from './sections/Qualities'
-import { Skills } from './sections/Skills'
-import {
-  skillGroups,
-  projects,
-  qualities,
-  heroBannerSrcMap,
-  qualitiesImageData
-} from 'lib/content'
+import { projects, heroBannerSrcMap } from 'lib/content'
 import { Projects } from './sections/Projects'
 import { Layout } from 'components/Layout'
 import { RecentlyPublished } from './sections/RecentlyPublished'
@@ -28,7 +20,7 @@ export const Home: React.FC<HomeProps> = ({ recentPostSummaries }) => (
         <>
           {'Hiya! 👋'}
           <br />
-          {"I'm Ryan Clements"}
+          {"I'm Ryan"}
         </>
       }
       subtitle={
@@ -44,19 +36,8 @@ export const Home: React.FC<HomeProps> = ({ recentPostSummaries }) => (
       subtitle="Just my thoughts on software engineering"
       postSummaries={recentPostSummaries}
     />
-    <Qualities
-      title="A new kind of engineer"
-      subtitle="New problems need new solutions. Here's the energy I bring to the table."
-      graphicSrc={qualitiesImageData}
-      qualities={qualities}
-    />
-    <Skills
-      title="A lifelong learner"
-      subtitle="Here is the tech I know and love"
-      groups={skillGroups}
-    />
     <Projects
-      title="One Giant Nerd"
+      title="Nerd work"
       subtitle="I love what I do. Here are some projects I like to work on."
       projects={projects}
     />

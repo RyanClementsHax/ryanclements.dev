@@ -1,7 +1,7 @@
 import { ProjectInfo } from 'lib/content'
 import React from 'react'
-import { Subtitle } from 'components/pages/home/headings/Subtitle'
-import { Title } from 'components/pages/home/headings/Title'
+import { Subtitle } from 'components/headings/Subtitle'
+import { Title } from 'components/headings/Title'
 import { Project } from './Project'
 
 export interface ProjectsProps {
@@ -26,7 +26,7 @@ export const Projects: React.FC<ProjectsProps> = ({
 )
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <section className="flex flex-col justify-center gap-8 bg-surface-offBase p-5 py-16 md:gap-24 md:p-8 md:py-24">
+  <section className="flex flex-col justify-center gap-8 p-5 py-16 md:gap-24 md:p-8 md:py-24">
     {children}
   </section>
 )

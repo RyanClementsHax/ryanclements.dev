@@ -1,23 +1,18 @@
 import Image from 'next/image'
 import { SocialLink } from 'components/icons/SocialLink'
 import { A11yStaticImageData, socialAccounts } from 'lib/content'
-import { Theme, useTheme } from 'components/theme'
 
 export interface HeroProps {
   title: React.ReactNode
   subtitle: React.ReactNode
-  bannerSrcMap: Record<Theme, A11yStaticImageData>
+  bannerSrc: A11yStaticImageData
 }
 
-export const Hero: React.FC<HeroProps> = ({
-  title,
-  subtitle,
-  bannerSrcMap
-}) => (
+export const Hero: React.FC<HeroProps> = ({ title, subtitle, bannerSrc }) => (
   <section className="w-100 h-screen px-5 py-12 md:px-8 md:py-16">
-    <div className="grid h-full items-center gap-8 md:container md:mx-auto md:grid-cols-2">
+    <div className="grid h-full items-center gap-8 md:container md:mx-auto md:grid-cols-2 lg:grid-cols-5">
       <Heading title={title} subtitle={subtitle} />
-      <Banner srcMap={bannerSrcMap} />
+      <Banner src={bannerSrc} />
     </div>
   </section>
 )
@@ -29,23 +24,23 @@ const Heading = ({
   title: React.ReactNode
   subtitle: React.ReactNode
 }) => (
-  <div className="grid gap-6">
+  <div className="grid gap-6 lg:col-span-2">
     <h1 className="text-4xl font-bold">{title}</h1>
     <h2 className="text-2xl text-on-surface-base-muted">{subtitle}</h2>
     <SocialLinks />
   </div>
 )
 
-const Banner = ({ srcMap }: { srcMap: Record<Theme, A11yStaticImageData> }) => {
-  const { theme } = useTheme()
-  if (!theme) return null
-  const { alt, ...src } = srcMap[theme]
-  return (
-    <div className="relative hidden h-full w-full md:block">
-      <Image src={src} alt={alt} priority fill />
-    </div>
-  )
-}
+const Banner = ({ src: { alt, ...src } }: { src: A11yStaticImageData }) => (
+  <Image
+    src={src}
+    alt={alt}
+    priority
+    // md/lg breakpoints
+    sizes="(max-width: 768px) 0, (max-width: 1024px) 50vw, 60vw"
+    className="hidden h-full max-h-[500px] rounded-xl object-cover shadow-lg md:block  lg:col-span-3"
+  />
+)
 
 const SocialLinks = () => (
   <div className="flex gap-6">
