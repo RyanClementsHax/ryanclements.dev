@@ -1,5 +1,6 @@
-import { A11yStaticImageData, SocialAccount } from 'lib/content'
 import { Author } from 'lib/content/authors'
+import { A11yStaticImageData } from 'lib/content/images'
+import { SocialAccount } from 'lib/content/socialAccounts'
 import Image from 'next/image'
 import Link from 'next/link'
 

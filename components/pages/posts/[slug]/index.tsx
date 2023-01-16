@@ -3,7 +3,7 @@ import { RenderablePost } from 'lib/pages/posts'
 import { MetaCard } from './MetaCard'
 import { Content } from './Content'
 import { Layout } from 'components/Layout'
-import { A11yStaticImageData } from 'lib/content'
+import { A11yStaticImageData } from 'lib/content/images'
 
 export interface PostDetailsProps {
   post: RenderablePost

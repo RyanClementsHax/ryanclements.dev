@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Hero } from '.'
-import { aboutImageData } from 'lib/content'
+import { aboutImageData } from 'lib/content/images'
 
 const Template: StoryFn = () => (
   <Hero

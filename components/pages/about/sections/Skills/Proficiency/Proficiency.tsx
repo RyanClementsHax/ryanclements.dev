@@ -1,5 +1,5 @@
 import c from 'classnames'
-import { ProficiencyLevel } from 'lib/content'
+import { ProficiencyLevel } from 'lib/content/skills'
 import s from './Proficiency.module.scss'
 
 export interface ProficiencyProps {

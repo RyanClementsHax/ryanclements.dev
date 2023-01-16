@@ -1,14 +1,11 @@
 import Head from 'next/head'
 import { Qualities } from './sections/Qualities'
 import { Skills } from './sections/Skills'
-import {
-  skillGroups,
-  qualities,
-  qualitiesImageData,
-  aboutImageData
-} from 'lib/content'
 import { Layout } from 'components/Layout'
 import { Hero } from './sections/Hero'
+import { aboutImageData, qualitiesImageData } from 'lib/content/images'
+import { qualities } from 'lib/content/qualities'
+import { skillGroups } from 'lib/content/skills'
 
 export const About: React.FC = () => (
   <Layout>

@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react'
-import { ProficiencyLevel } from 'lib/content'
+import { ProficiencyLevel } from 'lib/content/skills'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Proficiency, ProficiencyProps } from '.'

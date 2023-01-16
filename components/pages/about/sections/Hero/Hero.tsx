@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { SocialLink } from 'components/icons/SocialLink'
-import { A11yStaticImageData, socialAccounts } from 'lib/content'
+import { socialAccounts } from 'lib/content/socialAccounts'
+import { A11yStaticImageData } from 'lib/content/images'
 
 export interface HeroProps {
   title: React.ReactNode

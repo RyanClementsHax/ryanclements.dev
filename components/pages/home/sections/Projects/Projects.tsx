@@ -1,4 +1,4 @@
-import { ProjectInfo } from 'lib/content'
+import { ProjectInfo } from 'lib/content/projects'
 import React from 'react'
 import { Subtitle } from 'components/headings/Subtitle'
 import { Title } from 'components/headings/Title'

@@ -1,4 +1,4 @@
-import { SkillGroupInfo, SkillInfo } from 'lib/content'
+import { SkillGroupInfo, SkillInfo } from 'lib/content/skills'
 import { useMemo } from 'react'
 import { Skill } from '../Skill'
 

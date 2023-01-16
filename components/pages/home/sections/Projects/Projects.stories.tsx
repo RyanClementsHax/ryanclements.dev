@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react'
-import { projects } from 'lib/content'
+import { projects } from 'lib/content/projects'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Projects } from '.'
