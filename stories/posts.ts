@@ -1,4 +1,4 @@
-import { RenderablePostSummary } from 'lib/posts'
+import { RenderablePostSummary } from 'lib/pages/posts'
 
 export const postSummaries: RenderablePostSummary[] = [
   {

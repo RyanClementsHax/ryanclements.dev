@@ -1,5 +1,5 @@
 import { PostSummaryCard } from 'components/PostSummaryCard'
-import { RenderablePostSummary } from 'lib/posts'
+import { RenderablePostSummary } from 'lib/pages/posts'
 import { Subtitle } from 'components/headings/Subtitle'
 import { Title } from 'components/headings/Title'
 

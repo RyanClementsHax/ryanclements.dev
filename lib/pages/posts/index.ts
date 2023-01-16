@@ -1,55 +1,26 @@
 import { Serializable, serialize } from 'lib/utils'
-import { convertRawStringToPost, getPost } from 'lib/content/posts/server'
-import { HastTree, Post, PostMeta } from 'lib/content/posts/types'
-import { imageService } from 'lib/content/posts/server/imageService'
-import { parseToHast } from 'lib/content/posts/server/parsing'
+import { getAllPostSummaries } from 'lib/content/posts/server'
+import { PostSummary } from 'lib/content/posts/types'
+import { formatDate, sortPostSummaries } from './utils'
 
-import { A11yStaticImageData } from 'lib/content/images'
-import { formatDate } from 'lib/posts/utils'
-
-export interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
-  content: HastTree
-  meta: RenderablePostMeta
-}
-
-export interface RenderablePostMeta
-  extends Omit<PostMeta, 'bannerSrc' | 'bannerAlt' | 'publishedOn'> {
+export interface RenderablePostSummary
+  extends Omit<PostSummary, 'publishedOn'> {
   publishedOn?: string
-  bannerSrc: A11yStaticImageData
 }
 
-export const getSerializableRenderablePost = async (
-  slug: string
-): Promise<Serializable<RenderablePost>> => {
-  const post = await getPost(slug)
-  const renderablePost = await convertToRenderablePost(post)
-  return serialize(renderablePost)
-}
-
-export const convertRawStringToSerializableRenderablePost = async (
-  slug: string,
-  rawString: string
-): Promise<Serializable<RenderablePost>> => {
-  const post = await convertRawStringToPost(slug, rawString)
-  const renderablePost = await convertToRenderablePost(post)
-  return serialize(renderablePost)
-}
-
-const convertToRenderablePost = async (post: Post): Promise<RenderablePost> => {
-  const { bannerAlt, ...meta } = post.meta
-  const imgProps = await imageService.getOptimizedImageProperties(
-    post.meta.bannerSrc
+export const getSerializableRenderablePostSummaries = async (): Promise<
+  Serializable<RenderablePostSummary[]>
+> => {
+  const postSummaries = sortPostSummaries(await getAllPostSummaries())
+  const renderablePostSummaries = postSummaries.map(x =>
+    convertToRenderablePostSummary(x)
   )
-  return {
-    ...post,
-    content: await parseToHast(post.meta.slug, post.content),
-    meta: {
-      ...meta,
-      publishedOn: formatDate(meta.publishedOn),
-      bannerSrc: {
-        ...imgProps,
-        alt: bannerAlt
-      }
-    }
-  }
+  return serialize(renderablePostSummaries)
 }
+
+const convertToRenderablePostSummary = (
+  postSummary: PostSummary
+): RenderablePostSummary => ({
+  ...postSummary,
+  publishedOn: formatDate(postSummary.publishedOn)
+})

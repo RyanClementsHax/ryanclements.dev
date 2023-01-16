@@ -2,7 +2,7 @@ import { Home, HomeProps } from 'components/pages/home'
 import {
   getSerializableRenderablePostSummaries,
   RenderablePostSummary
-} from 'lib/posts'
+} from 'lib/pages/posts'
 import { deserialize, Serializable } from 'lib/utils'
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 

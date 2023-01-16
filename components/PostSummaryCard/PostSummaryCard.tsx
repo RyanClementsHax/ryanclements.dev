@@ -1,5 +1,5 @@
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
-import { RenderablePostSummary } from 'lib/posts'
+import { RenderablePostSummary } from 'lib/pages/posts'
 import Link from 'next/link'
 
 export interface PostSummaryCardProps {

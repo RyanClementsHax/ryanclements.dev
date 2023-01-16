@@ -3,7 +3,7 @@ import { Hero } from './sections/Hero'
 import { Projects } from './sections/Projects'
 import { Layout } from 'components/Layout'
 import { RecentlyPublished } from './sections/RecentlyPublished'
-import { RenderablePostSummary } from 'lib/posts'
+import { RenderablePostSummary } from 'lib/pages/posts'
 import { heroBannerSrcMap } from 'lib/content/images'
 import { projects } from 'lib/content/projects'
 

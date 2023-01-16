@@ -1,5 +1,5 @@
 import { Layout } from 'components/Layout'
-import { RenderablePostSummary } from 'lib/posts'
+import { RenderablePostSummary } from 'lib/pages/posts'
 import { PostSummaryCard } from 'components/PostSummaryCard'
 
 export interface PostsProps {
