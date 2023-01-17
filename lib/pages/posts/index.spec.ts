@@ -59,5 +59,7 @@ const createSummary = (summary: Partial<PostSummary>): PostSummary => ({
   description:
     'This is a post that contains all of the custom components and styles to make a post look awesome.',
   publishedOn: new Date(1, 2, 2022),
+  thumbnailSrc: 'some/src',
+  thumbnailAlt: 'some alt',
   ...summary
 })

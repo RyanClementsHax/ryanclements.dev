@@ -5,7 +5,7 @@ import * as stories from './ThemeSelect.stories'
 import { getCurrentTheme, Theme } from '..'
 import { composeStories } from '@storybook/testing-react'
 
-const { Base } = composeStories(stories)
+const { Base, LoadingBase } = composeStories(stories)
 
 describe('ThemeSelect', () => {
   it('has no axe violations', async () => {
@@ -61,6 +61,14 @@ describe('ThemeSelect', () => {
       )
 
       await waitFor(() => expect(getCurrentTheme()).toBe(newTheme))
+    })
+  })
+
+  describe('loading', () => {
+    it('has no axe violations', async () => {
+      const { container } = render(<LoadingBase />)
+
+      expect(await axe(container)).toHaveNoViolations()
     })
   })
 })

@@ -56,6 +56,7 @@ module.exports = {
                     300: 'white'
                   }
                 },
+                skeleton: colors.gray[200],
                 offBase: colors.gray[200],
                 brand: primary.DEFAULT,
                 primary: primary[100],
@@ -132,6 +133,7 @@ module.exports = {
                       300: '#1F2128'
                     }
                   },
+                  skeleton: colors.zinc[800],
                   offBase: colors.gray[800],
                   brand: primary[800],
                   primary: '#1f2330', // primary[900] @ 50% opacity on colors.zinc[900]
