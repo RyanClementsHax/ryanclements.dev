@@ -22,4 +22,6 @@ export interface PostSummary {
   title: string
   publishedOn?: Date
   description: string
+  thumbnailSrc: string
+  thumbnailAlt: string
 }

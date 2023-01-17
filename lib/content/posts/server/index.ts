@@ -67,7 +67,9 @@ const getPostSummary = async (slug: string): Promise<PostSummary> => {
     title: post.meta.title,
     slug,
     publishedOn: post.meta.publishedOn,
-    description: post.meta.description
+    description: post.meta.description,
+    thumbnailSrc: post.meta.bannerSrc,
+    thumbnailAlt: post.meta.bannerAlt
   }
 }
 
