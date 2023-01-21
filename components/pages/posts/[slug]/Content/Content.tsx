@@ -32,8 +32,13 @@ const ContentImage: React.FC<
   />
 )
 
+const Anchor: React.FC<
+  React.AnchorHTMLAttributes<HTMLAnchorElement>
+> = props => <a {...props} target="_blank" rel="noopener" />
+
 const components: ComponentsWithoutNodeOptions['components'] = {
   img: ContentImage,
   code: Code,
-  aside: Callout
+  aside: Callout,
+  a: Anchor
 }
