@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderProps> = ({ hideWithScroll = false }) => {
       ref={headerRef}
       className={c('z-50', { 'fixed w-full': !hideWithScroll })}
     >
-      <Popover ref={contentRef}>
+      <Popover ref={contentRef} className="z-10">
         {({ open }) => (
           <div
             className={c(

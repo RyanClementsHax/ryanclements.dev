@@ -176,3 +176,9 @@ Why is this? It is because the overlay wants to be absolutely positioned which m
 Also you may have noticed that the backdrop doesn't work any more. It applies only to the header. I'm not exactly sure why this is the case, but it seems to be also caused by the fact that my header uses a blurred background. Getting around that was simple. Only blur the background when the popover is closed.
 
 Honestly, I was at loss for where to go from here. How could I get the header animation I wanted, but also support the popover for mobile devices. Que [tailwindui.com](https://tailwindui.com/).
+
+## The perfect solution
+
+[tailwindui.com](https://tailwindui.com/) is made by the folks who bring us [tailwind](https://tailwindcss.com/). It is a way for them to make some income by selling website templates. I follow their newsletter since their content is top tier 👌🏻 and found that they released a website template for a [personal website](https://spotlight.tailwindui.com/). Of course I had to check it out when I went to build my own personal website! To my chagrin, they use the EXACT header that I wanted!
+
+Naturally I popped open Chrome's dev tools in attempt to pick apart how they were doing it and honestly it didn't make much sense to me. curiosity was killing me so I paid for the template myself (honestly they deserve the money in my opinion).
