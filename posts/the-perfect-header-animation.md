@@ -16,7 +16,21 @@ Personally, when I'm reading, I tend to do so on mobile. Because my thumb is scr
 
 When it came time to build the header for my website. I knew, at least for the sake of my sanity, that I had to implement the perfect header animation. In this post, I'll take you through the journey of how I implemented this, why Medium's solution didn't work for me, and how I found the perfect animation in an unexpected place 🤔.
 
+<aside>
+
+All of the code in this post can be found in [the sample repo](https://github.com/RyanClementsHax/blog-perfect-header-animation).
+
+The examples I use are in react, but the concept holds for any framework of choice
+
+</aside>
+
 ## The first attempt
+
+<aside>
+
+The code for this part can be found in [FirstAttemptHeader.tsx](https://github.com/RyanClementsHax/blog-perfect-header-animation/blob/main/components/FirstAttemptHeader.tsx)
+
+</aside>
 
 I thought to myself.
 
@@ -29,4 +43,118 @@ Let's start by trying to reverse engineer what Medium is doing.
 
 ![Medium is using a transform: translateY(value) approach](/what_medium_does.gif)
 
-It might be hard to see, but what medium is doing is first setting `position: sticky;{:css}` and `top: 0;{:css}` in order to get the header to be anchored to the top. Then in javascript they use css's [transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) property to move the header in and out out of view.
+It might be hard to see, but what medium is doing is first setting `position: sticky;{:css}` and `top: 0;{:css}` in order to get the header to be anchored to the top. Then in javascript they use css's [transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) property to move the header in and out out of view as the user scrolls. Also note that the value is only ever between `0` and `-98px`, the negative value of the header's height. More on this later.
+
+Alright, simple enough. Let's get started on an implementation. Here is the component.
+
+```tsx
+import { useEffect, useRef } from 'react'
+
+export const FirstAttempt: React.FC = () => {
+  return <header>Header content!</header>
+}
+```
+
+And some css to make it pretty. Notice the last two lines as being the important lines to make this work.
+
+```css
+header {
+  display: flex;
+  padding: 1rem;
+  background: green;
+  color: white;
+
+  /* these are the styles that we need to make the hiding/showing work */
+  position: sticky;
+  top: 0;
+}
+```
+
+This is what we get to start with.
+
+![Header without animations](/first-attempt-raw.gif)
+
+Now let's begin adding in that fancy animation. We are first going to need to add a handler to listen on scroll events.
+
+```tsx {4-10}
+import { useEffect, useRef } from 'react'
+
+export const FirstAttemptHeader: React.FC = () => {
+  useEffect(() => {
+    const handler = () => {
+      // TODO: add logic
+    }
+    window.addEventListener('scroll', handler)
+    return () => window.removeEventListener('scroll', handler)
+  }, [])
+  return <header>Header content!</header>
+}
+```
+
+We wrap it in a `useEffect` because we only want this to run once. We return a cleanup function (`() => window.removeEventListener('scroll', handler){:ts}`) that unregisters this handler when this component is unmounted (see the react docs for more on how this works).
+
+Because we will need to inline the `translationY` css property, we need a reference to the node we want to show and hide.
+
+```tsx {4, 14}
+import { useEffect, useRef } from 'react'
+
+export const FirstAttemptHeader: React.FC = () => {
+  const nodeRef = useRef<HTMLElement>(null!)
+  useEffect(() => {
+    let previousY: number | undefined = undefined
+    let translationY = 0
+    const handler = () => {
+      // TODO: logic
+    }
+    window.addEventListener('scroll', handler)
+    return () => window.removeEventListener('scroll', handler)
+  }, [])
+  return <header ref={nodeRef}>Header content!</header>
+}
+```
+
+Now let's add the logic. One way to think of the logic is like this:
+
+1. Calculate the change in scroll position
+2. Add the diff to the header's current `translationY` to get the new `translationY`, but bound it between `0` and the negative value of the header's height (also known as "clamping" the value between the two boundaries)
+3. Set the header's inline style to the newly calculated `translationY`
+
+Number 2 might take some explaining. If you look at the `translationY` value set on the header in the case of Medium's header (see below), you see that it follows this same logic. The `translationY` will never be more than `0` (positive values push the element down), and never be less than `-98px` (negative values push the element up) which just so happens to be the header element's height (you can see this by inspecting the element in the browser's dev tools).
+
+![Medium is using a transform: translateY(value) approach](/what_medium_does.gif)
+
+Let's add that logic in.
+
+```tsx {6-7, 9-21}
+import { useEffect, useRef } from 'react'
+
+export const FirstAttemptHeader: React.FC = () => {
+  const nodeRef = useRef<HTMLElement>(null!)
+  useEffect(() => {
+    let previousY: number | undefined = undefined
+    let translationY = 0
+    const handler = () => {
+      const currentY = window.scrollY
+      if (previousY === undefined) {
+        previousY = currentY
+        return
+      }
+      const diff = currentY - previousY
+      previousY = currentY
+
+      const { height } = nodeRef.current.getBoundingClientRect()
+
+      translationY = Math.min(Math.max(translationY - diff, -height), 0)
+
+      nodeRef.current.style.transform = `translateY(${translationY}px)`
+    }
+    window.addEventListener('scroll', handler)
+    return () => window.removeEventListener('scroll', handler)
+  }, [])
+  return <header ref={nodeRef}>Header content!</header>
+}
+```
+
+Success!
+
+![Our header with the animation applied](/first_attempt_implemented.gif)

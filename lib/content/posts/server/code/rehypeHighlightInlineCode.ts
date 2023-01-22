@@ -1,12 +1,11 @@
 import { Plugin } from 'unified'
 
-import { createStarryNight, common } from '@wooorm/starry-night'
 import { visit } from 'unist-util-visit'
 import { HastTree } from '../../types'
 import { ElementContent } from 'hast'
 import { h } from 'hastscript'
 import { pointStart } from 'unist-util-position'
-import { isPreElement } from './utils'
+import { getStarryNight, isPreElement } from './utils'
 
 const getClassNamesFromScope = (scope: string) => [
   'highlight',
@@ -17,7 +16,7 @@ const INLINE_CODE_LANG_MATCHER = /{:([a-zA-z]+)}$/
 
 export const rehypeHighlightInlineCode: Plugin<[], HastTree> =
   () => async (tree, file) => {
-    const starryNight = await createStarryNight(common)
+    const starryNight = await getStarryNight()
 
     visit(tree, { type: 'element', tagName: 'code' }, (node, index, parent) => {
       if (isPreElement(parent) || !parent || index === null) {
