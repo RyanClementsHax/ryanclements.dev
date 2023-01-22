@@ -6,6 +6,7 @@ import { useTheme } from 'components/theme/ThemeContext'
 import { Theme } from 'components/theme/types'
 
 const WIDTH_CLASS = 'w-28'
+const HEIGHT_CLASS = 'h-[38px]'
 
 export const ThemeSelect: React.FC = () => {
   const { theme, setTheme } = useTheme()
@@ -15,7 +16,7 @@ export const ThemeSelect: React.FC = () => {
   }
 
   return (
-    <div className={WIDTH_CLASS}>
+    <div className={c(WIDTH_CLASS, HEIGHT_CLASS)}>
       <Listbox value={theme} onChange={setTheme}>
         <div className="relative">
           <Button />
@@ -80,6 +81,10 @@ const Option = ({ value }: { value: string }) => (
 
 const Skeleton: React.FC = () => (
   <div
-    className={c(WIDTH_CLASS, 'animate-pulse rounded-md bg-surface-skeleton')}
+    className={c(
+      WIDTH_CLASS,
+      HEIGHT_CLASS,
+      'animate-pulse rounded-md bg-surface-skeleton'
+    )}
   />
 )

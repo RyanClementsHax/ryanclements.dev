@@ -158,3 +158,21 @@ export const FirstAttemptHeader: React.FC = () => {
 Success!
 
 ![Our header with the animation applied](/first_attempt_implemented.gif)
+
+## The problem
+
+If your use case is as simple as this, you can probably stop reading, but you won't cuz you're totally enthralled, right 🤩? If you want to support mobile navigation then I suggest you continue reading.
+
+What I want my header to also support, is on smaller screens, hide the navigation behind a "Menu" button that brings up an overlay with all of the nav items. I also want it to remain in the same place if the user scrolls. Like this:
+
+![An overlay on mobile that works with scrolling](/header_goal.gif)
+
+Instead, this happens:
+
+![An overlay on mobile that is broken scrolling](/first_attempt_failure.gif)
+
+Why is this? It is because the overlay wants to be absolutely positioned which makes sense if it wants to be anchored to the top of the viewport and be independent of scroll. Well, `position: sticky;{:css}` on the header runs this because the overlay becomes relative to _it_ instead of the viewport. Therefore, when it hides by being pushed up, the overlay gets pushed up too.
+
+Also you may have noticed that the backdrop doesn't work any more. It applies only to the header. I'm not exactly sure why this is the case, but it seems to be also caused by the fact that my header uses a blurred background. Getting around that was simple. Only blur the background when the popover is closed.
+
+Honestly, I was at loss for where to go from here. How could I get the header animation I wanted, but also support the popover for mobile devices. Que [tailwindui.com](https://tailwindui.com/).

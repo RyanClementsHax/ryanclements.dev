@@ -12,9 +12,7 @@ export { Base, DarkTheme }
 const { LoadingBase, LoadingDarkTheme } = createDefaultStories(
   () => (
     <ThemeContext.Provider value={{ theme: undefined, setTheme: () => {} }}>
-      <div className="flex h-[38px]">
-        <ThemeSelect />
-      </div>
+      <ThemeSelect />
     </ThemeContext.Provider>
   ),
   { prefix: 'Loading' }
