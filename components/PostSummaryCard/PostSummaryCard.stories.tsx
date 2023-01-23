@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react'
-import { tomatoesImageData } from 'stories/posts'
+import { postSummaries } from 'stories/posts'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { PostSummaryCard, PostSummaryCardProps } from '.'
@@ -8,14 +8,7 @@ const Template: StoryFn<PostSummaryCardProps> = props => (
   <PostSummaryCard {...props} />
 )
 Template.args = {
-  post: {
-    slug: 'post-design-system',
-    title: 'Post Design System for ryanclements.dev',
-    description:
-      'This is a post that contains all of the custom components and styles to make a post look awesome.',
-    publishedOn: 'Feb 3rd, 2022',
-    thumbnailSrc: tomatoesImageData
-  }
+  post: postSummaries[1]
 }
 
 const { Base, DarkTheme, Mobile, DarkThemedMobile } =

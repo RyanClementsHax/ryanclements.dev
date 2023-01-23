@@ -1,6 +1,6 @@
 ---
 title: 'The Perfect Header Animation'
-bannerAlt: 'tomatoes'
+bannerAlt: 'spiderman reading a book by roadtripwithraj on Unsplash'
 description: 'Ever wondered how to create a header that animates in and out of view in perfect sync with scrolling?'
 ---
 
@@ -182,3 +182,13 @@ Honestly, I was at loss for where to go from here. How could I get the header an
 [tailwindui.com](https://tailwindui.com/) is made by the folks who bring us [tailwind](https://tailwindcss.com/). It is a way for them to make some income by selling website templates. I follow their newsletter since their content is top tier 👌🏻 and found that they released a website template for a [personal website](https://spotlight.tailwindui.com/). Of course I had to check it out when I went to build my own personal website! To my chagrin, they use the EXACT header that I wanted!
 
 Naturally I popped open Chrome's dev tools in attempt to pick apart how they were doing it and honestly it didn't make much sense to me. curiosity was killing me so I paid for the template myself (honestly they deserve the money in my opinion).
+
+Their solution is much more complex since it handles several other features of their header, but the part that applies to what I needed ended up being.....somewhat.....simple. It uses a technique where the content in the header that you want to show and hide is wrapped in a div. That div gets the `position: sticky;{:css}` and `top: 0;{:css}` properties whereas the header itself has expandable height with a negative margin to off set it.
+
+If this sounds crazy to you, then yes, you're right, but it works 🤷🏻. The code is complicated so I'll have to save an explanation for a different post if y'all desire me to go into it. If you want to know how I implemented it, you can just look at the [source code for this website here](https://github.com/RyanClementsHax/ryanclements.dev/blob/main/components/Header/Header.tsx).
+
+## Conclusion
+
+Getting simple things to work in css can be tiring, but you learn so much on the way. Often, it takes diving deep into code you didn't write and trying until you have that eureka moment. Recently, for me, this described the process of creating the header you now see on this website. I hope you enjoy it 😄.
+
+That's all for now. Bye! 👋🏻
