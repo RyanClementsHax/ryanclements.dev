@@ -24,13 +24,15 @@ export const Header: React.FC<HeaderProps> = ({ hideWithScroll = false }) => {
   return (
     <header
       ref={headerRef}
-      className={c('z-50', { 'fixed w-full': !hideWithScroll })}
+      className={c('z-50', {
+        'fixed w-full': !hideWithScroll
+      })}
     >
       <Popover ref={contentRef} className="z-10">
         {({ open }) => (
           <div
             className={c(
-              'flex justify-end border-b bg-surface-base p-3',
+              'flex items-center justify-end border-b bg-surface-base p-3',
               isScrolledToTop
                 ? 'border-transparent'
                 : [
@@ -40,6 +42,12 @@ export const Header: React.FC<HeaderProps> = ({ hideWithScroll = false }) => {
                   ]
             )}
           >
+            <Link
+              href="/"
+              className="spacing mr-auto ml-3 text-lg font-semibold tracking-wider"
+            >
+              Ryan&nbsp;Clements
+            </Link>
             <MobileNav items={NAV_ITEMS} />
             <DesktopNav items={NAV_ITEMS} />
           </div>
