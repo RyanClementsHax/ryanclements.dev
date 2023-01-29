@@ -11,17 +11,14 @@ const postsDirectory = path.join(process.cwd(), 'posts')
 
 export const getAllPostSlugs = async (): Promise<string[]> =>
   (await getAllPosts())
-    .filter(x => IS_DEV || IS_PREVIEW || !!x.meta.publishedOn)
+    .filter(x => postCanBeShown(x.meta.publishedOn))
     .map(x => x.meta.slug)
-
-export const getAllPosts = async (): Promise<Post[]> => {
-  const fileStems = await getPostFileStems()
-  return await Promise.all(fileStems.map(x => getPost(x)))
-}
 
 export const getAllPostSummaries = async (): Promise<PostSummary[]> => {
   const fileStems = await getPostFileStems()
-  return await Promise.all(fileStems.map(x => getPostSummary(x)))
+  return (await Promise.all(fileStems.map(x => getPostSummary(x)))).filter(x =>
+    postCanBeShown(x.publishedOn)
+  )
 }
 
 export const getPost = async (slug: string): Promise<Post> => {
@@ -61,6 +58,11 @@ const getMetaFromRawString = async (slug: string, rawString: string) => {
   }
 }
 
+const getAllPosts = async (): Promise<Post[]> => {
+  const fileStems = await getPostFileStems()
+  return await Promise.all(fileStems.map(x => getPost(x)))
+}
+
 const getPostSummary = async (slug: string): Promise<PostSummary> => {
   const post = await getPost(slug)
   return {
@@ -85,3 +87,6 @@ const getPostFileStems = async () => {
     throw e
   }
 }
+
+const postCanBeShown = (publishedOn?: Date): boolean =>
+  IS_DEV || IS_PREVIEW || !!publishedOn
