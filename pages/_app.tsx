@@ -3,8 +3,8 @@ import { ThemeProvider } from 'components/theme'
 import type { AppProps } from 'next/app'
 
 import 'styles/global.scss'
+import { log } from 'lib/utils/logs'
 import { useEffect } from 'react'
-import { log } from 'lib/utils'
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   useEffect(() => {
@@ -14,7 +14,6 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
     )
     log.log("You're a curious one I see ;)")
   }, [])
-
   return (
     <ThemeProvider>
       <Component {...pageProps} />

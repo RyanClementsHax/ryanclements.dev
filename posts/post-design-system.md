@@ -1,6 +1,7 @@
 ---
 title: 'Post Design System for ryanclements.dev'
-bannerAlt: 'tomatoes'
+bannerAlt: 'computer showing design system by balazsketyi on Unsplash'
+description: 'This is a post that contains all of the custom components and styles to make a post look awesome.'
 ---
 
 <!-- markdownlint-disable MD029 -->

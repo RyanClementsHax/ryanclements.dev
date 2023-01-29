@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { GithubIcon } from 'components/icons/GithubIcon'
-import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
-import { ProjectInfo, Tech } from 'lib/content'
+import { ProjectInfo, Tech } from 'lib/content/projects'
+import { ArrowLink } from 'components/ArrowLink'
 
 export interface ProjectProps {
   project: ProjectInfo
@@ -14,8 +14,8 @@ export const Project: React.FC<ProjectProps> = ({
   <Container>
     <div className="flex flex-col gap-4 p-8">
       <Header name={name} githubUrl={githubUrl} />
-      <p className="text-on-surface-base">{description}</p>
-      {siteUrl && <SiteLink href={siteUrl} />}
+      <p>{description}</p>
+      {siteUrl && <ArrowLink href={siteUrl}>Go to site</ArrowLink>}
     </div>
     <Footer>
       {techs.map(x => (
@@ -26,14 +26,14 @@ export const Project: React.FC<ProjectProps> = ({
 )
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <div className="overflow-hidden rounded-xl bg-surface-base-elevation-100 shadow-md">
+  <div className="card overflow-hidden bg-surface-base-elevation-100 p-0">
     {children}
   </div>
 )
 
 const Header = ({ name, githubUrl }: { name: string; githubUrl?: string }) => (
   <div className="flex items-center justify-between">
-    <span className="font-bold text-on-surface-base">{name}</span>
+    <span className="font-bold">{name}</span>
     {githubUrl && <GithubLink href={githubUrl} />}
   </div>
 )
@@ -59,19 +59,6 @@ const TechDisplay = ({ tech }: { tech: Tech }) => (
 const GithubLink = ({ href }: { href: string }) => (
   <Link href={href} className="flex">
     <span className="sr-only">Github project url</span>
-    <GithubIcon className="text-on-surface-base" />
-  </Link>
-)
-
-const SiteLink = ({ href }: { href: string }) => (
-  <Link
-    href={href}
-    className="flex w-fit gap-1 text-primary-700 dark:text-primary-400"
-  >
-    Go to site
-    <ArrowLongRightIcon
-      aria-hidden="true"
-      className="h-6 w-6 text-primary-500 dark:text-primary-400"
-    />
+    <GithubIcon />
   </Link>
 )

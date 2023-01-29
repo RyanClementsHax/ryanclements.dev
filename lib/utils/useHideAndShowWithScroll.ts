@@ -1,63 +1,145 @@
-import { useState } from 'react'
-import { useIsomorphicLayoutEffect } from 'react-use'
+import React, { RefObject, useEffect, useRef } from 'react'
 
-// man I'm really not sure how to clean this up lol
-export const useHideAndShowWithScroll = (
-  { enabled }: { enabled: boolean } = { enabled: true }
-): ((ref: HTMLElement) => void) => {
-  const [ref, setRef] = useState<HTMLElement | null>(null)
+export const useHideAndShowWithScroll = <
+  THeader extends HTMLElement,
+  TContent extends HTMLElement
+>({
+  enabled
+}: {
+  enabled: boolean
+}): {
+  headerRef: RefObject<THeader>
+  contentRef: RefObject<TContent>
+} => {
+  const headerRef = useRef<THeader | null>(null)
+  const contentRef = useRef<TContent | null>(null)
 
-  useIsomorphicLayoutEffect(() => {
-    if (!ref) return
-    const updateTranslationYTo = (translationY: number) => {
-      ref.style.transform = `translateY(${translationY}px)`
-    }
-    if (!enabled) {
-      updateTranslationYTo(0)
+  useEffect(() => {
+    const updater = new StyleUpdater(headerRef, contentRef)
+    if (enabled) {
+      return updater.register()
+    } else {
+      updater.reset()
       return
     }
-    let height: number | undefined
-    const observer = new ResizeObserver(entries => {
-      if (entries[0]) {
-        height = entries[0].borderBoxSize[0].blockSize
-      }
-    })
-    observer.observe(ref)
+  }, [enabled])
 
-    let previousY = window.scrollY
-    let translationY = 0
-    let updateTranslationYFrame: ReturnType<typeof requestAnimationFrame>
-    const handler = () => {
-      if (height === undefined) return
-      cancelAnimationFrame(updateTranslationYFrame)
+  return {
+    headerRef,
+    contentRef
+  }
+}
 
-      const currentY = window.scrollY
-      const diff = currentY - previousY
-      translationY = Math.min(
-        Math.max(
-          translationY - diff,
-          -(
-            (
-              height + 1
-            ) /* sometimes chrome leaves in a pixel even though the math is right */
-          )
-        ),
-        0
+class StyleUpdater<THeader extends HTMLElement, TContent extends HTMLElement> {
+  private readonly HEADER_STYLES: React.CSSProperties = {
+    height: '',
+    marginBottom: ''
+  }
+  private readonly CONTENT_STYLES: React.CSSProperties = {
+    position: 'sticky',
+    top: 0
+  }
+  private frame: ReturnType<typeof requestAnimationFrame> = -1
+  private headerRef: RefObject<THeader>
+  private contentRef: RefObject<TContent>
+
+  // using typescripts inline field constructor syntax breaks storybook's babel for some reason *shrug*
+  // worth looking into again when upgrading to storybook 7
+  constructor(headerRef: RefObject<THeader>, contentRef: RefObject<TContent>) {
+    this.headerRef = headerRef
+    this.contentRef = contentRef
+  }
+
+  public register() {
+    this.setupStyles()
+    this.handleScroll()
+    window.addEventListener('scroll', this.handleScroll, { passive: true })
+    return () => this.dispose()
+  }
+
+  public reset() {
+    this.dispose()
+    this.cleanupStyles()
+  }
+
+  private handleScroll = () => {
+    cancelAnimationFrame(this.frame)
+    this.frame = requestAnimationFrame(() => this.update())
+  }
+
+  private update() {
+    if (!this.contentRef.current) return
+
+    const { top, height } = this.contentRef.current.getBoundingClientRect()
+    const scrollY = this.clamp(
+      window.scrollY,
+      0,
+      document.body.scrollHeight - window.innerHeight
+    )
+
+    if (top + height < 0) {
+      const offset = Math.max(height, scrollY)
+      this.setHeaderHeight(offset)
+      this.setHeaderMarginBottom(height - offset)
+    } else if (top === 0) {
+      this.setHeaderHeight(scrollY + height)
+      this.setHeaderMarginBottom(-scrollY)
+    }
+  }
+
+  private dispose() {
+    cancelAnimationFrame(this.frame)
+    window.removeEventListener('scroll', this.handleScroll)
+  }
+
+  private setupStyles() {
+    this.assignStyles(this.headerRef, this.HEADER_STYLES)
+    this.assignStyles(this.contentRef, this.CONTENT_STYLES)
+  }
+
+  private cleanupStyles() {
+    this.removeStyles(this.headerRef, this.HEADER_STYLES)
+    this.removeStyles(this.contentRef, this.CONTENT_STYLES)
+  }
+
+  private assignStyles(
+    ref: RefObject<HTMLElement>,
+    styles: React.CSSProperties
+  ) {
+    if (ref.current) {
+      Object.assign(ref.current.style, styles)
+    }
+  }
+
+  private removeStyles(
+    ref: RefObject<HTMLElement>,
+    styles: React.CSSProperties
+  ) {
+    if (ref.current) {
+      Object.assign(
+        ref.current.style,
+        Object.entries(styles)
+          .map(([key]) => [key, ''])
+          .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
       )
-      previousY = currentY
-
-      updateTranslationYFrame = requestAnimationFrame(() => {
-        updateTranslationYTo(translationY)
-      })
     }
+  }
 
-    window.addEventListener('scroll', handler)
-    return () => {
-      cancelAnimationFrame(updateTranslationYFrame)
-      window.removeEventListener('scroll', handler)
-      observer.disconnect()
-    }
-  }, [ref, enabled])
+  private setHeaderHeight(height: number) {
+    this.setHeaderProperty('height', `${height}px`)
+  }
 
-  return setRef
+  private setHeaderMarginBottom(marginBottom: number) {
+    this.setHeaderProperty('margin-bottom', `${marginBottom}px`)
+  }
+
+  private setHeaderProperty(property: string, value: string) {
+    this.headerRef.current?.style.setProperty(property, value)
+  }
+
+  private clamp(number: number, a: number, b: number) {
+    const min = Math.min(a, b)
+    const max = Math.max(a, b)
+    return Math.min(Math.max(number, min), max)
+  }
 }

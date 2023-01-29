@@ -1,32 +1,27 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 import * as yup from 'yup'
-import { log, Serializable, serialize } from 'lib/utils'
-import { isDev, isPreview } from 'lib/constants'
+import { log } from 'lib/utils/logs'
+import { IS_DEV, IS_PREVIEW } from 'lib/constants'
 import { parseFrontMatter } from './frontMatter'
 import { validateMarkdown } from './validation'
-import { Post, RenderablePost } from '../types'
-import { parseToHast } from './parsing'
-import { format } from 'date-fns'
-import { imageService } from './imageService'
+import { Post, PostSummary } from '../types'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
 export const getAllPostSlugs = async (): Promise<string[]> =>
   (await getAllPosts())
-    .filter(x => isDev || isPreview || !!x.meta.publishedOn)
+    .filter(x => IS_DEV || IS_PREVIEW || !!x.meta.publishedOn)
     .map(x => x.meta.slug)
 
 export const getAllPosts = async (): Promise<Post[]> => {
-  try {
-    const files = await fs.readdir(postsDirectory)
-    return await Promise.all(
-      files.map(x => x.replace('.md', '')).map(x => getPost(x))
-    )
-  } catch (e) {
-    log.error(`Was not able to read ${postsDirectory}`, e)
-    throw e
-  }
+  const fileStems = await getPostFileStems()
+  return await Promise.all(fileStems.map(x => getPost(x)))
+}
+
+export const getAllPostSummaries = async (): Promise<PostSummary[]> => {
+  const fileStems = await getPostFileStems()
+  return await Promise.all(fileStems.map(x => getPostSummary(x)))
 }
 
 export const getPost = async (slug: string): Promise<Post> => {
@@ -39,27 +34,7 @@ export const getPost = async (slug: string): Promise<Post> => {
   }
 }
 
-const getRawPostString = async (slug: string): Promise<string> =>
-  await fs.readFile(path.join(postsDirectory, `${slug}.md`), 'utf-8')
-
-export const getSerializableRenderablePost = async (
-  slug: string
-): Promise<Serializable<RenderablePost>> => {
-  const post = await getPost(slug)
-  const renderablePost = await convertToRenderablePost(post)
-  return serialize(renderablePost)
-}
-
-export const convertRawStringToSerializableRenderablePost = async (
-  slug: string,
-  rawString: string
-): Promise<Serializable<RenderablePost>> => {
-  const post = await convertRawStringToPost(slug, rawString)
-  const renderablePost = await convertToRenderablePost(post)
-  return serialize(renderablePost)
-}
-
-const convertRawStringToPost = async (
+export const convertRawStringToPost = async (
   slug: string,
   rawString: string
 ): Promise<Post> => {
@@ -72,6 +47,7 @@ const convertRawStringToPost = async (
 
 const postMetaSchema = yup.object({
   title: yup.string().required(),
+  description: yup.string().required(),
   publishedOn: yup.date(),
   bannerSrc: yup.string().required(),
   bannerAlt: yup.string().required()
@@ -85,25 +61,27 @@ const getMetaFromRawString = async (slug: string, rawString: string) => {
   }
 }
 
-export const convertToRenderablePost = async (
-  post: Post
-): Promise<RenderablePost> => {
-  const { bannerAlt, ...meta } = post.meta
-  const imgProps = await imageService.getOptimizedImageProperties(
-    post.meta.bannerSrc
-  )
+const getPostSummary = async (slug: string): Promise<PostSummary> => {
+  const post = await getPost(slug)
   return {
-    ...post,
-    content: await parseToHast(post.meta.slug, post.content),
-    meta: {
-      ...meta,
-      publishedOn: meta.publishedOn
-        ? format(meta.publishedOn, 'MMM do, y')
-        : undefined,
-      bannerSrc: {
-        ...imgProps,
-        alt: bannerAlt
-      }
-    }
+    title: post.meta.title,
+    slug,
+    publishedOn: post.meta.publishedOn,
+    description: post.meta.description,
+    thumbnailSrc: post.meta.bannerSrc,
+    thumbnailAlt: post.meta.bannerAlt
+  }
+}
+
+const getRawPostString = async (slug: string): Promise<string> =>
+  await fs.readFile(path.join(postsDirectory, `${slug}.md`), 'utf-8')
+
+const getPostFileStems = async () => {
+  try {
+    const files = await fs.readdir(postsDirectory)
+    return files.map(x => x.replace('.md', ''))
+  } catch (e) {
+    log.error(`Was not able to read ${postsDirectory}`, e)
+    throw e
   }
 }

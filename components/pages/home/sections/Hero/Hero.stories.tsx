@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { Hero } from '.'
-import { heroBannerSrcMap } from 'lib/content'
+import { heroBannerSrcMap } from 'lib/content/images'
 
 const Template: StoryFn = () => (
   <Hero
@@ -10,7 +10,7 @@ const Template: StoryFn = () => (
       <>
         {'Hiya! 👋'}
         <br />
-        {"I'm Ryan Clements"}
+        {"I'm Ryan"}
       </>
     }
     subtitle={

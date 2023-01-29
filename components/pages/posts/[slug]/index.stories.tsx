@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { createDefaultStories } from 'stories/storyUtils'
-import post from './storyUtils/post-design-system.md'
+import post from 'posts/post-design-system.md'
 
 import { PostDetails, PostDetailsProps } from '.'
 
@@ -16,5 +16,10 @@ const { Base, Mobile, DarkTheme, DarkThemedMobile } =
 export { Base, Mobile, DarkTheme, DarkThemedMobile }
 
 export default {
-  component: PostDetails
+  component: PostDetails,
+  parameters: {
+    nextRouter: {
+      pathname: '/posts/post-design-system'
+    }
+  }
 } as Meta

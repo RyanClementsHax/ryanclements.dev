@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { render, screen } from '@testing-library/react'
 import { axe } from 'jest-axe'
-import { socialAccounts, SocialPlatform } from 'lib/content'
+import { socialAccounts, SocialPlatform } from 'lib/content/socialAccounts'
 import { SocialLink } from './SocialLink'
 
 describe('SocialLink', () => {

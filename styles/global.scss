@@ -5,11 +5,21 @@
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply transition-colors;
+  body {
+    @apply bg-surface-base text-on-surface-base;
+  }
+}
+
+@layer components {
+  a {
+    @apply hover:text-accent-700 dark:hover:text-accent-400;
+
+    &.active {
+      @apply text-accent-700 dark:text-accent-400;
+    }
   }
 
-  body {
-    @apply bg-surface-base;
+  .card {
+    @apply rounded-xl bg-surface-base p-8 shadow-md;
   }
 }
