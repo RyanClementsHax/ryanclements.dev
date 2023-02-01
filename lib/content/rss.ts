@@ -1,19 +1,19 @@
-import { Feed } from 'feed'
+import { Author, Feed } from 'feed'
 import { mkdir, writeFile } from 'fs/promises'
 import { JSON_FEED_URL, RSS_FEED_URL, SITE_URL } from 'lib/constants'
 import { getAllPosts } from './posts/server'
 
 export const generateRssFeed = async (): Promise<void> => {
   const posts = await getAllPosts()
-  const author = {
-    name: 'Ryan Clements',
-    email: 'ryanclementshax@gmail.com'
-  }
 
+  const author: Author = {
+    name: 'Ryan Clements'
+  }
   const feed = new Feed({
-    title: author.name,
-    description: "Ryan Clements's personal website",
+    title: "Ryan Clements's blog",
+    description: "Ryan Clements's blog",
     author,
+    language: 'en-US',
     id: SITE_URL,
     link: SITE_URL,
     image: `${SITE_URL}/favicon.ico`,
@@ -27,23 +27,18 @@ export const generateRssFeed = async (): Promise<void> => {
 
   for (const post of posts) {
     const url = `${SITE_URL}/posts/${post.meta.slug}`
-    const html = 'TODO'
 
+    // It is possible to add the content into the feed,
+    // but I chose not to since it's optional and don't
+    // have an audience to tell me if they really want it
     feed.addItem({
       title: post.meta.title,
       id: url,
       link: url,
       description: post.meta.description,
-      content: html,
       author: [author],
       contributor: [author],
-      date:
-        post.meta.publishedOn ??
-        (() => {
-          throw new Error(
-            `Tried to include ${post.meta.title} in the rss feed, but it isn't published yet`
-          )
-        })()
+      date: post.meta.publishedOn ?? new Date()
     })
   }
 

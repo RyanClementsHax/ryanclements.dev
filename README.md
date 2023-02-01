@@ -15,7 +15,7 @@
 3. Create a `.env.production.local` file and put the following contents in it
 
    ```.env
-   NEXT_PUBLIC_VERCEL_URL=https://ryanclements.dev
+   NEXT_PUBLIC_VERCEL_URL=ryanclements.dev
    ```
 
 ## Developing
