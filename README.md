@@ -12,6 +12,11 @@
 
 1. (Recommended) Use VSCode and install the recommended extensions
 2. Run `yarn install` to install all of the dependencies
+3. Create a `.env.production.local` file and put the following contents in it
+
+   ```.env
+   NEXT_PUBLIC_VERCEL_URL=https://ryanclements.dev
+   ```
 
 ## Developing
 
