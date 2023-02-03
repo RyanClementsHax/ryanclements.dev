@@ -16,7 +16,7 @@ export const generateRssFeed = async (): Promise<void> => {
     language: 'en-US',
     id: SITE_URL,
     link: SITE_URL,
-    image: `${SITE_URL}/favicon.ico`,
+    image: `${SITE_URL}/favicon-32x32.png`,
     favicon: `${SITE_URL}/favicon.ico`,
     copyright: `All rights reserved ${new Date().getFullYear()}`,
     feedLinks: {

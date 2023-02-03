@@ -30,6 +30,8 @@ Run `yarn print-browser-support` to print out all the browsers this project is c
 
 You can use [feeder.co's Chrome extension RSS Feed Reader](https://chrome.google.com/webstore/detail/rss-feed-reader/pnjaodmkngahhkoihejjehlcdlnohgmp/related?hl=en) when testing the rss feed
 
+Docs for rss can be found [here](https://www.w3schools.com/xml/xml_rss.asp)
+
 ### Debugging in VSCode
 
 See the [Next.js docs for how to do this](https://nextjs.org/docs/advanced-features/debugging#debugging-with-vs-code)
