@@ -4,6 +4,7 @@ import { createDefaultStories } from 'stories/storyUtils'
 import { GithubIcon } from './GithubIcon'
 import { TwitterIcon } from './TwitterIcon'
 import { LinkedInIcon } from './LinkedInIcon'
+import { RssIcon } from './RssIcon'
 
 const { GithubIconBase, GithubIconDarkTheme } = createDefaultStories(
   () => <GithubIcon />,
@@ -31,6 +32,15 @@ const { LinkedInIconBase, LinkedInIconDarkTheme } = createDefaultStories(
 )
 
 export { LinkedInIconBase, LinkedInIconDarkTheme }
+
+const { RssIconBase, RssIconDarkTheme } = createDefaultStories(
+  () => <RssIcon />,
+  {
+    prefix: 'RssIcon'
+  }
+)
+
+export { RssIconBase, RssIconDarkTheme }
 
 export default {
   parameters: {

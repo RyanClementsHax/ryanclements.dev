@@ -1,4 +1,6 @@
 import { Home, HomeProps } from 'components/pages/home'
+import { IS_DEV } from 'lib/constants'
+import { generateRssFeed } from 'lib/content/rss'
 import {
   getSerializableRenderablePostSummaries,
   RenderablePostSummary
@@ -9,6 +11,9 @@ import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 export const getStaticProps: GetStaticProps<
   Serializable<HomeProps>
 > = async () => {
+  if (!IS_DEV) {
+    await generateRssFeed()
+  }
   return {
     props: {
       recentPostSummaries: (

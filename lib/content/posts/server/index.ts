@@ -10,14 +10,19 @@ import { Post, PostSummary } from '../types'
 const postsDirectory = path.join(process.cwd(), 'posts')
 
 export const getAllPostSlugs = async (): Promise<string[]> =>
-  (await getAllPosts())
-    .filter(x => postCanBeShown(x.meta.publishedOn))
-    .map(x => x.meta.slug)
+  (await getAllPosts()).map(x => x.meta.slug)
 
 export const getAllPostSummaries = async (): Promise<PostSummary[]> => {
   const fileStems = await getPostFileStems()
   return (await Promise.all(fileStems.map(x => getPostSummary(x)))).filter(x =>
     postCanBeShown(x.publishedOn)
+  )
+}
+
+export const getAllPosts = async (): Promise<Post[]> => {
+  const fileStems = await getPostFileStems()
+  return (await Promise.all(fileStems.map(x => getPost(x)))).filter(x =>
+    postCanBeShown(x.meta.publishedOn)
   )
 }
 
@@ -56,11 +61,6 @@ const getMetaFromRawString = async (slug: string, rawString: string) => {
     slug,
     ...(await postMetaSchema.validate(frontMatter))
   }
-}
-
-const getAllPosts = async (): Promise<Post[]> => {
-  const fileStems = await getPostFileStems()
-  return await Promise.all(fileStems.map(x => getPost(x)))
 }
 
 const getPostSummary = async (slug: string): Promise<PostSummary> => {

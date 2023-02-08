@@ -32,7 +32,7 @@ export const Header: React.FC<HeaderProps> = ({ hideWithScroll = false }) => {
         {({ open }) => (
           <div
             className={c(
-              'flex items-center justify-end border-b bg-surface-base p-3',
+              'flex items-center justify-end border-b bg-surface-base py-3 pr-3',
               isScrolledToTop
                 ? 'border-transparent'
                 : [
@@ -44,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({ hideWithScroll = false }) => {
           >
             <Link
               href="/"
-              className="spacing mr-auto ml-3 text-lg font-semibold tracking-wider"
+              className="spacing mr-auto pl-5 text-lg font-semibold tracking-wider md:pl-8"
             >
               Ryan&nbsp;Clements
             </Link>

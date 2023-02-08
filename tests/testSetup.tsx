@@ -6,13 +6,12 @@ import { LinkProps } from 'next/link'
 
 setGlobalConfig(globalStorybookConfig)
 
-expect.extend(toHaveNoViolations)
-
-global.ResizeObserver = class ResizeObserver {
-  observe() {}
-  disconnect() {}
-  unobserve() {}
+process.env = {
+  ...process.env,
+  NEXT_PUBLIC_VERCEL_URL: 'localhost:3000'
 }
+
+expect.extend(toHaveNoViolations)
 
 jest.mock('next/router', () => require('next-router-mock'))
 jest.mock('next/link', () => ({

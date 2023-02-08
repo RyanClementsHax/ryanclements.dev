@@ -4,13 +4,14 @@ import { getCurrentYear } from 'lib/utils/dates'
 import { socialAccounts } from 'lib/content/socialAccounts'
 import Link from 'next/link'
 import { NavItem, NAV_ITEMS } from 'lib/nav'
+import { RssLink } from 'components/icons/RssLink'
 
 export const Footer: React.FC = () => (
   <footer className="flex flex-col items-center gap-8 border-t border-t-borderColor px-5 pt-10 pb-16 text-center md:flex-row md:items-end md:justify-between md:px-8 md:text-start">
     <div className="flex flex-col items-center gap-8 md:items-start">
       <Quote />
       <NavLinks />
-      <SocialLinks />
+      <Links />
     </div>
     <CopyRight />
   </footer>
@@ -36,15 +37,12 @@ const NavLink: React.FC<{ item: NavItem }> = ({ item: { href, name } }) => (
   <Link href={href}>{name}</Link>
 )
 
-const SocialLinks = () => (
-  <div className="flex gap-6">
+const Links = () => (
+  <div className="flex gap-6 text-on-surface-base-muted">
     {socialAccounts.map(x => (
-      <SocialLink
-        key={x.href}
-        socialAccount={x}
-        className="text-on-surface-base-muted"
-      />
+      <SocialLink key={x.href} socialAccount={x} />
     ))}
+    <RssLink />
   </div>
 )
 

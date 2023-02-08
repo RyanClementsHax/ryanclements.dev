@@ -12,6 +12,11 @@
 
 1. (Recommended) Use VSCode and install the recommended extensions
 2. Run `yarn install` to install all of the dependencies
+3. Create a `.env.production.local` file and put the following contents in it
+
+   ```.env
+   NEXT_PUBLIC_VERCEL_URL=ryanclements.dev
+   ```
 
 ## Developing
 
@@ -22,6 +27,10 @@ Run `yarn format <files>` to format the files given
 Run `yarn format:all` to format all of the files
 
 Run `yarn print-browser-support` to print out all the browsers this project is configured to support as specified in the `.browserslistrc`
+
+You can use [feeder.co's Chrome extension RSS Feed Reader](https://chrome.google.com/webstore/detail/rss-feed-reader/pnjaodmkngahhkoihejjehlcdlnohgmp/related?hl=en) when testing the rss feed
+
+Docs for rss can be found [here](https://www.w3schools.com/xml/xml_rss.asp)
 
 ### Debugging in VSCode
 
