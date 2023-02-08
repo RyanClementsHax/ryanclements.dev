@@ -1,4 +1,5 @@
 import { Posts, PostsProps } from 'components/pages/posts'
+import { PageSeo } from 'components/PageSeo'
 import {
   getSerializableRenderablePostSummaries,
   RenderablePostSummary
@@ -20,7 +21,15 @@ const PostsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   posts
 }) => {
   const deserializedPosts = deserialize<RenderablePostSummary[]>(posts)
-  return <Posts posts={deserializedPosts} />
+  return (
+    <>
+      <PageSeo
+        title="Ryan Clements's tech blog"
+        description="A blog with insightful articles about many aspects of software engineering like deep diving into tech or commenting on the profession as a whole"
+      />
+      <Posts posts={deserializedPosts} />
+    </>
+  )
 }
 
 export default PostsPage

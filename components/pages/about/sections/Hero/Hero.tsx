@@ -1,7 +1,6 @@
 import Image from 'next/image'
-import { SocialLink } from 'components/icons/SocialLink'
-import { socialAccounts } from 'lib/content/socialAccounts'
 import { A11yStaticImageData } from 'lib/content/images'
+import { SocialLinks } from 'components/SocialLinks'
 
 export interface HeroProps {
   title: React.ReactNode
@@ -42,16 +41,4 @@ const Banner = ({ src: { alt, ...src } }: { src: A11yStaticImageData }) => (
     sizes="(max-width: 768px) 0, (max-width: 1024px) 50vw, 60vw"
     className="hidden h-full max-h-[500px] rounded-2xl object-cover shadow-lg md:block lg:col-span-3"
   />
-)
-
-const SocialLinks = () => (
-  <div className="flex gap-6">
-    {socialAccounts.map(x => (
-      <SocialLink
-        key={x.href}
-        socialAccount={x}
-        className="text-on-surface-base-muted"
-      />
-    ))}
-  </div>
 )

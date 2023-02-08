@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import { Hero } from './sections/Hero'
 import { Projects } from './sections/Projects'
 import { Layout } from 'components/Layout'
@@ -13,9 +12,6 @@ export interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ recentPostSummaries }) => (
   <Layout>
-    <Head>
-      <title>Ryan Clements</title>
-    </Head>
     <Hero
       title={
         <>

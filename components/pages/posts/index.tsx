@@ -9,7 +9,7 @@ export interface PostsProps {
 export const Posts: React.FC<PostsProps> = ({ posts }) => (
   <Layout>
     <Container>
-      <Title>My thoughts on the practice of software engineering</Title>
+      <Title>My thoughts about software engineering</Title>
       <PostsList posts={posts} />
     </Container>
   </Layout>

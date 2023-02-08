@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import { Qualities } from './sections/Qualities'
 import { Skills } from './sections/Skills'
 import { Layout } from 'components/Layout'
@@ -9,9 +8,6 @@ import { skillGroups } from 'lib/content/skills'
 
 export const About: React.FC = () => (
   <Layout>
-    <Head>
-      <title>Ryan Clements</title>
-    </Head>
     <Hero
       title="A little bit about Ryan Clements..."
       subtitle={
