@@ -19,6 +19,8 @@
    NEXT_PUBLIC_VERCEL_URL=ryanclements.dev
    ```
 
+   - This is to get around how we [cannot get the public url of the site easily within Vercel](https://github.com/vercel/next.js/discussions/16429#discussioncomment-1302156)
+
 ## Developing
 
 Run `yarn dev` to start a dev server
