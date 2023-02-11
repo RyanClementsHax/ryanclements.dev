@@ -1,9 +1,7 @@
 import Image from 'next/image'
-import { SocialLink } from 'components/icons/SocialLink'
 import { Theme, useTheme } from 'components/theme'
 import { A11yStaticImageData } from 'lib/content/images'
-import { socialAccounts } from 'lib/content/socialAccounts'
-import { RssLink } from 'components/icons/RssLink'
+import { SocialLinks } from 'components/SocialLinks'
 
 export interface HeroProps {
   title: React.ReactNode
@@ -34,7 +32,7 @@ const Heading = ({
   <div className="grid gap-6">
     <h1 className="text-4xl font-bold">{title}</h1>
     <h2 className="text-2xl text-on-surface-base-muted">{subtitle}</h2>
-    <Links />
+    <SocialLinks />
   </div>
 )
 
@@ -48,12 +46,3 @@ const Banner = ({ srcMap }: { srcMap: Record<Theme, A11yStaticImageData> }) => {
     </div>
   )
 }
-
-const Links = () => (
-  <div className="flex gap-6 text-on-surface-base-muted">
-    {socialAccounts.map(x => (
-      <SocialLink key={x.href} socialAccount={x} />
-    ))}
-    <RssLink />
-  </div>
-)

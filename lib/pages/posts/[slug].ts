@@ -15,6 +15,7 @@ export interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
 export interface RenderablePostMeta
   extends Omit<PostMeta, 'bannerSrc' | 'bannerAlt' | 'publishedOn'> {
   publishedOn?: string
+  publishedOnIso?: string
   bannerSrc: A11yStaticImageData
 }
 
@@ -46,6 +47,7 @@ const convertToRenderablePost = async (post: Post): Promise<RenderablePost> => {
     meta: {
       ...meta,
       publishedOn: formatDate(meta.publishedOn),
+      publishedOnIso: meta.publishedOn?.toISOString(),
       bannerSrc: {
         ...imgProps,
         alt: bannerAlt

@@ -12,6 +12,8 @@ import {
   RenderablePost,
   getSerializableRenderablePost
 } from 'lib/pages/posts/[slug]'
+import { NextSeo } from 'next-seo'
+import { SITE_URL } from 'lib/constants'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string
@@ -41,7 +43,30 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   post
 }) => {
   const deserializedPost = deserialize<RenderablePost>(post)
-  return <PostDetails post={deserializedPost} />
+  return (
+    <>
+      <NextSeo
+        title={post.meta.title}
+        description={post.meta.description}
+        openGraph={{
+          type: 'article',
+          article: {
+            publishedTime: post.meta.publishedOnIso,
+            authors: [`${SITE_URL}/about`]
+          },
+          images: [
+            {
+              url: `${SITE_URL}${post.meta.bannerSrc.src}`,
+              width: post.meta.bannerSrc.width,
+              height: post.meta.bannerSrc.height,
+              alt: post.meta.bannerSrc.alt
+            }
+          ]
+        }}
+      />
+      <PostDetails post={deserializedPost} />
+    </>
+  )
 }
 
 export default PostPage

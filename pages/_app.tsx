@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app'
 import 'styles/global.scss'
 import { log } from 'lib/utils/logs'
 import { useEffect } from 'react'
+import { AppSeo } from 'components/AppSeo'
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   useEffect(() => {
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
   }, [])
   return (
     <ThemeProvider>
+      <AppSeo />
       <Component {...pageProps} />
     </ThemeProvider>
   )
