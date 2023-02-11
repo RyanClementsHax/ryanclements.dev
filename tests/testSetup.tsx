@@ -6,11 +6,6 @@ import { LinkProps } from 'next/link'
 
 setGlobalConfig(globalStorybookConfig)
 
-process.env = {
-  ...process.env,
-  NEXT_PUBLIC_VERCEL_URL: 'localhost:3000'
-}
-
 expect.extend(toHaveNoViolations)
 
 jest.mock('next/router', () => require('next-router-mock'))
