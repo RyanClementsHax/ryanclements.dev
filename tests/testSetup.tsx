@@ -8,7 +8,7 @@ setGlobalConfig(globalStorybookConfig)
 
 process.env = {
   ...process.env,
-  NEXT_PUBLIC_VERCEL_URL: 'localhost:3000'
+  NEXT_PUBLIC_URL: 'localhost:3000'
 }
 
 expect.extend(toHaveNoViolations)
