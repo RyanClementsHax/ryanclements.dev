@@ -1,10 +1,10 @@
 import { About } from 'components/pages/about'
-import { PageSeo } from 'components/PageSeo'
+import { NextSeo } from 'next-seo'
 import { NextPage } from 'next'
 
 const AboutPage: NextPage = () => (
   <>
-    <PageSeo
+    <NextSeo
       title="About Ryan Clements"
       description="Learn a little bit about who Ryan is"
     />

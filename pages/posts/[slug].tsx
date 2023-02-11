@@ -12,7 +12,7 @@ import {
   RenderablePost,
   getSerializableRenderablePost
 } from 'lib/pages/posts/[slug]'
-import { PageSeo } from 'components/PageSeo'
+import { NextSeo } from 'next-seo'
 import { SITE_URL } from 'lib/constants'
 
 interface StaticPathParams extends ParsedUrlQuery {
@@ -45,7 +45,7 @@ const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   const deserializedPost = deserialize<RenderablePost>(post)
   return (
     <>
-      <PageSeo
+      <NextSeo
         title={post.meta.title}
         description={post.meta.description}
         openGraph={{
