@@ -14,7 +14,7 @@ module.exports = {
     screens: { xs: '480px', ...defaultTheme?.screens },
     extend: {
       fontFamily: {
-        title: ['Lato', 'sans-serif']
+        title: ['var(--font-title)']
       }
     }
   },

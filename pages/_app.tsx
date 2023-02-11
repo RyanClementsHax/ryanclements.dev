@@ -6,6 +6,7 @@ import 'styles/global.scss'
 import { log } from 'lib/utils/logs'
 import { useEffect } from 'react'
 import { AppSeo } from 'components/AppSeo'
+import { fontClass } from 'lib/fonts'
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   useEffect(() => {
@@ -18,7 +19,9 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ThemeProvider>
       <AppSeo />
-      <Component {...pageProps} />
+      <div className={fontClass}>
+        <Component {...pageProps} />
+      </div>
     </ThemeProvider>
   )
 }
