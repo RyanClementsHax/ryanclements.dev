@@ -4,6 +4,7 @@ import { DecoratorFunction, Parameters, GlobalTypes } from '@storybook/csf'
 
 import { ThemeDecorator } from './decorators/ThemeDecorator'
 import 'styles/global.scss'
+import './preview.scss'
 
 export const globalTypes: GlobalTypes = {
   theme: {
