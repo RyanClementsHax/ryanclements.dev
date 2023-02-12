@@ -3,7 +3,7 @@ import { usePrevious } from 'react-use'
 import { addons } from '@storybook/addons'
 import { UPDATE_GLOBALS } from '@storybook/core-events'
 import { Theme, ThemeContext, updateTheme } from 'components/theme'
-import { ReactFramework } from '@storybook/react'
+import { ReactRenderer } from '@storybook/react'
 import { DecoratorFunction } from '@storybook/csf'
 
 const updateThemeGlobal = (theme: Theme) =>
@@ -11,7 +11,7 @@ const updateThemeGlobal = (theme: Theme) =>
     globals: { theme }
   })
 
-export const ThemeDecorator: DecoratorFunction<ReactFramework> = (
+export const ThemeDecorator: DecoratorFunction<ReactRenderer> = (
   Story,
   { globals, parameters }
 ) => {

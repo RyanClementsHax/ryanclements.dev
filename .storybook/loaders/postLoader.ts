@@ -1,8 +1,8 @@
-import { loader } from 'webpack'
 import path from 'path'
+import { LoaderDefinitionFunction } from 'webpack'
 import { convertRawStringToSerializableRenderablePost } from 'lib/pages/posts/[slug]'
 
-const loader: loader.Loader = function (content, map) {
+const loader: LoaderDefinitionFunction = function (content, map) {
   const callback = this.async()
 
   convertRawStringToSerializableRenderablePost(

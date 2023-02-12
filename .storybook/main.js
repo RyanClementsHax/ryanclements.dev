@@ -1,18 +1,19 @@
-/** @type {import('@storybook/core-common').StorybookConfig} */
+/** @type {import('@storybook/nextjs').StorybookConfig} */
 const config = {
-  stories: ['../**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: ['../!(node_modules)/**/*.stories.@(js|jsx|ts|tsx)'],
+  staticDirs: ['../public'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
-    'storybook-dark-mode',
-    'storybook-addon-next'
+    'storybook-dark-mode'
   ],
-  core: {
-    builder: 'webpack5'
+  framework: {
+    name: '@storybook/nextjs',
+    options: {}
   },
   async webpackFinal(config) {
-    config.module?.rules.push({
+    config.module?.rules?.push({
       test: /\.md$/,
       loader: require.resolve('./loaders/dist/postLoader'),
       // without this, webpack treats .md files like strings
@@ -22,5 +23,4 @@ const config = {
     return config
   }
 }
-
 module.exports = config

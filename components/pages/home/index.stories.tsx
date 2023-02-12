@@ -16,8 +16,10 @@ export { Base, Mobile, DarkTheme, DarkThemedMobile }
 export default {
   component: Home,
   parameters: {
-    nextRouter: {
-      pathname: '/'
+    nextjs: {
+      router: {
+        pathname: '/'
+      }
     }
   }
 } as Meta

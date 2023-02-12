@@ -43,6 +43,7 @@ const { RssIconBase, RssIconDarkTheme } = createDefaultStories(
 export { RssIconBase, RssIconDarkTheme }
 
 export default {
+  component: GithubIcon,
   parameters: {
     layout: 'centered'
   }
