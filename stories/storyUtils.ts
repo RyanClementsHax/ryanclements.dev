@@ -1,4 +1,5 @@
-import { StoryFn } from '@storybook/react'
+import { ReactRenderer, StoryFn } from '@storybook/react'
+import { BaseAnnotations } from '@storybook/types'
 import { Theme } from 'components/theme'
 import merge from 'just-merge'
 import clone from 'just-clone'
@@ -46,7 +47,7 @@ export const createStory = <T>(
 ): StoryFn<T> => compose(withDefaults({ args }), ...modifiers)(template)
 
 export const asCopy = <T>(story: StoryFn<T>): StoryFn<T> => {
-  const newStory = story.bind({})
+  const newStory = story.bind({}) as typeof story
   newStory.args = story.args ? clone(story.args) : story.args
   return newStory
 }
@@ -65,8 +66,10 @@ export const compose =
   story =>
     params.reverse().reduceRight((y, fn) => fn(y), story)
 
+type StorybookParameters<T> = BaseAnnotations<ReactRenderer, T>['parameters']
+
 export const withParams: <T>(
-  params?: StoryFn<T>['parameters']
+  params?: StorybookParameters<T>
 ) => StoryModifier<T> = params => story => {
   story.parameters = merge(story.parameters || {}, params || {})
   return story
@@ -90,6 +93,8 @@ export const withDefaults = <T>({
   args?: Args<T>
 }): StoryModifier<T> => compose(asCopy, withArgs<T>(args))
 
+type StorybookArgs<T> = BaseAnnotations<ReactRenderer, T>['args']
+
 export type Args<T> =
-  | StoryFn<T>['args']
-  | ((args: NonNullable<StoryFn<T>['args']>) => StoryFn<T>['args'])
+  | StorybookArgs<T>
+  | ((args: NonNullable<StorybookArgs<T>>) => StorybookArgs<T>)
