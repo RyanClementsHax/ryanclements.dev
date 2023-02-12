@@ -1,5 +1,6 @@
 @use 'styles/utils';
-@import './syntaxTokens.module.scss';
+
+@import './syntaxTokens.module';
 
 @mixin code-block-wrapper {
   :global(.highlight):has(.code) {
