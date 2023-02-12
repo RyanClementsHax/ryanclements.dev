@@ -120,3 +120,6 @@ dist
 
 # storybook
 storybook-static
+
+# rss
+public/rss

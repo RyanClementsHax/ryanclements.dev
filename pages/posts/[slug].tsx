@@ -5,14 +5,15 @@ import {
   NextPage
 } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import { deserialize, Serializable, serialize } from 'lib/util'
-import { parseToHast } from 'lib/util/parsing/server'
-import { getAllPostSlugs, getPost, Post, PostMeta } from 'lib/content/posts'
-import Image from 'next/image'
-import { A11yStaticImageData, postsImageSrcMap } from 'lib/content'
-import { HastTree } from 'lib/util/parsing/types'
-import { MetaCard } from 'components/pages/posts/[slug]/MetaCard'
-import { Content } from 'components/pages/posts/[slug]/Content'
+import { deserialize, Serializable } from 'lib/utils/serialization'
+import { getAllPostSlugs } from 'lib/content/posts/server'
+import { PostDetails, PostDetailsProps } from 'components/pages/posts/[slug]'
+import {
+  RenderablePost,
+  getSerializableRenderablePost
+} from 'lib/pages/posts/[slug]'
+import { NextSeo } from 'next-seo'
+import { SITE_URL } from 'lib/constants'
 
 interface StaticPathParams extends ParsedUrlQuery {
   slug: string
@@ -26,89 +27,46 @@ export const getStaticPaths: GetStaticPaths<StaticPathParams> = async () => {
   }
 }
 
-interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
-  content: HastTree
-  meta: RenderablePostMeta
-}
-
-interface RenderablePostMeta extends Omit<PostMeta, 'bannerSrc'> {
-  bannerSrc: A11yStaticImageData
-}
-
-interface PostPageProps {
-  post: RenderablePost
-}
-
 export const getStaticProps: GetStaticProps<
-  Serializable<PostPageProps>,
+  Serializable<PostDetailsProps>,
   StaticPathParams
 > = async ({ params }) => {
   const { slug } = params as StaticPathParams
-  const post = await getPost(slug)
-  const renderablePost = await convertToRenderablePost(post)
   return {
     props: {
-      post: serializePost(renderablePost)
+      post: await getSerializableRenderablePost(slug)
     }
   }
 }
 
-const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> =
-  function ({ post }) {
-    const { content, meta } = deserializePost(post)
-
-    return (
-      <>
-        <Banner src={meta.bannerSrc} />
-        <ContentContainer>
-          <MetaCard title={meta.title} publishedOn={meta.publishedOn} />
-          <Content root={content} />
-        </ContentContainer>
-      </>
-    )
-  }
+const PostPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  post
+}) => {
+  const deserializedPost = deserialize<RenderablePost>(post)
+  return (
+    <>
+      <NextSeo
+        title={post.meta.title}
+        description={post.meta.description}
+        openGraph={{
+          type: 'article',
+          article: {
+            publishedTime: post.meta.publishedOnIso,
+            authors: [`${SITE_URL}/about`]
+          },
+          images: [
+            {
+              url: `${SITE_URL}${post.meta.bannerSrc.src}`,
+              width: post.meta.bannerSrc.width,
+              height: post.meta.bannerSrc.height,
+              alt: post.meta.bannerSrc.alt
+            }
+          ]
+        }}
+      />
+      <PostDetails post={deserializedPost} />
+    </>
+  )
+}
 
 export default PostPage
-
-const Banner: React.FC<{ src: A11yStaticImageData }> = ({
-  src: { alt, ...bannerSrc }
-}) => (
-  <Image
-    src={bannerSrc}
-    alt={alt}
-    sizes="100vw"
-    placeholder="blur"
-    className="relative -z-10 mx-auto aspect-[5/1] max-h-[20rem] w-full max-w-[100rem] object-cover"
-  />
-)
-
-const ContentContainer: React.FC<{ children?: React.ReactNode }> = ({
-  children
-}) => (
-  <div className="mx-auto -mt-8 flex max-w-2xl flex-col gap-10 px-5 text-on-surface-base md:-mt-16 md:gap-16">
-    {children}
-  </div>
-)
-
-const convertToRenderablePost = async (
-  post: Post
-): Promise<RenderablePost> => ({
-  ...post,
-  content: await parseToHast(post.content),
-  meta: {
-    ...post.meta,
-    bannerSrc: postsImageSrcMap[post.meta.bannerSrc]
-  }
-})
-
-const serializePost = (post: RenderablePost): Serializable<RenderablePost> => ({
-  ...post,
-  meta: serialize(post.meta)
-})
-
-const deserializePost = (
-  post: Serializable<RenderablePost>
-): RenderablePost => ({
-  ...post,
-  meta: deserialize<RenderablePostMeta>(post.meta)
-})

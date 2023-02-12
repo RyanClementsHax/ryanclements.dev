@@ -4,21 +4,43 @@ import { createDefaultStories } from 'stories/storyUtils'
 import { GithubIcon } from './GithubIcon'
 import { TwitterIcon } from './TwitterIcon'
 import { LinkedInIcon } from './LinkedInIcon'
+import { RssIcon } from './RssIcon'
 
-const { Base: GithubIconBase, DarkTheme: GithubIconDarkTheme } =
-  createDefaultStories(() => <GithubIcon className="text-on-surface-base" />)
+const { GithubIconBase, GithubIconDarkTheme } = createDefaultStories(
+  () => <GithubIcon />,
+  {
+    prefix: 'GithubIcon'
+  }
+)
 
 export { GithubIconBase, GithubIconDarkTheme }
 
-const { Base: TwitterIconBase, DarkTheme: TwitterIconDarkTheme } =
-  createDefaultStories(() => <TwitterIcon className="text-on-surface-base" />)
+const { TwitterIconBase, TwitterIconDarkTheme } = createDefaultStories(
+  () => <TwitterIcon />,
+  {
+    prefix: 'TwitterIcon'
+  }
+)
 
 export { TwitterIconBase, TwitterIconDarkTheme }
 
-const { Base: LinkedInIconBase, DarkTheme: LinkedInIconDarkTheme } =
-  createDefaultStories(() => <LinkedInIcon className="text-on-surface-base" />)
+const { LinkedInIconBase, LinkedInIconDarkTheme } = createDefaultStories(
+  () => <LinkedInIcon />,
+  {
+    prefix: 'LinkedInIcon'
+  }
+)
 
 export { LinkedInIconBase, LinkedInIconDarkTheme }
+
+const { RssIconBase, RssIconDarkTheme } = createDefaultStories(
+  () => <RssIcon />,
+  {
+    prefix: 'RssIcon'
+  }
+)
+
+export { RssIconBase, RssIconDarkTheme }
 
 export default {
   component: GithubIcon,

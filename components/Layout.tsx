@@ -1,11 +1,12 @@
-import { Header } from './Header'
-import { Footer } from './Footer'
+import { Header } from 'components/Header'
+import { Footer } from 'components/Footer'
 
-export const Layout: React.FC<{ children?: React.ReactNode }> = ({
-  children
-}) => (
+export const Layout: React.FC<{
+  children?: React.ReactNode
+  hideHeaderWithScroll?: boolean
+}> = ({ children, hideHeaderWithScroll }) => (
   <main>
-    <Header />
+    <Header hideWithScroll={hideHeaderWithScroll} />
     {children}
     <Footer />
   </main>

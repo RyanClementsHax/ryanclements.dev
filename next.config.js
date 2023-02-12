@@ -6,7 +6,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')
 /**
  * @type {import('next').NextConfig}
  **/
-const config = {}
+const config = {
+  eslint: {
+    // https://nextjs.org/docs/basic-features/eslint#linting-custom-directories-and-files
+    dirs: ['.']
+  }
+}
 
 module.exports = () =>
   [

@@ -1,9 +1,8 @@
 import { when } from 'jest-when'
 import { mock } from 'jest-mock-extended'
-import { Theme } from './types'
+import { ContentMeta, Theme, themeToContentMetaMap } from './types'
 import {
-  getInitialTheme,
-  setInitialTheme,
+  initTheme,
   updateAndPersistTheme,
   getCurrentTheme,
   updateTheme
@@ -14,9 +13,60 @@ describe('theme utils', () => {
     document.documentElement.className = ''
     global.localStorage.clear()
     global.matchMedia = jest.fn()
+    const colorSchemeMeta = document.createElement('meta')
+    colorSchemeMeta.name = 'color-scheme'
+    colorSchemeMeta.content = 'normal'
+    document.getElementsByTagName('head')[0].appendChild(colorSchemeMeta)
   })
 
-  describe('getInitialTheme', () => {
+  afterEach(() => {
+    for (const meta of Array.from(document.getElementsByTagName('meta'))) {
+      document.getElementsByTagName('head')[0].removeChild(meta)
+    }
+  })
+
+  describe('initTheme', () => {
+    it('preserves other classes on the document', () => {
+      const themePreference = Theme.dark
+      global.localStorage.setItem('themePreference', themePreference)
+      const otherClass = 'otherClass'
+      document.documentElement.classList.add(otherClass)
+
+      initTheme(Theme, themeToContentMetaMap)
+
+      expect(document.documentElement).toHaveClass(themePreference)
+      expect(document.documentElement).toHaveClass(otherClass)
+    })
+
+    it('sets the color-scheme meta according to the map', () => {
+      expect(getColorSchemeMeta()).toHaveAttribute('content', 'normal')
+      const themePreference = Theme.dark
+      global.localStorage.setItem('themePreference', themePreference)
+      let map = {
+        [Theme.dark]: ContentMeta.dark,
+        [Theme.light]: ContentMeta.light
+      }
+
+      initTheme(Theme, map)
+
+      expect(getColorSchemeMeta()).toHaveAttribute(
+        'content',
+        map[themePreference]
+      )
+
+      map = {
+        [Theme.dark]: ContentMeta.light,
+        [Theme.light]: ContentMeta.dark
+      }
+
+      initTheme(Theme, map)
+
+      expect(getColorSchemeMeta()).toHaveAttribute(
+        'content',
+        map[themePreference]
+      )
+    })
+
     describe('when there is a theme preference', () => {
       let themePreference: Theme
 
@@ -25,19 +75,15 @@ describe('theme utils', () => {
         global.localStorage.setItem('themePreference', themePreference)
       })
 
-      it('returns that preference', () => {
-        const result = getInitialTheme()
+      it('sets the theme to that preference', () => {
+        initTheme(Theme, themeToContentMetaMap)
 
-        expect(result).toBe(themePreference)
-      })
-
-      it('makes no call to the "prefers-color-scheme" media query', () => {
-        expect(global.matchMedia).not.toHaveBeenCalled()
+        expect(document.documentElement).toHaveClass(themePreference)
       })
     })
 
     describe('when there is no theme preference saved but there is an OS preference', () => {
-      it(`returns ${Theme.dark} when the preference is "dark"`, () => {
+      it(`sets the theme to ${Theme.dark} when the preference is "dark"`, () => {
         when(global.matchMedia)
           .calledWith('(prefers-color-scheme: dark)')
           .mockReturnValue(
@@ -46,12 +92,12 @@ describe('theme utils', () => {
             })
           )
 
-        const result = getInitialTheme()
+        initTheme(Theme, themeToContentMetaMap)
 
-        expect(result).toBe(Theme.dark)
+        expect(document.documentElement).toHaveClass(Theme.dark)
       })
 
-      it(`returns ${Theme.light} when the preference is "light"`, () => {
+      it(`sets the theme to ${Theme.light} when the preference is "light"`, () => {
         when(global.matchMedia)
           .calledWith('(prefers-color-scheme: dark)')
           .mockReturnValue(
@@ -60,9 +106,9 @@ describe('theme utils', () => {
             })
           )
 
-        const result = getInitialTheme()
+        initTheme(Theme, themeToContentMetaMap)
 
-        expect(result).toBe(Theme.light)
+        expect(document.documentElement).toHaveClass(Theme.light)
       })
     })
 
@@ -78,36 +124,10 @@ describe('theme utils', () => {
       })
 
       it(`defaults to ${Theme.light}`, () => {
-        const result = getInitialTheme()
+        initTheme(Theme, themeToContentMetaMap)
 
-        expect(result).toBe(Theme.light)
+        expect(document.documentElement).toHaveClass(Theme.light)
       })
-    })
-  })
-
-  describe('setInitialTheme', () => {
-    let themePreference: Theme
-
-    beforeEach(() => {
-      themePreference = Theme.dark
-      global.localStorage.setItem('themePreference', themePreference)
-    })
-
-    it('sets the theme as a class on the document', () => {
-      setInitialTheme()
-
-      expect(document.documentElement).toHaveClass(themePreference)
-    })
-
-    it('preserves other classes on the document', () => {
-      const otherClass = 'otherClass'
-      document.documentElement.classList.add(otherClass)
-
-      setInitialTheme()
-
-      expect(document.documentElement).toHaveClass(themePreference)
-
-      expect(document.documentElement).toHaveClass(otherClass)
     })
   })
 
@@ -178,5 +198,19 @@ describe('theme utils', () => {
 
       expect(global.localStorage.getItem('themePreference')).toBe(newTheme)
     })
+
+    it('sets the color-scheme meta according to the map', () => {
+      expect(getColorSchemeMeta()).toHaveAttribute('content', 'normal')
+
+      updateAndPersistTheme(newTheme)
+
+      expect(getColorSchemeMeta()).toHaveAttribute(
+        'content',
+        themeToContentMetaMap[newTheme]
+      )
+    })
   })
 })
+
+const getColorSchemeMeta = () =>
+  document.querySelector('meta[name="color-scheme"]')

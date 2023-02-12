@@ -14,7 +14,7 @@ module.exports = {
     screens: { xs: '480px', ...defaultTheme?.screens },
     extend: {
       fontFamily: {
-        title: ['Lato', 'sans-serif']
+        title: ['var(--font-title)']
       }
     }
   },
@@ -22,6 +22,7 @@ module.exports = {
     extend: {}
   },
   plugins: [
+    require('@tailwindcss/typography'),
     require('tailwindcss-themer')({
       defaultTheme: {
         extend: {
@@ -42,6 +43,10 @@ module.exports = {
             primary.DEFAULT = primary[800]
             return {
               primary,
+              accent: colors.yellow,
+              success: colors.green[500],
+              warning: colors.yellow[400],
+              danger: colors.red[500],
               surface: {
                 base: {
                   DEFAULT: 'white',
@@ -51,9 +56,14 @@ module.exports = {
                     300: 'white'
                   }
                 },
+                skeleton: colors.gray[200],
                 offBase: colors.gray[200],
-                primary: primary.DEFAULT,
-                active: primary[100]
+                brand: primary.DEFAULT,
+                primary: primary[100],
+                active: primary[100],
+                success: colors.green[100],
+                warning: colors.yellow[50],
+                danger: colors.red[100]
               },
               on: {
                 surface: {
@@ -65,13 +75,21 @@ module.exports = {
                     DEFAULT: colors.zinc[800],
                     muted: colors.zinc[600]
                   },
-                  primary: primary[100],
-                  active: colors.zinc[900]
+                  brand: primary[100],
+                  primary: primary[900],
+                  active: colors.zinc[900],
+                  success: colors.green[900],
+                  warning: colors.yellow[900],
+                  danger: colors.red[900]
                 }
               },
               borderColor: {
                 DEFAULT: colors.zinc[300],
-                focus: primary.DEFAULT
+                focus: primary.DEFAULT,
+                primary: primary[200],
+                success: colors.green[200],
+                warning: colors.yellow[200],
+                danger: colors.red[200]
               },
               ringColor: {
                 focus: primary.DEFAULT
@@ -102,6 +120,10 @@ module.exports = {
               primary.DEFAULT = primary[500]
               return {
                 primary,
+                accent: colors.amber,
+                success: colors.green[500],
+                warning: colors.yellow[500],
+                danger: colors.red[500],
                 surface: {
                   base: {
                     DEFAULT: colors.zinc[900],
@@ -111,9 +133,14 @@ module.exports = {
                       300: '#1F2128'
                     }
                   },
+                  skeleton: colors.zinc[800],
                   offBase: colors.gray[800],
-                  primary: primary[800],
-                  active: primary[900]
+                  brand: primary[800],
+                  primary: '#1f2330', // primary[900] @ 50% opacity on colors.zinc[900]
+                  active: primary[900],
+                  success: '#172a21', // colors.green[800] @ 30% opacity on colors.zinc[900]
+                  warning: '#392817', // colors.yellow[800] @ 50% opacity on colors.zinc[900]
+                  danger: '#371a1c' // colors.red[900] @ 50% opacity on colors.zinc[900]
                 },
                 on: {
                   surface: {
@@ -125,13 +152,21 @@ module.exports = {
                       DEFAULT: colors.zinc[300],
                       muted: colors.zinc[400]
                     },
+                    brand: primary[100],
                     primary: primary[100],
-                    active: primary[100]
+                    active: primary[100],
+                    success: colors.green[200],
+                    warning: colors.yellow[200],
+                    danger: colors.red[200]
                   }
                 },
                 borderColor: {
                   DEFAULT: colors.zinc[700],
-                  focus: primary.DEFAULT
+                  focus: primary.DEFAULT,
+                  primary: primary[900],
+                  success: colors.green[900],
+                  warning: colors.yellow[900],
+                  danger: '#5a1b1d' // colors.red[900] @ 50% opacity on colors.zinc[900]
                 },
                 ringColor: {
                   focus: primary.DEFAULT

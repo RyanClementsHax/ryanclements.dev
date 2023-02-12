@@ -1,55 +1,34 @@
-import Head from 'next/head'
-import { Hero } from 'components/pages/landing/sections/Hero'
-import { Qualities } from 'components/pages/landing/sections/Qualities'
-import { Skills } from 'components/pages/landing/sections/Skills'
+import { Home, HomeProps } from 'components/pages/home'
+import { IS_DEV } from 'lib/constants'
+import { generateRssFeed } from 'lib/content/rss'
 import {
-  skillGroups,
-  projects,
-  qualities,
-  heroBannerSrcMap,
-  qualitiesImageData
-} from 'lib/content'
-import { Projects } from 'components/pages/landing/sections/Projects'
+  getSerializableRenderablePostSummaries,
+  RenderablePostSummary
+} from 'lib/pages/posts'
+import { deserialize, Serializable } from 'lib/utils/serialization'
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 
-const Index: React.FC = () => (
-  <>
-    <Head>
-      <title>Ryan Clements</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-    <Hero
-      title={
-        <>
-          {'Hiya! 👋'}
-          <br />
-          {"I'm Ryan Clements"}
-        </>
-      }
-      subtitle={
-        <>
-          I 💖 God, my wife and daughter&nbsp;👨‍👩‍👧, and making dope
-          software&nbsp;👨‍💻
-        </>
-      }
-      bannerSrcMap={heroBannerSrcMap}
-    />
-    <Qualities
-      title="A new kind of engineer"
-      subtitle="New problems need new solutions. Here's the energy I bring to the table."
-      graphicSrc={qualitiesImageData}
-      qualities={qualities}
-    />
-    <Skills
-      title="A lifelong learner"
-      subtitle="Here is the tech I know and love"
-      groups={skillGroups}
-    />
-    <Projects
-      title="One Giant Nerd"
-      subtitle="I love what I do. Here are some projects I like to work on."
-      projects={projects}
-    />
-  </>
-)
+export const getStaticProps: GetStaticProps<
+  Serializable<HomeProps>
+> = async () => {
+  if (!IS_DEV) {
+    await generateRssFeed()
+  }
+  return {
+    props: {
+      recentPostSummaries: (
+        await getSerializableRenderablePostSummaries()
+      ).slice(0, 10)
+    }
+  }
+}
+
+const Index: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  recentPostSummaries
+}) => {
+  const deserializedPostSummaries =
+    deserialize<RenderablePostSummary[]>(recentPostSummaries)
+  return <Home recentPostSummaries={deserializedPostSummaries} />
+}
 
 export default Index

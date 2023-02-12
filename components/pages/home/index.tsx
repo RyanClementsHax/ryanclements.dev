@@ -1,0 +1,42 @@
+import { Hero } from './sections/Hero'
+import { Projects } from './sections/Projects'
+import { Layout } from 'components/Layout'
+import { RecentlyPublished } from './sections/RecentlyPublished'
+import { RenderablePostSummary } from 'lib/pages/posts'
+import { heroBannerSrcMap } from 'lib/content/images'
+import { projects } from 'lib/content/projects'
+
+export interface HomeProps {
+  recentPostSummaries: RenderablePostSummary[]
+}
+
+export const Home: React.FC<HomeProps> = ({ recentPostSummaries }) => (
+  <Layout>
+    <Hero
+      title={
+        <>
+          {'Hiya! 👋'}
+          <br />
+          {"I'm Ryan"}
+        </>
+      }
+      subtitle={
+        <>
+          I 💖 God, my wife and daughter&nbsp;👨‍👩‍👧, and making dope
+          software&nbsp;👨‍💻
+        </>
+      }
+      bannerSrcMap={heroBannerSrcMap}
+    />
+    <RecentlyPublished
+      title="Recently published posts"
+      subtitle="Just my thoughts on software engineering"
+      postSummaries={recentPostSummaries}
+    />
+    <Projects
+      title="Nerd work"
+      subtitle="I love what I do. Here are some projects I like to work on."
+      projects={projects}
+    />
+  </Layout>
+)

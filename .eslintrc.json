@@ -28,7 +28,17 @@
       },
       "rules": {
         "@typescript-eslint/no-floating-promises": "error",
-        "@typescript-eslint/explicit-module-boundary-types": "warn"
+        "@typescript-eslint/explicit-module-boundary-types": "warn",
+        "@typescript-eslint/no-empty-function": "off"
+      }
+    },
+    {
+      "files": ["**/*.stories.ts?(x)"],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off"
       }
     },
     {
@@ -38,7 +48,14 @@
         "plugin:jest/style",
         "plugin:jest-dom/recommended",
         "plugin:testing-library/react"
-      ]
+      ],
+      "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "jest/no-standalone-expect": [
+          "error",
+          { "additionalTestBlockFunctions": ["each.it"] }
+        ]
+      }
     }
   ]
 }

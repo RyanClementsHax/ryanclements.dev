@@ -1,27 +1,25 @@
-# ryanclements.dev
+# ryanclements.dev <!-- omit in toc -->
 
-- [ryanclements.dev](#ryanclementsdev)
-  - [Setup](#setup)
-  - [Developing](#developing)
-    - [Debugging in VSCode (may be broken beyond our control)](#debugging-in-vscode-may-be-broken-beyond-our-control)
-  - [Linting](#linting)
-  - [Testing](#testing)
-    - [Lighthouse](#lighthouse)
-  - [Deployment](#deployment)
+- [Setup](#setup)
+- [Developing](#developing)
+  - [Debugging in VSCode](#debugging-in-vscode)
+- [Linting](#linting)
+- [Testing](#testing)
+  - [Lighthouse](#lighthouse)
+- [Deployment](#deployment)
+- [SEO](#seo)
 
 ## Setup
 
 1. (Recommended) Use VSCode and install the recommended extensions
 2. Run `yarn install` to install all of the dependencies
-3. Setup the environment variables
+3. Create a `.env.production.local` file and put the following contents in it
 
-   - copy create a `.env.local` file at the root of this repo
-   - copy the template below into that file and replace the placeholders with actual values
+   ```.env
+   NEXT_PUBLIC_VERCEL_URL=ryanclements.dev
+   ```
 
-     ```.env
-     # set this if you plan to use chromatic
-     CHROMATIC_PROJECT_TOKEN=<get this from chromatic>
-     ```
+   - This is to get around how we [cannot get the public url of the site easily within Vercel](https://github.com/vercel/next.js/discussions/16429#discussioncomment-1302156)
 
 ## Developing
 
@@ -33,15 +31,13 @@ Run `yarn format:all` to format all of the files
 
 Run `yarn print-browser-support` to print out all the browsers this project is configured to support as specified in the `.browserslistrc`
 
-### Debugging in VSCode (may be broken beyond our control)
+You can use [feeder.co's Chrome extension RSS Feed Reader](https://chrome.google.com/webstore/detail/rss-feed-reader/pnjaodmkngahhkoihejjehlcdlnohgmp/related?hl=en) when testing the rss feed
 
-Run the `Debug next` launch configuration to debug the next server
+Docs for rss can be found [here](https://www.w3schools.com/xml/xml_rss.asp)
 
-Run the `Debug chrome` launch configuration to debug the website in chrome ([MUST close all other chrome tabs first!!](https://stackoverflow.com/a/55505708))
+### Debugging in VSCode
 
-- Make sure you have the `Debugger for Chrome` extension installed
-
-Run the `Debug next and chrome` launch configuration to launch both ([MUST close all other chrome tabs first!!](https://stackoverflow.com/a/55505708))
+See the [Next.js docs for how to do this](https://nextjs.org/docs/advanced-features/debugging#debugging-with-vs-code)
 
 ## Linting
 
@@ -70,3 +66,9 @@ It is recommended that you get [this](https://chrome.google.com/webstore/detail/
 ## Deployment
 
 Deployment is handled by Vercel on merge to the `main` branch
+
+## SEO
+
+You can use Facebook's [OG debugger tool](https://developers.facebook.com/tools/debug/) to help debug card creation when sharing on Facebook. The docs for this can be found [here](https://developers.facebook.com/docs/sharing/webmasters/).
+
+You can use Twitter's Tweet Composer to test link rendering. See [this post](https://twittercommunity.com/t/card-validator-preview-removal/175006) for more details and [this troubleshooting guide](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/troubleshooting-cards) for help.

@@ -1,26 +1,27 @@
-/* eslint-disable no-console */
 import { ThemeProvider } from 'components/theme'
-import { Layout } from 'components/Layout'
 
 import type { AppProps } from 'next/app'
 
 import 'styles/global.scss'
+import { log } from 'lib/utils/logs'
 import { useEffect } from 'react'
+import { AppSeo } from 'components/AppSeo'
+import { fontClass } from 'lib/fonts'
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   useEffect(() => {
-    console.log('Ryan Clements')
-    console.log(
+    log.log('Ryan Clements')
+    log.log(
       'Full Time Catholic | Full Time Father | Full Stack Engineer | Massive Nerd'
     )
-    console.log("You're a curious one I see ;)")
+    log.log("You're a curious one I see ;)")
   }, [])
-
   return (
     <ThemeProvider>
-      <Layout>
+      <AppSeo />
+      <div className={fontClass}>
         <Component {...pageProps} />
-      </Layout>
+      </div>
     </ThemeProvider>
   )
 }

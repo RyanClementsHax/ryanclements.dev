@@ -1,23 +1,33 @@
-import { Theme } from './types'
+import { Theme, themeToContentMetaMap } from './types'
 
-export const getInitialTheme = (): string => {
-  const persistedThemePreference = localStorage.getItem('themePreference')
-  const hasPersistedPreference = typeof persistedThemePreference === 'string'
-  if (hasPersistedPreference) {
-    return persistedThemePreference
+const _Theme = Theme
+const _themeToContentMetaMap = themeToContentMetaMap
+
+export const initTheme = (
+  Theme: typeof _Theme,
+  themeToContentMetaMap: typeof _themeToContentMetaMap
+): void => {
+  const getInitialTheme = (): Theme => {
+    const persistedThemePreference = localStorage.getItem('themePreference')
+    const hasPersistedPreference = typeof persistedThemePreference === 'string'
+    if (hasPersistedPreference) {
+      return persistedThemePreference as Theme
+    }
+
+    const mql = matchMedia('(prefers-color-scheme: dark)')
+    const hasMediaQueryPreference = typeof mql.matches === 'boolean'
+    if (hasMediaQueryPreference) {
+      return mql.matches ? Theme.dark : Theme.light
+    }
+
+    return Theme.light
   }
+  const theme = getInitialTheme()
+  document.documentElement.classList.add(theme)
 
-  const mql = matchMedia('(prefers-color-scheme: dark)')
-  const hasMediaQueryPreference = typeof mql.matches === 'boolean'
-  if (hasMediaQueryPreference) {
-    return mql.matches ? 'dark' : 'light'
-  }
-
-  return 'light'
-}
-
-export const setInitialTheme = (): void => {
-  document.documentElement.classList.add(getInitialTheme())
+  document
+    .querySelector('meta[name="color-scheme"]')
+    ?.setAttribute('content', themeToContentMetaMap[theme])
 }
 
 export const getCurrentTheme = (): Theme =>
@@ -34,5 +44,12 @@ export const updateTheme = (newTheme: Theme): void => {
 
 export const updateAndPersistTheme = (newTheme: Theme): void => {
   updateTheme(newTheme)
+  updateContentMeta(newTheme)
   localStorage.setItem('themePreference', newTheme)
+}
+
+const updateContentMeta = (theme: Theme): void => {
+  document
+    .querySelector('meta[name="color-scheme"]')
+    ?.setAttribute('content', themeToContentMetaMap[theme])
 }
