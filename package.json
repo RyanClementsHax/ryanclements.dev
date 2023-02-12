@@ -23,6 +23,8 @@
     "print-browser-support": "browserslist --config=\".browserslistrc\"",
     "test": "jest",
     "test:all": "yarn lint:all && yarn type-check && yarn test",
+    "precommit:prepare": "node scripts/build.js",
+    "post:mark-updated": "node scripts/dist/markPostUpdated.js",
     "prepare": "husky install"
   },
   "dependencies": {

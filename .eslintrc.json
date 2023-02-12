@@ -22,7 +22,8 @@
   },
   "overrides": [
     {
-      "files": ["**/*.ts?(x)"],
+      "files": ["*.ts", "*.tsx", "*.mts"],
+      "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": "./tsconfig.json"
       },
@@ -33,7 +34,7 @@
       }
     },
     {
-      "files": ["**/*.stories.ts?(x)"],
+      "files": ["*.stories.ts?(x)"],
       "parserOptions": {
         "project": "./tsconfig.json"
       },
@@ -42,7 +43,7 @@
       }
     },
     {
-      "files": ["**/*@(spec|test).@(t|j)s?(x)"],
+      "files": ["*@(spec|test).@(t|j)s?(x)"],
       "extends": [
         "plugin:jest/recommended",
         "plugin:jest/style",
