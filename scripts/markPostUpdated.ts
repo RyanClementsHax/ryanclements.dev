@@ -1,5 +1,9 @@
 import { log } from 'lib/utils/logs'
 
-log.log('-------------------------------------')
-log.log('this is a test')
-log.log('-------------------------------------')
+void (async () => {
+  const [, , ...postFilePaths] = process.argv
+
+  log.log('-------------------------------------')
+  log.log('this is a test', postFilePaths)
+  log.log('-------------------------------------')
+})()
