@@ -3,20 +3,15 @@ module.exports = {
     'stylelint-config-standard',
     'stylelint-config-recommended-scss',
     'stylelint-config-rational-order',
-    'stylelint-a11y/recommended',
-    'stylelint-declaration-block-no-ignored-properties',
-    'stylelint-prettier/recommended'
+    'stylelint-a11y/recommended'
   ],
   plugins: [
     'stylelint-declaration-block-no-ignored-properties',
     'stylelint-declaration-strict-value'
   ],
   rules: {
-    'declaration-block-trailing-semicolon': null,
     'selector-class-pattern': null,
-    'a11y/media-prefers-reduced-motion': null,
     'plugin/declaration-block-no-ignored-properties': true,
-    'scss/at-import-partial-extension': null,
     'import-notation': null,
     'scale-unlimited/declaration-strict-value': [
       ['/color$/'],
