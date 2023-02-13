@@ -13,6 +13,7 @@ export interface PostMeta {
   title: string
   description: string
   publishedOn?: Date
+  updatedAt?: Date
   bannerSrc: string
   bannerAlt: string
 }

@@ -6,6 +6,7 @@ require('esbuild').build({
   format: 'cjs',
   platform: 'node',
   bundle: true,
+  external: ['sharp'],
   entryPoints: [path.join(__dirname, './markPostUpdated.ts')],
   outfile: path.join(__dirname, './dist/markPostUpdated.js')
 })

@@ -1,13 +1,12 @@
 import remarkParse from 'remark-parse'
 import { unified, Plugin } from 'unified'
 import { Node } from 'unist'
-import { YAML } from 'mdast'
-import { parse } from 'yaml'
+import { stringify } from 'gray-matter'
 import { PresetBuilder } from './presetBuilder'
 import remarkFrontmatter from 'remark-frontmatter'
-import { visit } from 'unist-util-visit'
-import { pointStart } from 'unist-util-position'
 import { imageService } from './imageService'
+import { matter } from 'vfile-matter'
+import { VFile } from 'vfile'
 
 export const parseFrontMatter = async (
   slug: string,
@@ -20,22 +19,16 @@ export const parseFrontMatter = async (
     })
   ).result
 
-const remarkParseFrontmatter: Plugin = () => async (tree, file) => {
-  let yamlNode: YAML | undefined
+export const writeFrontMatter = async (
+  frontMatter: object,
+  rawString: string
+): Promise<string> => {
+  const content = String(matter(new VFile(rawString), { strip: true }))
+  return stringify(content, frontMatter)
+}
 
-  visit(tree, 'yaml', (node: YAML) => {
-    if (yamlNode) {
-      file.fail(
-        'Cannot have multiple yaml nodes in one markdown file',
-        pointStart(node)
-      )
-      return
-    } else {
-      yamlNode = node
-    }
-  })
-
-  file.data.frontMatter = yamlNode ? parse(yamlNode.value) : {}
+const remarkParseFrontmatter: Plugin = () => async (_, file) => {
+  matter(file)
 }
 
 const frontMatterAddBannerSrc: Plugin = () => async (_, file) => {
@@ -45,13 +38,13 @@ const frontMatterAddBannerSrc: Plugin = () => async (_, file) => {
     )
     return
   }
-  if (!file.data.frontMatter) {
+  if (!file.data.matter) {
     file.fail(
       'Must include the banner src plugin after the front matter parsing plugin'
     )
     return
   }
-  const frontMatter = file.data.frontMatter as Record<string, unknown>
+  const frontMatter = file.data.matter as Record<string, unknown>
   frontMatter.bannerSrc = imageService.getPostBannerFilePath(file.stem)
 }
 
@@ -65,6 +58,5 @@ const frontMatterProcessor = unified()
   .use(remarkParse)
   .use(frontMatterTransformer)
   .use(function () {
-    this.Compiler = (_, file) =>
-      file.data.frontMatter as Record<string, unknown>
+    this.Compiler = (_, file) => file.data.matter as Record<string, unknown>
   } as Plugin<[], Node, Record<string, unknown>>)

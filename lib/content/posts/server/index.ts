@@ -3,9 +3,9 @@ import path from 'path'
 import * as yup from 'yup'
 import { log } from 'lib/utils/logs'
 import { IS_DEV, IS_PREVIEW } from 'lib/constants'
-import { parseFrontMatter } from './frontMatter'
+import { parseFrontMatter, writeFrontMatter } from './frontMatter'
 import { validateMarkdown } from './validation'
-import { Post, PostSummary } from '../types'
+import { Post, PostMeta, PostSummary } from '../types'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
@@ -47,6 +47,17 @@ export const convertRawStringToPost = async (
   }
 }
 
+export const markUpdated = async (
+  slug: string,
+  updatedAt: Date
+): Promise<void> => {
+  const meta = await getMeta(slug)
+  if (meta.publishedOn) {
+    meta.updatedAt = updatedAt
+    await updateMeta(meta)
+  }
+}
+
 const postMetaSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().required(),
@@ -75,8 +86,15 @@ const getPostSummary = async (slug: string): Promise<PostSummary> => {
   }
 }
 
-const getRawPostString = async (slug: string): Promise<string> =>
+const getRawPostString = async (slug: string) =>
   await fs.readFile(path.join(postsDirectory, `${slug}.md`), 'utf-8')
+
+const writeRawPostString = async (slug: string, rawString: string) =>
+  await fs.writeFile(
+    path.join(postsDirectory, `${slug}.md`),
+    rawString,
+    'utf-8'
+  )
 
 const getPostFileStems = async () => {
   try {
@@ -86,6 +104,16 @@ const getPostFileStems = async () => {
     log.error(`Was not able to read ${postsDirectory}`, e)
     throw e
   }
+}
+
+const getMeta = async (slug: string) => (await getPost(slug)).meta
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const updateMeta = async ({ bannerSrc, slug, ...meta }: PostMeta) => {
+  log.log(`Marking updated at for ${slug} to ${meta.updatedAt}`)
+  let rawPostString = await getRawPostString(slug)
+  rawPostString = await writeFrontMatter(meta, rawPostString)
+  await writeRawPostString(slug, rawPostString)
 }
 
 const postCanBeShown = (publishedOn?: Date): boolean =>
