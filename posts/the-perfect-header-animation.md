@@ -1,6 +1,6 @@
 ---
 bannerAlt: spiderman reading a book by roadtripwithraj on Unsplash
-updatedAt: 2023-02-14T18:28:59.418Z
+updatedAt: 2023-02-14T18:32:09.602Z
 publishedOn: 2023-01-29T05:00:00.000Z
 description: >-
   Ever wondered how to create a header that animates in and out of view in
