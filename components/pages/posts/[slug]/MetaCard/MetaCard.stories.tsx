@@ -32,6 +32,20 @@ const { DraftBase, DraftMobile, DraftDarkTheme, DraftDarkThemedMobile } =
 
 export { DraftBase, DraftMobile, DraftDarkTheme, DraftDarkThemedMobile }
 
+const {
+  UpdatedBase,
+  UpdatedMobile,
+  UpdatedDarkTheme,
+  UpdatedDarkThemedMobile
+} = createDefaultStories(Template, {
+  prefix: 'Updated',
+  additionalArgs: {
+    updatedAt: 'Feb 3rd, 2023'
+  }
+})
+
+export { UpdatedBase, UpdatedMobile, UpdatedDarkTheme, UpdatedDarkThemedMobile }
+
 export default {
   component: MetaCard
 } as Meta

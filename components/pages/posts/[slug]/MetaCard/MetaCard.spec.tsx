@@ -3,7 +3,7 @@ import { axe } from 'jest-axe'
 import * as stories from './MetaCard.stories'
 import { composeStories } from '@storybook/testing-react'
 
-const { Base, DraftBase } = composeStories(stories)
+const { Base, DraftBase, UpdatedBase } = composeStories(stories)
 
 describe('MetaCard', () => {
   it('has no axe violations', async () => {
@@ -22,5 +22,11 @@ describe('MetaCard', () => {
     render(<DraftBase />)
 
     expect(await screen.findByText(/draft/i)).toBeInTheDocument()
+  })
+
+  it('displays the date when given an updated date', async () => {
+    render(<UpdatedBase />)
+
+    expect(await screen.findByText(/updated/i)).toBeInTheDocument()
   })
 })

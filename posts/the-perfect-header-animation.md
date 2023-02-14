@@ -1,8 +1,11 @@
 ---
-title: 'The Perfect Header Animation'
-bannerAlt: 'spiderman reading a book by roadtripwithraj on Unsplash'
-description: 'Ever wondered how to create a header that animates in and out of view in perfect sync with scrolling?'
-publishedOn: '1/29/2023'
+bannerAlt: spiderman reading a book by roadtripwithraj on Unsplash
+updatedAt: 2023-02-14T18:28:59.418Z
+publishedOn: 2023-01-29T05:00:00.000Z
+description: >-
+  Ever wondered how to create a header that animates in and out of view in
+  perfect sync with scrolling?
+title: The Perfect Header Animation
 ---
 
 What do you enjoy about being deep in a facinating article? The content? Probably. The author? Maybe. Not being distracted while reading? Most certainly.

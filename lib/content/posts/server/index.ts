@@ -61,7 +61,11 @@ export const markUpdated = async (
 const postMetaSchema = yup.object({
   title: yup.string().required(),
   description: yup.string().required(),
-  publishedOn: yup.date(),
+  publishedOn: yup.date().when('updatedAt', {
+    is: (val: unknown) => !!val,
+    then: schema => schema.required()
+  }),
+  updatedAt: yup.date(),
   bannerSrc: yup.string().required(),
   bannerAlt: yup.string().required()
 })

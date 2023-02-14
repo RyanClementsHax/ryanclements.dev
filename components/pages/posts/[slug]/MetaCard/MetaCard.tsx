@@ -1,13 +1,30 @@
 export interface MetaCardProps {
   title: string
   publishedOn?: string
+  updatedAt?: string
 }
 
-export const MetaCard: React.FC<MetaCardProps> = ({ title, publishedOn }) => (
+export const MetaCard: React.FC<MetaCardProps> = ({
+  title,
+  publishedOn,
+  updatedAt
+}) => (
   <Container>
     <Title>{title}</Title>
     <PublishedDate>
-      {publishedOn ?? <span className="italic">Draft</span>}
+      {publishedOn ? (
+        <span className="flex gap-2">
+          {publishedOn}
+          {updatedAt && (
+            <>
+              <span>•</span>
+              <span>Updated {updatedAt}</span>
+            </>
+          )}
+        </span>
+      ) : (
+        <span className="italic">Draft</span>
+      )}
     </PublishedDate>
   </Container>
 )
