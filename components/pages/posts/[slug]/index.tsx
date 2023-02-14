@@ -15,7 +15,11 @@ export const PostDetails: React.FC<PostDetailsProps> = ({
   <Layout hideHeaderWithScroll>
     <Banner src={meta.bannerSrc} />
     <ContentContainer>
-      <MetaCard title={meta.title} publishedOn={meta.publishedOn} />
+      <MetaCard
+        title={meta.title}
+        publishedOn={meta.publishedOn}
+        updatedAt={meta.updatedAt}
+      />
       <Content root={content} />
     </ContentContainer>
   </Layout>
