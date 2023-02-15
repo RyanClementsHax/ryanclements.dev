@@ -6,6 +6,7 @@ import c from 'classnames'
 import Image, { ImageProps } from 'next/image'
 import { Code } from './Code'
 import { Callout } from './Callout'
+import Link from 'next/link'
 
 export const Content: React.FC<{ root: HastTree }> = ({ root }) => {
   const children = useReactFromHast(root, components)
@@ -32,9 +33,17 @@ const ContentImage: React.FC<
   />
 )
 
-const Anchor: React.FC<
-  React.AnchorHTMLAttributes<HTMLAnchorElement>
-> = props => <a {...props} target="_blank" rel="noopener" />
+const Anchor: React.FC<React.AnchorHTMLAttributes<HTMLAnchorElement>> = props =>
+  props.href?.startsWith('#') ? (
+    <a {...props} />
+  ) : (
+    <Link
+      {...props}
+      href={props.href ?? '#'}
+      target="_blank"
+      rel="noopener noreferrer"
+    />
+  )
 
 const components: ComponentsWithoutNodeOptions['components'] = {
   img: ContentImage,
