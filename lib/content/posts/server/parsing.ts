@@ -1,12 +1,11 @@
 import { unified, Plugin } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
-import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { HastTree } from '../types'
-import { Schema } from 'hast-util-sanitize'
-import deepmerge from '@fastify/deepmerge'
 import { frontMatterTransformer } from './frontMatter'
 import { imageTransformer } from './imageTransformer'
 import { codeTransformer } from './code'
@@ -30,13 +29,8 @@ const contentProcessor = unified()
   .use(codeTransformer)
   .use(rehypeRaw)
   .use(imageTransformer)
-  .use(
-    rehypeSanitize,
-    deepmerge()<Schema, Schema>(defaultSchema, {
-      tagNames: ['aside'],
-      attributes: { '*': ['className'], img: ['data-blurdataurl'] }
-    })
-  )
+  .use(rehypeSlug)
+  .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
   .use(function () {
     this.Compiler = tree => ({ tree })
   } as Plugin<[], HastTree, { tree: HastTree }>)
