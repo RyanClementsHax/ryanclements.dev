@@ -31,10 +31,10 @@
 }
 
 @include code-block-wrapper() {
-  @apply rounded-md shadow;
+  @apply my-6 overflow-hidden rounded-md shadow;
 
   @include code-block() {
-    @apply shadow-none;
+    @apply m-0 shadow-none;
   }
 
   @include with-code-block-title() {
