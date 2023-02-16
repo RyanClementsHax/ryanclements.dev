@@ -4,13 +4,13 @@ const path = require('path')
 require('esbuild').build({
   target: 'es6',
   // would need to replace __dirname with import.meta.url when converting to esm
-  entryPoints: [path.join(__dirname, './postLoader.ts')],
+  entryPoints: [path.join(__dirname, 'postLoader.ts')],
   platform: 'node',
   bundle: true,
   // *.node native binary modules aren't supported
   // https://esbuild.github.io/api/#packages
   external: ['sharp'],
-  outfile: path.join(__dirname, './dist/postLoader.js'),
+  outdir: path.join(__dirname, 'dist'),
   plugins: [
     // starry-night uses import.meta.url, but that needs an extra transformation
     // to work in cjs since it is a esm concept
