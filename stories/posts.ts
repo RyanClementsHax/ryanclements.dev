@@ -1,7 +1,7 @@
 import { RenderablePostSummary } from 'lib/pages/posts'
 import postDesignSystemBanner from 'public/posts/post-design-system/banner.jpg'
 import thePerfectHeaderAnimationBanner from 'public/posts/the-perfect-header-animation/banner.jpg'
-import usingWebpackLoadersForNextjsStaticPropsInStorybookBanner from 'public/posts/using-webpack-loaders-for-nextjs-static-props-in-storybook/banner.jpg'
+import seamlesslyUsingNextjsStaticPropsInStorybookBanner from 'public/posts/seamlessly-using-nextjs-static-props-in-storybook/banner.jpg'
 
 export const postSummaries: RenderablePostSummary[] = [
   {
@@ -26,14 +26,14 @@ export const postSummaries: RenderablePostSummary[] = [
     }
   },
   {
-    slug: 'using-webpack-loaders-for-nextjs-static-props-in-storybook',
-    title: 'Using Webpack Loaders for Next.js Static Props in Storybook',
+    slug: 'seamlessly-using-nextjs-static-props-in-storybook',
+    title: 'Seamlessly using Next.js static props in Storybook',
     description:
-      'Using esbuild and a simple webpack loader, I found a way to just "import" the static props used by Next.js page components. You can even use node apis too!',
+      'How to use Next.js static props in Storybook using static imports, esbuild, and webpack',
     publishedOn: 'Jul 14th, 2022',
     thumbnailSrc: {
-      ...usingWebpackLoadersForNextjsStaticPropsInStorybookBanner,
-      alt: 'tomatoes'
+      ...seamlesslyUsingNextjsStaticPropsInStorybookBanner,
+      alt: 'construction vehicle by @zacedmo on Unsplash'
     }
   }
 ]
