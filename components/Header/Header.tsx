@@ -1,6 +1,5 @@
 import { ThemeSelect } from 'components/theme'
 import { useHideAndShowWithScroll } from 'lib/utils/useHideAndShowWithScroll'
-import { useWindowScroll } from 'react-use'
 import c from 'classnames'
 
 import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid'
@@ -10,6 +9,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 import { NavItem, NAV_ITEMS } from 'lib/nav'
+import { useIsScrolledToTop } from 'lib/utils/useIsScrolledToTop'
 
 export interface HeaderProps {
   hideWithScroll?: boolean
@@ -56,8 +56,6 @@ export const Header: React.FC<HeaderProps> = ({ hideWithScroll = false }) => {
     </header>
   )
 }
-
-const useIsScrolledToTop = () => useWindowScroll().y === 0
 
 const DesktopNav: React.FC<{ items: NavItem[] }> = ({ items }) => (
   <div className="hidden w-full flex-row justify-end gap-6 md:flex">
