@@ -167,4 +167,171 @@ Given the difficulties, I saw the following options.
 
 I so badly wanted option `3` to be viable, but stories render in a browser, therefore, you don't have access to any apis exclusive to the server side like reading the file system, which the blog post page needs to grab the post markdown file.
 
-## Hope
+## The Idea
+
+What if I ......imported...... the props into the story? Like this.
+
+```tsx title=components/PostDetails.stories.tsx {3}
+import { Meta, StoryFn } from '@storybook/react'
+import { PostDetails, PostDetailsProps } from './PostDetails'
+import post from 'posts/the-post-i-want-to-put-in-a-story.md'
+
+export const Base: StoryFn<PostDetailsProps> = props => (
+  <PostDetails {...props} />
+)
+
+Template.args = {
+  post
+}
+
+export default {
+  component: PostDetails
+} as Meta
+```
+
+See, when I worked on [storybook-addon-next](https://www.npmjs.com/package/storybook-addon-next), I worked a lot with webpack loaders and build tools of the like. I became familiar with how a file specified for importing can go through many transformations before actually being imported. What if I made a markdown loader that just took the file path being asked for, and ran it through the pipeline I created?
+
+It has the following benefits.
+
+1. I don't need to worry about creating/editing clunky AST objects
+2. The story will always be up to date with whatever changes I make to the pipeline
+3. If I want to change the story, I change the markdown file so editing is pleasant
+4. The only diffs created when content is edited is the diff of the pipeline or the markdown files themselves so reviewing is easy
+5. I have all the access to server side APIs that I need because webpack loaders run in a server context and all that gets sent to the browser is the processed file (i.e. the same props that are returned from `getServerSideProps`)
+6. It actually exercises the full post rendering pipeline so it gives my stories higher fidelity to what will be rendered in Next.js
+
+It comes with the downside that I have to create a webpack loader which requires me to set up a separate build process. More on this later.
+
+Motivated by how cool it would be if I could pull this off, I went to work.
+
+## The Loader
+
+Webpack loaders are functions that tell webpack _how_ to load content when something asks for it.
+
+<aside>
+
+Definitely check out [the documentation](https://webpack.js.org/loaders/) and [Swashbucking with Code's Webpack 5 tutorial playlist](https://www.youtube.com/playlist?list=PLmZPx_9ZF_sB4orswXdpThGMX9ii2uP7Z) to learn more.
+
+</aside>
+
+Using Storybook's [custom webpack config feature](https://storybook.js.org/docs/react/builders/webpack#extending-storybooks-webpack-config), what I'm planning on doing is writing a custom loader that teaches Storybook's webpack to load `.md` files. That loader will exercise my pipeline to grab the `.md` file from disk and transform it into the props that my `PostDetails.tsx` component needs.
+
+Here is what the webpack config will look like.
+
+```tsx title=.storybook/main.ts {15-24}
+import type { StorybookConfig } from '@storybook/nextjs'
+
+module.exports = {
+  stories: ['../!(node_modules)/**/*.stories.@(js|jsx|ts|tsx)'],
+  staticDirs: ['../public'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-a11y',
+    'storybook-dark-mode'
+  ],
+  framework: {
+    name: '@storybook/nextjs',
+    options: {}
+  },
+  async webpackFinal(config) {
+    config.module?.rules?.push({
+      test: /\.md$/,
+      loader: require.resolve('./path/to/the/loader.js'),
+      // without this, webpack treats .md files like strings
+      // but this loader converts it to json
+      type: 'javascript/auto'
+    })
+    return config
+  }
+} satisfies StorybookConfig
+```
+
+The loader will be pretty simple too. All it needs to do is take the file path and convert it into the props using the method described above.
+
+```tsx title=postLoader.ts
+import { LoaderDefinitionFunction } from 'webpack'
+import { getPostDetailProps } from 'lib/posts'
+
+module.exports = function (content, map) {
+  const callback = this.async()
+
+  getPostDetailProps(content.toString())
+    .then(result =>
+      callback?.(null, `module.exports = ${JSON.stringify(result)}`, map)
+    )
+    .catch(err => callback?.(err))
+} satisfies LoaderDefinitionFunction
+```
+
+This might look scary so let's break it down. You can read more about how loaders work on the documentation, but I'll give a brief overview here.
+
+Webpack loaders take a few parameters. They receive the raw content, a source map, and a few other parameters that aren't important for this discussion.
+
+```tsx title=postLoader.ts {4}
+import { LoaderDefinitionFunction } from 'webpack'
+import { getPostDetailProps } from 'lib/posts'
+
+module.exports = function (content, map) {
+  const callback = this.async()
+
+  getPostDetailProps(path.parse(this.resource).name, content.toString())
+    .then(result =>
+      callback?.(null, `module.exports = ${JSON.stringify(result)}`, map)
+    )
+    .catch(err => callback?.(err))
+} satisfies LoaderDefinitionFunction
+```
+
+Normally loaders `return{:js}` the final content from the function, but if the loader is async, you need to use the special `this.async(){:js}` callback and call it when your loader is done. The docs for this are [here](https://webpack.js.org/api/loaders/#asynchronous-loaders).
+
+```tsx title=postLoader.ts {5}
+import { LoaderDefinitionFunction } from 'webpack'
+import { getPostDetailProps } from 'lib/posts'
+
+module.exports = function (content, map) {
+  const callback = this.async()
+
+  getPostDetailProps(content.toString())
+    .then(result =>
+      callback?.(null, `module.exports = ${JSON.stringify(result)}`, map)
+    )
+    .catch(err => callback?.(err))
+} satisfies LoaderDefinitionFunction
+```
+
+Next we go convert the markdown to the props we need by calling our function.
+
+```tsx title=postLoader.ts {7}
+import { LoaderDefinitionFunction } from 'webpack'
+import { getPostDetailProps } from 'lib/posts'
+
+module.exports = function (content, map) {
+  const callback = this.async()
+
+  getPostDetailProps(content.toString())
+    .then(result =>
+      callback?.(null, `module.exports = ${JSON.stringify(result)}`, map)
+    )
+    .catch(err => callback?.(err))
+} satisfies LoaderDefinitionFunction
+```
+
+Lastly, we return the props that we converted the markdown file to, or the error if there was one.
+
+```tsx title=postLoader.ts {8-11}
+import { LoaderDefinitionFunction } from 'webpack'
+import { getPostDetailProps } from 'lib/posts'
+
+module.exports = function (content, map) {
+  const callback = this.async()
+
+  getPostDetailProps(content.toString())
+    .then(result =>
+      callback?.(null, `module.exports = ${JSON.stringify(result)}`, map)
+    )
+    .catch(err => callback?.(err))
+} satisfies LoaderDefinitionFunction
+```
+
+You might be wondering why we return `` `module.exports = ${JSON.stringify(result)}` {:js}``. This is because we want the `import post from 'posts/the-post-i-want-to-put-in-a-story.md'{:js}` to work in run time. The way we do that is if instead of it pointing to a markdown file, it points to a javascript file. Returning the content as a javascript file allows this to work.
