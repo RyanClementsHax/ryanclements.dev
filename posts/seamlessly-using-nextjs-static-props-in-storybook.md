@@ -2,6 +2,7 @@
 title: 'Seamlessly using Next.js static props in Storybook'
 bannerAlt: 'construction vehicle by @zacedmo on Unsplash'
 description: 'How to use Next.js static props in Storybook using static imports, esbuild, and webpack'
+publishedOn: '2/20/2023'
 ---
 
 Making this website has been one of the most fun side projects I've ever worked on. It's a playground where I can try so many things and have the freedom to create whatever my heart desires. In the spirit of using really cool tech, I decided to build this website with Next.js as my framework, and Storybook for component driven development, and UI testing.
