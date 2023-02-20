@@ -1,5 +1,6 @@
-/** @type {import('@storybook/nextjs').StorybookConfig} */
-const config = {
+import type { StorybookConfig } from '@storybook/nextjs'
+
+module.exports = {
   stories: ['../!(node_modules)/**/*.stories.@(js|jsx|ts|tsx)'],
   staticDirs: ['../public'],
   addons: [
@@ -22,5 +23,4 @@ const config = {
     })
     return config
   }
-}
-module.exports = config
+} satisfies StorybookConfig

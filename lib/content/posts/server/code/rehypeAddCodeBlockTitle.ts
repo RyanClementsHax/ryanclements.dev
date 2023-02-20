@@ -5,7 +5,7 @@ import { HastTree } from '../../types'
 import { h } from 'hastscript'
 import { isMetaValid } from './utils'
 
-const TITLE_MATCHER = /title=([\w.-]+)/
+const TITLE_MATCHER = /title=([\w.-/]+)/
 
 export const rehypeAddCodeBlockTitle: Plugin<[], HastTree> =
   () => async tree => {

@@ -2,7 +2,7 @@ import path from 'path'
 import { LoaderDefinitionFunction } from 'webpack'
 import { convertRawStringToSerializableRenderablePost } from 'lib/pages/posts/[slug]'
 
-const loader: LoaderDefinitionFunction = function (content, map) {
+module.exports = function (content, map) {
   const callback = this.async()
 
   convertRawStringToSerializableRenderablePost(
@@ -13,6 +13,4 @@ const loader: LoaderDefinitionFunction = function (content, map) {
       callback?.(null, `module.exports = ${JSON.stringify(result)}`, map)
     )
     .catch(err => callback?.(err))
-}
-
-module.exports = loader
+} satisfies LoaderDefinitionFunction
