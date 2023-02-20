@@ -171,9 +171,11 @@ I so badly wanted option `3` to be viable, but stories render in a browser, ther
 
 What if I ......imported...... the props into the story? Like this.
 
-```tsx title=components/PostDetails.stories.tsx {3}
+```tsx title=components/PostDetails.stories.tsx {3-5, 12}
 import { Meta, StoryFn } from '@storybook/react'
 import { PostDetails, PostDetailsProps } from './PostDetails'
+// What's imported is the content of the .md file converted as props
+// for the component below
 import post from 'posts/the-post-i-want-to-put-in-a-story.md'
 
 export const Base: StoryFn<PostDetailsProps> = props => (
@@ -189,7 +191,7 @@ export default {
 } as Meta
 ```
 
-See, when I worked on [storybook-addon-next](https://www.npmjs.com/package/storybook-addon-next), I worked a lot with webpack loaders and build tools of the like. I became familiar with how a file specified for importing can go through many transformations before actually being imported. What if I made a markdown loader that just took the file path being asked for, and ran it through the pipeline I created?
+See, when I worked on [storybook-addon-next](https://www.npmjs.com/package/storybook-addon-next), I worked a lot with webpack loaders and build tools of the like. I became familiar with how a file specified for importing can go through many transformations before actually being imported. What if I made a markdown loader that just took the raw `.md` file, and ran it through the pipeline I created?
 
 It has the following benefits.
 
@@ -200,7 +202,7 @@ It has the following benefits.
 5. I have all the access to server side APIs that I need because webpack loaders run in a server context and all that gets sent to the browser is the processed file (i.e. the same props that are returned from `getServerSideProps`)
 6. It actually exercises the full post rendering pipeline so it gives my stories higher fidelity to what will be rendered in Next.js
 
-It comes with the downside that I have to create a webpack loader which requires me to set up a separate build process. More on this later.
+It comes with the downside that I have to create a webpack loader which requires me to set up a separate build process if I want to use typescript and esm. More on this later.
 
 Motivated by how cool it would be if I could pull this off, I went to work.
 
@@ -214,40 +216,13 @@ Definitely check out [the documentation](https://webpack.js.org/loaders/) and [S
 
 </aside>
 
-Using Storybook's [custom webpack config feature](https://storybook.js.org/docs/react/builders/webpack#extending-storybooks-webpack-config), what I'm planning on doing is writing a custom loader that teaches Storybook's webpack to load `.md` files. That loader will exercise my pipeline to grab the `.md` file from disk and transform it into the props that my `PostDetails.tsx` component needs.
+Using Storybook's [custom webpack config feature](https://storybook.js.org/docs/react/builders/webpack#extending-storybooks-webpack-config), what I'm planning on doing is writing a custom loader that teaches Storybook's webpack to load `.md` files. That loader will do the following.
 
-Here is what the webpack config will look like.
+1. Take the content that was originally going to be loaded (the content of the `.md` file)
+2. Feed the content into the transformation pipeline which will convert it into the props that my `PostDetails.tsx` component needs
+3. Tell webpack instead of loading the content of the `.md` file, load the content of a javascript file that exports the props we created in the previous step
 
-```tsx title=.storybook/main.ts {15-24}
-import type { StorybookConfig } from '@storybook/nextjs'
-
-module.exports = {
-  stories: ['../!(node_modules)/**/*.stories.@(js|jsx|ts|tsx)'],
-  staticDirs: ['../public'],
-  addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-a11y',
-    'storybook-dark-mode'
-  ],
-  framework: {
-    name: '@storybook/nextjs',
-    options: {}
-  },
-  async webpackFinal(config) {
-    config.module?.rules?.push({
-      test: /\.md$/,
-      loader: require.resolve('./path/to/the/loader.js'),
-      // without this, webpack treats .md files like strings
-      // but this loader converts it to json
-      type: 'javascript/auto'
-    })
-    return config
-  }
-} satisfies StorybookConfig
-```
-
-The loader will be pretty simple too. All it needs to do is take the file path and convert it into the props using the method described above.
+The loader will be pretty simple. All it needs to do is take the raw content of the `.md` file and convert it into the props using the method described above.
 
 ```tsx title=postLoader.ts
 import { LoaderDefinitionFunction } from 'webpack'
@@ -275,7 +250,7 @@ import { getPostDetailProps } from 'lib/posts'
 module.exports = function (content, map) {
   const callback = this.async()
 
-  getPostDetailProps(path.parse(this.resource).name, content.toString())
+  getPostDetailProps(content.toString())
     .then(result =>
       callback?.(null, `module.exports = ${JSON.stringify(result)}`, map)
     )
@@ -300,9 +275,9 @@ module.exports = function (content, map) {
 } satisfies LoaderDefinitionFunction
 ```
 
-Next we go convert the markdown to the props we need by calling our function.
+Next we go convert the markdown to the props we need by calling our function. I choose to not call `getStaticProps` directly because I would have to "mock" out all the parameters that Next.js gives to this function. Instead, I want to call the function that converts a raw markdown file to props directly.
 
-```tsx title=postLoader.ts {7}
+```tsx title=postLoader.ts {2, 7}
 import { LoaderDefinitionFunction } from 'webpack'
 import { getPostDetailProps } from 'lib/posts'
 
@@ -317,7 +292,7 @@ module.exports = function (content, map) {
 } satisfies LoaderDefinitionFunction
 ```
 
-Lastly, we return the props that we converted the markdown file to, or the error if there was one.
+Lastly, we return the props that we converted the markdown file to, or an the error if there was one.
 
 ```tsx title=postLoader.ts {8-11}
 import { LoaderDefinitionFunction } from 'webpack'
@@ -334,4 +309,220 @@ module.exports = function (content, map) {
 } satisfies LoaderDefinitionFunction
 ```
 
-You might be wondering why we return `` `module.exports = ${JSON.stringify(result)}` {:js}``. This is because we want the `import post from 'posts/the-post-i-want-to-put-in-a-story.md'{:js}` to work in run time. The way we do that is if instead of it pointing to a markdown file, it points to a javascript file. Returning the content as a javascript file allows this to work.
+You might be wondering why we return `` `module.exports = ${JSON.stringify(result)}` {:js}`` instead of just `result{:js}`. This is because to get `import post from 'posts/the-post-i-want-to-put-in-a-story.md'{:js}` to work the way we want, we need the file that this points to to be a javascript file that exports the props.
+
+Once we have our loader, we have to hook it up with Storybook. Here is what the Storybook webpack config will look like.
+
+```tsx title=.storybook/main.ts {15-24}
+import type { StorybookConfig } from '@storybook/nextjs'
+
+module.exports = {
+  stories: ['../!(node_modules)/**/*.stories.@(js|jsx|ts|tsx)'],
+  staticDirs: ['../public'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-a11y'
+  ],
+  framework: {
+    name: '@storybook/nextjs',
+    options: {}
+  },
+  async webpackFinal(config) {
+    config.module?.rules?.push({
+      test: /\.md$/,
+      loader: require.resolve('./path/to/postLoader'),
+      // without this, webpack treats .md files like strings
+      // but this loader converts it to json
+      type: 'javascript/auto'
+    })
+    return config
+  }
+} satisfies StorybookConfig
+```
+
+There's one problem though.
+
+```ts title=.storybook/main.ts {6}
+module.exports = {
+  // ...
+  async webpackFinal(config) {
+    config.module?.rules?.push({
+      test: /\.md$/,
+      loader: require.resolve('./path/to/postLoader'),
+      // without this, webpack treats .md files like strings
+      // but this loader converts it to json
+      type: 'javascript/auto'
+    })
+    return config
+  }
+} satisfies StorybookConfig
+```
+
+The webpack rule `loader` field is either a string pointing to an npm package or a file path to a javascript file to load. There isn't an option to hand it a function reference like this.
+
+```ts title=.storybook/main.ts {1, 8-9}
+import postLoader from './path/to/postLoader'
+
+module.exports = {
+  // ...
+  async webpackFinal(config) {
+    config.module?.rules?.push({
+      test: /\.md$/,
+      // ❌ Can't do this
+      loader: postLoader,
+      // without this, webpack treats .md files like strings
+      // but this loader converts it to json
+      type: 'javascript/auto'
+    })
+    return config
+  }
+} satisfies StorybookConfig
+```
+
+This means we have to either write the loader in plain javascript and commonjs modules, or we have to build our typescript and esm loader first and point the webpack rule to the build output. If you want to write your loader in plain javascript and cjs, then you can stop reading here and use the following loader.
+
+```tsx title=postLoader.js
+// We no longer have the ability to use absolute imports
+// so we have to use relative paths now
+const { getPostDetailProps } = require('../path/to/lib/posts')
+
+module.exports = function (content, map) {
+  const callback = this.async()
+
+  getPostDetailProps(content.toString())
+    .then(result =>
+      callback?.(null, `module.exports = ${JSON.stringify(result)}`, map)
+    )
+    .catch(err => callback?.(err))
+}
+```
+
+I on the other hand love typescript and wanted to challenge myself to to the extra mile to make this work.
+
+## Building The Loader
+
+What we need to do is create a script that builds our typescript and esm loader into plain javascript and commonjs. After that, we can reference the built loader's file path in our custom webpack config rule.
+
+In my OSS packages like [storybook-addon-next](https://www.npmjs.com/package/storybook-addon-next). I've been able to get away with just using typescript's compiler `tsc`. This works fine when making standalone packages, but when I tried using `tsc` to build the loader within a Next.js repo, I found that it was clunky, difficult to work with, and awkward so I abandoned that approach for a tool better designed for building. I'll just skip to what worked for brevity's sake. I can make another post about this attempt if desired 🙂.
+
+Enter [esbuild](https://esbuild.github.io/).
+
+This tool has been receiving quite a buzz over the last few years so I was excited to try it out finally. After installing `esbuild` I created a `build.js` file next to `postLoader.ts` with a very simple config. For this file I bit the bullet and wrote it in javascript despite my love for typescript since it is a simple file and running raw typescript scripts in Node.js is annoying currently, but not impossible (see [ts-node](https://www.npmjs.com/package/ts-node)).
+
+```js title=build.js
+const path = require('path')
+
+require('esbuild').build({
+  entryPoints: [path.join(__dirname, 'postLoader.ts')],
+  outdir: path.join(__dirname, 'dist'),
+  platform: 'node',
+  bundle: true
+})
+```
+
+It's pretty simple but we can walk through it.
+
+First we tell `esbuild` to build our `postLoader.ts` file. We don't need to add any additional files like `lib/posts` because `esbuild` can figure that out on its own.
+
+```js title=build.js {4}
+const path = require('path')
+
+require('esbuild').build({
+  entryPoints: [path.join(__dirname, 'postLoader.ts')],
+  outdir: path.join(__dirname, 'dist'),
+  platform: 'node',
+  bundle: true
+})
+```
+
+Next we tell it what directory we want the output built into.
+
+```js title=build.js {5}
+const path = require('path')
+
+require('esbuild').build({
+  entryPoints: [path.join(__dirname, 'postLoader.ts')],
+  outdir: path.join(__dirname, 'dist'),
+  platform: 'node',
+  bundle: true
+})
+```
+
+By default, `esbuild` outputs code designed for the browser so if we want to build code that runs in Node.js, then we have to specify `platform: 'node'`.
+
+```js title=build.js {6}
+const path = require('path')
+
+require('esbuild').build({
+  entryPoints: [path.join(__dirname, 'postLoader.ts')],
+  outdir: path.join(__dirname, 'dist'),
+  platform: 'node',
+  bundle: true
+})
+```
+
+Lastly, I found it difficult to have `esbuild` respect the `paths` and `baseUrl` properties of `tsconfig.json` when outputing unbundled code, so I just configured `esbuild` to bundle everything into one file. This isn't a problem for what we are doing though.
+
+```js title=build.js {7}
+const path = require('path')
+
+require('esbuild').build({
+  entryPoints: [path.join(__dirname, 'postLoader.ts')],
+  outdir: path.join(__dirname, 'dist'),
+  platform: 'node',
+  bundle: true
+})
+```
+
+Since we need to reference the built version of `postLoader.ts` we have to update the config to point to it in the `dist` directory next to `postLoader.ts`.
+
+```ts title=.storybook/main.ts {6}
+module.exports = {
+  // ...
+  async webpackFinal(config) {
+    config.module?.rules?.push({
+      test: /\.md$/,
+      loader: require.resolve('./path/to/dist/postLoader'),
+      // without this, webpack treats .md files like strings
+      // but this loader converts it to json
+      type: 'javascript/auto'
+    })
+    return config
+  }
+} satisfies StorybookConfig
+```
+
+Now whenever we want to run storybook, we just need to build the loader first so we need to run this script before starting storybook. We can do this by adding a `storybook:prepare` script in our `package.json` that we run before `storybook dev` or `storybook build`.
+
+```json title=package.json
+{
+  "scripts": {
+    "storybook": "yarn storybook:prepare && storybook dev -p 6006",
+    "storybook:prepare": "node .storybook/loaders/build.js",
+    "storybook:build": "yarn storybook:prepare && storybook build"
+  }
+}
+```
+
+Some might be hesitant to add a build step worrying about added build time. `esbuild` is _stupid fast_ so this wasn't a problem at all for me.
+
+That's it! Running `yarn storybook` or `storybook:build` works and I can see the posts render as normal in stories!
+
+## The Real Code
+
+The examples given here were simplified versions of what I actually created as to better communicate the concepts. For now, I only have one story configured for my post page which is just a "kitchen sink" post containing all the different things I could render in a post, but I'm considering rendering a story for every post I make.
+
+If you want to see the actual code I wrote for this you can see it here.
+
+- [postLoader.ts](https://github.com/RyanClementsHax/ryanclements.dev/blob/7c711e8eff1340178572ac59bcc01e8b292eb2d9/.storybook/loaders/postLoader.ts)
+- [build.js](https://github.com/RyanClementsHax/ryanclements.dev/blob/7c711e8eff1340178572ac59bcc01e8b292eb2d9/.storybook/loaders/build.js)
+- [My post page](https://github.com/RyanClementsHax/ryanclements.dev/blob/7c711e8eff1340178572ac59bcc01e8b292eb2d9/pages/posts/%5Bslug%5D.tsx)
+- [The stories for my post page](https://github.com/RyanClementsHax/ryanclements.dev/blob/7c711e8eff1340178572ac59bcc01e8b292eb2d9/components/pages/posts/%5Bslug%5D/index.stories.tsx)
+- [The post file I import into the stories](https://github.com/RyanClementsHax/ryanclements.dev/blob/7c711e8eff1340178572ac59bcc01e8b292eb2d9/posts/post-design-system.md)
+
+## Conclusion
+
+Don't be afraid to invent where you see holes. I had a ton of fun learning about these build tools and I'm so happy I was able to finally get this working. Feel free to reach out to me to let me know what you think!
+
+That's all for now. Bye! 👋🏻
