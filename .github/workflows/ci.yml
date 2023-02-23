@@ -67,6 +67,9 @@ jobs:
         with:
           urls: |
             ${{ steps.vercel_preview_url.outputs.url }}
+            ${{ steps.vercel_preview_url.outputs.url }}/posts
+            ${{ steps.vercel_preview_url.outputs.url }}/about
+            ${{ steps.vercel_preview_url.outputs.url }}/posts/the-perfect-header-animation
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
@@ -77,6 +80,9 @@ jobs:
         with:
           urls: |
             ${{ steps.vercel_preview_url.outputs.url }}
+            ${{ steps.vercel_preview_url.outputs.url }}/posts
+            ${{ steps.vercel_preview_url.outputs.url }}/about
+            ${{ steps.vercel_preview_url.outputs.url }}/posts/the-perfect-header-animation
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
@@ -106,12 +112,12 @@ jobs:
               results
                 .map(result => {
                   const summary = result.summary
-                  const url = result.url
+                  const url = new URL(result.url)
 
                   return `
-            ## ${title}
+            ## ${title} ${url.pathname}
             🌎 [${url}](${url})
-            ⚡️ [Report](${links[url]})
+            ⚡️ [Report](${links[url.toString()]})
 
             | Category | Score |
             | --- | --- |

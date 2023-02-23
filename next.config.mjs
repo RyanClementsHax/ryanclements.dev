@@ -1,7 +1,4 @@
-// I'd love to convert this to .mjs but storybook-addon-next doesn't support importing mjs yet
-/* eslint-disable @typescript-eslint/no-var-requires */
-
-const withBundleAnalyzer = require('@next/bundle-analyzer')
+import withBundleAnalyzer from '@next/bundle-analyzer'
 
 /**
  * @type {import('next').NextConfig}
@@ -13,7 +10,8 @@ const config = {
   }
 }
 
-module.exports = () =>
+// eslint-disable-next-line import/no-anonymous-default-export
+export default () =>
   [
     withBundleAnalyzer({
       enabled: process.env.ANALYZE === 'true'

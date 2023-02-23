@@ -16,3 +16,7 @@ jest.mock('next/link', () => ({
   )
 }))
 jest.mock('../.storybook/decorators/ThemeDecorator')
+jest.mock('lib/utils/useIsScrolledToTop', () => ({
+  // if not mocked, causes act(...) errors in console
+  useIsScrolledToTop: () => true
+}))
