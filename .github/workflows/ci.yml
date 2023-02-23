@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: restore dependencies
         uses: bahmutov/npm-install@v1
       - run: yarn lint:all
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: restore dependencies
         uses: bahmutov/npm-install@v1
       - run: yarn test
@@ -36,15 +36,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: restore dependencies
         uses: bahmutov/npm-install@v1
       - run: yarn type-check
-  lighthouse:
+  lighthouse_desktop:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: restore dependencies
         uses: bahmutov/npm-install@v1
       - name: awaiting preview url
@@ -58,30 +58,73 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.pull_request.number }}
-          header: lighthouse
+          header: lighthouse desktop
           message: |
-            🚦 Running Lighthouse audit...
+            🚦 Running Lighthouse audit on desktop...
       - name: audit urls using lighthouse emulating desktop
-        id: lighthouse_audit_desktop
+        id: lighthouse_audit
         uses: treosh/lighthouse-ci-action@v9
         with:
           urls: |
             ${{ steps.vercel_preview_url.outputs.url }}
-            ${{ steps.vercel_preview_url.outputs.url }}/posts
             ${{ steps.vercel_preview_url.outputs.url }}/about
+            ${{ steps.vercel_preview_url.outputs.url }}/posts
+            ${{ steps.vercel_preview_url.outputs.url }}/posts/post-design-system
             ${{ steps.vercel_preview_url.outputs.url }}/posts/the-perfect-header-animation
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
           configPath: './.github/lighthouse/desktop.lighthouserc.js'
+      - name: format lighthouse result
+        id: lighthouse_result
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            require('./.github/lighthouse/formatLighthouseResult.js')({
+              core,
+              type: 'Desktop',
+              links: ${{ steps.lighthouse_audit.outputs.links }},
+              manifest: ${{ steps.lighthouse_audit.outputs.manifest }}
+            })
+      - name: add lighthouse comment to PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ github.event.pull_request.number }}
+          header: lighthouse desktop
+          message: |
+            ${{ steps.lighthouse_result.outputs.comment }}
+  lighthouse_mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: restore dependencies
+        uses: bahmutov/npm-install@v1
+      - name: awaiting preview url
+        uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
+        id: vercel_preview_url
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 300 # 5min
+      - name: add comment to PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ github.event.pull_request.number }}
+          header: lighthouse mobile
+          message: |
+            🚦 Running Lighthouse audit on mobile...
       - name: audit urls using lighthouse emulating mobile
-        id: lighthouse_audit_mobile
+        id: lighthouse_audit
         uses: treosh/lighthouse-ci-action@v9
         with:
           urls: |
             ${{ steps.vercel_preview_url.outputs.url }}
-            ${{ steps.vercel_preview_url.outputs.url }}/posts
             ${{ steps.vercel_preview_url.outputs.url }}/about
+            ${{ steps.vercel_preview_url.outputs.url }}/posts
+            ${{ steps.vercel_preview_url.outputs.url }}/posts/post-design-system
             ${{ steps.vercel_preview_url.outputs.url }}/posts/the-perfect-header-animation
           uploadArtifacts: true
           temporaryPublicStorage: true
@@ -93,55 +136,17 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const runs = [
-              {
-                title: 'Desktop',
-                links: ${{ steps.lighthouse_audit_desktop.outputs.links }},
-                results: (${{ steps.lighthouse_audit_desktop.outputs.manifest }}).filter(result => result.isRepresentativeRun)
-              },
-              {
-                title: 'Mobile',
-                links: ${{ steps.lighthouse_audit_mobile.outputs.links }},
-                results: (${{ steps.lighthouse_audit_mobile.outputs.manifest }}).filter(result => result.isRepresentativeRun)
-              }
-            ]
-
-            const gradeScore = res => (res >= 90 ? '🟢' : res >= 50 ? '🟠' : '🔴')
-
-            const formatRun = ({ title, links, results }) =>
-              results
-                .map(result => {
-                  const summary = result.summary
-                  const url = new URL(result.url)
-
-                  return `
-            ## ${title} ${url.pathname}
-            🌎 [${url}](${url})
-            ⚡️ [Report](${links[url.toString()]})
-
-            | Category | Score |
-            | --- | --- |
-            ${Object.keys(summary)
-              .map(key => {
-                const percentage = Math.round(summary[key] * 100)
-                return `| ${gradeScore(percentage)} ${key} | ${percentage} |`
-              })
-              .join('\n')}
-            `
-                })
-                .join('---')
-
-            const comment = `
-            # Lighthouse Results
-            ${runs.map(formatRun).join('')}
-            `
-
-            core.setOutput("comment", comment);
+            require('./.github/lighthouse/formatLighthouseResult.js')({
+              core,
+              type: 'Mobile',
+              links: ${{ steps.lighthouse_audit.outputs.links }},
+              manifest: ${{ steps.lighthouse_audit.outputs.manifest }}
+            })
       - name: add lighthouse comment to PR
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.pull_request.number }}
-          header: lighthouse
+          header: lighthouse mobile
           message: |
             ${{ steps.lighthouse_result.outputs.comment }}

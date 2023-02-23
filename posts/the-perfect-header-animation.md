@@ -1,6 +1,6 @@
 ---
 bannerAlt: spiderman reading a book by roadtripwithraj on Unsplash
-updatedAt: 2023-02-14T18:32:09.602Z
+updatedAt: 2023-02-23T14:27:35.662Z
 publishedOn: 2023-01-29T05:00:00.000Z
 description: >-
   Ever wondered how to create a header that animates in and out of view in
@@ -28,7 +28,7 @@ In this post, I'll take you through the journey of how I implemented this, why M
 
 <aside>
 
-The repo containing this code can be found [here](https://github.com/RyanClementsHax/blog-perfect-header-animation). The examples I use are in react, but the concept holds for any framework of choice. The code for the header logic specifically can be found in [Header.tsx](https://github.com/RyanClementsHax/blog-perfect-header-animation/blob/main/components/Header.tsx).
+I made a [repo containing all of this code](https://github.com/RyanClementsHax/blog-perfect-header-animation). The examples I use are in react, but the concept holds for any framework of choice. The code for the header logic specifically can be found in [Header.tsx](https://github.com/RyanClementsHax/blog-perfect-header-animation/blob/main/components/Header.tsx).
 
 </aside>
 

@@ -1,4 +1,7 @@
 // https://github.com/GoogleChrome/lighthouse-ci
+
+const assert = require('./assertConfig')
+
 module.exports = {
   ci: {
     // https://github.com/GoogleChrome/lighthouse/blob/main/docs/configuration.md#lighthouse-configuration
@@ -15,6 +18,7 @@ module.exports = {
           'best-practices'
         ]
       }
-    }
+    },
+    assert
   }
 }
