@@ -1,5 +1,5 @@
 const defaultAssertionRules = {
-  'csp-xss': 'off',
+  // 'csp-xss': 'off',
   'uses-rel-preconnect': 'off',
   'uses-responsive-images': 'off',
   'efficient-animated-content': 'off'
@@ -11,11 +11,11 @@ const pathToOverrides = {
     'color-contrast': 'off',
     // Right now, the AST downloaded on a post is really large
     // I hope to fix this later with server components
-    'total-byte-weight': 'off',
-    'link-text': 'off'
+    'total-byte-weight': 'off'
+    // 'link-text': 'off'
   },
   about: {
-    'offscreen-images': 'off'
+    // 'offscreen-images': 'off'
   }
 }
 
