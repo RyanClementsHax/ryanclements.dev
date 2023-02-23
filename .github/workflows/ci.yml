@@ -67,6 +67,9 @@ jobs:
         with:
           urls: |
             ${{ steps.vercel_preview_url.outputs.url }}
+            ${{ steps.vercel_preview_url.outputs.url }}/posts
+            ${{ steps.vercel_preview_url.outputs.url }}/about
+            ${{ steps.vercel_preview_url.outputs.url }}/posts/the-perfect-header-animation
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
@@ -77,6 +80,9 @@ jobs:
         with:
           urls: |
             ${{ steps.vercel_preview_url.outputs.url }}
+            ${{ steps.vercel_preview_url.outputs.url }}/posts
+            ${{ steps.vercel_preview_url.outputs.url }}/about
+            ${{ steps.vercel_preview_url.outputs.url }}/posts/the-perfect-header-animation
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
