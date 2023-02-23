@@ -62,17 +62,18 @@ jobs:
           message: |
             🚦 Running Lighthouse audit on desktop...
       - name: audit urls using lighthouse emulating desktop
-        id: lighthouse_audit_desktop
+        id: lighthouse_audit
         uses: treosh/lighthouse-ci-action@v9
         with:
           urls: |
             ${{ steps.vercel_preview_url.outputs.url }}
-            ${{ steps.vercel_preview_url.outputs.url }}/posts
             ${{ steps.vercel_preview_url.outputs.url }}/about
+            ${{ steps.vercel_preview_url.outputs.url }}/posts
+            ${{ steps.vercel_preview_url.outputs.url }}/posts/post-design-system
             ${{ steps.vercel_preview_url.outputs.url }}/posts/the-perfect-header-animation
           uploadArtifacts: true
           temporaryPublicStorage: true
-          runs: 3
+          runs: 2
           configPath: './.github/lighthouse/desktop.lighthouserc.js'
       - name: format lighthouse result
         id: lighthouse_result
@@ -82,9 +83,9 @@ jobs:
           script: |
             require('./.github/lighthouse/formatLighthouseResult.js')({
               core,
-              title: 'Desktop',
-              links: ${{ steps.lighthouse_audit_desktop.outputs.links }},
-              manifest: ${{ steps.lighthouse_audit_desktop.outputs.manifest }}
+              type: 'Desktop',
+              links: ${{ steps.lighthouse_audit.outputs.links }},
+              manifest: ${{ steps.lighthouse_audit.outputs.manifest }}
             })
       - name: add lighthouse comment to PR
         uses: marocchino/sticky-pull-request-comment@v2
@@ -116,17 +117,18 @@ jobs:
           message: |
             🚦 Running Lighthouse audit on mobile...
       - name: audit urls using lighthouse emulating mobile
-        id: lighthouse_audit_mobile
+        id: lighthouse_audit
         uses: treosh/lighthouse-ci-action@v9
         with:
           urls: |
             ${{ steps.vercel_preview_url.outputs.url }}
-            ${{ steps.vercel_preview_url.outputs.url }}/posts
             ${{ steps.vercel_preview_url.outputs.url }}/about
+            ${{ steps.vercel_preview_url.outputs.url }}/posts
+            ${{ steps.vercel_preview_url.outputs.url }}/posts/post-design-system
             ${{ steps.vercel_preview_url.outputs.url }}/posts/the-perfect-header-animation
           uploadArtifacts: true
           temporaryPublicStorage: true
-          runs: 3
+          runs: 2
           configPath: './.github/lighthouse/mobile.lighthouserc.js'
       - name: format lighthouse result
         id: lighthouse_result
@@ -136,9 +138,9 @@ jobs:
           script: |
             require('./.github/lighthouse/formatLighthouseResult.js')({
               core,
-              title: 'Mobile',
-              links: ${{ steps.lighthouse_audit_mobile.outputs.links }},
-              manifest: ${{ steps.lighthouse_audit_mobile.outputs.manifest }}
+              type: 'Mobile',
+              links: ${{ steps.lighthouse_audit.outputs.links }},
+              manifest: ${{ steps.lighthouse_audit.outputs.manifest }}
             })
       - name: add lighthouse comment to PR
         uses: marocchino/sticky-pull-request-comment@v2
