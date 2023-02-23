@@ -73,7 +73,7 @@ jobs:
             ${{ steps.vercel_preview_url.outputs.url }}/posts/the-perfect-header-animation
           uploadArtifacts: true
           temporaryPublicStorage: true
-          runs: 2
+          runs: 3
           configPath: './.github/lighthouse/desktop.lighthouserc.js'
       - name: format lighthouse result
         id: lighthouse_result
@@ -128,7 +128,7 @@ jobs:
             ${{ steps.vercel_preview_url.outputs.url }}/posts/the-perfect-header-animation
           uploadArtifacts: true
           temporaryPublicStorage: true
-          runs: 2
+          runs: 3
           configPath: './.github/lighthouse/mobile.lighthouserc.js'
       - name: format lighthouse result
         id: lighthouse_result

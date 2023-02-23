@@ -27,9 +27,9 @@ ${Object.keys(summary)
     return `| ${gradeScore(percentage)} ${key} | ${percentage} |`
   })
   .join('\n')}
-    `
+`
       })
-      .join('---')
+      .join('')
 
   const comment = `
 # ${type} Lighthouse Results
