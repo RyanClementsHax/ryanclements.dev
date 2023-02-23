@@ -37,6 +37,10 @@ module.exports = {
           'best-practices'
         ]
       }
+    },
+    assert: {
+      // https://github.com/GoogleChrome/lighthouse-ci/blob/d7240dcb25ff67aa74cce5067170a5f1a7a446a2/docs/configuration.md#assert
+      preset: 'lighthouse:no-pwa'
     }
   }
 }
