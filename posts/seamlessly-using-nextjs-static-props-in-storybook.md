@@ -1,8 +1,11 @@
 ---
-title: 'Seamlessly using Next.js static props in Storybook'
-bannerAlt: 'construction vehicle by @zacedmo on Unsplash'
-description: 'How to use Next.js static props in Storybook using static imports, esbuild, and webpack'
-publishedOn: '2/20/2023'
+bannerAlt: construction vehicle by @zacedmo on Unsplash
+publishedOn: 2023-02-20T05:00:00.000Z
+description: >-
+  How to use Next.js static props in Storybook using static imports, esbuild,
+  and webpack
+title: Seamlessly using Next.js static props in Storybook
+updatedAt: 2023-02-24T14:41:13.498Z
 ---
 
 Making this website has been one of the most fun side projects I've ever worked on. It's a playground where I can try so many things and have the freedom to create whatever my heart desires. In the spirit of using really cool tech, I decided to build this website with Next.js as my framework, and Storybook for component driven development, and UI testing.
@@ -507,6 +510,35 @@ Now whenever we want to run storybook, we just need to build the loader first so
 ```
 
 Some might be hesitant to add a build step worrying about added build time. `esbuild` is _stupid fast_ so this wasn't a problem at all for me.
+
+## Polishing Types
+
+If you're using typescript, then you probably want to make sure that the `import post from 'posts/the-post-i-want-to-put-in-a-story.md'{:js}` is typed properly. To do this, we need to make a module declaration. We need to create a file ending in `.d.ts` and put it anywhere in the project so long as it is covered by [typescript's include config option](https://www.typescriptlang.org/tsconfig#include). I personally put module declarations in a `types` folder under the root of the repo. In that file, put the following content.
+
+```ts title=markdown.d.ts
+declare module '*.md' {
+  // or wherever the type is defined
+  import { Post } from 'lib/posts'
+
+  const post: Post
+  export default post
+}
+```
+
+This tells typescript that any import from a `.md` file should be considered as having a default export of type `Post`.
+
+If you use [Next.js's MDX feature](https://nextjs.org/docs/advanced-features/using-mdx), you might run into a problem with clashes with it's `declare module '*.md'` definition. In which case, we would need to disambiguate the module definitions by making our module definition more specific and rename our files accordingly. For example:
+
+```ts title=markdown.d.ts {1}
+declare module '*.post.md' {
+  import { Post } from 'lib/posts'
+
+  const post: Post
+  export default post
+}
+```
+
+And now our post file names should be named something like `the-post-i-want-to-put-in-a-story.post.md` and the import would be something like `import post from 'posts/the-post-i-want-to-put-in-a-story.md`.
 
 That's it! Running `yarn storybook` or `storybook:build` works and I can see the posts render as normal in stories!
 
