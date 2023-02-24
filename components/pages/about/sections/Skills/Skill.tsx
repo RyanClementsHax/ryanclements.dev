@@ -1,6 +1,6 @@
 import { SkillInfo } from 'lib/content/skills'
 import Image from 'next/image'
-import { Proficiency } from '../Proficiency'
+import { Proficiency } from './Proficiency'
 
 export interface SkillProps {
   skill: SkillInfo
