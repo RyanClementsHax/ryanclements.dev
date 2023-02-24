@@ -1,11 +1,14 @@
 ---
-title: 'Seamlessly using Next.js static props in Storybook'
-bannerAlt: 'construction vehicle by @zacedmo on Unsplash'
-description: 'How to use Next.js static props in Storybook using static imports, esbuild, and webpack'
-publishedOn: '2/20/2023'
+bannerAlt: construction vehicle by @zacedmo on Unsplash
+updatedAt: 2023-02-24T14:45:38.348Z
+publishedOn: 2023-02-20T05:00:00.000Z
+description: >-
+  How to use Next.js static props in Storybook using static imports, esbuild,
+  and webpack
+title: Seamlessly using Next.js static props in Storybook
 ---
 
-Making this website has been one of the most fun side projects I've ever worked on. It's a playground where I can try so many things and have the freedom to create whatever my heart desires. In the spirit of using really cool tech, I decided to build this website with Next.js as my framework, and Storybook for component driven development, and UI testing.
+Making this website has been one of the most fun side projects I've ever worked on. It's a playground where I can try so many things and have the freedom to create whatever my heart desires. In the spirit of using really cool tech, I decided to build this website with Next.js as my framework, and Storybook for both component driven development, and UI testing.
 
 One thing that immediately stood out when trying to get Next.js features to work in Storybook was that there wasn't great support. This was a common cry in the community to the point that I made [storybook-addon-next](https://www.npmjs.com/package/storybook-addon-next).
 
@@ -37,11 +40,11 @@ const GreetingPage: NextPage<
 export default GreetingPage
 ```
 
-What Storybook does is you can render small components in isolation without neededing any server in these things called "stories". To render a story is give it a component, some props, and a few other configurations, and it will render that in the browser. This is great as it lets you develop components separately from each other and render them in as many configurations as you want to without having to manually rig your application to trigger special code paths. You can even visually regression test them with a tool like [Chromatic](https://www.chromatic.com/).
+What Storybook does is allow you to render small components in isolation without neededing any server in these things called "stories". To render a story is give it a component, some props, and a few other configurations, and it will render that in the browser. This is great as it lets you develop components separately from each other and render them in as many configurations as you want to without having to manually rig your application to trigger special code paths. You can even visually regression test them with a tool like [Chromatic](https://www.chromatic.com/).
 
 Not only can you render small components, but also larger ones too! You're not bound by the size or complexity of what you render so long as you follow Storybook's contract. This is great for building this website because I not only want to render small components like my header, but I also want to render full pages so see how all the small components fit together.
 
-Getting Next.js pages rendered in Storybook, though, comes with some complications. Storybook has no concept of a server, static generation, or "pages" as understood by Next.js, so if you want to render a Next.js page as a story you can't hand Storybook a Next.js page and expect it to call the `getStaticProps` function, pass the returned props to the page component, and have it render the full page in the browser. The best you can do is extract the page into a component and manually pass in parameters when configuring the story.
+However, getting Next.js pages rendered in Storybook comes with some complications. Storybook has no concept of a server, static generation, or "pages" as understood by Next.js, so if you want to render a Next.js page as a story you can't hand Storybook a Next.js page and expect it to call the `getStaticProps` function, pass the returned props to the page component, and have it render the full page in the browser. The best you can do is extract the page into a component and manually pass in parameters when configuring the story.
 
 ```tsx title=pages/GreetingPage.tsx {2, 17}
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
@@ -92,7 +95,7 @@ export default {
 
 ## Problem
 
-The aforementioned pattern is fine if your props are simple and static like maybe a user profile for a user profile page or a list of products for a product listing page. My `pages/posts/[slug].tsx` page, the page reponsible for rendering a given post (i.e. the one you're currently on), is not like this. Its props are much more complex.
+The aforementioned pattern is fine if your props are simple and static, like perhaps a user profile for a user profile page or a list of products for a product listing page. My `pages/posts/[slug].tsx` page, the page reponsible for rendering a given post (i.e. the one you're currently on), is not like this. Its props are much more complex.
 
 When a post page is prerendered, the `getStaticProps` page will run grabbing the post to render from the `posts` directory of the repo. It then transforms the post, written in markdown, to html with a few transformations. The resulting props that get passed to the page component are complicated.
 
@@ -166,7 +169,7 @@ Given the difficulties, I saw the following options.
 2. Give up and move on
 3. Find a way to run the `getStaticProps` function when rendering a story
 
-I so badly wanted option `3` to be viable, but stories render in a browser, therefore, you don't have access to any apis exclusive to the server side like reading the file system, which the blog post page needs to grab the post markdown file.
+I so badly wanted option `3` to be viable, but stories render in a browser, therefore, you don't have access to any apis exclusive to the server-side like reading the file system, which the blog post page needs to grab the post markdown file.
 
 ## The Idea
 
@@ -199,8 +202,8 @@ It has the following benefits.
 1. I don't need to worry about creating/editing clunky AST objects
 2. The story will always be up to date with whatever changes I make to the pipeline
 3. If I want to change the story, I change the markdown file so editing is pleasant
-4. The only diffs created when content is edited is the diff of the pipeline or the markdown files themselves so reviewing is easy
-5. I have all the access to server side APIs that I need because webpack loaders run in a server context and all that gets sent to the browser is the processed file (i.e. the same props that are returned from `getServerSideProps`)
+4. The only diffs created when content is edited is the diff of the pipeline or the markdown files themselves, so reviewing is easy
+5. I have all the access to server-side APIs that I need because webpack loaders run in a server context and all that gets sent to the browser is the processed file (i.e. the same props that are returned from `getServerSideProps`)
 6. It actually exercises the full post rendering pipeline so it gives my stories higher fidelity to what will be rendered in Next.js
 
 It comes with the downside that I have to create a webpack loader which requires me to set up a separate build process if I want to use typescript and esm. More on this later.
@@ -293,7 +296,7 @@ module.exports = function (content, map) {
 } satisfies LoaderDefinitionFunction
 ```
 
-Lastly, we return the props that we converted the markdown file to, or an the error if there was one.
+Lastly, we return the props that we converted the markdown file to, or the error if there was one.
 
 ```tsx title=postLoader.ts {8-11}
 import { LoaderDefinitionFunction } from 'webpack'
@@ -360,7 +363,7 @@ module.exports = {
 } satisfies StorybookConfig
 ```
 
-The webpack rule `loader` field is either a string pointing to an npm package or a file path to a javascript file to load. There isn't an option to hand it a function reference like this.
+The webpack rule `loader` field is either a string pointing to a npm package or a file path to a javascript file to load. There isn't an option to hand it a function reference like this.
 
 ```ts title=.storybook/main.ts {1, 8-9}
 import postLoader from './path/to/postLoader'
@@ -399,7 +402,7 @@ module.exports = function (content, map) {
 }
 ```
 
-I on the other hand love typescript and wanted to challenge myself to to the extra mile to make this work.
+I on the other hand love typescript and wanted to challenge myself to go to the extra mile to make this work.
 
 ## Building The Loader
 
@@ -507,6 +510,35 @@ Now whenever we want to run storybook, we just need to build the loader first so
 ```
 
 Some might be hesitant to add a build step worrying about added build time. `esbuild` is _stupid fast_ so this wasn't a problem at all for me.
+
+## Polishing Types
+
+If you're using typescript, then you probably want to make sure that the `import post from 'posts/the-post-i-want-to-put-in-a-story.md'{:js}` is typed properly. To do this, we need to make a module declaration. We need to create a file ending in `.d.ts` and put it anywhere in the project so long as it is covered by [typescript's include config option](https://www.typescriptlang.org/tsconfig#include). I personally put module declarations in a `types` folder under the root of the repo. In that file, put the following content.
+
+```ts title=markdown.d.ts
+declare module '*.md' {
+  // or wherever the type is defined
+  import { Post } from 'lib/posts'
+
+  const post: Post
+  export default post
+}
+```
+
+This tells typescript that any import from a `.md` file should be considered as having a default export of type `Post`.
+
+If you use [Next.js's MDX feature](https://nextjs.org/docs/advanced-features/using-mdx), you might run into a problem with clashes with it's `declare module '*.md'` definition. In which case, we would need to disambiguate the module definitions by making our module definition more specific and rename our files accordingly. For example:
+
+```ts title=markdown.d.ts {1}
+declare module '*.post.md' {
+  import { Post } from 'lib/posts'
+
+  const post: Post
+  export default post
+}
+```
+
+And now our post file names should be named something like `the-post-i-want-to-put-in-a-story.post.md` and the import would be something like `import post from 'posts/the-post-i-want-to-put-in-a-story.md`.
 
 That's it! Running `yarn storybook` or `storybook:build` works and I can see the posts render as normal in stories!
 
