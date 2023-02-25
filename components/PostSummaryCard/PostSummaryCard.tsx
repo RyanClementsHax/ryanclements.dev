@@ -57,7 +57,5 @@ const Thumbnail: React.FC<{ src: A11yStaticImageData }> = ({
     // md breakpoint
     sizes="(max-width: 768px) 100vw, 12rem"
     className="h-full object-cover"
-    // not having this will cause a flash of image without "object-fit: cover" when loading from cache (e.g. reloading browser)
-    priority
   />
 )
