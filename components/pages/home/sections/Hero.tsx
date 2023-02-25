@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import { Theme, useTheme } from 'components/theme'
 import { A11yStaticImageData } from 'lib/content/images'
@@ -35,6 +37,8 @@ const Heading = ({
     <SocialLinks />
   </div>
 )
+
+// TODO: separate this into a client component
 
 const Banner = ({ srcMap }: { srcMap: Record<Theme, A11yStaticImageData> }) => {
   const { theme } = useTheme()

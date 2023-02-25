@@ -1,3 +1,5 @@
+'use client'
+
 import { ThemeSelect } from 'components/theme'
 import { useHideAndShowWithScroll } from 'lib/utils/useHideAndShowWithScroll'
 import c from 'classnames'
@@ -6,7 +8,7 @@ import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { Popover, Transition } from '@headlessui/react'
 
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { Fragment } from 'react'
 import { NavItem, NAV_ITEMS } from 'lib/nav'
 import { useIsScrolledToTop } from 'lib/utils/useIsScrolledToTop'
@@ -159,4 +161,4 @@ const MobileNavLink: React.FC<{ item: NavItem }> = ({
   )
 }
 
-const useIsActive = (href: string) => useRouter().pathname === href
+const useIsActive = (href: string) => usePathname() === href
