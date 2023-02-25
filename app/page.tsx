@@ -3,7 +3,7 @@ import { IS_DEV } from 'lib/constants'
 import { generateRssFeed } from 'lib/content/rss'
 import { getSerializableRenderablePostSummaries } from 'lib/pages/posts'
 
-export default async function Index(): Promise<JSX.Element> {
+export default async function HomePage(): Promise<JSX.Element> {
   if (!IS_DEV) {
     await generateRssFeed()
   }
