@@ -4,6 +4,9 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
  * @type {import('next').NextConfig}
  **/
 const config = {
+  experimental: {
+    appDir: true
+  },
   eslint: {
     // https://nextjs.org/docs/basic-features/eslint#linting-custom-directories-and-files
     dirs: ['.']
