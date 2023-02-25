@@ -1,11 +1,11 @@
 import path from 'path'
 import { LoaderDefinitionFunction } from 'webpack'
-import { convertRawStringToSerializableRenderablePost } from 'lib/pages/posts/[slug]'
+import { convertRawStringToRenderablePost } from 'lib/pages/posts/[slug]'
 
 module.exports = function (content, map) {
   const callback = this.async()
 
-  convertRawStringToSerializableRenderablePost(
+  convertRawStringToRenderablePost(
     path.parse(this.resource).name,
     content.toString()
   )

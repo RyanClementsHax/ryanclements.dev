@@ -1,7 +1,17 @@
 import { Author, Feed } from 'feed'
 import { mkdir, writeFile } from 'fs/promises'
 import { JSON_FEED_URL, RSS_FEED_URL, SITE_URL } from 'lib/constants'
+import { Metadata } from 'next'
 import { getAllPosts } from './posts/server'
+
+export const rssMetadata: Metadata = {
+  alternates: {
+    types: {
+      'application/rss+xml': RSS_FEED_URL,
+      'application/feed+json': JSON_FEED_URL
+    }
+  }
+}
 
 export const generateRssFeed = async (): Promise<void> => {
   const posts = await getAllPosts()

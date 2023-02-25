@@ -1,9 +1,37 @@
 import { getAllPostSlugs } from 'lib/content/posts/server'
 import { PostDetails } from 'components/pages/posts/[slug]'
-import { getSerializableRenderablePost } from 'lib/pages/posts/[slug]'
+import { getRenderablePost } from 'lib/pages/posts/[slug]'
+import { Metadata } from 'next'
+import { SITE_URL } from 'lib/constants'
 
 interface Params {
   slug: string
+}
+
+export async function generateStaticMetadata({
+  params: { slug }
+}: {
+  params: Params
+}): Promise<Metadata> {
+  const post = await getRenderablePost(slug)
+  return {
+    title: post.meta.title,
+    description: post.meta.description,
+    openGraph: {
+      type: 'article',
+      url: `${SITE_URL}/posts/${slug}`,
+      authors: [`${SITE_URL}/about`],
+      publishedTime: post.meta.publishedOnIso,
+      images: [
+        {
+          url: `${SITE_URL}${post.meta.bannerSrc.src}`,
+          width: post.meta.bannerSrc.width,
+          height: post.meta.bannerSrc.height,
+          alt: post.meta.bannerSrc.alt
+        }
+      ]
+    }
+  }
 }
 
 export async function generateStaticParams(): Promise<Params[]> {
@@ -16,29 +44,6 @@ export default async function PostPage({
 }: {
   params: Params
 }): Promise<JSX.Element> {
-  const post = await getSerializableRenderablePost(slug)
-  return (
-    <>
-      {/* <NextSeo
-        title={post.meta.title}
-        description={post.meta.description}
-        openGraph={{
-          type: 'article',
-          article: {
-            publishedTime: post.meta.publishedOnIso,
-            authors: [`${SITE_URL}/about`]
-          },
-          images: [
-            {
-              url: `${SITE_URL}${post.meta.bannerSrc.src}`,
-              width: post.meta.bannerSrc.width,
-              height: post.meta.bannerSrc.height,
-              alt: post.meta.bannerSrc.alt
-            }
-          ]
-        }}
-      /> */}
-      <PostDetails post={post} />
-    </>
-  )
+  const post = await getRenderablePost(slug)
+  return <PostDetails post={post} />
 }

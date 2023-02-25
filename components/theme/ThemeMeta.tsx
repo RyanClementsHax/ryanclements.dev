@@ -1,6 +1,8 @@
 // https://web.dev/color-scheme/
 
+import { Metadata } from 'next'
+
 // This will be updated by ThemeScript
-export const ThemeMeta: React.FC = () => (
-  <meta name="color-scheme" content="normal" />
-)
+export const themeMetadata: Metadata = {
+  colorScheme: 'normal'
+}

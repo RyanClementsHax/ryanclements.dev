@@ -1,4 +1,3 @@
-import { Serializable, serialize } from 'lib/utils/serialization'
 import { convertRawStringToPost, getPost } from 'lib/content/posts/server'
 import { HastTree, Post, PostMeta } from 'lib/content/posts/types'
 import { imageService } from 'lib/content/posts/server/imageService'
@@ -24,21 +23,19 @@ export interface RenderablePostMeta
   bannerSrc: A11yStaticImageData
 }
 
-export const getSerializableRenderablePost = async (
+export const getRenderablePost = async (
   slug: string
-): Promise<Serializable<RenderablePost>> => {
+): Promise<RenderablePost> => {
   const post = await getPost(slug)
-  const renderablePost = await convertToRenderablePost(post)
-  return serialize(renderablePost)
+  return await convertToRenderablePost(post)
 }
 
-export const convertRawStringToSerializableRenderablePost = async (
+export const convertRawStringToRenderablePost = async (
   slug: string,
   rawString: string
-): Promise<Serializable<RenderablePost>> => {
+): Promise<RenderablePost> => {
   const post = await convertRawStringToPost(slug, rawString)
-  const renderablePost = await convertToRenderablePost(post)
-  return serialize(renderablePost)
+  return await convertToRenderablePost(post)
 }
 
 const convertToRenderablePost = async (post: Post): Promise<RenderablePost> => {
