@@ -1,4 +1,4 @@
-import { markUpdated } from 'lib/content/posts/server'
+import { markUpdated } from 'lib/content/posts'
 import path from 'path'
 
 void (async () => {

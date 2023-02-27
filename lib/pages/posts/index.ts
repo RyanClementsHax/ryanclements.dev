@@ -1,8 +1,8 @@
-import { getAllPostSummaries } from 'lib/content/posts/server'
+import { getAllPostSummaries } from 'lib/content/posts'
 import { PostSummary } from 'lib/content/posts/types'
 import { formatDate, sortPostSummaries } from './utils'
 import { A11yStaticImageData } from 'lib/content/images'
-import { imageService } from 'lib/content/posts/server/imageService'
+import { imageService } from 'lib/content/posts/imageService'
 
 export interface RenderablePostSummary
   extends Omit<PostSummary, 'thumbnailSrc' | 'thumbnailAlt' | 'publishedOn'> {

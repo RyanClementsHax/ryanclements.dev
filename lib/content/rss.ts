@@ -2,7 +2,7 @@ import { Author, Feed } from 'feed'
 import { mkdir, writeFile } from 'fs/promises'
 import { JSON_FEED_URL, RSS_FEED_URL, SITE_URL } from 'lib/constants'
 import { Metadata } from 'next'
-import { getAllPosts } from './posts/server'
+import { getAllPosts } from './posts'
 
 export const rssMetadata: Metadata = {
   alternates: {

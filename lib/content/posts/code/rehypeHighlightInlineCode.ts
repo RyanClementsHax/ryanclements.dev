@@ -1,7 +1,7 @@
 import { Plugin } from 'unified'
 
 import { visit } from 'unist-util-visit'
-import { HastTree } from '../../types'
+import { HastTree } from '../types'
 import { ElementContent } from 'hast'
 import { h } from 'hastscript'
 import { pointStart } from 'unist-util-position'

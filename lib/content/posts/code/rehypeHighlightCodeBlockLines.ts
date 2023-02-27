@@ -2,7 +2,7 @@ import { Plugin } from 'unified'
 
 import { visit } from 'unist-util-visit'
 import { Properties } from 'hast'
-import { HastElement, HastTree } from '../../types'
+import { HastElement, HastTree } from '../types'
 import parseRange from 'parse-numeric-range'
 import { isMetaValid, isPreElement } from './utils'
 

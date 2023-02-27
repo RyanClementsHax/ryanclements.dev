@@ -1,4 +1,4 @@
-import { getAllPostSlugs } from 'lib/content/posts/server'
+import { getAllPostSlugs } from 'lib/content/posts'
 import { PostDetails } from 'components/pages/posts/[slug]'
 import { getRenderablePost } from 'lib/pages/posts/[slug]'
 import { Metadata } from 'next'

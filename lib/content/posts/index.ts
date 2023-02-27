@@ -5,7 +5,7 @@ import { log } from 'lib/utils/logs'
 import { IS_DEV, IS_PREVIEW } from 'lib/constants'
 import { parseFrontMatter, writeFrontMatter } from './frontMatter'
 import { validateMarkdown } from './validation'
-import { Post, PostMeta, PostSummary } from '../types'
+import { Post, PostMeta, PostSummary } from './types'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 

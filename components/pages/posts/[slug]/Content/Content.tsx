@@ -1,4 +1,4 @@
-import { useReactFromHast } from 'lib/content/posts/client'
+import { convertToReact } from 'lib/content/posts/rendering'
 import { HastTree } from 'lib/content/posts/types'
 import { ComponentsWithoutNodeOptions } from 'rehype-react/lib/complex-types'
 import s from './Content.module.scss'
@@ -8,8 +8,10 @@ import { Code } from './Code'
 import { Callout } from './Callout'
 import Link from 'next/link'
 
-export const Content: React.FC<{ root: HastTree }> = ({ root }) => {
-  const children = useReactFromHast(root, components)
+export const Content: React.FC<{
+  root: HastTree
+}> = ({ root }) => {
+  const children = convertToReact(root, components)
   return (
     <div
       className={c(s.content, 'prose prose-zinc max-w-none dark:prose-invert')}
