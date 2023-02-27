@@ -11,7 +11,7 @@ interface Params {
   slug: string
 }
 
-export async function generateStaticMetadata({
+export async function generateMetadata({
   params: { slug }
 }: {
   params: Params
