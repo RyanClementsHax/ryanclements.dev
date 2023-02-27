@@ -2,7 +2,13 @@ const defaultAssertionRules = {
   'csp-xss': 'off',
   'uses-rel-preconnect': 'off',
   'uses-responsive-images': 'off',
-  'efficient-animated-content': 'off'
+  'efficient-animated-content': 'off',
+  // vercel's live feedback widget interferes with coverage metrics
+  // can double check this with chrome's coverage tool
+  'unused-javascript': 'off',
+  // something about next.js or vercel makes the rss feed link prefetched which
+  // for some reason 404's
+  'errors-in-console': 'off'
 }
 
 const pathToOverrides = {
