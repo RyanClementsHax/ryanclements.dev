@@ -33,13 +33,15 @@ export default function RootLayout({
   children: React.ReactNode
 }): JSX.Element {
   return (
-    <Html lang="en" className={fontClass}>
-      <head />
-      <body>
-        <ThemeScript />
-        <ThemeProvider>{children}</ThemeProvider>
-        <ConsoleMessage />
-      </body>
-    </Html>
+    <ThemeProvider>
+      <Html lang="en" className={fontClass}>
+        <head />
+        <body>
+          <ThemeScript />
+          {children}
+          <ConsoleMessage />
+        </body>
+      </Html>
+    </ThemeProvider>
   )
 }
