@@ -1,4 +1,4 @@
-import { markUpdated } from 'lib/content/posts'
+import { postService } from 'lib/content/posts/postService'
 import path from 'path'
 
 void (async () => {
@@ -6,6 +6,6 @@ void (async () => {
   const now = new Date()
   for (const postFilePath of postFilePaths) {
     const stem = path.parse(postFilePath).name
-    await markUpdated(stem, now)
+    await postService.markUpdated(stem, now)
   }
 })()

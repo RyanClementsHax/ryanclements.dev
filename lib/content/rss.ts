@@ -2,7 +2,7 @@ import { Author, Feed } from 'feed'
 import { mkdir, writeFile } from 'fs/promises'
 import { JSON_FEED_URL, RSS_FEED_URL, SITE_URL } from 'lib/constants'
 import { Metadata } from 'next'
-import { getAllPosts } from './posts'
+import { postService } from './posts/postService'
 
 export const rssMetadata: Metadata = {
   alternates: {
@@ -14,7 +14,7 @@ export const rssMetadata: Metadata = {
 }
 
 export const generateRssFeed = async (): Promise<void> => {
-  const posts = await getAllPosts()
+  const posts = await postService.getAll()
 
   const author: Author = {
     name: 'Ryan Clements'

@@ -1,4 +1,4 @@
-import { getAllPostSlugs } from 'lib/content/posts'
+import { postService } from 'lib/content/posts/postService'
 import { PostDetails } from 'components/pages/posts/[slug]'
 import {
   getRenderablePost,
@@ -38,7 +38,7 @@ export async function generateStaticMetadata({
 }
 
 export async function generateStaticParams(): Promise<Params[]> {
-  const postSlugs = await getAllPostSlugs()
+  const postSlugs = await postService.getAllSlugs()
   return postSlugs.map(x => ({ slug: x }))
 }
 
