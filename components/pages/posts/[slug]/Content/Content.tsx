@@ -6,7 +6,7 @@ import { HastTree } from 'lib/content/posts/types'
 import s from './Content.module.scss'
 import { Code } from './Code'
 import { Callout } from './Callout'
-import { convertToReact } from 'lib/pages/posts/[slug]'
+import { convertToReact } from 'lib/pages/posts/[slug]/client'
 
 export const Content: React.FC<{
   root: HastTree

@@ -3,7 +3,7 @@ import { PostDetails } from 'components/pages/posts/[slug]'
 import {
   getRenderablePost,
   getRenderablePostMeta
-} from 'lib/pages/posts/[slug]'
+} from 'lib/pages/posts/[slug]/server'
 import { Metadata } from 'next'
 import { SITE_URL } from 'lib/constants'
 

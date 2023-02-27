@@ -1,30 +1,9 @@
-import { createElement, Fragment } from 'react'
-import rehypeReact from 'rehype-react'
-import { ComponentsWithoutNodeOptions } from 'rehype-react/lib/complex-types'
-import { unified } from 'unified'
-import { HastTree, Post, PostMeta } from 'lib/content/posts/types'
+import { Post, PostMeta } from 'lib/content/posts/types'
 import { imageService } from 'lib/content/posts/imageService'
 import { parseToHast } from 'lib/content/posts/parsing'
-import { A11yStaticImageData } from 'lib/content/images'
 import { formatDate } from 'lib/pages/posts/utils'
 import { postService } from 'lib/content/posts/postService'
-
-export interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
-  content: HastTree
-  meta: RenderablePostMeta
-}
-
-export interface RenderablePostMeta
-  extends Omit<
-    PostMeta,
-    'bannerSrc' | 'bannerAlt' | 'publishedOn' | 'updatedAt'
-  > {
-  publishedOn?: string
-  publishedOnIso?: string
-  updatedAt?: string
-  updatedAtIso?: string
-  bannerSrc: A11yStaticImageData
-}
+import { RenderablePost, RenderablePostMeta } from './types'
 
 export const getRenderablePost = async (
   slug: string
@@ -47,14 +26,6 @@ export const convertRawStringToRenderablePost = async (
   const post = await postService.convertRawString(slug, rawString)
   return await convertToRenderablePost(post)
 }
-
-export const convertToReact = (
-  content: HastTree,
-  components: ComponentsWithoutNodeOptions['components']
-): React.ReactNode =>
-  unified()
-    .use(rehypeReact, { createElement, Fragment, components })
-    .stringify(content)
 
 const convertToRenderablePost = async (post: Post): Promise<RenderablePost> => {
   return {

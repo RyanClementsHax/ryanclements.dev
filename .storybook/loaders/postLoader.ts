@@ -1,6 +1,6 @@
 import path from 'path'
 import { LoaderDefinitionFunction } from 'webpack'
-import { convertRawStringToRenderablePost } from 'lib/pages/posts/[slug]'
+import { convertRawStringToRenderablePost } from 'lib/pages/posts/[slug]/server'
 
 module.exports = function (content, map) {
   const callback = this.async()
