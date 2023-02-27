@@ -1,5 +1,5 @@
 import { ConsoleMessage } from 'components/ConsoleMessage'
-import { themeMetadata } from 'components/theme'
+import { themeMetadata, Html } from 'components/theme'
 import { ThemeProvider } from 'components/theme/ThemeContext'
 import { ThemeScript } from 'components/theme/ThemeScript'
 import { SITE_URL } from 'lib/constants'
@@ -33,15 +33,13 @@ export default function RootLayout({
   children: React.ReactNode
 }): JSX.Element {
   return (
-    // suppressHydrationWarning here is to suppress the warning caused by
-    // ThemeScript adding a class name to the html tag during initial render
-    <html lang="en" className={fontClass} suppressHydrationWarning>
+    <Html lang="en" className={fontClass}>
       <head />
       <body>
         <ThemeScript />
         <ThemeProvider>{children}</ThemeProvider>
         <ConsoleMessage />
       </body>
-    </html>
+    </Html>
   )
 }
