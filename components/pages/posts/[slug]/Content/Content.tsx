@@ -1,12 +1,12 @@
-import { convertToReact } from 'lib/content/posts/rendering'
-import { HastTree } from 'lib/content/posts/types'
-import { ComponentsWithoutNodeOptions } from 'rehype-react/lib/complex-types'
-import s from './Content.module.scss'
-import c from 'classnames'
+import Link from 'next/link'
 import Image, { ImageProps } from 'next/image'
+import { ComponentsWithoutNodeOptions } from 'rehype-react/lib/complex-types'
+import c from 'classnames'
+import { HastTree } from 'lib/content/posts/types'
+import s from './Content.module.scss'
 import { Code } from './Code'
 import { Callout } from './Callout'
-import Link from 'next/link'
+import { convertToReact } from 'lib/pages/posts/[slug]'
 
 export const Content: React.FC<{
   root: HastTree
