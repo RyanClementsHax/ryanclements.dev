@@ -1,5 +1,5 @@
 import { Plugin } from 'unified'
-import { HastElement, HastTree } from '../types'
+import { HastElement, HastTree } from './types'
 import { visit } from 'unist-util-visit'
 import { pointStart } from 'unist-util-position'
 import { ImageService, imageService } from './imageService'

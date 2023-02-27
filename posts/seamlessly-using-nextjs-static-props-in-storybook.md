@@ -1,6 +1,6 @@
 ---
 bannerAlt: construction vehicle by @zacedmo on Unsplash
-updatedAt: 2023-02-24T14:45:38.348Z
+updatedAt: 2023-02-27T14:39:34.577Z
 publishedOn: 2023-02-20T05:00:00.000Z
 description: >-
   How to use Next.js static props in Storybook using static imports, esbuild,
@@ -553,6 +553,7 @@ If you want to see the actual code I wrote for this you can see it here.
 - [My post page](https://github.com/RyanClementsHax/ryanclements.dev/blob/7c711e8eff1340178572ac59bcc01e8b292eb2d9/pages/posts/%5Bslug%5D.tsx)
 - [The stories for my post page](https://github.com/RyanClementsHax/ryanclements.dev/blob/7c711e8eff1340178572ac59bcc01e8b292eb2d9/components/pages/posts/%5Bslug%5D/index.stories.tsx)
 - [The post file I import into the stories](https://github.com/RyanClementsHax/ryanclements.dev/blob/7c711e8eff1340178572ac59bcc01e8b292eb2d9/posts/post-design-system.md)
+- [The .d.ts file I use to type .md imports](https://github.com/RyanClementsHax/ryanclements.dev/blob/7c711e8eff1340178572ac59bcc01e8b292eb2d9/types/markdown.d.ts)
 
 ## Conclusion
 

@@ -38,6 +38,19 @@ describe('theme utils', () => {
       expect(document.documentElement).toHaveClass(otherClass)
     })
 
+    it('adds the initial theme as the last class', () => {
+      const themePreference = Theme.dark
+      global.localStorage.setItem('themePreference', themePreference)
+      const otherClass = 'otherClass'
+      document.documentElement.classList.add(otherClass)
+
+      initTheme(Theme, themeToContentMetaMap)
+
+      expect(document.documentElement.className).toBe(
+        `${otherClass} ${themePreference}`
+      )
+    })
+
     it('sets the color-scheme meta according to the map', () => {
       expect(getColorSchemeMeta()).toHaveAttribute('content', 'normal')
       const themePreference = Theme.dark

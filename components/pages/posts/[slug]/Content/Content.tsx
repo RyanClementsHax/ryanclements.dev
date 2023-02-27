@@ -1,15 +1,17 @@
-import { useReactFromHast } from 'lib/content/posts/client'
-import { HastTree } from 'lib/content/posts/types'
-import { ComponentsWithoutNodeOptions } from 'rehype-react/lib/complex-types'
-import s from './Content.module.scss'
-import c from 'classnames'
+import Link from 'next/link'
 import Image, { ImageProps } from 'next/image'
+import { ComponentsWithoutNodeOptions } from 'rehype-react/lib/complex-types'
+import c from 'classnames'
+import { HastTree } from 'lib/content/posts/types'
+import s from './Content.module.scss'
 import { Code } from './Code'
 import { Callout } from './Callout'
-import Link from 'next/link'
+import { convertToReact } from 'lib/pages/posts/[slug]/client'
 
-export const Content: React.FC<{ root: HastTree }> = ({ root }) => {
-  const children = useReactFromHast(root, components)
+export const Content: React.FC<{
+  root: HastTree
+}> = ({ root }) => {
+  const children = convertToReact(root, components)
   return (
     <div
       className={c(s.content, 'prose prose-zinc max-w-none dark:prose-invert')}

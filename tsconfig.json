@@ -18,7 +18,12 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "lib": ["dom", "dom.iterable", "esnext"],
-    "baseUrl": "."
+    "baseUrl": ".",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "exclude": ["node_modules", ".next", "out", "storybook-static", "**/dist"],
   "include": [
@@ -32,6 +37,7 @@
     ".storybook/**/*.js",
     ".storybook/**/*.jsx",
     ".storybook/**/*.ts",
-    ".storybook/**/*.tsx"
+    ".storybook/**/*.tsx",
+    ".next/types/**/*.ts"
   ]
 }

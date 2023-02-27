@@ -3,8 +3,10 @@ import { Projects } from './sections/Projects'
 import { Layout } from 'components/Layout'
 import { RecentlyPublished } from './sections/RecentlyPublished'
 import { RenderablePostSummary } from 'lib/pages/posts'
-import { heroBannerSrcMap } from 'lib/content/images'
 import { projects } from 'lib/content/projects'
+import heroBannerLight from 'public/office-light.svg'
+import heroBannerDark from 'public/office-dark.svg'
+import { Theme } from 'components/theme'
 
 export interface HomeProps {
   recentPostSummaries: RenderablePostSummary[]
@@ -26,7 +28,16 @@ export const Home: React.FC<HomeProps> = ({ recentPostSummaries }) => (
           software&nbsp;👨‍💻
         </>
       }
-      bannerSrcMap={heroBannerSrcMap}
+      bannerSrcMap={{
+        [Theme.light]: {
+          ...heroBannerLight,
+          alt: 'Me coding in my office with my wife reading a book to our daughter'
+        },
+        [Theme.dark]: {
+          ...heroBannerDark,
+          alt: 'Me in my office coding'
+        }
+      }}
     />
     <RecentlyPublished
       title="Recently published posts"

@@ -1,4 +1,4 @@
-import { Lato } from '@next/font/google'
+import { Lato } from 'next/font/google'
 
 const lato = Lato({
   weight: '900',

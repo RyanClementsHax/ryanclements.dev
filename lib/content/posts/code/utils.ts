@@ -1,5 +1,5 @@
 import { common, createStarryNight } from '@wooorm/starry-night'
-import { HastElement, HastTree } from '../../types'
+import { HastElement, HastTree } from '../types'
 import sourceTsx from '@wooorm/starry-night/lang/source.tsx.js'
 
 export const isMetaValid = (meta: unknown): meta is string =>

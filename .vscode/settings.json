@@ -18,10 +18,15 @@
   "less.validate": false,
   "scss.validate": false,
   "jest.jestCommandLine": "yarn test",
-  "jest.autoRun": { "watch": false, "onSave": "test-src-file" },
+  "jest.autoRun": {
+    "watch": false,
+    "onSave": "test-src-file"
+  },
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": "active",
   "markdownlint.config": {
     "no-inline-html": false
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

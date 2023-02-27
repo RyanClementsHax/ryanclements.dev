@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import { Theme, useTheme } from 'components/theme'
+import { Theme } from 'components/theme'
 import { A11yStaticImageData } from 'lib/content/images'
 import { SocialLinks } from 'components/SocialLinks'
+import { Banner } from './Banner'
 
 export interface HeroProps {
   title: React.ReactNode
@@ -35,14 +35,3 @@ const Heading = ({
     <SocialLinks />
   </div>
 )
-
-const Banner = ({ srcMap }: { srcMap: Record<Theme, A11yStaticImageData> }) => {
-  const { theme } = useTheme()
-  if (!theme) return null
-  const { alt, ...src } = srcMap[theme]
-  return (
-    <div className="relative hidden h-full w-full md:block">
-      <Image src={src} alt={alt} priority fill />
-    </div>
-  )
-}

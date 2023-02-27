@@ -2,7 +2,7 @@ import { Plugin } from 'unified'
 
 import { visit } from 'unist-util-visit'
 import { toString } from 'hast-util-to-string'
-import { HastElement } from '../../types'
+import { HastElement } from '../types'
 import { ElementContent } from 'hast'
 import { h } from 'hastscript'
 import { pointStart } from 'unist-util-position'

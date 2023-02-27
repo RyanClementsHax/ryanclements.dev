@@ -1,9 +1,8 @@
-import { Serializable, serialize } from 'lib/utils/serialization'
-import { getAllPostSummaries } from 'lib/content/posts/server'
 import { PostSummary } from 'lib/content/posts/types'
 import { formatDate, sortPostSummaries } from './utils'
 import { A11yStaticImageData } from 'lib/content/images'
-import { imageService } from 'lib/content/posts/server/imageService'
+import { imageService } from 'lib/content/posts/imageService'
+import { postService } from 'lib/content/posts/postService'
 
 export interface RenderablePostSummary
   extends Omit<PostSummary, 'thumbnailSrc' | 'thumbnailAlt' | 'publishedOn'> {
@@ -11,14 +10,13 @@ export interface RenderablePostSummary
   thumbnailSrc: A11yStaticImageData
 }
 
-export const getSerializableRenderablePostSummaries = async (): Promise<
-  Serializable<RenderablePostSummary[]>
+export const getRenderablePostSummaries = async (): Promise<
+  RenderablePostSummary[]
 > => {
-  const postSummaries = sortPostSummaries(await getAllPostSummaries())
-  const renderablePostSummaries = await Promise.all(
+  const postSummaries = sortPostSummaries(await postService.getAllSummaries())
+  return await Promise.all(
     postSummaries.map(x => convertToRenderablePostSummary(x))
   )
-  return serialize(renderablePostSummaries)
 }
 
 const convertToRenderablePostSummary = async ({
