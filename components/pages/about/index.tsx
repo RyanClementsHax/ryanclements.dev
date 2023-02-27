@@ -2,9 +2,10 @@ import { Qualities } from './sections/Qualities'
 import { Skills } from './sections/Skills'
 import { Layout } from 'components/Layout'
 import { Hero } from './sections/Hero'
-import { aboutImageData, qualitiesImageData } from 'lib/content/images'
 import { qualities } from 'lib/content/qualities'
 import { skillGroups } from 'lib/content/skills'
+import qualitiesPicture from 'public/qualities-picture.jpg'
+import aboutPicture from 'public/about-picture.jpg'
 
 export const About: React.FC = () => (
   <Layout>
@@ -16,12 +17,18 @@ export const About: React.FC = () => (
           daughter 👨‍👩‍👧 where I work on my craft as a software engineer 👨‍💻.
         </>
       }
-      bannerSrc={aboutImageData}
+      bannerSrc={{
+        ...aboutPicture,
+        alt: 'My family and I at a harvest festival'
+      }}
     />
     <Qualities
       title="A new kind of engineer"
       subtitle="New problems need new solutions. Here's the energy I bring to the table."
-      graphicSrc={qualitiesImageData}
+      graphicSrc={{
+        ...qualitiesPicture,
+        alt: 'Me and my daughter coding'
+      }}
       qualities={qualities}
     />
     <Skills
