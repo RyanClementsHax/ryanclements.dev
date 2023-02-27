@@ -1,29 +1,29 @@
 const defaultAssertionRules = {
-  'csp-xss': 'off',
-  'uses-rel-preconnect': 'off',
-  'uses-responsive-images': 'off',
-  'efficient-animated-content': 'off',
-  // vercel's live feedback widget interferes with coverage metrics
-  // can double check this with chrome's coverage tool
-  'unused-javascript': 'off',
-  // something about next.js or vercel makes the rss feed link prefetched which
-  // for some reason 404's
-  'errors-in-console': 'off'
+  // 'csp-xss': 'off',
+  // 'uses-rel-preconnect': 'off',
+  // 'uses-responsive-images': 'off',
+  // 'efficient-animated-content': 'off',
+  // // vercel's live feedback widget interferes with coverage metrics
+  // // can double check this with chrome's coverage tool
+  // 'unused-javascript': 'off',
+  // // something about next.js or vercel makes the rss feed link prefetched which
+  // // for some reason 404's
+  // 'errors-in-console': 'off'
 }
 
 const pathToOverrides = {
   'posts/.+': {
-    // Code block non-highlighted line opacity seems to trip this up
-    'color-contrast': 'off',
-    // Right now, the AST downloaded on a post is really large
-    // I hope to fix this later with server components
-    'total-byte-weight': 'off',
-    // Checkboxes seem to fail this, but they're there for style only
-    // Github seems to style checkboxes in comments in the same way
-    label: 'off'
+    // // Code block non-highlighted line opacity seems to trip this up
+    // 'color-contrast': 'off',
+    // // Right now, the AST downloaded on a post is really large
+    // // I hope to fix this later with server components
+    // 'total-byte-weight': 'off',
+    // // Checkboxes seem to fail this, but they're there for style only
+    // // Github seems to style checkboxes in comments in the same way
+    // label: 'off'
   },
   about: {
-    'offscreen-images': 'off'
+    // 'offscreen-images': 'off'
   }
 }
 
