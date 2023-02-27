@@ -1,7 +1,5 @@
-import { Header } from 'components/Header/Header'
+import { Header } from 'components/Header'
 import { Footer } from 'components/Footer'
-
-// TODO: refactor
 
 export const Layout: React.FC<{
   children?: React.ReactNode

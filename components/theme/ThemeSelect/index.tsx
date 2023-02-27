@@ -1,1 +1,1 @@
-export * from './ThemeSelect'
+export { ThemeSelect } from './ThemeSelect'

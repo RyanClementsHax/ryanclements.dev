@@ -1,6 +1,9 @@
 import { getAllPostSlugs } from 'lib/content/posts'
 import { PostDetails } from 'components/pages/posts/[slug]'
-import { getRenderablePost } from 'lib/pages/posts/[slug]'
+import {
+  getRenderablePost,
+  getRenderablePostMeta
+} from 'lib/pages/posts/[slug]'
 import { Metadata } from 'next'
 import { SITE_URL } from 'lib/constants'
 
@@ -13,21 +16,21 @@ export async function generateStaticMetadata({
 }: {
   params: Params
 }): Promise<Metadata> {
-  const post = await getRenderablePost(slug)
+  const meta = await getRenderablePostMeta(slug)
   return {
-    title: post.meta.title,
-    description: post.meta.description,
+    title: meta.title,
+    description: meta.description,
     openGraph: {
       type: 'article',
       url: `${SITE_URL}/posts/${slug}`,
       authors: [`${SITE_URL}/about`],
-      publishedTime: post.meta.publishedOnIso,
+      publishedTime: meta.publishedOnIso,
       images: [
         {
-          url: `${SITE_URL}${post.meta.bannerSrc.src}`,
-          width: post.meta.bannerSrc.width,
-          height: post.meta.bannerSrc.height,
-          alt: post.meta.bannerSrc.alt
+          url: `${SITE_URL}${meta.bannerSrc.src}`,
+          width: meta.bannerSrc.width,
+          height: meta.bannerSrc.height,
+          alt: meta.bannerSrc.alt
         }
       ]
     }

@@ -1,16 +1,14 @@
 'use client'
 
-import { ThemeSelect } from 'components/theme'
-import { useHideAndShowWithScroll } from 'lib/utils/useHideAndShowWithScroll'
-import c from 'classnames'
-
-import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid'
-import { Popover, Transition } from '@headlessui/react'
-
+import { Fragment } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Fragment } from 'react'
+import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/solid'
+import { Popover, Transition } from '@headlessui/react'
+import c from 'classnames'
+import { ThemeSelect } from 'components/theme'
 import { NavItem, NAV_ITEMS } from 'lib/nav'
+import { useHideAndShowWithScroll } from 'lib/utils/useHideAndShowWithScroll'
 import { useIsScrolledToTop } from 'lib/utils/useIsScrolledToTop'
 
 export interface HeaderProps {

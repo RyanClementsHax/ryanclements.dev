@@ -36,6 +36,9 @@ export const getPost = async (slug: string): Promise<Post> => {
   }
 }
 
+export const getPostMeta = async (slug: string): Promise<PostMeta> =>
+  (await getPost(slug)).meta
+
 export const convertRawStringToPost = async (
   slug: string,
   rawString: string
@@ -51,7 +54,7 @@ export const markUpdated = async (
   slug: string,
   updatedAt: Date
 ): Promise<void> => {
-  const meta = await getMeta(slug)
+  const meta = await getPostMeta(slug)
   if (meta.publishedOn) {
     meta.updatedAt = updatedAt
     await updateMeta(meta)
@@ -109,8 +112,6 @@ const getPostFileStems = async () => {
     throw e
   }
 }
-
-const getMeta = async (slug: string) => (await getPost(slug)).meta
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const updateMeta = async ({ bannerSrc, slug, ...meta }: PostMeta) => {
