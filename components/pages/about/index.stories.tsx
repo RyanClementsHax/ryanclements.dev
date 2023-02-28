@@ -13,7 +13,8 @@ export default {
   component: About,
   parameters: {
     nextjs: {
-      router: {
+      appDirectory: true,
+      navigation: {
         pathname: '/about'
       }
     }
