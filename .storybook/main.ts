@@ -7,8 +7,12 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
+    '@storybook/addon-interactions',
     'storybook-dark-mode'
   ],
+  features: {
+    interactionsDebugger: true
+  },
   framework: {
     name: '@storybook/nextjs',
     options: {}

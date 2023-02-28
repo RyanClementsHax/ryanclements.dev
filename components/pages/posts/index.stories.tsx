@@ -19,7 +19,8 @@ export default {
   component: Posts,
   parameters: {
     nextjs: {
-      router: {
+      appDirectory: true,
+      navigation: {
         pathname: '/posts'
       }
     }

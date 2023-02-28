@@ -17,7 +17,8 @@ export default {
   component: Home,
   parameters: {
     nextjs: {
-      router: {
+      appDirectory: true,
+      navigation: {
         pathname: '/'
       }
     }
