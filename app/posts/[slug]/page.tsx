@@ -17,12 +17,6 @@ export async function generateMetadata({
   params: Params
 }): Promise<Metadata> {
   const meta = await getRenderablePostMeta(slug)
-  const images: NonNullable<Metadata['openGraph']>['images'] = {
-    url: `${SITE_URL}${meta.bannerSrc.src}`,
-    width: meta.bannerSrc.width,
-    height: meta.bannerSrc.height,
-    alt: meta.bannerSrc.alt
-  }
   return {
     title: meta.title,
     description: meta.description,
@@ -32,8 +26,7 @@ export async function generateMetadata({
       title: meta.title,
       description: meta.description,
       authors: [`${SITE_URL}/about`],
-      publishedTime: meta.publishedOnIso,
-      images
+      publishedTime: meta.publishedOnIso
     },
     twitter: {
       site: '@RyanClementsHax',
@@ -41,7 +34,10 @@ export async function generateMetadata({
       card: 'summary_large_image'
     },
     other: {
-      'og:image': images.url as string
+      'og:image': `${SITE_URL}${meta.bannerSrc.src}`,
+      'og:image:width': meta.bannerSrc.width,
+      'og:image:height': meta.bannerSrc.height,
+      'og:image:alt': meta.bannerSrc.alt
     }
   }
 }
