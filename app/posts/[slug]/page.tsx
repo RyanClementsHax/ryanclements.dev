@@ -36,6 +36,9 @@ export async function generateMetadata({
       images
     },
     twitter: {
+      site: '@RyanClementsHax',
+      creator: '@RyanClementsHax',
+      card: 'summary_large_image',
       images
     }
   }
