@@ -10,3 +10,6 @@ export const SITE_URL: string =
 
 export const RSS_FEED_URL = `${SITE_URL}/rss/feed.xml`
 export const JSON_FEED_URL = `${SITE_URL}/rss/feed.json`
+
+export const ASSET_DIR = 'public'
+export const POSTS_DIR = 'posts'

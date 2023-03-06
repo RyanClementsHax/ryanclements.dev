@@ -16,7 +16,7 @@ const rehypeOptimizeImages: Plugin<[], HastTree> = () => async (tree, file) => {
   ) => {
     if (!(await imageService.exists(src))) {
       file.fail(
-        `The src "${src}" does not exist as a file within root dir "${imageService.config.rootDir}"`,
+        `The src "${src}" does not exist as a file within asset dir "${imageService.config.assetDir}"`,
         pointStart(node)
       )
       return
@@ -94,7 +94,7 @@ const rehypeVideo: Plugin<[], HastTree> = () => async tree => {
       return
     }
     const src = node.properties?.src
-    if (typeof src === 'string' && /.*\.webm/.test(src)) {
+    if (typeof src === 'string' && /\.(webm|mp4)$/.test(src)) {
       parent.children[index] = h('video', [
         h('source', {
           src: videoService.getFullPathForVideoSrc(src),
