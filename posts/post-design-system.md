@@ -234,3 +234,7 @@ Like links, Images also have a footnote style syntax
 With a reference later in the document defining the URL location:
 
 [id]: dojocat.jpg 'The Dojocat'
+
+## Videos
+
+![dropbox.tech's header animation is super sensitive to scrolling](dropbox_tech_scroll.webm)

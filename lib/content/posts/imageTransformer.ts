@@ -5,6 +5,7 @@ import { pointStart } from 'unist-util-position'
 import { ImageService, imageService } from './imageService'
 import { PresetBuilder } from './presetBuilder'
 import { h } from 'hastscript'
+import { videoService } from './videoService'
 
 const rehypeOptimizeImages: Plugin<[], HastTree> = () => async (tree, file) => {
   const imageOptimizationJobs: Promise<void>[] = []
@@ -87,8 +88,26 @@ const rehypeConvertTopLevelImagesToFigures: Plugin<[], HastTree> =
       )
   }
 
+const rehypeVideo: Plugin<[], HastTree> = () => async tree => {
+  visit(tree, { type: 'element', tagName: 'img' }, (node, index, parent) => {
+    if (!parent || index === null) {
+      return
+    }
+    const src = node.properties?.src
+    if (typeof src === 'string' && /.*\.webm/.test(src)) {
+      parent.children[index] = h('video', [
+        h('source', {
+          src: videoService.getFullPathForVideoSrc(src),
+          type: 'video/webm'
+        })
+      ])
+    }
+  })
+}
+
 export const imageTransformer = new PresetBuilder()
   .use(rehypeRewriteImageSrcs)
+  .use(rehypeVideo)
   .use(rehypeOptimizeImages)
   .use(rehypeConvertTopLevelImagesToFigures)
   .build()
