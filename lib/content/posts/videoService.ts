@@ -73,7 +73,7 @@ class VideoService {
     const mp4Path = gifPath.replace(/\.gif$/, '.mp4')
     const transform = async () =>
       await execaCommand(
-        `ffmpeg -y -i ${gifPath} -c:v libx265 -preset fast -crf 28 -tag:v hvc1 -c:a eac3 -b:a 224k ${mp4Path}`
+        `ffmpeg -y -i ${gifPath} -c vp9 -b:v 0 -crf 41 ${mp4Path}`
       )
     if (!(await this.exists(mp4Path))) {
       logger.log('Creating mp4 transformation on', relativePath)

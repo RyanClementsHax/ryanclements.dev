@@ -50,10 +50,6 @@ const Anchor: React.FC<React.AnchorHTMLAttributes<HTMLAnchorElement>> = props =>
 const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = props => (
   <video
     controls
-    loop
-    autoPlay
-    muted
-    playsInline
     {...props}
     className={c(props.className, 'w-full rounded-lg shadow-md')}
   />
