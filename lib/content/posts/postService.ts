@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 import * as yup from 'yup'
-import { log } from 'lib/utils/logs'
+import { logger } from 'lib/utils/logs'
 import { IS_DEV, IS_PREVIEW } from 'lib/constants'
 import { parseFrontMatter, writeFrontMatter } from './frontMatter'
 import { validateMarkdown } from './validation'
@@ -50,7 +50,7 @@ export class PostService {
       const rawPostString = await this.getRawPostString(slug)
       return await this.convertRawString(slug, rawPostString)
     } catch (e: unknown) {
-      log.error(`Could not get post for ${slug}`, e)
+      logger.error(`Could not get post for ${slug}`, e)
       throw e
     }
   }
@@ -118,14 +118,14 @@ export class PostService {
       const files = await fs.readdir(this.config.postsDir)
       return files.map(x => x.replace('.md', ''))
     } catch (e) {
-      log.error(`Was not able to read ${this.config.postsDir}`, e)
+      logger.error(`Was not able to read ${this.config.postsDir}`, e)
       throw e
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private async updateMeta({ bannerSrc, slug, ...meta }: PostMeta) {
-    log.log(`Marking updated at for ${slug} to ${meta.updatedAt}`)
+    logger.log(`Marking updated at for ${slug} to ${meta.updatedAt}`)
     let rawPostString = await this.getRawPostString(slug)
     rawPostString = await writeFrontMatter(meta, rawPostString)
     await this.writeRawPostString(slug, rawPostString)

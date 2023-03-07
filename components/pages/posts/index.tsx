@@ -9,7 +9,7 @@ export interface PostsProps {
 export const Posts: React.FC<PostsProps> = ({ posts }) => (
   <Layout>
     <Container>
-      <Title>My musings about software engineering</Title>
+      <Title>My musings about the practice of software</Title>
       <PostsList posts={posts} />
     </Container>
   </Layout>
@@ -22,7 +22,7 @@ const Container: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
 )
 
 const Title: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
-  <h1 className="my-10 text-6xl font-bold md:text-8xl">{children}</h1>
+  <h1 className="my-10 text-6xl font-bold md:text-7xl">{children}</h1>
 )
 
 const PostsList: React.FC<{ posts: RenderablePostSummary[] }> = ({ posts }) => (

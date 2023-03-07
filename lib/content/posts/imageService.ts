@@ -1,4 +1,5 @@
 import { stat } from 'fs/promises'
+import { POSTS_DIR, ASSET_DIR } from 'lib/constants'
 import path from 'path'
 import { getPlaiceholder } from 'plaiceholder'
 
@@ -11,7 +12,7 @@ export interface OptimizedImageProps {
 }
 
 export interface ImageServiceConfig {
-  readonly rootDir: string
+  readonly assetDir: string
   readonly postsDir: string
   readonly postBannerFileName: string
 }
@@ -29,7 +30,7 @@ export class ImageService {
     src: string
   ): Promise<OptimizedImageProps> {
     const { base64, img } = await getPlaiceholder(this.asAbsolutePath(src), {
-      dir: this.config.rootDir,
+      dir: this.config.assetDir,
       removeAlpha: false
     })
     return {
@@ -51,12 +52,12 @@ export class ImageService {
   }
 
   private getFullPath(src: string) {
-    return path.join(this.config.rootDir, src)
+    return path.join(this.config.assetDir, src)
   }
 }
 
 export const imageService = new ImageService({
-  rootDir: 'public',
-  postsDir: 'posts',
+  assetDir: ASSET_DIR,
+  postsDir: POSTS_DIR,
   postBannerFileName: 'banner.jpg'
 })

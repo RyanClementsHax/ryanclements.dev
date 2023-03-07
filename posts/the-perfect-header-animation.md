@@ -1,6 +1,6 @@
 ---
 bannerAlt: spiderman reading a book by roadtripwithraj on Unsplash
-updatedAt: 2023-02-23T14:27:35.662Z
+updatedAt: 2023-03-06T16:30:26.829Z
 publishedOn: 2023-01-29T05:00:00.000Z
 description: >-
   Ever wondered how to create a header that animates in and out of view in
@@ -12,13 +12,13 @@ What do you enjoy about being deep in a facinating article? The content? Probabl
 
 One thing that frequently gets in the way for me is when the website hosting the article has a header that hides or shows at even the _slightest_ scroll. [dropbox.tech](https://dropbox.tech), one of my favorite tech blogs, unfortunately does this.
 
-![dropbox.tech's header animation is super sensitive to scrolling](/dropbox_tech_scroll.gif)
+![dropbox.tech's header animation is super sensitive to scrolling](dropbox_tech_scroll.webm)
 
 Personally, when I'm reading, I tend to do so on mobile. Because my thumb is scrolling while I'm processing the lines, thus covering the bottom half of lines, I keep my focused line at the top of the page. When all I'm doing is scrolling down, everything is fine, but if I so much as scroll up by a single pixel, the header crashes in often covering the line I'm currently trying to read. Annoying 😤.
 
 [Medium](https://medium.com) however understands me 😍.
 
-![Medium's header hides and shows in sync with scrolling](/medium_scroll.gif)
+![Medium's header hides and shows in sync with scrolling](medium_scroll.webm)
 
 When it came time to build the header for my website. I knew, at least for the sake of my sanity, that I had to implement the animation I loved so much.
 
@@ -34,7 +34,7 @@ I made a [repo containing all of this code](https://github.com/RyanClementsHax/b
 
 Let's start by trying to reverse engineer what Medium is doing.
 
-![Medium is using a transform: translateY(value) approach](/what_medium_does.gif)
+![Medium is using a transform: translateY(value) approach](what_medium_does.webm)
 
 It might be hard to see, but what medium is doing is first setting `position: sticky;{:css}` and `top: 0;{:css}` in order to get the header to be anchored to the top. Then in javascript they use css's [transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) property to move the header in and out out of view as the user scrolls. Also note that the value is only ever between `0` and `-98px`, the negative value of the header's height. More on this later.
 
@@ -65,7 +65,7 @@ header {
 
 This is what we get to start with.
 
-![Header without animations](/first-attempt-raw.gif)
+![Header without animations](first-attempt-raw.webm)
 
 Now let's begin adding in that fancy animation. We are first going to need to add a handler to listen on scroll events.
 
@@ -114,7 +114,7 @@ Now let's add the logic for what should happen on a scroll event. One way to thi
 
 Number 2 might take some explaining. If you look at the `translationY` value set on the header in the case of Medium's header (see below), you see that it follows this same logic. The `translationY` will never be more than `0` (positive values push the element down), and never be less than `-98px` (negative values push the element up) which just so happens to be the header element's height (you can see this by inspecting the element in the browser's dev tools).
 
-![Medium is using a transform: translateY(value) approach](/what_medium_does.gif)
+![Medium is using a transform: translateY(value) approach](what_medium_does.webm)
 
 Let's add that logic in.
 
@@ -150,7 +150,7 @@ export const FirstAttemptHeader: React.FC = () => {
 
 Success!
 
-![The header with the animation applied](/first_attempt_implemented.gif)
+![The header with the animation applied](first_attempt_implemented.webm)
 
 ## The problem
 
@@ -165,11 +165,11 @@ What I want my header to also support, is on smaller screens, the following item
 
 Over all, it would look like this.
 
-![An overlay on mobile that works with scrolling](/header_goal.gif)
+![An overlay on mobile that works with scrolling](header_goal.webm)
 
 Instead, this happens:
 
-![An overlay on mobile that is broken scrolling](/first_attempt_failure.gif)
+![An overlay on mobile that is broken scrolling](first_attempt_failure.webm)
 
 Why is this? Honestly, I'm having a hard time figuring this one out myself, but here is my current theory. Because the overlay wants to be absolutely positioned so it can be anchored to the viewport on scroll, it clashes with `position: sticky;{:css}` on the header seems to ruin this because the overlay becomes relative to _it_ instead of the viewport. Therefore, when it hides by being pushed up, the overlay gets pushed up too. What doesn't make sense is that the overlay doesn't seem to move up by the same amount, so therefore I feel like this explanation isn't completely accurate 🤷🏻‍♂️.
 

@@ -23,5 +23,13 @@ const { OpenMobile, OpenDarkThemedMobile } = createDefaultStories(Template, {
 export { OpenMobile, OpenDarkThemedMobile }
 
 export default {
-  component: Header
+  component: Header,
+  parameters: {
+    nextjs: {
+      appDirectory: true,
+      navigation: {
+        pathname: '/'
+      }
+    }
+  }
 } as Meta

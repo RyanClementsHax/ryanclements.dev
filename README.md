@@ -8,6 +8,8 @@
   - [Lighthouse](#lighthouse)
 - [Deployment](#deployment)
 - [SEO](#seo)
+- [Media](#media)
+  - [Optimizing gifs](#optimizing-gifs)
 - [Docs](#docs)
   - [ADRs](#adrs)
 
@@ -76,6 +78,21 @@ You can use Facebook's [OG debugger tool](https://developers.facebook.com/tools/
 You can use Twitter's Tweet Composer to test link rendering. See [this post](https://twittercommunity.com/t/card-validator-preview-removal/175006) for more details and [this troubleshooting guide](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/troubleshooting-cards) for help.
 
 You can use [this tool](https://renderform.io/tools/imessage-link-preview-tool/) to test iOS link rendering.
+
+## Media
+
+### Optimizing gifs
+
+First install `ffmpeg`.
+
+```bash
+sudo apt update &amp;&amp; sudo apt upgrade
+sudo apt install ffmpeg
+```
+
+Then run `yarn media:optimize-gifs` to transform them in place to `.mp4` and `.webm` files.
+
+Consult [chrome's developer guide for efficient video formats](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/) for further details.
 
 ## Docs
 

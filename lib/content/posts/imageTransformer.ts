@@ -5,6 +5,7 @@ import { pointStart } from 'unist-util-position'
 import { ImageService, imageService } from './imageService'
 import { PresetBuilder } from './presetBuilder'
 import { h } from 'hastscript'
+import { videoService } from './videoService'
 
 const rehypeOptimizeImages: Plugin<[], HastTree> = () => async (tree, file) => {
   const imageOptimizationJobs: Promise<void>[] = []
@@ -15,7 +16,7 @@ const rehypeOptimizeImages: Plugin<[], HastTree> = () => async (tree, file) => {
   ) => {
     if (!(await imageService.exists(src))) {
       file.fail(
-        `The src "${src}" does not exist as a file within root dir "${imageService.config.rootDir}"`,
+        `The src "${src}" does not exist as a file within asset dir "${imageService.config.assetDir}"`,
         pointStart(node)
       )
       return
@@ -87,8 +88,32 @@ const rehypeConvertTopLevelImagesToFigures: Plugin<[], HastTree> =
       )
   }
 
+const rehypeVideo: Plugin<[], HastTree> = () => async tree => {
+  visit(tree, { type: 'element', tagName: 'img' }, (node, index, parent) => {
+    if (!parent || index === null) {
+      return
+    }
+    const src = node.properties?.src
+    const extRegex = /\.(webm|mp4)$/
+    if (typeof src === 'string' && extRegex.test(src)) {
+      const path = videoService.getPathForVideoSrc(src)
+      parent.children[index] = h('video', [
+        h('source', {
+          src: path.replace(extRegex, '.webm'),
+          type: 'video/webm'
+        }),
+        h('source', {
+          src: path.replace(extRegex, '.mp4'),
+          type: 'video/mp4'
+        })
+      ])
+    }
+  })
+}
+
 export const imageTransformer = new PresetBuilder()
   .use(rehypeRewriteImageSrcs)
+  .use(rehypeVideo)
   .use(rehypeOptimizeImages)
   .use(rehypeConvertTopLevelImagesToFigures)
   .build()
