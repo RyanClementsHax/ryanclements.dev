@@ -1,7 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { postSummaries } from 'stories/posts'
 import { createDefaultStories } from 'stories/storyUtils'
-import { within, userEvent } from '@storybook/testing-library'
 
 import { PostSummaryCard, PostSummaryCardProps } from '.'
 
@@ -29,23 +28,6 @@ const { DraftBase, DraftMobile, DraftDarkTheme, DraftDarkThemedMobile } =
   })
 
 export { DraftBase, DraftMobile, DraftDarkTheme, DraftDarkThemedMobile }
-
-const { HoverBase, HoverMobile, HoverDarkTheme, HoverDarkThemedMobile } =
-  createDefaultStories(Template, {
-    prefix: 'Hover',
-    play: async ({ canvasElement }) => {
-      const canvas = within(canvasElement)
-
-      // TODO: Check if chromatic registers this
-      userEvent.hover(
-        await canvas.findByRole('link', {
-          name: new RegExp(Template.args!.post!.title, 'i')
-        })
-      )
-    }
-  })
-
-export { HoverBase, HoverMobile, HoverDarkTheme, HoverDarkThemedMobile }
 
 export default {
   component: PostSummaryCard,
