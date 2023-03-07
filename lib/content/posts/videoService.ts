@@ -1,12 +1,11 @@
 import { execa, execaCommand } from 'execa'
 import { stat } from 'fs/promises'
 import { glob } from 'glob'
-import { POSTS_DIR, ASSET_DIR, SITE_URL } from 'lib/constants'
+import { POSTS_DIR, ASSET_DIR } from 'lib/constants'
 import { logger } from 'lib/utils/logs'
 import path from 'path'
 
 export interface VideoServiceConfig {
-  readonly siteUrl: string
   readonly assetDir: string
   readonly postsDir: string
 }
@@ -14,8 +13,8 @@ export interface VideoServiceConfig {
 class VideoService {
   constructor(private readonly config: VideoServiceConfig) {}
 
-  public getFullPathForVideoSrc(src: string) {
-    return new URL(src, this.config.siteUrl).toString()
+  public getPathForVideoSrc(src: string) {
+    return '/' + src.replace(/^\//, '')
   }
 
   public async optimizeAllGifs() {
@@ -94,7 +93,6 @@ class VideoService {
 }
 
 export const videoService = new VideoService({
-  siteUrl: SITE_URL,
   assetDir: ASSET_DIR,
   postsDir: POSTS_DIR
 })

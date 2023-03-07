@@ -94,11 +94,17 @@ const rehypeVideo: Plugin<[], HastTree> = () => async tree => {
       return
     }
     const src = node.properties?.src
-    if (typeof src === 'string' && /\.(webm|mp4)$/.test(src)) {
+    const extRegex = /\.(webm|mp4)$/
+    if (typeof src === 'string' && extRegex.test(src)) {
+      const path = videoService.getPathForVideoSrc(src)
       parent.children[index] = h('video', [
         h('source', {
-          src: videoService.getFullPathForVideoSrc(src),
+          src: path.replace(extRegex, '.webm'),
           type: 'video/webm'
+        }),
+        h('source', {
+          src: path.replace(extRegex, '.mp4'),
+          type: 'video/mp4'
         })
       ])
     }

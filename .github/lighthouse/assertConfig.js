@@ -18,12 +18,6 @@ const pathToOverrides = {
   'posts/.+': {
     // Code block non-highlighted line opacity seems to trip this up
     'color-contrast': 'off',
-    // This is caused by gifs being really large
-    // https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/
-    'total-byte-weight': 'off',
-    // This is caused by gifs being really large
-    // https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/
-    'efficient-animated-content': 'off',
     // Checkboxes seem to fail this, but they're there for style only
     // Github seems to style checkboxes in comments in the same way
     label: 'off'
