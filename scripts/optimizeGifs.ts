@@ -1,5 +1,6 @@
 import { videoService } from 'lib/content/posts/videoService'
 
 void (async () => {
-  await videoService.optimizeAllGifs()
+  const replaceExisting = process.argv.includes('--replace-existing')
+  await videoService.optimizeAllGifs(replaceExisting)
 })()

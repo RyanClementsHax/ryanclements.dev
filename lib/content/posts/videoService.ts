@@ -17,7 +17,7 @@ class VideoService {
     return '/' + src.replace(/^\//, '')
   }
 
-  public async optimizeAllGifs() {
+  public async optimizeAllGifs(replaceExisting = false) {
     if (!(await this.ffmpegIsInstalled())) {
       throw new Error(
         'Must install ffmpeg to optimize gifs. See readme for instructions.'
@@ -26,7 +26,7 @@ class VideoService {
 
     const gifPaths = await this.findAllGifPaths()
 
-    await Promise.all(gifPaths.map(x => this.transformGif(x)))
+    await Promise.all(gifPaths.map(x => this.transformGif(x, replaceExisting)))
   }
 
   private async ffmpegIsInstalled() {
@@ -42,20 +42,25 @@ class VideoService {
     )
   }
 
-  private async transformGif(gifPath: string) {
+  private async transformGif(gifPath: string, replaceExisting: boolean) {
     // https://web.dev/replace-gifs-with-videos/
-    await this.convertGifToWebm(gifPath)
-    await this.convertGifToMp4(gifPath)
+    await this.convertGifToWebm(gifPath, replaceExisting)
+    await this.convertGifToMp4(gifPath, replaceExisting)
   }
 
-  private async convertGifToWebm(gifPath: string) {
+  private async convertGifToWebm(gifPath: string, replaceExisting: boolean) {
     const relativePath = this.getPathRelativeToPostsDirFromAbsolutePath(gifPath)
     const webmPath = gifPath.replace(/\.gif$/, '.webm')
-    if (!(await this.exists(webmPath))) {
-      logger.log('Performing webm transformation on', relativePath)
+    const transform = async () =>
       await execaCommand(
-        `ffmpeg -i ${gifPath} -c vp9 -b:v 0 -crf 41 ${webmPath}`
+        `ffmpeg -y -i ${gifPath} -c vp9 -b:v 0 -crf 41 ${webmPath}`
       )
+    if (!(await this.exists(webmPath))) {
+      logger.log('Creating webm transformation on', relativePath)
+      await transform()
+    } else if (replaceExisting) {
+      logger.log('Replacing webm transformation for', relativePath)
+      await transform()
     } else {
       logger.log(
         `Skipping webm transform for ${relativePath} as ${webmPath} already exists`
@@ -63,14 +68,19 @@ class VideoService {
     }
   }
 
-  private async convertGifToMp4(gifPath: string) {
+  private async convertGifToMp4(gifPath: string, replaceExisting: boolean) {
     const relativePath = this.getPathRelativeToPostsDirFromAbsolutePath(gifPath)
     const mp4Path = gifPath.replace(/\.gif$/, '.mp4')
-    if (!(await this.exists(mp4Path))) {
-      logger.log('Performing mp4 transformation on', relativePath)
+    const transform = async () =>
       await execaCommand(
-        `ffmpeg -i ${gifPath} -c vp9 -b:v 0 -crf 41 ${mp4Path}`
+        `ffmpeg -y -i ${gifPath} -c vp9 -b:v 0 -crf 41 ${mp4Path}`
       )
+    if (!(await this.exists(mp4Path))) {
+      logger.log('Creating mp4 transformation on', relativePath)
+      await transform()
+    } else if (replaceExisting) {
+      logger.log('Replacing mp4 transformation on', relativePath)
+      await transform()
     } else {
       logger.log(
         `Skipping mp4 transform for ${relativePath} as ${mp4Path} already exists`
