@@ -50,7 +50,7 @@ const ContentContainer: React.FC<{ children?: React.ReactNode }> = ({
 
 const Closer: React.FC = () => (
   <section className="flex flex-col gap-12">
-    <hr className="border-zinc-200 dark:border-zinc-700" />
+    <hr className="border-borderColor" />
     <p className="text-center">
       Did you enjoy the post? Consider supporting me and my tea addition 🤗🍵.
     </p>
