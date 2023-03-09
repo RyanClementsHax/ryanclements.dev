@@ -84,7 +84,7 @@ module.exports = {
                 }
               },
               borderColor: {
-                DEFAULT: colors.zinc[300],
+                DEFAULT: colors.zinc[200],
                 focus: primary.DEFAULT,
                 primary: primary[200],
                 success: colors.green[200],

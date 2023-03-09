@@ -10,6 +10,14 @@ const config = {
   eslint: {
     // https://nextjs.org/docs/basic-features/eslint#linting-custom-directories-and-files
     dirs: ['.']
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'img.buymeacoffee.com'
+      }
+    ]
   }
 }
 
