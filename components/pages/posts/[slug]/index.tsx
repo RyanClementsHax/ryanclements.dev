@@ -65,7 +65,7 @@ const BuyMeACoffeeButton: React.FC = () => (
   >
     <Image
       src="https://img.buymeacoffee.com/button-api/?text=Buy me a tea&emoji=🍵&slug=ryanclementshax&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff"
-      alt="Buy me a coffee"
+      alt="Buy me a tea"
       fill
       unoptimized
     />
