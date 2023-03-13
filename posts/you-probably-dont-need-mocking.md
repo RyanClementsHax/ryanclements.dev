@@ -70,7 +70,7 @@ When unchecked, this can compound into a maintainability nightmare. I've been on
 
 You might be saying in your head, "Well, Ryan, this sounds nice, but do you seriously want me to actually send an email every time I run my test suite? What if the unit I'm testing makes payments? You can't seriously expect me to not mock that?"
 
-Bear with me, but yes and no.
+Bear with me, but it depends on what you're testing and the nature of your application.
 
 What I'd also like to suggest is for us to consider what makes a test valuable. A test's value is the reliability to which it fails if a behavior depended upon in production is no longer present in the exercised system, code base, unit, etc. This has a couple of implications.
 
@@ -92,7 +92,7 @@ This is NOT a comprehensive guide to all of the testing techniques out there. Th
 
 </aside>
 
-Without further adeu, here is the Testing Totem Pole.
+Without further ado, here is the Testing Totem Pole.
 
 1. E2E Production testing
 2. E2E Preproduction testing
@@ -123,15 +123,19 @@ One key property of this type of testing is that it is easy to change implementa
 
 These tests sitting at such a high level of detail make them more aligned with how stakeholders desire the system to behave. That being said, the coarse grained view has drawbacks.
 
-Many projects are large and important. Testing in production is too dangerous. You can mitigate this with canary deployments and proper monitoring, but not every project can invest in such infrastructure. Additionally, it can be difficult to pinpoint the source of errors. If an email fails to send is it because you misconfigured some ports, your code has a bug in it, or your third party email service is experiencing an outage? It is also difficult to verify fine grained details like a certain API endpoint was called. This isn't even to mention the problems of gathering all the data you need to make the assertions you want to make. What if you wanted to verify data was stored properly? Are you going to expose your database over the public internet? What if you were asserting against a long running job? This is only a hint of the problems this class of testing poses.
+Many projects are large and important. Testing in production is too dangerous. Additionally, it can be difficult to pinpoint the source of errors. If an email fails to send is it because you misconfigured some ports, your code has a bug in it, or your third party email service is experiencing an outage? It is also difficult to verify fine grained details like a certain API endpoint was called. This isn't even to mention the problems of gathering all the data you need to make the assertions you want to make. What if you wanted to verify data was stored properly? Are you going to expose your database over the public internet? What if you were asserting against a long running job? This is only a hint of the problems this class of testing poses.
 
-### Pros
+This isn't to say all hope is lost, however. There are techniques and tools at our disposal to mitigate these problems. For example, if you have the infrastructure, you alleviate some danger of deploying with canaries and proper monitoring. Additionally, if you're making a products service and want to E2E test that a POST to `/products/:id` creates some product, instead of attempting to gain access to the database to verify the product was persisted, you could verify the same thing by getting the product from the API (e.g. GET to `/products/:id`).
+
+In short, despite its drawbacks, this form of testing is still the first to consider for me due to how valuable they are and many of the drawbacks for some projects have mitigating techniques available.
+
+Pros
 
 - Has the greatest value over any other technique
 - Isn't brittle to implementation changes
-- Tests the entirety of the tech stack
+- Tests the entirety of the tech stack, even hard to test layers
 
-### Cons
+Cons
 
 - You have to deploy to run these types of tests
 - Difficult to make fine grained assertions
@@ -142,6 +146,64 @@ Many projects are large and important. Testing in production is too dangerous. Y
 - Not all the information might be available to verify correct functionality
 
 ## E2E Preproduction Testing
+
+Production, as useful as it is to know how code will actually perform, produces a ton of noise that's difficult to cut through when testing. When testing a piece of software, you don't want components you don't own to interfere with the test results. If that piece is a login service, you don't want an outage in your monitoring stack to prevent testing a login flow. If that piece is a shader for a rendering engine, you don't want a hardware bug to prevent testing lighting algorithms. These issues point to a more stable environment to test in. Enter preprod.
+
+Many teams create a preproduction (preprod) environment alongside their production environment. The goal of preprod is to match as closely as possible to production, but with some simplifications. These environments, if they differ, tend to not receive much load. Developers also tend to have access to resources within preprod like databases and secrets. Although preprod, being a close mirror of production, can suffer from the same problems as production, these simplifications stabilize the environment making it easier to test at the expense of lowered fidelity.
+
+Some projects might not even suffer from lowered fidelity at all! This website, for example, uses [Vercel](https://vercel.com) for hosting. Vercel as a feature called [preview deployments](https://vercel.com/docs/concepts/deployments/preview-deployments) which let you deploy a live version of your site during pull request. It is built and deployed just like production. I use this to visually test my website before deploying, both manually, like to make sure the newest post I wrote looks ok, and automatically, like with lighthouse analysis.
+
+As mentioned, preprod can give you an insight into production behavior _before_ deploying into production. The biggest problem my static webstie would ever have is grammar issues, but software supporting traffic lights has much more to risk. Production testing might be practically, or even morally, impossible for a project which makes preprod testing a good next technique to consider.
+
+It is not without its problems though. Services you don't own, like third party services, might not expose any resources for testing complicating your ability to perform such tests. This also requires creating and maintaining a completely separate environment. Not all projects might be able to afford this. Preprod environments might not even make sense for some projects. Alas, if your project can allow it, consider a preproduction environment as a helpful analog.
+
+Pros
+
+- High production fidelity
+- Easier access to resrouces (e.g. databases)
+- Tests the entirety of the stack
+- Less noise than production
+
+Cons
+
+- You have to deploy to run these types of tests
+- Difficult to make fine grained assertions
+- It can be hard to pinpoint the source of an error
+- Requires a completely separate environment
+- Not all third parties allow for test accounts
+- Larger projects require more complicated deployment and monitoring strategies
+- Can easily take very long to run
+
+## Local Integration Testing
+
+Deploying changes to test them is annoying. This is why the next level I go to is local integration testing. This is the practice where you stand as much of your environment up on your machine as you can and run your tests against that. Dependencies typically are replaced with mocks as access to them locally is sometimes difficult. Tools like [docker compose](https://docs.docker.com/compose/) and [Mock Server](https://www.mock-server.com/#what-is-mockserver) can be very helpful here.
+
+Because all of the resources are local, it is much easier to debug issues. It's also easier to massage the environment into the state you need it in. If these tests are built properly, they can also run in CI.
+
+The biggest thing to keep in mind is that you don't ship your laptop. Production is often on different hardware under different network connectivity with different load and different data. Expecting these tests to provide indication on how a website might perform, for example, will leave you sadly disappointed as you realize much of the world does not have the newest, fastest smart phone. Your laptop is often not subject to security rules like network firewalls or IAM permissions. Expecting this to be a faithful analog to production would be misleading.
+
+Pros
+
+- Don't have to deploy to run tests
+- Easier to debug
+- Medium fidelity
+- Cuts out much noise
+- Tests a good portion of your stack
+- Can run these tests in CI
+- Most projects can do a form of this
+
+Cons
+
+- Doesn't test under real networking/security/hardware conditions
+- Doesn't test with real data (sometimes)
+- Might be difficult to set up a local environment
+- Might be difficult to mock out other services
+
+## In Process Integration Testing with Fakes
+
+All of the techniques before have been out of process solutions. This is the first in process solution, we'll discuss. This technique unit tests
+
+## Unit Testing with Mocks
 
 ## Heuristics
 
