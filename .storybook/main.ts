@@ -10,9 +10,6 @@ module.exports = {
     '@storybook/addon-interactions',
     'storybook-dark-mode'
   ],
-  features: {
-    interactionsDebugger: true
-  },
   framework: {
     name: '@storybook/nextjs',
     options: {}
