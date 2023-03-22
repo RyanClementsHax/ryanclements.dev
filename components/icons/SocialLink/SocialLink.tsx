@@ -13,7 +13,7 @@ export const SocialLink: React.FC<SocialLinkProps> = ({
   socialAccount,
   className
 }) => (
-  <Link href={socialAccount.href} className={className}>
+  <Link href={socialAccount.href} className={className} target="_blank">
     <span className="sr-only">{`Link to ${socialAccount.platform}`}</span>
     {socialPlatformToIconMap[socialAccount.platform]}
   </Link>
