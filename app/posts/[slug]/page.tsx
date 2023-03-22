@@ -6,6 +6,7 @@ import {
 } from 'lib/pages/posts/[slug]/server'
 import { Metadata } from 'next'
 import { SITE_URL } from 'lib/constants'
+import { notFound } from 'next/navigation'
 
 interface Params {
   slug: string
@@ -16,6 +17,7 @@ export async function generateMetadata({
 }: {
   params: Params
 }): Promise<Metadata> {
+  await redirectIfNotFound(slug)
   const meta = await getRenderablePostMeta(slug)
   return {
     title: meta.title,
@@ -52,6 +54,13 @@ export default async function PostPage({
 }: {
   params: Params
 }): Promise<JSX.Element> {
+  await redirectIfNotFound(slug)
   const post = await getRenderablePost(slug)
   return <PostDetails post={post} />
+}
+
+const redirectIfNotFound = async (slug: string) => {
+  if (!(await postService.exists(slug))) {
+    notFound()
+  }
 }

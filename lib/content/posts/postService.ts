@@ -27,6 +27,13 @@ export interface PostServiceConfig {
 export class PostService {
   constructor(readonly config: PostServiceConfig) {}
 
+  public async exists(slug: string): Promise<boolean> {
+    return await fs
+      .stat(this.getPath(slug))
+      .then(() => true)
+      .catch(() => false)
+  }
+
   public async getAllSlugs(): Promise<string[]> {
     return (await this.getAll()).map(x => x.meta.slug)
   }
@@ -99,18 +106,11 @@ export class PostService {
   }
 
   private async getRawPostString(slug: string) {
-    return await fs.readFile(
-      path.join(this.config.postsDir, `${slug}.md`),
-      'utf-8'
-    )
+    return await fs.readFile(this.getPath(slug), 'utf-8')
   }
 
   private async writeRawPostString(slug: string, rawString: string) {
-    await fs.writeFile(
-      path.join(this.config.postsDir, `${slug}.md`),
-      rawString,
-      'utf-8'
-    )
+    await fs.writeFile(this.getPath(slug), rawString, 'utf-8')
   }
 
   private async getPostFileStems() {
@@ -121,6 +121,10 @@ export class PostService {
       logger.error(`Was not able to read ${this.config.postsDir}`, e)
       throw e
     }
+  }
+
+  private getPath(slug: string) {
+    return path.join(this.config.postsDir, `${slug}.md`)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
