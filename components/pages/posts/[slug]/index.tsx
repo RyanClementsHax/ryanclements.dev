@@ -5,6 +5,7 @@ import { Content } from './Content'
 import { Layout } from 'components/Layout'
 import { A11yStaticImageData } from 'lib/content/images'
 import Link from 'next/link'
+import { ShareLinks } from 'components/ShareLinks'
 
 export interface PostDetailsProps {
   post: RenderablePost
@@ -22,7 +23,7 @@ export const PostDetails: React.FC<PostDetailsProps> = ({
         updatedAt={meta.updatedAt}
       />
       <Content root={content} />
-      <Closer />
+      <Closer title={meta.title} />
     </ContentContainer>
   </Layout>
 )
@@ -48,13 +49,17 @@ const ContentContainer: React.FC<{ children?: React.ReactNode }> = ({
   </article>
 )
 
-const Closer: React.FC = () => (
-  <section className="flex flex-col gap-12">
+const Closer: React.FC<{ title: string }> = ({ title }) => (
+  <section className="flex flex-col gap-12 text-center">
     <hr className="border-borderColor" />
-    <p className="text-center">
+    <p>
       Did you enjoy the post? Consider supporting me and my tea addition 🤗🍵.
     </p>
     <BuyMeACoffeeButton />
+    <p className="mx-auto flex gap-2">
+      Or sharing with others
+      <ShareLinks title={title} />
+    </p>
   </section>
 )
 

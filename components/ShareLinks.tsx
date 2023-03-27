@@ -7,7 +7,11 @@ import { TwitterIcon } from 'components/icons/TwitterIcon'
 import { useEncodedSiteUrl } from 'lib/utils/useEncodedSiteUrl'
 import Link from 'next/link'
 
-export const ShareLinks: React.FC<{ title: string }> = ({ title }) => {
+export interface ShareLinksProps {
+  title: string
+}
+
+export const ShareLinks: React.FC<ShareLinksProps> = ({ title }) => {
   const encodedSiteUrl = useEncodedSiteUrl()
   return (
     <span className="flex gap-4 text-on-surface-base-muted">
