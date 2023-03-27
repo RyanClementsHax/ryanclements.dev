@@ -1,4 +1,4 @@
-import { ShareLinks } from './ShareLinks'
+import { ShareLinks } from 'components/ShareLinks'
 
 export interface MetaCardProps {
   title: string
