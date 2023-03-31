@@ -63,7 +63,13 @@ export class PostService {
   }
 
   public async getMeta(slug: string): Promise<PostMeta> {
-    return (await this.get(slug)).meta
+    try {
+      const rawPostString = await this.getRawPostString(slug)
+      return await this.getMetaFromRawString(slug, rawPostString)
+    } catch (e: unknown) {
+      logger.error(`Could not get post meta for ${slug}`, e)
+      throw e
+    }
   }
 
   public async convertRawString(
