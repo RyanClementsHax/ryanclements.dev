@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen } from 'tests/utils'
 import { ProficiencyLevel, SkillInfo } from 'lib/content/skills'
 import { SkillGroup } from './SkillGroup'
 
