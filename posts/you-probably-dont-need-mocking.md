@@ -5,6 +5,7 @@ description: >-
   Mocking is overused and can lead to brittle tests. Here I go over alternatives
   and when you should reach for mocking.
 title: You Probably Don't Need Mocking
+updatedAt: 2023-04-02T00:57:54.197Z
 ---
 
 When I first joined the software industry working my first internship, one of the first things I learned was what a "unit test" was. Following the explanation for why tests should exercise "units", typically classes, in isolation from each other, came another explanation for what "mocking" was and why it is useful in accomplishing isolation. Like any new engineer, I did what the big kids did and hardly questioned the practice. I even convinced myself that this was "best practice" - a term I'm slowly beginning to realize is more loose than I was initially led to believe. Like any engineering practice, its drawbacks started to show with scale and overreliance.
@@ -222,7 +223,7 @@ The terminology differs between who you ask, but a "fake" to me is a simplified 
 
 <aside>
 
-Note that even [EF Core recommends testing with real databases over testing in process](https://learn.microsoft.com/en-us/ef/core/testing/).f
+Note that even [EF Core recommends testing with real databases over testing in process](https://learn.microsoft.com/en-us/ef/core/testing/).
 
 </aside>
 
@@ -300,6 +301,6 @@ As anyone with experience will tell you, sometimes the "top of the pole" options
 
 What I hope I detailed here is a way to think about testing that you can bring into your work or share with others. Let me know what your thoughts are. Would you change this, add additional points, or completely disagree with me on some parts? Let me know. I'm always learning 🙂.
 
-In my next post, I'll detail justifications for moving down the totem pole.
+In my [next post](justifying-mocking), I detail justifications for moving down the totem pole.
 
 That's all for now. Bye! 👋🏻
