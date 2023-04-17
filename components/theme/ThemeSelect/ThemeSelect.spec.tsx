@@ -11,6 +11,7 @@ jest.mock('@headlessui/react', () => {
   const mod = jest.requireActual('@headlessui/react')
   return {
     ...mod,
+    // Transition causes annoying act(...) warnings when running tests
     Transition: ({ children }: { children: React.ReactNode }) => children
   }
 })
