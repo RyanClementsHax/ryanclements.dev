@@ -1,19 +1,13 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { DecoratorFunction, Parameters } from '@storybook/csf'
-import { withThemeByClassName } from '@storybook/addon-styling'
+import { ReactRenderer } from '@storybook/react'
 
 import 'styles/global.scss'
 import './preview.scss'
-import { ReactRenderer } from '@storybook/react'
+import { themeDecorators } from './decorators/theme'
 
 export const decorators = [
-  withThemeByClassName({
-    themes: {
-      light: 'light',
-      dark: 'dark'
-    },
-    defaultTheme: 'light'
-  })
+  ...themeDecorators
 ] as DecoratorFunction<ReactRenderer>[]
 
 export const parameters: Parameters = {

@@ -8,6 +8,7 @@ setProjectAnnotations(globalStorybookConfig)
 
 expect.extend(toHaveNoViolations)
 
+jest.mock('../.storybook/decorators/theme')
 jest.mock('next/router', () => require('next-router-mock'))
 jest.mock('next/link', () => ({
   __esModule: true,
