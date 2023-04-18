@@ -31,47 +31,47 @@ export const useHideAndShowWithScroll = <
 }
 
 class StyleUpdater<THeader extends HTMLElement, TContent extends HTMLElement> {
-  private readonly HEADER_STYLES: React.CSSProperties = {
+  readonly #HEADER_STYLES: React.CSSProperties = {
     height: '',
     marginBottom: ''
   }
-  private readonly CONTENT_STYLES: React.CSSProperties = {
+  readonly #CONTENT_STYLES: React.CSSProperties = {
     position: 'sticky',
     top: 0
   }
-  private frame: ReturnType<typeof requestAnimationFrame> = -1
-  private headerRef: RefObject<THeader>
-  private contentRef: RefObject<TContent>
+  #frame: ReturnType<typeof requestAnimationFrame> = -1
+  #headerRef: RefObject<THeader>
+  #contentRef: RefObject<TContent>
 
   // using typescripts inline field constructor syntax breaks storybook's babel for some reason *shrug*
   // worth looking into again when upgrading to storybook 7
   constructor(headerRef: RefObject<THeader>, contentRef: RefObject<TContent>) {
-    this.headerRef = headerRef
-    this.contentRef = contentRef
+    this.#headerRef = headerRef
+    this.#contentRef = contentRef
   }
 
   public register() {
-    this.setupStyles()
-    this.handleScroll()
-    window.addEventListener('scroll', this.handleScroll, { passive: true })
-    return () => this.dispose()
+    this.#setupStyles()
+    this.#handleScroll()
+    window.addEventListener('scroll', this.#handleScroll, { passive: true })
+    return () => this.#dispose()
   }
 
   public reset() {
-    this.dispose()
-    this.cleanupStyles()
+    this.#dispose()
+    this.#cleanupStyles()
   }
 
-  private handleScroll = () => {
-    cancelAnimationFrame(this.frame)
-    this.frame = requestAnimationFrame(() => this.update())
+  #handleScroll = () => {
+    cancelAnimationFrame(this.#frame)
+    this.#frame = requestAnimationFrame(() => this.#update())
   }
 
-  private update() {
-    if (!this.contentRef.current) return
+  #update() {
+    if (!this.#contentRef.current) return
 
-    const { top, height } = this.contentRef.current.getBoundingClientRect()
-    const scrollY = this.clamp(
+    const { top, height } = this.#contentRef.current.getBoundingClientRect()
+    const scrollY = this.#clamp(
       window.scrollY,
       0,
       document.body.scrollHeight - window.innerHeight
@@ -79,42 +79,36 @@ class StyleUpdater<THeader extends HTMLElement, TContent extends HTMLElement> {
 
     if (top + height < 0) {
       const offset = Math.max(height, scrollY)
-      this.setHeaderHeight(offset)
-      this.setHeaderMarginBottom(height - offset)
+      this.#setHeaderHeight(offset)
+      this.#setHeaderMarginBottom(height - offset)
     } else if (top === 0) {
-      this.setHeaderHeight(scrollY + height)
-      this.setHeaderMarginBottom(-scrollY)
+      this.#setHeaderHeight(scrollY + height)
+      this.#setHeaderMarginBottom(-scrollY)
     }
   }
 
-  private dispose() {
-    cancelAnimationFrame(this.frame)
-    window.removeEventListener('scroll', this.handleScroll)
+  #dispose() {
+    cancelAnimationFrame(this.#frame)
+    window.removeEventListener('scroll', this.#handleScroll)
   }
 
-  private setupStyles() {
-    this.assignStyles(this.headerRef, this.HEADER_STYLES)
-    this.assignStyles(this.contentRef, this.CONTENT_STYLES)
+  #setupStyles() {
+    this.#assignStyles(this.#headerRef, this.#HEADER_STYLES)
+    this.#assignStyles(this.#contentRef, this.#CONTENT_STYLES)
   }
 
-  private cleanupStyles() {
-    this.removeStyles(this.headerRef, this.HEADER_STYLES)
-    this.removeStyles(this.contentRef, this.CONTENT_STYLES)
+  #cleanupStyles() {
+    this.#removeStyles(this.#headerRef, this.#HEADER_STYLES)
+    this.#removeStyles(this.#contentRef, this.#CONTENT_STYLES)
   }
 
-  private assignStyles(
-    ref: RefObject<HTMLElement>,
-    styles: React.CSSProperties
-  ) {
+  #assignStyles(ref: RefObject<HTMLElement>, styles: React.CSSProperties) {
     if (ref.current) {
       Object.assign(ref.current.style, styles)
     }
   }
 
-  private removeStyles(
-    ref: RefObject<HTMLElement>,
-    styles: React.CSSProperties
-  ) {
+  #removeStyles(ref: RefObject<HTMLElement>, styles: React.CSSProperties) {
     if (ref.current) {
       Object.assign(
         ref.current.style,
@@ -125,19 +119,19 @@ class StyleUpdater<THeader extends HTMLElement, TContent extends HTMLElement> {
     }
   }
 
-  private setHeaderHeight(height: number) {
-    this.setHeaderProperty('height', `${height}px`)
+  #setHeaderHeight(height: number) {
+    this.#setHeaderProperty('height', `${height}px`)
   }
 
-  private setHeaderMarginBottom(marginBottom: number) {
-    this.setHeaderProperty('margin-bottom', `${marginBottom}px`)
+  #setHeaderMarginBottom(marginBottom: number) {
+    this.#setHeaderProperty('margin-bottom', `${marginBottom}px`)
   }
 
-  private setHeaderProperty(property: string, value: string) {
-    this.headerRef.current?.style.setProperty(property, value)
+  #setHeaderProperty(property: string, value: string) {
+    this.#headerRef.current?.style.setProperty(property, value)
   }
 
-  private clamp(number: number, a: number, b: number) {
+  #clamp(number: number, a: number, b: number) {
     const min = Math.min(a, b)
     const max = Math.max(a, b)
     return Math.min(Math.max(number, min), max)

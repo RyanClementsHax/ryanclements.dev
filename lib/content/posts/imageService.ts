@@ -21,7 +21,7 @@ export class ImageService {
   constructor(readonly config: ImageServiceConfig) {}
 
   public async exists(src: string): Promise<boolean> {
-    return await stat(this.getFullPath(src))
+    return await stat(this.#getFullPath(src))
       .then(() => true)
       .catch(() => false)
   }
@@ -29,7 +29,7 @@ export class ImageService {
   public async getOptimizedImageProperties(
     src: string
   ): Promise<OptimizedImageProps> {
-    const { base64, img } = await getPlaiceholder(this.asAbsolutePath(src), {
+    const { base64, img } = await getPlaiceholder(this.#asAbsolutePath(src), {
       dir: this.config.assetDir,
       removeAlpha: false
     })
@@ -47,11 +47,11 @@ export class ImageService {
     return path.join(this.config.postsDir, slug, src)
   }
 
-  private asAbsolutePath(src: string) {
+  #asAbsolutePath(src: string) {
     return path.join('/', src)
   }
 
-  private getFullPath(src: string) {
+  #getFullPath(src: string) {
     return path.join(this.config.assetDir, src)
   }
 }
