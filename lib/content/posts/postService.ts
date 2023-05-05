@@ -24,7 +24,18 @@ export interface PostServiceConfig {
   postCanBeShown: (publishedOn?: Date) => boolean
 }
 
-export class PostService {
+export interface IPostService {
+  exists(slug: string): Promise<boolean>
+  getAllSlugs(): Promise<string[]>
+  getAllSummaries(): Promise<PostSummary[]>
+  getAll(): Promise<Post[]>
+  get(slug: string): Promise<Post>
+  getMeta(slug: string): Promise<PostMeta>
+  convertRawString(slug: string, rawString: string): Promise<Post>
+  markUpdated(slug: string, updatedAt: Date): Promise<void>
+}
+
+class PostService implements IPostService {
   constructor(readonly config: PostServiceConfig) {}
 
   public async exists(slug: string): Promise<boolean> {
@@ -142,7 +153,7 @@ export class PostService {
   }
 }
 
-export const postService = new PostService({
+export const postService: IPostService = new PostService({
   postsDir: path.join(process.cwd(), 'posts'),
   postCanBeShown: (publishedOn?: Date): boolean =>
     IS_DEV || IS_PREVIEW || !!publishedOn
