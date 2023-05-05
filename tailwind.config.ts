@@ -1,9 +1,10 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const colors = require('tailwindcss/colors')
-const defaultTheme = require('tailwindcss/defaultTheme')
+import colors from 'tailwindcss/colors'
+import defaultTheme from 'tailwindcss/defaultTheme'
+import typography from '@tailwindcss/typography'
+import themer from 'tailwindcss-themer'
+import { Config } from 'tailwindcss'
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -22,8 +23,8 @@ module.exports = {
     extend: {}
   },
   plugins: [
-    require('@tailwindcss/typography'),
-    require('tailwindcss-themer')({
+    typography,
+    themer({
       defaultTheme: {
         extend: {
           colors() {
@@ -179,4 +180,4 @@ module.exports = {
       ]
     })
   ]
-}
+} satisfies Config

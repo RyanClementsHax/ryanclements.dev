@@ -8,6 +8,7 @@ setProjectAnnotations(globalStorybookConfig)
 
 expect.extend(toHaveNoViolations)
 
+jest.mock('../.storybook/decorators/theme')
 jest.mock('next/router', () => require('next-router-mock'))
 jest.mock('next/link', () => ({
   __esModule: true,
@@ -15,7 +16,6 @@ jest.mock('next/link', () => ({
     <a href={href.toString()} {...props} />
   )
 }))
-jest.mock('../.storybook/decorators/ThemeDecorator')
 jest.mock('lib/utils/useIsScrolledToTop', () => ({
   // if not mocked, causes act(...) errors in console
   useIsScrolledToTop: () => true

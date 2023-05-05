@@ -3,6 +3,7 @@ import { formatDate, sortPostSummaries } from './utils'
 import { A11yStaticImageData } from 'lib/content/images'
 import { imageService } from 'lib/content/posts/imageService'
 import { postService } from 'lib/content/posts/postService'
+import { cache } from 'react'
 
 export interface RenderablePostSummary
   extends Omit<PostSummary, 'thumbnailSrc' | 'thumbnailAlt' | 'publishedOn'> {
@@ -10,14 +11,14 @@ export interface RenderablePostSummary
   thumbnailSrc: A11yStaticImageData
 }
 
-export const getRenderablePostSummaries = async (): Promise<
-  RenderablePostSummary[]
-> => {
-  const postSummaries = sortPostSummaries(await postService.getAllSummaries())
-  return await Promise.all(
-    postSummaries.map(x => convertToRenderablePostSummary(x))
-  )
-}
+export const getRenderablePostSummaries = cache(
+  async (): Promise<RenderablePostSummary[]> => {
+    const postSummaries = sortPostSummaries(await postService.getAllSummaries())
+    return await Promise.all(
+      postSummaries.map(x => convertToRenderablePostSummary(x))
+    )
+  }
+)
 
 const convertToRenderablePostSummary = async ({
   thumbnailSrc,

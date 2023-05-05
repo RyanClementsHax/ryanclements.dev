@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen } from 'tests/utils'
 import { axe } from 'jest-axe'
 import { socialAccounts, SocialPlatform } from 'lib/content/socialAccounts'
 import { SocialLink } from './SocialLink'

@@ -24,22 +24,19 @@ export async function generateMetadata({
     description: meta.description,
     openGraph: {
       type: 'article',
-      url: `${SITE_URL}/posts/${slug}`,
+      url: `posts/${slug}`,
       title: meta.title,
       description: meta.description,
       authors: [`${SITE_URL}/about`],
-      publishedTime: meta.publishedOnIso
-    },
-    twitter: {
-      site: '@RyanClementsHax',
-      creator: '@RyanClementsHax',
-      card: 'summary_large_image'
-    },
-    other: {
-      'og:image': `${SITE_URL}${meta.bannerSrc.src}`,
-      'og:image:width': meta.bannerSrc.width,
-      'og:image:height': meta.bannerSrc.height,
-      'og:image:alt': meta.bannerSrc.alt
+      publishedTime: meta.publishedOnIso,
+      images: [
+        {
+          url: meta.bannerSrc.src,
+          width: meta.bannerSrc.width,
+          height: meta.bannerSrc.height,
+          alt: meta.bannerSrc.alt
+        }
+      ]
     }
   }
 }

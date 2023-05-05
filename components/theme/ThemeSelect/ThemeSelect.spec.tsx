@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor } from 'tests/utils'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
 import * as stories from './ThemeSelect.stories'
@@ -6,6 +6,15 @@ import { getCurrentTheme, Theme } from '..'
 import { composeStories } from '@storybook/testing-react'
 
 const { Base, LoadingBase } = composeStories(stories)
+
+jest.mock('@headlessui/react', () => {
+  const mod = jest.requireActual('@headlessui/react')
+  return {
+    ...mod,
+    // Transition causes annoying act(...) warnings when running tests
+    Transition: ({ children }: { children: React.ReactNode }) => children
+  }
+})
 
 describe('ThemeSelect', () => {
   it('has no axe violations', async () => {
@@ -19,7 +28,11 @@ describe('ThemeSelect', () => {
       const view = render(<Base />)
 
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-      await userEvent.click(await screen.findByRole('button'))
+      await act(
+        async () => await userEvent.click(await screen.findByRole('button'))
+      )
+
+      await screen.findByRole('listbox')
 
       return view
     }
@@ -54,10 +67,13 @@ describe('ThemeSelect', () => {
       const currentTheme = getCurrentTheme()
       const newTheme = Object.keys(Theme).find(x => x !== currentTheme)
 
-      await userEvent.click(
-        await screen.findByRole('option', {
-          name: newTheme
-        })
+      await act(
+        async () =>
+          await userEvent.click(
+            await screen.findByRole('option', {
+              name: newTheme
+            })
+          )
       )
 
       await waitFor(() => expect(getCurrentTheme()).toBe(newTheme))

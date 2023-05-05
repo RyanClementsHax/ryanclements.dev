@@ -2,7 +2,6 @@ import { ConsoleMessage } from 'components/ConsoleMessage'
 import { themeMetadata, Html } from 'components/theme'
 import { ThemeProvider } from 'components/theme/ThemeContext'
 import { ThemeScript } from 'components/theme/ThemeScript'
-import { SITE_URL } from 'lib/constants'
 import { rssMetadata } from 'lib/content/rss'
 import { fontClass } from 'lib/fonts'
 import deepmerge from '@fastify/deepmerge'
@@ -19,7 +18,7 @@ export const metadata = deepmerge({ all: true })<Metadata[]>(
       icon: '/favicon.ico'
     },
     openGraph: {
-      url: `${SITE_URL}/`
+      url: '.'
     },
     twitter: {
       site: '@RyanClementsHax',

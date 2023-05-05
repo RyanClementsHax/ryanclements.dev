@@ -1,4 +1,4 @@
-import { renderHook, RenderHookResult, act } from '@testing-library/react'
+import { renderHook, RenderHookResult, act } from 'tests/utils'
 import { Theme } from './types'
 import { usePersistedTheme } from './usePersistedTheme'
 import { getCurrentTheme } from './utils'

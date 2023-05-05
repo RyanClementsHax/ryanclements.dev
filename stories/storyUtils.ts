@@ -98,7 +98,11 @@ export const withParams: <T>(
 }
 
 export const withDarkTheme = <T>(story: StoryFn<T>): StoryFn<T> =>
-  withParams<T>({ theme: Theme.dark })(story)
+  withParams<T>({
+    theming: {
+      themeOverride: Theme.dark
+    }
+  })(story)
 
 export const withMobile = <T>(story: StoryFn<T>): StoryFn<T> =>
   withParams<T>({

@@ -1,7 +1,7 @@
 import { Preset, Plugin, PluginTuple } from 'unified'
 
 export class PresetBuilder {
-  private plugins: PluginTuple[] = []
+  #plugins: PluginTuple[] = []
 
   public use<
     PluginParameters extends unknown[] = unknown[],
@@ -11,7 +11,7 @@ export class PresetBuilder {
     plugin: Plugin<PluginParameters, Input, Output>,
     ...settings: PluginParameters | [boolean]
   ): this {
-    this.plugins.push([
+    this.#plugins.push([
       plugin as Plugin<unknown[], unknown, unknown>,
       ...settings
     ])
@@ -20,7 +20,7 @@ export class PresetBuilder {
 
   public build(): Preset {
     return {
-      plugins: this.plugins
+      plugins: this.#plugins
     }
   }
 }
