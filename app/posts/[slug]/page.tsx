@@ -24,14 +24,14 @@ export async function generateMetadata({
     description: meta.description,
     openGraph: {
       type: 'article',
-      url: `${SITE_URL}/posts/${slug}`,
+      url: `posts/${slug}`,
       title: meta.title,
       description: meta.description,
       authors: [`${SITE_URL}/about`],
       publishedTime: meta.publishedOnIso,
       images: [
         {
-          url: `${SITE_URL}${meta.bannerSrc.src}`,
+          url: meta.bannerSrc.src,
           width: meta.bannerSrc.width,
           height: meta.bannerSrc.height,
           alt: meta.bannerSrc.alt
