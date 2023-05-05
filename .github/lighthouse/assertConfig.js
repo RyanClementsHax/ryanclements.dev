@@ -8,10 +8,7 @@ const defaultAssertionRules = {
   'uses-responsive-images': 'off',
   // vercel's live feedback widget interferes with coverage metrics
   // can double check this with chrome's coverage tool
-  'unused-javascript': 'off',
-  // something about next.js or vercel makes the rss feed link prefetched which
-  // for some reason 404's
-  'errors-in-console': 'off'
+  'unused-javascript': 'off'
 }
 
 const pathToOverrides = {
