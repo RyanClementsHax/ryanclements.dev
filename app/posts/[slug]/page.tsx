@@ -31,10 +31,10 @@ export async function generateMetadata({
       publishedTime: meta.publishedOnIso,
       images: [
         {
-          url: meta.bannerSrc.src,
-          width: meta.bannerSrc.width,
-          height: meta.bannerSrc.height,
-          alt: meta.bannerSrc.alt
+          url: meta.ogSrc.src,
+          width: meta.ogSrc.width,
+          height: meta.ogSrc.height,
+          alt: meta.ogSrc.alt
         }
       ]
     }

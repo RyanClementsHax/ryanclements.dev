@@ -45,13 +45,32 @@ const frontMatterAddBannerSrc: Plugin = () => async (_, file) => {
     return
   }
   const frontMatter = file.data.matter as Record<string, unknown>
-  frontMatter.bannerSrc = imageService.getPostBannerFilePath(file.stem)
+  frontMatter.bannerSrc = imageService.getPostBannerSrc(file.stem)
+}
+
+const frontMatterAddOgImageData: Plugin = () => async (_, file) => {
+  if (!file.stem) {
+    file.fail(
+      'In order for a og src to be automatically added, the file slug must be included with the content'
+    )
+    return
+  }
+  if (!file.data.matter) {
+    file.fail(
+      'Must include the og src plugin after the front matter parsing plugin'
+    )
+    return
+  }
+  const frontMatter = file.data.matter as Record<string, unknown>
+  frontMatter.ogSrc = imageService.getPostOgSrc(file.stem)
+  frontMatter.ogAlt = frontMatter.ogAlt ?? frontMatter.bannerAlt
 }
 
 export const frontMatterTransformer = new PresetBuilder()
   .use(remarkFrontmatter)
   .use(remarkParseFrontmatter)
   .use(frontMatterAddBannerSrc)
+  .use(frontMatterAddOgImageData)
   .build()
 
 const frontMatterProcessor = unified()

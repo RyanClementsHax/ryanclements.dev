@@ -9,11 +9,12 @@ export interface RenderablePost extends Omit<Post, 'content' | 'meta'> {
 export interface RenderablePostMeta
   extends Omit<
     PostMeta,
-    'bannerSrc' | 'bannerAlt' | 'publishedOn' | 'updatedAt'
+    'bannerSrc' | 'bannerAlt' | 'ogSrc' | 'ogAlt' | 'publishedOn' | 'updatedAt'
   > {
   publishedOn?: string
   publishedOnIso?: string
   updatedAt?: string
   updatedAtIso?: string
   bannerSrc: A11yStaticImageData
+  ogSrc: A11yStaticImageData
 }
