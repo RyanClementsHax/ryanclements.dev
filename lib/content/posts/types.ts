@@ -16,6 +16,8 @@ export interface PostMeta {
   updatedAt?: Date
   bannerSrc: string
   bannerAlt: string
+  ogSrc: string
+  ogAlt: string
 }
 
 export interface PostSummary {

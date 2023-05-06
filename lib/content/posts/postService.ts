@@ -2,7 +2,7 @@ import { promises as fs } from 'fs'
 import path from 'path'
 import * as yup from 'yup'
 import { logger } from 'lib/utils/logs'
-import { IS_DEV, IS_PREVIEW } from 'lib/constants'
+import { IS_DEV, IS_PREVIEW, POSTS_DIR } from 'lib/constants'
 import { parseFrontMatter, writeFrontMatter } from './frontMatter'
 import { validateMarkdown } from './validation'
 import { Post, PostMeta, PostSummary } from './types'
@@ -16,7 +16,9 @@ const postMetaSchema = yup.object({
   }),
   updatedAt: yup.date(),
   bannerSrc: yup.string().required(),
-  bannerAlt: yup.string().required()
+  bannerAlt: yup.string().required(),
+  ogSrc: yup.string().required(),
+  ogAlt: yup.string().required()
 })
 
 export interface PostServiceConfig {
@@ -117,8 +119,8 @@ class PostService implements IPostService {
       slug,
       publishedOn: post.meta.publishedOn,
       description: post.meta.description,
-      thumbnailSrc: post.meta.bannerSrc,
-      thumbnailAlt: post.meta.bannerAlt
+      thumbnailSrc: post.meta.ogSrc,
+      thumbnailAlt: post.meta.ogAlt
     }
   }
 
@@ -154,7 +156,7 @@ class PostService implements IPostService {
 }
 
 export const postService: IPostService = new PostService({
-  postsDir: path.join(process.cwd(), 'posts'),
+  postsDir: path.join(process.cwd(), POSTS_DIR),
   postCanBeShown: (publishedOn?: Date): boolean =>
     IS_DEV || IS_PREVIEW || !!publishedOn
 })

@@ -2,6 +2,7 @@ import { stat } from 'fs/promises'
 import { POSTS_DIR, ASSET_DIR } from 'lib/constants'
 import path from 'path'
 import { getPlaiceholder } from 'plaiceholder'
+import sharp from 'sharp'
 
 export interface OptimizedImageProps {
   blurDataURL: string
@@ -15,6 +16,11 @@ export interface ImageServiceConfig {
   readonly assetDir: string
   readonly postsDir: string
   readonly postBannerFileName: string
+  readonly ogConfig: {
+    fileName: string
+    width: number
+    height: number
+  }
 }
 
 export class ImageService {
@@ -39,12 +45,27 @@ export class ImageService {
     }
   }
 
-  public getPostBannerFilePath(slug: string): string {
+  public getPostBannerSrc(slug: string): string {
     return path.join(this.config.postsDir, slug, this.config.postBannerFileName)
+  }
+
+  public getPostOgSrc(slug: string): string {
+    return path.join(this.config.postsDir, slug, this.config.ogConfig.fileName)
   }
 
   public rewriteSrcForPost(src: string, slug: string): string {
     return path.join(this.config.postsDir, slug, src)
+  }
+
+  public async createOgImage(slug: string): Promise<void> {
+    const bannerPath = this.#getPostBannerAssetPath(slug)
+    const ogPath = this.#getPostOgAssetPath(slug)
+    await sharp(bannerPath)
+      .resize({
+        width: 1024,
+        height: 512
+      })
+      .toFile(ogPath)
   }
 
   #asAbsolutePath(src: string) {
@@ -54,10 +75,23 @@ export class ImageService {
   #getFullPath(src: string) {
     return path.join(this.config.assetDir, src)
   }
+
+  #getPostBannerAssetPath(slug: string) {
+    return path.join(this.config.assetDir, this.getPostBannerSrc(slug))
+  }
+
+  #getPostOgAssetPath(slug: string) {
+    return path.join(this.config.assetDir, this.getPostOgSrc(slug))
+  }
 }
 
 export const imageService = new ImageService({
   assetDir: ASSET_DIR,
   postsDir: POSTS_DIR,
-  postBannerFileName: 'banner.jpg'
+  postBannerFileName: 'banner.jpg',
+  ogConfig: {
+    fileName: 'og.jpg',
+    width: 1024,
+    height: 512
+  }
 })

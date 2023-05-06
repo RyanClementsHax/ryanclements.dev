@@ -27,6 +27,7 @@
     "post:mark-updated": "node scripts/dist/markPostUpdated.js",
     "post:validate-banner": "node scripts/dist/validateBanner.js",
     "media:optimize-gifs": "yarn scripts:build && node scripts/dist/optimizeGifs.js",
+    "media:create-og-images": "yarn scripts:build && node scripts/dist/createOgImages.js",
     "prepare": "husky install"
   },
   "dependencies": {

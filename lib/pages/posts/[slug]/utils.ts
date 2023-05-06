@@ -16,10 +16,14 @@ export const convertToRenderablePost = async (
 
 export const convertToRenderablePostMeta = async ({
   bannerAlt,
+  ogAlt,
   ...meta
 }: PostMeta): Promise<RenderablePostMeta> => {
-  const imgProps = await imageService.getOptimizedImageProperties(
+  const bannerImageProps = await imageService.getOptimizedImageProperties(
     meta.bannerSrc
+  )
+  const ogImageProps = await imageService.getOptimizedImageProperties(
+    meta.ogSrc
   )
   return {
     ...meta,
@@ -28,8 +32,12 @@ export const convertToRenderablePostMeta = async ({
     updatedAt: formatDate(meta.updatedAt),
     updatedAtIso: meta.updatedAt?.toISOString(),
     bannerSrc: {
-      ...imgProps,
+      ...bannerImageProps,
       alt: bannerAlt
+    },
+    ogSrc: {
+      ...ogImageProps,
+      alt: ogAlt
     }
   }
 }
