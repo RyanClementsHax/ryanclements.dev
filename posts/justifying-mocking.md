@@ -1,10 +1,13 @@
 ---
-bannerAlt: checklist @glenncarstenspeters on Unsplash
+ogAlt: checklist by @glenncarstenspeters on Unsplash
+ogSrc: posts/justifying-mocking/og.jpg
+bannerAlt: checklist by @glenncarstenspeters on Unsplash
 publishedOn: 2023-04-01T04:00:00.000Z
 description: >-
   Testing techniques like mocking are often overused, but can be justified. In
   this post I break down what justifies such techniques.
 title: Justifying Mocking
+updatedAt: 2023-05-14T15:02:21.028Z
 ---
 
 I'm not a huge fan of mocking as my [previous post on the testing totem pole makes clear](you-probably-dont-need-mocking). I find it, and other test simplifications like it, to take away from the value of the test being written. It can cause tests to become annoying maintenance pests that provide no more value than to remind you to update your tests when you make changes to the code.
