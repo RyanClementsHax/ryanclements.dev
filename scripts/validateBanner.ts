@@ -18,9 +18,7 @@ void (async () => {
   if (invalidResults.length) {
     const message = `The following banners were greater than ${
       MAX_BANNER_SIZE_IN_BYTES / 1000 / 1000
-    }MB which will prevent them from being rendered in link previews.\n${invalidResults.map(
-      x => `\t- ${x.path}\n`
-    )}`
+    }MB which is very large.\n${invalidResults.map(x => `\t- ${x.path}\n`)}`
     throw new Error(message)
   }
 })()
