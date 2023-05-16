@@ -1,6 +1,9 @@
 ---
+ogAlt: burning building @davehoefler on Unsplash
+ogSrc: posts/amazon-ships-bad-code-too/og.jpg
 bannerAlt: burning building @davehoefler on Unsplash
-description: 'Find out why even a top tier tech company still ships bad code'
+publishedOn: 2023-05-15T04:00:00.000Z
+description: Find out why even a top tier tech company still ships bad code
 title: Amazon Ships Bad Code Too
 ---
 
