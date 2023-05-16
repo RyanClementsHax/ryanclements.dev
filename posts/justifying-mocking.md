@@ -1,5 +1,6 @@
 ---
-bannerAlt: checklist @glenncarstenspeters on Unsplash
+bannerAlt: checklist by @glenncarstenspeters on Unsplash
+updatedAt: 2023-05-16T00:23:08.733Z
 publishedOn: 2023-04-01T04:00:00.000Z
 description: >-
   Testing techniques like mocking are often overused, but can be justified. In
