@@ -147,7 +147,7 @@ class PostService implements IPostService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async #updateMeta({ bannerSrc, slug, ...meta }: PostMeta) {
+  async #updateMeta({ bannerSrc, slug, ogAlt, ogSrc, ...meta }: PostMeta) {
     logger.log(`Marking updated at for ${slug} to ${meta.updatedAt}`)
     let rawPostString = await this.#getRawPostString(slug)
     rawPostString = await writeFrontMatter(meta, rawPostString)

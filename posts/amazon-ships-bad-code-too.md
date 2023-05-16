@@ -1,10 +1,9 @@
 ---
-ogAlt: burning building @davehoefler on Unsplash
-ogSrc: posts/amazon-ships-bad-code-too/og.jpg
 bannerAlt: burning building @davehoefler on Unsplash
 publishedOn: 2023-05-15T04:00:00.000Z
 description: Find out why even a top tier tech company still ships bad code
 title: Amazon Ships Bad Code Too
+updatedAt: 2023-05-16T00:23:08.733Z
 ---
 
 > When I got to Amazon, I thought engineering would be like a well oiled battle ship; ordered and tidy. Turns out it is more like a pirate ship; messy and chaotic. - Unknown Amazon principle engineer (paraphrased)
