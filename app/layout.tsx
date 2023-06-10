@@ -8,17 +8,16 @@ import deepmerge from '@fastify/deepmerge'
 
 import 'styles/global.scss'
 import { Metadata } from 'next'
+import { SITE_URL } from 'lib/constants'
 
 export const metadata = deepmerge({ all: true })<Metadata[]>(
   {
     title: 'Ryan Clements',
     description:
       'Full Time Catholic | Full Time Father | Full Stack Engineer | Massive Nerd',
+    metadataBase: new URL(SITE_URL),
     icons: {
       icon: '/favicon.ico'
-    },
-    openGraph: {
-      url: '.'
     },
     twitter: {
       site: '@RyanClementsHax',
