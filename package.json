@@ -122,7 +122,7 @@
     "prettier-plugin-tailwindcss": "^0.2.8",
     "storybook": "^7.0.9",
     "storybook-dark-mode": "^3.0.0",
-    "stylelint": "^15.6.1",
+    "stylelint": "^15.10.1",
     "stylelint-a11y": "^1.2.3",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-recommended-scss": "^11.0.0",
