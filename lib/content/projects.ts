@@ -38,6 +38,17 @@ export const projects: ProjectInfo[] = [
     ]
   },
   {
+    name: 'Tailwind Themer',
+    description: 'An unopinionated, scalable, tailwindcss theming solution',
+    githubUrl: 'https://github.com/RyanClementsHax/tailwindcss-themer',
+    siteUrl: 'https://www.npmjs.com/package/tailwindcss-themer',
+    techs: [
+      { name: 'Typescript', logoSrc: tsLogo },
+      { name: 'Tailwindcss', logoSrc: tailwindLogo },
+      { name: 'Jest', logoSrc: jestLogo }
+    ]
+  },
+  {
     name: 'Storybook Addon Next',
     description:
       'A no config Storybook addon that makes Next.js features just work in Storybook',
@@ -48,17 +59,6 @@ export const projects: ProjectInfo[] = [
       { name: 'Storybook', logoSrc: sbLogo },
       { name: 'Webpack', logoSrc: webpackLogo },
       { name: 'Next.js', logoSrc: nextjsLogo }
-    ]
-  },
-  {
-    name: 'Tailwind Themer',
-    description: 'An unopinionated, scalable, tailwindcss theming solution',
-    githubUrl: 'https://github.com/RyanClementsHax/tailwindcss-themer',
-    siteUrl: 'https://www.npmjs.com/package/tailwindcss-themer',
-    techs: [
-      { name: 'Typescript', logoSrc: tsLogo },
-      { name: 'Tailwindcss', logoSrc: tailwindLogo },
-      { name: 'Jest', logoSrc: jestLogo }
     ]
   },
   {

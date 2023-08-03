@@ -21,7 +21,7 @@ export const Skills: React.FC<SkillsProps> = ({ title, subtitle, groups }) => (
 )
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <section className="flex flex-col justify-center gap-8 p-5 py-16 md:gap-24 md:p-8 md:py-24">
+  <section className="mx-auto flex flex-col justify-center gap-8 p-5 py-16 md:max-w-7xl md:gap-24 md:p-8 md:py-24">
     {children}
   </section>
 )
