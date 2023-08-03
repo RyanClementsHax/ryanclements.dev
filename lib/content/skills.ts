@@ -31,6 +31,9 @@ import awsLogo from 'public/tech-logos/aws-logo.svg'
 import azureLogo from 'public/tech-logos/azure-logo.svg'
 import javaLogo from 'public/tech-logos/java-logo.svg'
 import kotlinLogo from 'public/tech-logos/kotlin-logo.svg'
+import jetpackComposeLogo from 'public/tech-logos/jetpack-compose-logo.svg'
+import dioxusLogo from 'public/tech-logos/dioxus-logo.png'
+
 import { StaticImageData } from 'next/image'
 
 export interface SkillInfo {
@@ -80,6 +83,11 @@ export const skillGroups: SkillGroupInfo[] = [
         name: 'Android',
         proficiency: ProficiencyLevel.Comfortable,
         logoSrc: androidLogo
+      },
+      {
+        name: 'Jetpack Compose',
+        proficiency: ProficiencyLevel.Comfortable,
+        logoSrc: jetpackComposeLogo
       },
       {
         name: 'Vue',
@@ -135,6 +143,11 @@ export const skillGroups: SkillGroupInfo[] = [
         name: 'Cypress',
         proficiency: ProficiencyLevel.Comfortable,
         logoSrc: cyLogo
+      },
+      {
+        name: 'Dioxus',
+        proficiency: ProficiencyLevel.Exploring,
+        logoSrc: dioxusLogo
       }
     ]
   },
@@ -198,12 +211,12 @@ export const skillGroups: SkillGroupInfo[] = [
       },
       {
         name: 'Rust',
-        proficiency: ProficiencyLevel.Exploring,
+        proficiency: ProficiencyLevel.Novice,
         logoSrc: rustLogo
       },
       {
         name: 'Deno',
-        proficiency: ProficiencyLevel.Exploring,
+        proficiency: ProficiencyLevel.Novice,
         logoSrc: denoLogo
       }
     ]
