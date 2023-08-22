@@ -16,7 +16,7 @@ const { OpenMobile, OpenDarkThemedMobile } = createDefaultStories(Template, {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    userEvent.click(await canvas.findByRole('button'))
+    await userEvent.click(await canvas.findByRole('button'))
   }
 })
 

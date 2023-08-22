@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from 'tests/utils'
+import { render, screen, waitFor } from 'tests/utils'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
 import * as stories from './ThemeSelect.stories'
@@ -28,9 +28,8 @@ describe('ThemeSelect', () => {
       const view = render(<Base />)
 
       expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
-      await act(
-        async () => await userEvent.click(await screen.findByRole('button'))
-      )
+      // eslint-disable-next-line testing-library/no-await-sync-events
+      await userEvent.click(await screen.findByRole('button'))
 
       await screen.findByRole('listbox')
 
@@ -67,13 +66,11 @@ describe('ThemeSelect', () => {
       const currentTheme = getCurrentTheme()
       const newTheme = Object.keys(Theme).find(x => x !== currentTheme)
 
-      await act(
-        async () =>
-          await userEvent.click(
-            await screen.findByRole('option', {
-              name: newTheme
-            })
-          )
+      // eslint-disable-next-line testing-library/no-await-sync-events
+      await userEvent.click(
+        await screen.findByRole('option', {
+          name: newTheme
+        })
       )
 
       await waitFor(() => expect(getCurrentTheme()).toBe(newTheme))

@@ -1,4 +1,4 @@
-import { stat } from 'fs/promises'
+import { stat, readFile } from 'fs/promises'
 import { POSTS_DIR, ASSET_DIR } from 'lib/constants'
 import path from 'path'
 import { getPlaiceholder } from 'plaiceholder'
@@ -35,12 +35,13 @@ export class ImageService {
   public async getOptimizedImageProperties(
     src: string
   ): Promise<OptimizedImageProps> {
-    const { base64, img } = await getPlaiceholder(this.#asAbsolutePath(src), {
-      dir: this.config.assetDir,
+    const imageBuffer = await this.#resolveFile(src)
+    const { base64, metadata } = await getPlaiceholder(imageBuffer, {
       removeAlpha: false
     })
     return {
-      ...img,
+      ...metadata,
+      src: this.#asAbsolutePath(src),
       blurDataURL: base64
     }
   }
@@ -66,6 +67,10 @@ export class ImageService {
         height: 512
       })
       .toFile(ogPath)
+  }
+
+  async #resolveFile(src: string) {
+    return await readFile(this.#getFullPath(src))
   }
 
   #asAbsolutePath(src: string) {
