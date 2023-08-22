@@ -13,11 +13,11 @@
     "postcss": "css"
   },
   "stylelint.validate": ["css", "scss"],
-  "npm.packageManager": "yarn",
+  "npm.packageManager": "npm",
   "css.validate": false,
   "less.validate": false,
   "scss.validate": false,
-  "jest.jestCommandLine": "yarn test",
+  "jest.jestCommandLine": "npm run test --",
   "jest.autoRun": {
     "watch": false,
     "onSave": "test-src-file"
