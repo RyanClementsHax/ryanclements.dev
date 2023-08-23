@@ -28,10 +28,10 @@ const { OpenBase, OpenDarkTheme } = createDefaultStories(Template, {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    userEvent.click(await canvas.findByRole('button'))
+    await userEvent.click(await canvas.findByRole('button'))
 
     for (const theme of Object.values(Theme)) {
-      expect(
+      await expect(
         await canvas.findByRole('option', {
           name: new RegExp(theme, 'i')
         })
