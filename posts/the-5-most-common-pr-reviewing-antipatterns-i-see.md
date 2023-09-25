@@ -1,6 +1,6 @@
 ---
 bannerAlt: people working with computers @charlesdeluvio on Unsplash
-publishedOn: 2023-09-25T04:00:00.000Z
+publishedOn: 2023-09-26T04:00:00.000Z
 description: >-
   Here I list the most common antipatterns I see PR reviewers make and how to
   fix them at their core
