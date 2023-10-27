@@ -6,6 +6,7 @@
 - [Linting](#linting)
 - [Testing](#testing)
   - [Lighthouse](#lighthouse)
+- [Upgrading dependencies](#upgrading-dependencies)
 - [Deployment](#deployment)
 - [SEO](#seo)
 - [Media](#media)
@@ -66,6 +67,10 @@ Run `npm run test:all` to lint all files, type check, and run jest tests
 ### Lighthouse
 
 It is recommended that you get [this](https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk/related) extension to help run lighthouse tests
+
+## Upgrading dependencies
+
+Run `npx npm-check -u` to get an interactive shell of everything that can be upgraded.
 
 ## Deployment
 
