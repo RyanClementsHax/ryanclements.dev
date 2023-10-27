@@ -1,7 +1,7 @@
 import { render, screen } from 'tests/utils'
 import { axe } from 'jest-axe'
 import * as stories from './MetaCard.stories'
-import { composeStories } from '@storybook/testing-react'
+import { composeStories } from '@storybook/react'
 
 const { Base, DraftBase, UpdatedBase } = composeStories(stories)
 

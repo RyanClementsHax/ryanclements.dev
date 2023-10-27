@@ -1,7 +1,7 @@
 import { render, screen } from 'tests/utils'
 import { axe } from 'jest-axe'
 import * as stories from './Footer.stories'
-import { composeStories } from '@storybook/testing-react'
+import { composeStories } from '@storybook/react'
 import { getCurrentYear } from 'lib/utils/dates'
 import { INITIAL_YEAR } from 'lib/constants'
 
