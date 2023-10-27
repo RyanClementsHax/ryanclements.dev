@@ -1,4 +1,4 @@
-import { unified, Plugin } from 'unified'
+import { unified, Plugin, Processor } from 'unified'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import rehypeRaw from 'rehype-raw'
@@ -32,5 +32,24 @@ const contentProcessor = unified()
   .use(rehypeSlug)
   .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
   .use(function () {
-    this.Compiler = tree => ({ tree })
+    // "this" typing is poor with unified
+    // this code works fine
+    // https://github.com/rehypejs/rehype-react/blob/93fac074e8e3447088ed2408282e9e089ea7b36c/lib/index.js#L21
+    const self = this as unknown as Processor<
+      undefined,
+      undefined,
+      undefined,
+      HastTree,
+      { tree: HastTree }
+    >
+    self.compiler = tree => ({ tree })
   } as Plugin<[], HastTree, { tree: HastTree }>)
+
+// Allows for custom return types
+// https://github.com/unifiedjs/unified/tree/b69689bba52a918d87aa62f295ccffa8d9aa8ef8#compileresultmap
+declare module 'unified' {
+  interface CompileResultMap {
+    // Register a new result (value is used, key should match it).
+    parsedHast: { tree: HastTree }
+  }
+}

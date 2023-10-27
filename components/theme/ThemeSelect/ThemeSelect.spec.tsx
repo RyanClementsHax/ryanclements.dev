@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { axe } from 'jest-axe'
 import * as stories from './ThemeSelect.stories'
 import { getCurrentTheme, Theme } from '..'
-import { composeStories } from '@storybook/testing-react'
+import { composeStories } from '@storybook/react'
 
 const { Base, LoadingBase } = composeStories(stories)
 

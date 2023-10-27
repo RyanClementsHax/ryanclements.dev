@@ -19,7 +19,7 @@ export const rehypeHighlightInlineCode: Plugin<[], HastTree> =
     const starryNight = await getStarryNight()
 
     visit(tree, { type: 'element', tagName: 'code' }, (node, index, parent) => {
-      if (isPreElement(parent) || !parent || index === null) {
+      if (isPreElement(parent) || !parent || index === undefined) {
         return
       }
 

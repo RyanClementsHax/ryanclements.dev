@@ -1,18 +1,19 @@
-import { Preset, Plugin, PluginTuple } from 'unified'
+import { Preset, Plugin } from 'unified'
+import { Node } from 'unist'
 
 export class PresetBuilder {
-  #plugins: PluginTuple[] = []
+  #plugins: NonNullable<Preset['plugins']> = []
 
   public use<
     PluginParameters extends unknown[] = unknown[],
-    Input = Node,
+    Input extends Node | string | undefined = Node,
     Output = Input
   >(
     plugin: Plugin<PluginParameters, Input, Output>,
-    ...settings: PluginParameters | [boolean]
+    ...settings: PluginParameters
   ): this {
     this.#plugins.push([
-      plugin as Plugin<unknown[], unknown, unknown>,
+      plugin as Plugin<unknown[], undefined, unknown>,
       ...settings
     ])
     return this

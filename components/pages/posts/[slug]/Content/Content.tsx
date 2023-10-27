@@ -1,12 +1,15 @@
 import Link from 'next/link'
 import Image, { ImageProps } from 'next/image'
-import { ComponentsWithoutNodeOptions } from 'rehype-react/lib/complex-types'
 import c from 'classnames'
 import { HastTree } from 'lib/content/posts/types'
 import s from './Content.module.scss'
 import { Code } from './Code'
 import { Callout } from './Callout'
-import { convertToReact } from 'lib/pages/posts/[slug]/client'
+import {
+  convertToReact,
+  ElementSubstitution,
+  Options
+} from 'lib/pages/posts/[slug]/client'
 
 export const Content: React.FC<{
   root: HastTree
@@ -21,9 +24,11 @@ export const Content: React.FC<{
   )
 }
 
-const ContentImage: React.FC<
-  React.ImgHTMLAttributes<HTMLImageElement> & { 'data-blurdataurl'?: string }
-> = ({ alt, 'data-blurdataurl': blurDataURL, ...props }) => (
+const ContentImage: ElementSubstitution<'img'> = ({
+  alt,
+  'data-blurdataurl': blurDataURL,
+  ...props
+}: JSX.IntrinsicElements['img'] & { 'data-blurdataurl'?: string }) => (
   <Image
     {...(props as ImageProps)}
     alt={alt as string}
@@ -35,7 +40,11 @@ const ContentImage: React.FC<
   />
 )
 
-const Anchor: React.FC<React.AnchorHTMLAttributes<HTMLAnchorElement>> = props =>
+const Anchor: ElementSubstitution<'a'> = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ref: notNeededAndCausesTSErrors,
+  ...props
+}) =>
   props.href?.startsWith('#') ? (
     <a {...props} />
   ) : (
@@ -47,7 +56,7 @@ const Anchor: React.FC<React.AnchorHTMLAttributes<HTMLAnchorElement>> = props =>
     />
   )
 
-const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = props => (
+const Video: ElementSubstitution<'video'> = props => (
   <video
     controls
     {...props}
@@ -55,7 +64,7 @@ const Video: React.FC<React.VideoHTMLAttributes<HTMLVideoElement>> = props => (
   />
 )
 
-const components: ComponentsWithoutNodeOptions['components'] = {
+const components: Options['components'] = {
   img: ContentImage,
   code: Code,
   aside: Callout,

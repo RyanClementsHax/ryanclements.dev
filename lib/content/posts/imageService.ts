@@ -36,11 +36,15 @@ export class ImageService {
     src: string
   ): Promise<OptimizedImageProps> {
     const imageBuffer = await this.#resolveFile(src)
-    const { base64, metadata } = await getPlaiceholder(imageBuffer, {
+    const {
+      base64,
+      metadata: { height, width }
+    } = await getPlaiceholder(imageBuffer, {
       removeAlpha: false
     })
     return {
-      ...metadata,
+      height,
+      width,
       src: this.#asAbsolutePath(src),
       blurDataURL: base64
     }

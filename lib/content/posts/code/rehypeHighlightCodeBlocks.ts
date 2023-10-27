@@ -25,7 +25,7 @@ export const rehypeHighlightCodeBlocks: Plugin<[], HastElement> =
     const starryNight = await getStarryNight()
 
     visit(tree, { type: 'element', tagName: 'pre' }, (node, index, parent) => {
-      if (!parent || index === null) {
+      if (!parent || index === undefined) {
         return
       }
 
