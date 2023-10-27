@@ -1,5 +1,6 @@
 import c from 'classnames'
 import s from './Callout.module.scss'
+import { ElementSubstitution } from 'lib/pages/posts/[slug]/client'
 
 const classToIconMap: Record<string, string> = {
   info: 'ℹ️',
@@ -8,7 +9,7 @@ const classToIconMap: Record<string, string> = {
   danger: '🚫'
 }
 
-export const Callout: React.FC<React.HTMLAttributes<HTMLElement>> = ({
+export const Callout: ElementSubstitution<'aside'> = ({
   children,
   ...props
 }) => (

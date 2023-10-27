@@ -1,5 +1,5 @@
 import remarkParse from 'remark-parse'
-import { unified, Plugin } from 'unified'
+import { unified, Plugin, Processor } from 'unified'
 import { Node } from 'unist'
 import { stringify } from 'gray-matter'
 import { PresetBuilder } from './presetBuilder'
@@ -77,5 +77,24 @@ const frontMatterProcessor = unified()
   .use(remarkParse)
   .use(frontMatterTransformer)
   .use(function () {
-    this.Compiler = (_, file) => file.data.matter as Record<string, unknown>
+    // "this" typing is poor with unified
+    // this code works fine
+    // https://github.com/rehypejs/rehype-react/blob/93fac074e8e3447088ed2408282e9e089ea7b36c/lib/index.js#L21
+    const self = this as unknown as Processor<
+      undefined,
+      undefined,
+      undefined,
+      Node,
+      Record<string, unknown>
+    >
+    self.compiler = (_, file) => file.data.matter as Record<string, unknown>
   } as Plugin<[], Node, Record<string, unknown>>)
+
+// Allows for custom return types
+// https://github.com/unifiedjs/unified/tree/b69689bba52a918d87aa62f295ccffa8d9aa8ef8#compileresultmap
+declare module 'unified' {
+  interface CompileResultMap {
+    // Register a new result (value is used, key should match it).
+    frontMatter: Record<string, unknown>
+  }
+}

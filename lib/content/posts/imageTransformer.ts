@@ -90,7 +90,7 @@ const rehypeConvertTopLevelImagesToFigures: Plugin<[], HastTree> =
 
 const rehypeVideo: Plugin<[], HastTree> = () => async tree => {
   visit(tree, { type: 'element', tagName: 'img' }, (node, index, parent) => {
-    if (!parent || index === null) {
+    if (!parent || index === undefined) {
       return
     }
     const src = node.properties?.src
