@@ -19,8 +19,9 @@ module.exports = function (content, map) {
     path.parse(this.resource).name,
     content.toString()
   )
-    .then(result =>
-      callback?.(null, `module.exports = ${JSON.stringify(result)}`, map)
+    .then(
+      result =>
+        callback?.(null, `module.exports = ${JSON.stringify(result)}`, map)
     )
     .catch(err => callback?.(err))
 } satisfies LoaderDefinitionFunction

@@ -5,8 +5,12 @@
   .content {
     @apply w-full self-center;
 
-    > p {
-      @apply m-0;
+    > p:first-of-type {
+      @apply mt-0;
+    }
+
+    > p:last-of-type {
+      @apply mb-0;
     }
   }
 

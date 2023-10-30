@@ -5,7 +5,7 @@ import { NavItem, NAV_ITEMS } from 'lib/nav'
 import { SocialLinks } from 'components/SocialLinks'
 
 export const Footer: React.FC = () => (
-  <footer className="flex flex-col items-center gap-8 border-t border-t-borderColor px-5 pt-10 pb-16 text-center md:flex-row md:items-end md:justify-between md:px-8 md:text-start">
+  <footer className="flex flex-col items-center gap-8 border-t border-t-borderColor px-5 pb-16 pt-10 text-center md:flex-row md:items-end md:justify-between md:px-8 md:text-start">
     <div className="flex flex-col items-center gap-8 md:items-start">
       <Quote />
       <NavLinks />
