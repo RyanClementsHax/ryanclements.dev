@@ -39,7 +39,7 @@
 
   @include with-code-block-title() {
     > :first-child {
-      @apply rounded-t-md border-b border-borderColor bg-gray-100 py-2 px-4 text-sm italic text-on-surface-offBase-muted;
+      @apply rounded-t-md border-b border-borderColor bg-gray-100 px-4 py-2 text-sm italic text-on-surface-offBase-muted;
     }
 
     @include code-block() {

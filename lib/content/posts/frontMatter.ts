@@ -23,8 +23,9 @@ export const writeFrontMatter = async (
   frontMatter: object,
   rawString: string
 ): Promise<string> => {
-  const content = String(matter(new VFile(rawString), { strip: true }))
-  return stringify(content, frontMatter)
+  const file = new VFile(rawString)
+  matter(file, { strip: true })
+  return stringify(String(file.value), frontMatter)
 }
 
 const remarkParseFrontmatter: Plugin = () => async (_, file) => {
