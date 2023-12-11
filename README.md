@@ -78,6 +78,8 @@ Deployment is handled by Vercel on merge to the `main` branch
 
 ## SEO
 
+You can use [opengraph.xyz](https://www.opengraph.xyz/) for general social card debugging.
+
 You can use Facebook's [OG debugger tool](https://developers.facebook.com/tools/debug/) to help debug card creation when sharing on Facebook. The docs for this can be found [here](https://developers.facebook.com/docs/sharing/webmasters/).
 
 You can use Twitter's Tweet Composer to test link rendering. See [this post](https://twittercommunity.com/t/card-validator-preview-removal/175006) for more details and [this troubleshooting guide](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/troubleshooting-cards) for help.
