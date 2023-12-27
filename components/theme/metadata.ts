@@ -1,8 +1,8 @@
 // https://web.dev/color-scheme/
 
-import { Metadata } from 'next'
+import { Viewport } from 'next'
 
 // This will be updated by ThemeScript
-export const themeMetadata: Metadata = {
+export const themeMetadata: Viewport = {
   colorScheme: 'normal'
 }

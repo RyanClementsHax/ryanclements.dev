@@ -7,8 +7,12 @@ import { fontClass } from 'lib/fonts'
 import deepmerge from '@fastify/deepmerge'
 
 import 'styles/global.scss'
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import { SITE_URL } from 'lib/constants'
+
+export const viewport: Viewport = {
+  ...themeMetadata
+}
 
 export const metadata = deepmerge({ all: true })<Metadata[]>(
   {
@@ -25,7 +29,6 @@ export const metadata = deepmerge({ all: true })<Metadata[]>(
       card: 'summary_large_image'
     }
   },
-  themeMetadata,
   rssMetadata
 )
 
