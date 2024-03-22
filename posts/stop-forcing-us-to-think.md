@@ -1,10 +1,11 @@
 ---
-bannerAlt: man rubbing eyes by @@towfiqu999999 on Unsplash
+bannerAlt: man rubbing eyes by @towfiqu999999 on Unsplash
 publishedOn: 2023-06-10T04:00:00.000Z
 description: >-
   The article discusses the hidden, negative impact of cognitive overload in
   software engineering and suggests ways to combat it.
 title: Stop Forcing Us to Think
+updatedAt: 2024-03-22T18:57:49.253Z
 ---
 
 Our trade moves at the speed of `git push` and man is it mind numbingly fast. To keep up, we have to constantly learn new languages, frameworks, paradigms, and libraries, else we risk job security and relevancy. The firehose of information we must digest is easily overwhelming and overloading our brains noticeably has a negative impact on productivity. This is known as “cognitive load”.
