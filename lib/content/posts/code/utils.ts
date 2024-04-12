@@ -3,6 +3,8 @@ import { common, createStarryNight } from '@wooorm/starry-night'
 // but this is how you import a single source
 // https://github.com/wooorm/starry-night/releases/tag/3.0.0
 import sourceTsx from '@wooorm/starry-night/source.tsx'
+// @ts-expect-error The typescript support for this is poor
+import textHtmlVue from '@wooorm/starry-night/text.html.vue'
 
 import { HastElement, HastTree } from '../types'
 
@@ -16,4 +18,4 @@ export const isPreElement = (
 
 export const getStarryNight = async (): Promise<
   Awaited<ReturnType<typeof createStarryNight>>
-> => await createStarryNight([...common, sourceTsx])
+> => await createStarryNight([...common, sourceTsx, textHtmlVue])
