@@ -61,6 +61,10 @@ export default {
                 offBase: colors.gray[200],
                 brand: primary.DEFAULT,
                 primary: primary[100],
+                accent: {
+                  DEFAULT: colors.yellow[300],
+                  hover: colors.yellow[500]
+                },
                 active: primary[100],
                 success: colors.green[100],
                 warning: colors.yellow[50],
@@ -78,6 +82,7 @@ export default {
                   },
                   brand: primary[100],
                   primary: primary[900],
+                  accent: colors.yellow[900],
                   active: colors.zinc[900],
                   success: colors.green[900],
                   warning: colors.yellow[900],
@@ -138,6 +143,10 @@ export default {
                   offBase: colors.gray[800],
                   brand: primary[800],
                   primary: '#1f2330', // primary[900] @ 50% opacity on colors.zinc[900]
+                  accent: {
+                    DEFAULT: colors.amber[300],
+                    hover: colors.amber[500]
+                  },
                   active: primary[900],
                   success: '#172a21', // colors.green[800] @ 30% opacity on colors.zinc[900]
                   warning: '#392817', // colors.yellow[800] @ 50% opacity on colors.zinc[900]
@@ -155,6 +164,7 @@ export default {
                     },
                     brand: primary[100],
                     primary: primary[100],
+                    accent: colors.amber[900],
                     active: primary[100],
                     success: colors.green[200],
                     warning: colors.yellow[200],
