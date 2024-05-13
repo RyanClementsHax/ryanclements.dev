@@ -54,7 +54,7 @@ export function SubscribeForm(): JSX.Element {
           className="overflow-hidden rounded-md border border-borderColor bg-surface-base px-3 py-2 text-left text-sm shadow-sm focus:border-borderColor-focus focus:outline-none focus:ring-1 focus:ring-ringColor-focus"
           placeholder="Enter your email"
         />
-        <button className="rounded-md bg-accent-400 px-3 py-2 text-on-surface-accent shadow-sm hover:bg-surface-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface-accent">
+        <button className="rounded-md bg-accent-400 px-3 py-2 text-sm text-on-surface-accent shadow-sm hover:bg-surface-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-surface-accent">
           Subscribe
         </button>
       </div>
