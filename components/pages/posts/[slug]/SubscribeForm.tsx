@@ -28,6 +28,9 @@ export function SubscribeForm(): JSX.Element {
           body: JSON.stringify({ email, referringUrl: window.location.href })
         })
         const { message } = await res.json()
+        if (res.ok) {
+          ;(e.target as HTMLFormElement).reset()
+        }
         setFormState({
           ok: res.ok,
           message
