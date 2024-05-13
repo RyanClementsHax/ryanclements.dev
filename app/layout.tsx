@@ -5,6 +5,7 @@ import { ThemeScript } from 'components/theme/ThemeScript'
 import { rssMetadata } from 'lib/content/rss'
 import { fontClass } from 'lib/fonts'
 import deepmerge from '@fastify/deepmerge'
+import PlausibleProvider from 'next-plausible'
 
 import 'styles/global.scss'
 import { Metadata, Viewport } from 'next'
@@ -40,7 +41,13 @@ export default function RootLayout({
   return (
     <ThemeProvider>
       <Html lang="en" className={fontClass}>
-        <head />
+        <head>
+          <PlausibleProvider
+            trackOutboundLinks
+            taggedEvents
+            domain="ryanclements.dev"
+          />
+        </head>
         <body>
           <ThemeScript />
           {children}
