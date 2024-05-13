@@ -6,6 +6,7 @@ import { Layout } from 'components/Layout'
 import { A11yStaticImageData } from 'lib/content/images'
 import Link from 'next/link'
 import { ShareLinks } from 'components/ShareLinks'
+import { SubscribeForm } from './SubscribeForm'
 
 export interface PostDetailsProps {
   post: RenderablePost
@@ -52,12 +53,11 @@ const ContentContainer: React.FC<{ children?: React.ReactNode }> = ({
 const Closer: React.FC<{ title: string }> = ({ title }) => (
   <section className="flex flex-col gap-12 text-center">
     <hr className="border-borderColor" />
-    <p>
-      Did you enjoy the post? Consider supporting me and my tea addition 🤗🍵.
-    </p>
+    <SubscribeForm />
+    <p>You can also support me and my tea addition 🤗🍵.</p>
     <BuyMeACoffeeButton />
     <p className="mx-auto flex gap-2">
-      Or sharing with others
+      Or share with others
       <ShareLinks title={title} />
     </p>
   </section>

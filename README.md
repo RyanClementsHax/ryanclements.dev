@@ -18,7 +18,14 @@
 
 1. (Recommended) Use VSCode and install the recommended extensions
 2. Run `npm run install` to install all of the dependencies
-3. Create a `.env.production.local` file and put the following contents in it
+3. Create a `.env.local` file and put the following keys in it
+
+   ```shell
+   BEEHIIV_PUBLICATION_ID="<beehiiv publication id>"
+   BEEHIIV_API_KEY="<beehiiv api key>"
+   ```
+
+4. Create a `.env.production.local` file and put the following contents in it
 
    ```.env
    NEXT_PUBLIC_VERCEL_URL=ryanclements.dev
