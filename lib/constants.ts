@@ -5,8 +5,8 @@ export const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 
 const protocol = IS_DEV ? 'http://' : 'https://'
 
-export const SITE_URL: string =
-  protocol + (process.env.NEXT_PUBLIC_URL ?? 'localhost:3000')
+const baseUrl = process.env.NEXT_PUBLIC_URL?.trim() || 'localhost:3000'
+export const SITE_URL: string = protocol + baseUrl
 
 export const RSS_FEED_URL = `${SITE_URL}/rss/feed.xml`
 export const JSON_FEED_URL = `${SITE_URL}/rss/feed.json`
