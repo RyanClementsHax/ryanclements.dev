@@ -3,7 +3,6 @@ import { BaseAnnotations, StoryAnnotations } from '@storybook/types'
 import { Theme } from 'components/theme'
 import merge from 'just-merge'
 import clone from 'just-clone'
-import type { PlayFunction } from '@storybook/types'
 
 export interface StoryModifier<T> {
   (story: StoryFn<T>): StoryFn<T>
@@ -78,7 +77,7 @@ export const withArgs: <T>(args?: Args<T>) => StoryModifier<T> =
 
 export const withPlay: <T>(play?: StorybookPlay<T>) => StoryModifier<T> =
   play => story => {
-    story.play = play as unknown as PlayFunction
+    story.play = play
     return story
   }
 
