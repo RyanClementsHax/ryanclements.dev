@@ -25,7 +25,14 @@
       }
     ]
   },
-  "exclude": ["node_modules", ".next", "out", "storybook-static", "**/dist"],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "out",
+    "storybook-static",
+    "**/dist",
+    "stories/**"
+  ],
   "include": [
     "next-env.d.ts",
     "**/*.ts",

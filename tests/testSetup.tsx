@@ -3,8 +3,9 @@ import { toHaveNoViolations } from 'jest-axe'
 import { setProjectAnnotations } from '@storybook/react'
 import * as globalStorybookConfig from '../.storybook/preview'
 import { LinkProps } from 'next/link'
+import type { ProjectAnnotations } from '@storybook/types'
 
-setProjectAnnotations(globalStorybookConfig)
+setProjectAnnotations(globalStorybookConfig as unknown as ProjectAnnotations)
 
 expect.extend(toHaveNoViolations)
 
