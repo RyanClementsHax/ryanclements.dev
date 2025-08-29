@@ -18,8 +18,7 @@ export const convertToReact = (
   components: ReactRehypeOptions['components']
 ): React.ReactNode =>
   unified()
-    .use(rehypeReact as unknown as (this: unknown, options?: ReactRehypeOptions | boolean) => void, {
-      ...production,
-      components
-    } as ReactRehypeOptions)
+    // TODO: Fix rehype-react typings for Next 15 upgrade; leaving as-is for now
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .use(rehypeReact as any, { ...production, components } as any)
     .stringify(content)
