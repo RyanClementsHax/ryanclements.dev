@@ -77,8 +77,8 @@ export const withArgs: <T>(args?: Args<T>) => StoryModifier<T> =
 
 export const withPlay: <T>(play?: StorybookPlay<T>) => StoryModifier<T> =
   play => story => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- TODO: refine Storybook v8 play typing
     // TODO: Storybook v8 typing for play is stricter; leaving as-is for now
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- TODO: refine Storybook v8 play typing
     story.play = play as any
     return story
   }
