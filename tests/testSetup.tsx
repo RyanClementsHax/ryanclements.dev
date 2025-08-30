@@ -4,7 +4,8 @@ import { setProjectAnnotations } from '@storybook/react'
 import * as globalStorybookConfig from '../.storybook/preview'
 import { LinkProps } from 'next/link'
 
-setProjectAnnotations(globalStorybookConfig)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- TODO: type correctly for Storybook v8
+setProjectAnnotations(globalStorybookConfig as any) // TODO: type correctly for Storybook v8
 
 expect.extend(toHaveNoViolations)
 

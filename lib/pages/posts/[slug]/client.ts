@@ -5,8 +5,6 @@ import rehypeReact, {
 import { HastTree } from 'lib/content/posts/types'
 import * as prod from 'react/jsx-runtime'
 import { unified } from 'unified'
-
-// @ts-expect-error: the react types are missing.
 // https://github.com/rehypejs/rehype-react/tree/93fac074e8e3447088ed2408282e9e089ea7b36c#use
 const production = { Fragment: prod.Fragment, jsx: prod.jsx, jsxs: prod.jsxs }
 
@@ -20,5 +18,7 @@ export const convertToReact = (
   components: ReactRehypeOptions['components']
 ): React.ReactNode =>
   unified()
-    .use(rehypeReact, { ...production, components })
+    // TODO: Fix rehype-react typings for Next 15 upgrade; leaving as-is for now
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .use(rehypeReact as any, { ...production, components } as any)
     .stringify(content)
