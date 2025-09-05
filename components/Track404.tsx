@@ -4,7 +4,7 @@ import { useAnalytics } from 'lib/analytics'
 import { Redirect } from './Redirect'
 import { useEffect } from 'react'
 
-export function Track404(): JSX.Element {
+export function Track404(): React.JSX.Element {
   const { track404 } = useAnalytics()
 
   useEffect(() => {

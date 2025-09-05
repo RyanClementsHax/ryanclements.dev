@@ -8,11 +8,11 @@ export const useHideAndShowWithScroll = <
 }: {
   enabled: boolean
 }): {
-  headerRef: RefObject<THeader>
-  contentRef: RefObject<TContent>
+  headerRef: RefObject<THeader | null>
+  contentRef: RefObject<TContent | null>
 } => {
-  const headerRef = useRef<THeader | null>(null)
-  const contentRef = useRef<TContent | null>(null)
+  const headerRef = useRef<THeader>(null)
+  const contentRef = useRef<TContent>(null)
 
   useEffect(() => {
     const updater = new StyleUpdater(headerRef, contentRef)
@@ -40,12 +40,16 @@ class StyleUpdater<THeader extends HTMLElement, TContent extends HTMLElement> {
     top: 0
   }
   private frame: ReturnType<typeof requestAnimationFrame> = -1
-  private headerRef: RefObject<THeader>
-  private contentRef: RefObject<TContent>
+  private headerRef: RefObject<THeader | null>
+  private contentRef: RefObject<TContent | null>
 
+  // TODO: consider this
   // using typescripts inline field constructor syntax breaks storybook's babel for some reason *shrug*
   // worth looking into again when upgrading to storybook 7
-  constructor(headerRef: RefObject<THeader>, contentRef: RefObject<TContent>) {
+  constructor(
+    headerRef: RefObject<THeader | null>,
+    contentRef: RefObject<TContent | null>
+  ) {
     this.headerRef = headerRef
     this.contentRef = contentRef
   }
@@ -103,7 +107,7 @@ class StyleUpdater<THeader extends HTMLElement, TContent extends HTMLElement> {
   }
 
   private assignStyles(
-    ref: RefObject<HTMLElement>,
+    ref: RefObject<HTMLElement | null>,
     styles: React.CSSProperties
   ) {
     if (ref.current) {
@@ -112,7 +116,7 @@ class StyleUpdater<THeader extends HTMLElement, TContent extends HTMLElement> {
   }
 
   private removeStyles(
-    ref: RefObject<HTMLElement>,
+    ref: RefObject<HTMLElement | null>,
     styles: React.CSSProperties
   ) {
     if (ref.current) {

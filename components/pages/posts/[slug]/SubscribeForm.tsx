@@ -12,7 +12,7 @@ const initialState: FormState = {
   message: ''
 }
 
-export function SubscribeForm(): JSX.Element {
+export function SubscribeForm(): React.JSX.Element {
   const [formState, setFormState] = useState(initialState)
   return (
     <form

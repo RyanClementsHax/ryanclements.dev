@@ -28,7 +28,7 @@ const ContentImage: ElementSubstitution<'img'> = ({
   alt,
   'data-blurdataurl': blurDataURL,
   ...props
-}: JSX.IntrinsicElements['img'] & { 'data-blurdataurl'?: string }) => (
+}: React.ComponentProps<'img'> & { 'data-blurdataurl'?: string }) => (
   <Image
     {...(props as ImageProps)}
     alt={alt as string}

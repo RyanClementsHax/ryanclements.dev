@@ -53,7 +53,7 @@ One of the pages was the browse page which looked like this.
 
 A typical SDUI implementation would model the response for that page roughly like this.
 
-```jsonc
+```json
 {
   "data": [
     {
@@ -123,7 +123,7 @@ We had a business requirement where the rows needed to be cached no longer than 
 
 At the same time, we wanted to keep the rest of the page cached. Reducing traffic to the backend from 55 million daily active users resulted in serious 💰💰💰. We could patch on granular cacheability to the previous model, but we instead went with this data model that made it easier.
 
-```jsonc
+```json
 {
   "data": [
     {
@@ -142,7 +142,7 @@ To ensure we didn't make a request for every child, we prepopulated the response
 
 The response actually looked something like this.
 
-```jsonc
+```json
 {
   "data": [
     {

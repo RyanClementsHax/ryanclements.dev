@@ -54,7 +54,7 @@ const Closer: React.FC<{ title: string }> = ({ title }) => (
   <section className="flex flex-col gap-12 text-center">
     <hr className="border-borderColor" />
     <SubscribeForm />
-    <p>You can also support me and my tea addition 🤗🍵.</p>
+    <p>You can also support me and my tea addiction 🤗🍵.</p>
     <BuyMeACoffeeButton />
     <p className="mx-auto flex gap-2">
       Or share with others

@@ -8,7 +8,7 @@ import { isMetaValid } from './utils'
 const TITLE_MATCHER = /title=([\w.-/]+)/
 
 export const rehypeAddCodeBlockTitle: Plugin<[], HastTree> =
-  () => async tree => {
+  () => async (tree: HastTree) => {
     visit(tree, { type: 'element', tagName: 'div' }, node => {
       if (!node.properties?.dataCodeBlockRoot) {
         return

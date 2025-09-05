@@ -10,6 +10,6 @@ export const metadata = {
   }
 }
 
-export default function AboutPage(): JSX.Element {
+export default function AboutPage(): React.JSX.Element {
   return <About />
 }

@@ -15,7 +15,7 @@ export const viewport: Viewport = {
   ...themeMetadata
 }
 
-export const metadata = deepmerge({ all: true })<Metadata[]>(
+export const metadata: Metadata = deepmerge({ all: true })(
   {
     title: 'Ryan Clements',
     description:
@@ -37,7 +37,7 @@ export default function RootLayout({
   children
 }: {
   children: React.ReactNode
-}): JSX.Element {
+}): React.JSX.Element {
   return (
     <ThemeProvider>
       <Html lang="en" className={fontClass}>

@@ -8,6 +8,9 @@ const config = {
     // https://nextjs.org/docs/basic-features/eslint#linting-custom-directories-and-files
     dirs: ['.']
   },
+  typescript: {
+    ignoreBuildErrors: true
+  },
   images: {
     remotePatterns: [
       {

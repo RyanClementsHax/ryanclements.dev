@@ -13,10 +13,11 @@ interface Params {
 }
 
 export async function generateMetadata({
-  params: { slug }
+  params
 }: {
-  params: Params
+  params: Promise<Params>
 }): Promise<Metadata> {
+  const { slug } = await params
   await redirectIfNotFound(slug)
   const meta = await getRenderablePostMeta(slug)
   return {
@@ -48,10 +49,11 @@ export async function generateStaticParams(): Promise<Params[]> {
 }
 
 export default async function PostPage({
-  params: { slug }
+  params
 }: {
-  params: Params
-}): Promise<JSX.Element> {
+  params: Promise<Params>
+}): Promise<React.JSX.Element> {
+  const { slug } = await params
   await redirectIfNotFound(slug)
   const post = await getRenderablePost(slug)
   return <PostDetails post={post} />
