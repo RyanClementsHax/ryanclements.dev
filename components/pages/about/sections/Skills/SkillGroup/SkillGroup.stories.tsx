@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/nextjs'
 import { allSkills } from 'lib/content/skills'
 import { createDefaultStories } from 'stories/storyUtils'
 import { SkillGroup } from '.'

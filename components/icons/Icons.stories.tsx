@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react'
+import { Meta } from '@storybook/nextjs'
 import { createDefaultStories } from 'stories/storyUtils'
 
 import { GithubIcon } from './GithubIcon'

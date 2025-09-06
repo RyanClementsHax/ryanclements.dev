@@ -1,8 +1,8 @@
-import { ReactRenderer, StoryFn } from '@storybook/react'
-import { BaseAnnotations, StoryAnnotations } from '@storybook/types'
+import { ReactRenderer, StoryFn } from '@storybook/nextjs'
 import { Theme } from 'components/theme'
 import merge from 'just-merge'
 import clone from 'just-clone'
+import { BaseAnnotations, StoryAnnotations } from 'storybook/internal/csf'
 
 export interface StoryModifier<T> {
   (story: StoryFn<T>): StoryFn<T>

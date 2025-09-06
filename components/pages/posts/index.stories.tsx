@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/nextjs'
 import { postSummaries } from 'stories/posts'
 import { createDefaultStories } from 'stories/storyUtils'
 

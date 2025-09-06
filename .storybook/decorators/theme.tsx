@@ -1,11 +1,11 @@
 import { Theme, ThemeContext } from 'components/theme'
-import { ReactRenderer } from '@storybook/react'
-import { DecoratorFunction } from '@storybook/csf'
+import { ReactRenderer } from '@storybook/nextjs'
 import {
   withThemeByClassName,
   withThemeFromJSXProvider
-} from '@storybook/addon-styling'
-import { action } from '@storybook/addon-actions'
+} from '@storybook/addon-themes'
+import { useGlobals } from 'storybook/manager-api'
+import { DecoratorFunction } from 'storybook/internal/csf'
 
 const defaultTheme = Theme.light
 
@@ -23,15 +23,18 @@ export const themeDecorators: DecoratorFunction<ReactRenderer>[] = [
     ),
     defaultTheme,
     Provider: ({
-      theme: { name: theme },
       children
     }: {
       theme: { name: Theme }
       children?: React.ReactNode
     }) => {
+      const [{ theme: selected }, updateGlobals] = useGlobals()
       return (
         <ThemeContext.Provider
-          value={{ theme, setTheme: (...args) => action('setTheme')(...args) }}
+          value={{
+            theme: selected,
+            setTheme: theme => updateGlobals({ theme })
+          }}
         >
           {children}
         </ThemeContext.Provider>

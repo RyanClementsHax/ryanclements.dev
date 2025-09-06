@@ -1,10 +1,10 @@
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { DecoratorFunction, Parameters } from '@storybook/csf'
-import { ReactRenderer } from '@storybook/react'
+import { INITIAL_VIEWPORTS } from 'storybook/viewport'
+import { Parameters, ReactRenderer } from '@storybook/nextjs'
 
 import 'styles/global.scss'
 import './preview.scss'
 import { themeDecorators } from './decorators/theme'
+import { DecoratorFunction } from 'storybook/internal/csf'
 
 export const decorators = [
   ...themeDecorators

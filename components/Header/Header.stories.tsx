@@ -1,6 +1,6 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/nextjs'
 import { createDefaultStories } from 'stories/storyUtils'
-import { within, userEvent } from '@storybook/testing-library'
+import { within, userEvent } from 'storybook/test'
 
 import { Header } from '.'
 

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import { toHaveNoViolations } from 'jest-axe'
-import { setProjectAnnotations } from '@storybook/react'
+import { setProjectAnnotations } from '@storybook/nextjs'
 import * as globalStorybookConfig from '../.storybook/preview'
 import { LinkProps } from 'next/link'
 
