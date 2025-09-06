@@ -4,6 +4,9 @@ import { setProjectAnnotations } from '@storybook/nextjs'
 import * as globalStorybookConfig from '../.storybook/preview'
 import { LinkProps } from 'next/link'
 
+import { createRouter } from '@storybook/nextjs/router.mock'
+import { createNavigation } from '@storybook/nextjs/navigation.mock'
+
 setProjectAnnotations(globalStorybookConfig)
 
 expect.extend(toHaveNoViolations)
@@ -25,3 +28,6 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   unobserve: jest.fn(),
   disconnect: jest.fn()
 }))
+
+createRouter({})
+createNavigation({})
