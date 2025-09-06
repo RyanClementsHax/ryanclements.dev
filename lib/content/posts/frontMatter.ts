@@ -28,44 +28,47 @@ export const writeFrontMatter = async (
   return stringify(String(file.value), frontMatter)
 }
 
-const remarkParseFrontmatter: Plugin = () => async (_, file) => {
-  matter(file)
-}
+const remarkParseFrontmatter: Plugin =
+  () => async (_: unknown, file: VFile) => {
+    matter(file)
+  }
 
-const frontMatterAddBannerSrc: Plugin = () => async (_, file) => {
-  if (!file.stem) {
-    file.fail(
-      'In order for a banner src to be automatically added, the file slug must be included with the content'
-    )
-    return
+const frontMatterAddBannerSrc: Plugin =
+  () => async (_: unknown, file: VFile) => {
+    if (!file.stem) {
+      file.fail(
+        'In order for a banner src to be automatically added, the file slug must be included with the content'
+      )
+      return
+    }
+    if (!file.data.matter) {
+      file.fail(
+        'Must include the banner src plugin after the front matter parsing plugin'
+      )
+      return
+    }
+    const frontMatter = file.data.matter as Record<string, unknown>
+    frontMatter.bannerSrc = imageService.getPostBannerSrc(file.stem)
   }
-  if (!file.data.matter) {
-    file.fail(
-      'Must include the banner src plugin after the front matter parsing plugin'
-    )
-    return
-  }
-  const frontMatter = file.data.matter as Record<string, unknown>
-  frontMatter.bannerSrc = imageService.getPostBannerSrc(file.stem)
-}
 
-const frontMatterAddOgImageData: Plugin = () => async (_, file) => {
-  if (!file.stem) {
-    file.fail(
-      'In order for a og src to be automatically added, the file slug must be included with the content'
-    )
-    return
+const frontMatterAddOgImageData: Plugin =
+  () => async (_: unknown, file: VFile) => {
+    if (!file.stem) {
+      file.fail(
+        'In order for a og src to be automatically added, the file slug must be included with the content'
+      )
+      return
+    }
+    if (!file.data.matter) {
+      file.fail(
+        'Must include the og src plugin after the front matter parsing plugin'
+      )
+      return
+    }
+    const frontMatter = file.data.matter as Record<string, unknown>
+    frontMatter.ogSrc = imageService.getPostOgSrc(file.stem)
+    frontMatter.ogAlt = frontMatter.ogAlt ?? frontMatter.bannerAlt
   }
-  if (!file.data.matter) {
-    file.fail(
-      'Must include the og src plugin after the front matter parsing plugin'
-    )
-    return
-  }
-  const frontMatter = file.data.matter as Record<string, unknown>
-  frontMatter.ogSrc = imageService.getPostOgSrc(file.stem)
-  frontMatter.ogAlt = frontMatter.ogAlt ?? frontMatter.bannerAlt
-}
 
 export const frontMatterTransformer = new PresetBuilder()
   .use(remarkFrontmatter)

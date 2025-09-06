@@ -11,7 +11,7 @@ const NUMERIC_RANGE_MATCHER = /{([0-9,.-\s]*)}/
 // inspired by
 // https://github.com/Microflash/rehype-starry-night#example-highlight-lines
 export const rehypeHighlightCodeBlockLines: Plugin<[], HastTree> =
-  () => async tree => {
+  () => async (tree: HastTree) => {
     visit(tree, { type: 'element', tagName: 'code' }, (node, _, parent) => {
       if (!isPreElement(parent)) {
         return
@@ -50,5 +50,5 @@ const normalizeClassName = (className: Properties['className']) =>
   Array.isArray(className)
     ? className
     : typeof className == 'string' || typeof className === 'number'
-    ? [className]
-    : []
+      ? [className]
+      : []

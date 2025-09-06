@@ -6,46 +6,48 @@ import { ImageService, imageService } from './imageService'
 import { PresetBuilder } from './presetBuilder'
 import { h } from 'hastscript'
 import { videoService } from './videoService'
+import { VFile } from 'vfile'
 
-const rehypeOptimizeImages: Plugin<[], HastTree> = () => async (tree, file) => {
-  const imageOptimizationJobs: Promise<void>[] = []
-  const optimizeImage = async (
-    node: HastElement,
-    src: string,
-    imageService: ImageService
-  ) => {
-    if (!(await imageService.exists(src))) {
-      file.fail(
-        `The src "${src}" does not exist as a file within asset dir "${imageService.config.assetDir}"`,
-        pointStart(node)
+const rehypeOptimizeImages: Plugin<[], HastTree> =
+  () => async (tree: HastTree, file: VFile) => {
+    const imageOptimizationJobs: Promise<void>[] = []
+    const optimizeImage = async (
+      node: HastElement,
+      src: string,
+      imageService: ImageService
+    ) => {
+      if (!(await imageService.exists(src))) {
+        file.fail(
+          `The src "${src}" does not exist as a file within asset dir "${imageService.config.assetDir}"`,
+          pointStart(node)
+        )
+        return
+      }
+      const { blurDataURL, ...props } =
+        await imageService.getOptimizedImageProperties(src)
+      node.properties = {
+        ...node.properties,
+        ...props,
+        'data-blurdataurl': blurDataURL
+      }
+    }
+    visit(tree, { type: 'element', tagName: 'img' }, node => {
+      if (!node.properties?.src || typeof node.properties.src !== 'string') {
+        file.fail(
+          'All images need a src property of type string',
+          pointStart(node)
+        )
+        return
+      }
+      imageOptimizationJobs.push(
+        optimizeImage(node, node.properties.src, imageService)
       )
-      return
-    }
-    const { blurDataURL, ...props } =
-      await imageService.getOptimizedImageProperties(src)
-    node.properties = {
-      ...node.properties,
-      ...props,
-      'data-blurdataurl': blurDataURL
-    }
+    })
+    await Promise.all(imageOptimizationJobs)
   }
-  visit(tree, { type: 'element', tagName: 'img' }, node => {
-    if (!node.properties?.src || typeof node.properties.src !== 'string') {
-      file.fail(
-        'All images need a src property of type string',
-        pointStart(node)
-      )
-      return
-    }
-    imageOptimizationJobs.push(
-      optimizeImage(node, node.properties.src, imageService)
-    )
-  })
-  await Promise.all(imageOptimizationJobs)
-}
 
 const rehypeRewriteImageSrcs: Plugin<[], HastTree> =
-  () => async (tree, file) => {
+  () => async (tree: HastTree, file: VFile) => {
     visit(tree, { type: 'element', tagName: 'img' }, node => {
       if (!file.stem) {
         file.fail(
@@ -68,7 +70,7 @@ const rehypeRewriteImageSrcs: Plugin<[], HastTree> =
   }
 
 const rehypeConvertTopLevelImagesToFigures: Plugin<[], HastTree> =
-  () => async tree => {
+  () => async (tree: HastTree) => {
     tree.children
       .map((x, i) => [x, i] as const)
       .filter((x): x is [HastElement, number] => x[0].type === 'element')
@@ -88,7 +90,7 @@ const rehypeConvertTopLevelImagesToFigures: Plugin<[], HastTree> =
       )
   }
 
-const rehypeVideo: Plugin<[], HastTree> = () => async tree => {
+const rehypeVideo: Plugin<[], HastTree> = () => async (tree: HastTree) => {
   visit(tree, { type: 'element', tagName: 'img' }, (node, index, parent) => {
     if (!parent || index === undefined) {
       return

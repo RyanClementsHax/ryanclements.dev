@@ -2,7 +2,10 @@ import { Root, Element } from 'hast'
 
 export type HastTree = Root
 export type HastElement = Element
-
+export type {
+  MdxJsxFlowElementHast,
+  MdxJsxTextElementHast
+} from 'mdast-util-mdx-jsx'
 export interface Post {
   meta: PostMeta
   content: string

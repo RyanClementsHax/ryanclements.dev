@@ -6,6 +6,7 @@ import { ElementContent } from 'hast'
 import { h } from 'hastscript'
 import { pointStart } from 'unist-util-position'
 import { getStarryNight, isPreElement } from './utils'
+import { VFile } from 'vfile'
 
 const getClassNamesFromScope = (scope: string) => [
   'highlight',
@@ -15,7 +16,7 @@ const getClassNamesFromScope = (scope: string) => [
 const INLINE_CODE_LANG_MATCHER = /{:([a-zA-z]+)}$/
 
 export const rehypeHighlightInlineCode: Plugin<[], HastTree> =
-  () => async (tree, file) => {
+  () => async (tree: HastTree, file: VFile) => {
     const starryNight = await getStarryNight()
 
     visit(tree, { type: 'element', tagName: 'code' }, (node, index, parent) => {

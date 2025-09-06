@@ -2,11 +2,12 @@ import { Plugin } from 'unified'
 
 import { visit } from 'unist-util-visit'
 import { toString } from 'hast-util-to-string'
-import { HastElement } from '../types'
+import { HastElement, HastTree } from '../types'
 import { ElementContent } from 'hast'
 import { h } from 'hastscript'
 import { pointStart } from 'unist-util-position'
 import { getStarryNight } from './utils'
+import { VFile } from 'vfile'
 
 const PREFIX = 'language-'
 const removePrefix = (str?: string) => str?.substring(PREFIX.length)
@@ -21,7 +22,7 @@ const getClassNamesFromScope = (scope: string) => [
 // modified from
 // https://github.com/wooorm/starry-night#example-integrate-with-unified-remark-and-rehype
 export const rehypeHighlightCodeBlocks: Plugin<[], HastElement> =
-  () => async (tree, file) => {
+  () => async (tree: HastTree, file: VFile) => {
     const starryNight = await getStarryNight()
 
     visit(tree, { type: 'element', tagName: 'pre' }, (node, index, parent) => {

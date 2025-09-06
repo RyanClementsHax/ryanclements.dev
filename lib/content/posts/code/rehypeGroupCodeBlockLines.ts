@@ -8,7 +8,7 @@ import { isPreElement } from './utils'
 // modified from
 // https://github.com/wooorm/starry-night#example-adding-line-numbers
 export const rehypeGroupCodeBlockLines: Plugin<[], HastTree> =
-  () => async code => {
+  () => async (code: HastTree) => {
     visit(code, { type: 'element', tagName: 'code' }, (node, _, parent) => {
       if (!isPreElement(parent)) {
         return

@@ -6,13 +6,23 @@ import sourceTsx from '@wooorm/starry-night/source.tsx'
 // @ts-expect-error The typescript support for this is poor
 import textHtmlVue from '@wooorm/starry-night/text.html.vue'
 
-import { HastElement, HastTree } from '../types'
+import {
+  HastElement,
+  HastTree,
+  MdxJsxTextElementHast,
+  MdxJsxFlowElementHast
+} from '../types'
 
 export const isMetaValid = (meta: unknown): meta is string =>
   typeof meta === 'string'
 
 export const isPreElement = (
-  node: HastTree | HastElement | undefined
+  node:
+    | HastTree
+    | HastElement
+    | MdxJsxTextElementHast
+    | MdxJsxFlowElementHast
+    | undefined
 ): node is HastElement =>
   !!node && node.type === 'element' && node.tagName === 'pre'
 
