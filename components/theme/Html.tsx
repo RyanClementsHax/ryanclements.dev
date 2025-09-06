@@ -5,6 +5,8 @@ import c from 'classnames'
 import { getCurrentTheme } from './utils'
 import { useMemo } from 'react'
 
+// Note: React Testing Library does not support rendering <html> elements
+
 // This is to make the hydration mismatch warning go away
 // The initial theme is set by ThemeScript before rendering can take place
 // This makes sure that react is happy during hydration

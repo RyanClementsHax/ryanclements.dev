@@ -19,3 +19,9 @@ jest.mock('lib/utils/useIsScrolledToTop', () => ({
   // if not mocked, causes act(...) errors in console
   useIsScrolledToTop: () => true
 }))
+
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn()
+}))

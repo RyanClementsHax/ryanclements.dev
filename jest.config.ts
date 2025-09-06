@@ -1,4 +1,4 @@
-import nextJest from 'next/jest'
+import nextJest from 'next/jest.js'
 import { Config } from 'jest'
 
 export default async function createJestConfig(): Promise<Config> {
