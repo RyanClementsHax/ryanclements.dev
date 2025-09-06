@@ -1,4 +1,5 @@
 import withBundleAnalyzer from '@next/bundle-analyzer'
+import path from 'node:path'
 
 /**
  * @type {import('next').NextConfig}
@@ -7,6 +8,10 @@ const config = {
   eslint: {
     // https://nextjs.org/docs/basic-features/eslint#linting-custom-directories-and-files
     dirs: ['.']
+  },
+  sassOptions: {
+    // Allow Sass imports like `@use 'styles/utils'` from project root
+    includePaths: [process.cwd()]
   },
   typescript: {
     ignoreBuildErrors: true
