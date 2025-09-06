@@ -10,8 +10,8 @@ const config = {
     dirs: ['.']
   },
   sassOptions: {
-    // Allow Sass imports like `@use 'styles/utils'` from project root
-    includePaths: [process.cwd()]
+    // Allow Sass imports like `@use 'utils'` from the styles directory
+    includePaths: [path.join(process.cwd(), 'styles')]
   },
   typescript: {
     ignoreBuildErrors: true
@@ -26,10 +26,9 @@ const config = {
   }
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default () =>
-  [
-    withBundleAnalyzer({
-      enabled: process.env.ANALYZE === 'true'
-    })
-  ].reduce((acc, next) => next(acc), config)
+// Compose Next.js plugins and export the final config object
+export default [
+  withBundleAnalyzer({
+    enabled: process.env.ANALYZE === 'true'
+  })
+].reduce((acc, next) => next(acc), config)

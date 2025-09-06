@@ -26,34 +26,7 @@ module.exports = {
       styles: path.resolve(__dirname, '../styles')
     }
 
-    // Ensure Sass @use 'styles/..' resolves like in Next.js
-    const includePaths = [path.resolve(__dirname, '..'), process.cwd()]
-    const applySassIncludePaths = (rule: any) => {
-      if (!rule) return
-      if (Array.isArray(rule)) {
-        rule.forEach(applySassIncludePaths)
-        return
-      }
-      if (rule.use) {
-        const uses = Array.isArray(rule.use) ? rule.use : [rule.use]
-        uses.forEach((use: any) => {
-          const loader: string | undefined = use && (use.loader || use?.loader?.loader)
-          if (loader && loader.includes('sass-loader')) {
-            use.options = {
-              ...(use.options || {}),
-              sassOptions: {
-                ...((use.options && use.options.sassOptions) || {}),
-                includePaths
-              }
-            }
-          }
-        })
-      }
-      if (rule.oneOf) applySassIncludePaths(rule.oneOf)
-      if (rule.rules) applySassIncludePaths(rule.rules)
-    }
-    applySassIncludePaths(config.module?.rules)
-
+    // Keep the custom .md loader used by content stories
     config.module?.rules?.push({
       test: /\.md$/,
       loader: require.resolve('./loaders/dist/postLoader'),
