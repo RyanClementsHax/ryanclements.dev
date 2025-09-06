@@ -39,8 +39,6 @@ const remarkLintNoDeeperThanH3 = lintRule(
   }
 )
 
-// TODO: attempt to remove @types/hast and vfile as direct dependencies
-
 // docs on how to configure
 // https://github.com/remarkjs/remark-lint
 // example preset
