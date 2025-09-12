@@ -33,6 +33,7 @@ export const themeDecorators: DecoratorFunction<ReactRenderer>[] = [
         <ThemeContext.Provider
           value={{
             theme: selected,
+            // TODO: consider using storybook/addon-actions instead
             setTheme: theme => updateGlobals({ theme })
           }}
         >
