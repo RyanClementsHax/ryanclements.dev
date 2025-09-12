@@ -1,7 +1,8 @@
 import type { StorybookConfig } from '@storybook/nextjs'
 
-module.exports = {
-  stories: ['../!(node_modules)/**/*.stories.@(js|jsx|ts|tsx)'],
+const config: StorybookConfig = {
+  // SB9+ uses fast-glob; avoid extglob patterns here
+  stories: ['../**/*.stories.@(js|jsx|ts|tsx)'],
   staticDirs: ['../public'],
   addons: [
     '@storybook/addon-links',
@@ -25,4 +26,6 @@ module.exports = {
     })
     return config
   }
-} satisfies StorybookConfig
+}
+
+export default config
