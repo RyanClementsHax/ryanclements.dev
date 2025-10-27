@@ -9,7 +9,7 @@
     "analyze": "ANALYZE=true npm run build",
     "export": "next export",
     "start": "next start",
-    "sb": "npm run sb:prepare && storybook dev -p 6006",
+    "sb": "npm run sb:prepare && storybook dev -p 6006 --no-open",
     "sb:prepare": "node .storybook/loaders/build.js",
     "sb:build": "npm run sb:prepare && storybook build",
     "sb:serve": "npx serve storybook-static",
